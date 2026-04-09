@@ -17,6 +17,8 @@
 body {
   font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
   background: linear-gradient(145deg, #0a0a0f 0%, #1a1025 40%, #0f0a1a 100%);
+  background-attachment: fixed;
+  background-color: #0a0a0f;
   color: white;
   min-height: 100vh;
 }
