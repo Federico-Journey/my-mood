@@ -10,27 +10,45 @@ import { supabase } from './supabase'
 import type { Venue, MoodType, PriceRange } from '@/types/database'
 
 /**
- * Prende tutti i locali attivi per un certo mood e budget.
- * Usata per costruire il piano serata.
+ * Budget adiacenti per allargare il pool di venue e avere più varietà.
+ * Es. se scegli "mid", cerchiamo anche "low" e "high" così il piano
+ * cambia davvero ogni volta che clicchi "Rigenera".
+ */
+const ADJACENT_BUDGETS: Record<PriceRange, PriceRange[]> = {
+  low:    ['low', 'mid'],
+  mid:    ['low', 'mid', 'high'],
+  high:   ['mid', 'high', 'luxury'],
+  luxury: ['high', 'luxury'],
+}
+
+/**
+ * Prende tutti i locali attivi per un certo mood.
+ * Include budget adiacenti per avere un pool ampio e piani sempre diversi.
+ * I venue del budget esatto vengono messi prima (boost implicito).
  */
 export async function getVenuesByMoodAndBudget(
   mood: MoodType,
   priceRange: PriceRange
 ): Promise<Venue[]> {
+  const budgets = ADJACENT_BUDGETS[priceRange]
+
   const { data, error } = await supabase
     .from('venues')
     .select('*')
     .contains('compatible_moods', [mood])
-    .eq('price_range', priceRange)
+    .in('price_range', budgets)
     .eq('is_active', true)
-    .order('boost_level', { ascending: false }) // i locali partner appaiono prima
+    .order('boost_level', { ascending: false })
 
   if (error) {
     console.error('Errore nel caricare le venues:', error)
     return []
   }
 
-  return data ?? []
+  // Metti prima i venue del budget esatto, poi gli adiacenti
+  const exact = (data ?? []).filter(v => v.price_range === priceRange)
+  const others = (data ?? []).filter(v => v.price_range !== priceRange)
+  return [...exact, ...others]
 }
 
 /**
