@@ -173,6 +173,16 @@ export default function PlanView({
         >
           {"\u{1F319}"} Nuovo Mood
         </button>
+
+        {/* Link piani salvati — visibile solo se loggato */}
+        {user && (
+          <Link
+            href="/piani"
+            className="w-full py-2.5 text-white/20 text-xs text-center hover:text-white/50 transition-colors block"
+          >
+            {"\u{1F4CB}"} I miei piani salvati
+          </Link>
+        )}
       </div>
     </div>
   );

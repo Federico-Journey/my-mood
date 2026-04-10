@@ -4,6 +4,32 @@ import { notFound } from 'next/navigation'
 import type { Venue } from '@/types/database'
 import Link from 'next/link'
 
+/** Recupera foto reale via Google Places API (server-side, nessun costo extra lato client) */
+async function fetchPlacesPhoto(venue: Venue): Promise<string | null> {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY
+  if (!apiKey) return null
+  try {
+    const query = encodeURIComponent(`${venue.name} ${venue.address} Milano`)
+    const res = await fetch(
+      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id,photos&key=${apiKey}`,
+      { next: { revalidate: 86400 } } // cache 24h
+    )
+    const data = await res.json()
+    const photoRef = data.candidates?.[0]?.photos?.[0]?.photo_reference
+    if (!photoRef) return null
+
+    const placeId = data.candidates?.[0]?.place_id
+    const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${photoRef}&key=${apiKey}`
+
+    // Aggiorna il DB in background (fire and forget)
+    supabase.from('venues').update({ photo_url: photoUrl, google_place_id: placeId }).eq('id', venue.id).then(() => {})
+
+    return photoUrl
+  } catch {
+    return null
+  }
+}
+
 type Props = {
   params: Promise<{ id: string }>
 }
@@ -61,6 +87,13 @@ export default async function VenuePage({ params }: Props) {
   if (error || !data) notFound()
 
   const venue = data as Venue
+
+  // Se non abbiamo la foto in DB, la recuperiamo da Google Places (e la salviamo per la prossima volta)
+  let photoUrl = venue.photo_url
+  if (!photoUrl) {
+    photoUrl = await fetchPlacesPhoto(venue)
+  }
+
   const accentColor = STEP_TYPE_COLORS[VENUE_TO_STEP_TYPE[venue.type]] ?? '#8B5CF6'
   const moodObjects = MOODS.filter(m => venue.compatible_moods?.includes(m.id as never) ||
     venue.compatible_moods?.some((cm: string) => {
@@ -97,10 +130,10 @@ export default async function VenuePage({ params }: Props) {
           overflow: 'hidden',
         }}
       >
-        {venue.photo_url ? (
+        {photoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={venue.photo_url}
+            src={photoUrl}
             alt={venue.name}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
