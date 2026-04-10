@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MOODS, STEP_TYPE_COLORS, type Plan } from "@/lib/data";
 
 type Props = {
@@ -89,57 +90,23 @@ export default function PlanView({
                 {step.time}
               </span>
 
-              {/* Card */}
-              <div
-                className="rounded-2xl p-5 border border-white/[0.06]"
-                style={{
-                  background: `linear-gradient(135deg, ${typeColor}08, transparent)`,
-                }}
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0"
-                    style={{
-                      background: `${typeColor}12`,
-                      border: `1px solid ${typeColor}22`,
-                    }}
-                  >
-                    {step.img}
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-white font-bold text-base">{step.name}</h3>
-                    <p className="text-white/30 text-xs">
-                      {"\u{1F4CD}"} {step.address}
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-white/45 text-sm leading-relaxed mb-3">
-                  {step.desc}
-                </p>
-
-                {/* Meta row */}
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="bg-white/5 rounded-lg px-2.5 py-1 text-white/35 text-[11px]">
-                    {"\u{1F552}"} {step.duration}
-                  </span>
-                  <span className="bg-white/5 rounded-lg px-2.5 py-1 text-white/35 text-[11px]">
-                    {"\u{1F4B0}"} {step.price}
-                  </span>
-                </div>
-
-                {/* Tip */}
-                <div
-                  className="rounded-xl px-3 py-2.5 text-[12px] leading-relaxed"
-                  style={{
-                    background: `${typeColor}08`,
-                    border: `1px solid ${typeColor}12`,
-                    color: `${typeColor}cc`,
-                  }}
+              {/* Card — cliccabile se abbiamo il venue_id */}
+              {step.venue_id ? (
+                <Link
+                  href={`/venue/${step.venue_id}`}
+                  className="block rounded-2xl p-5 border border-white/[0.06] transition-all hover:border-white/[0.12] hover:scale-[1.01] active:scale-[0.99]"
+                  style={{ background: `linear-gradient(135deg, ${typeColor}08, transparent)` }}
                 >
-                  {"\u{1F4A1}"} <span className="font-semibold">Tip:</span> {step.tip}
+                  <VenueCardContent step={step} typeColor={typeColor} accentColor={accentColor} />
+                </Link>
+              ) : (
+                <div
+                  className="rounded-2xl p-5 border border-white/[0.06]"
+                  style={{ background: `linear-gradient(135deg, ${typeColor}08, transparent)` }}
+                >
+                  <VenueCardContent step={step} typeColor={typeColor} accentColor={accentColor} />
                 </div>
-              </div>
+              )}
             </div>
           );
         })}
@@ -178,5 +145,71 @@ export default function PlanView({
         </button>
       </div>
     </div>
+  );
+}
+
+// ─── Sottocomponente riusabile per il contenuto della card venue ───────────────
+
+import type { PlanStep } from "@/lib/data";
+
+function VenueCardContent({
+  step,
+  typeColor,
+}: {
+  step: PlanStep;
+  typeColor: string;
+  accentColor: string;
+}) {
+  return (
+    <>
+      <div className="flex items-start gap-3 mb-3">
+        <div
+          className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0"
+          style={{
+            background: `${typeColor}12`,
+            border: `1px solid ${typeColor}22`,
+          }}
+        >
+          {step.img}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <h3 className="text-white font-bold text-base truncate">{step.name}</h3>
+            {step.venue_id && (
+              <span className="text-white/20 text-xs shrink-0">→</span>
+            )}
+          </div>
+          <p className="text-white/30 text-xs">
+            {"\u{1F4CD}"} {step.address}
+          </p>
+        </div>
+      </div>
+
+      <p className="text-white/45 text-sm leading-relaxed mb-3">
+        {step.desc}
+      </p>
+
+      {/* Meta row */}
+      <div className="flex flex-wrap gap-2 mb-3">
+        <span className="bg-white/5 rounded-lg px-2.5 py-1 text-white/35 text-[11px]">
+          {"\u{1F552}"} {step.duration}
+        </span>
+        <span className="bg-white/5 rounded-lg px-2.5 py-1 text-white/35 text-[11px]">
+          {"\u{1F4B0}"} {step.price}
+        </span>
+      </div>
+
+      {/* Tip */}
+      <div
+        className="rounded-xl px-3 py-2.5 text-[12px] leading-relaxed"
+        style={{
+          background: `${typeColor}08`,
+          border: `1px solid ${typeColor}12`,
+          color: `${typeColor}cc`,
+        }}
+      >
+        {"\u{1F4A1}"} <span className="font-semibold">Tip:</span> {step.tip}
+      </div>
+    </>
   );
 }

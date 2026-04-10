@@ -23,6 +23,7 @@ export type Budget = {
 };
 
 export type PlanStep = {
+  venue_id?: string;  // UUID Supabase — presente solo nei piani generati da DB
   time: string;
   type: string;
   name: string;

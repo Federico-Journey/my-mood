@@ -147,14 +147,15 @@ function pickVenue(venues: Venue[], types: string[], usedIds: Set<string>): Venu
 /** Converte un Venue del DB nello step che PlanView si aspetta */
 function venueToStep(venue: Venue, time: string, duration: string): PlanStep {
   return {
+    venue_id: venue.id,
     time,
     type:     VENUE_TO_STEP_TYPE[venue.type] || 'drink',
     name:     venue.name,
     address:  venue.address,
     desc:     venue.description ?? `${venue.name} — perfetto per il tuo mood.`,
-    img:      venue.emoji ?? '📍',
+    img:      venue.emoji ?? '\u{1F4CD}',
     duration,
-    price:    PRICE_LABEL[venue.price_range] ?? '€ variabile',
+    price:    PRICE_LABEL[venue.price_range] ?? '\u20AC variabile',
     tip:      venue.tips ?? 'Controlla gli orari prima di andare.',
   }
 }

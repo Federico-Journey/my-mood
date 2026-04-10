@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import { MOODS, STEP_TYPE_COLORS, type Plan } from '@/lib/data'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 
 // Step type colors fallback
 const TYPE_COLORS: Record<string, string> = STEP_TYPE_COLORS
@@ -156,18 +157,19 @@ export default async function SharePage({ params }: Props) {
           {plan.steps.map((step, i) => {
             const typeColor = TYPE_COLORS[step.type] || accentColor
 
-            return (
-              <div
-                key={i}
-                style={{
-                  borderRadius: '20px',
-                  padding: '18px',
-                  background: `linear-gradient(135deg, ${typeColor}08, rgba(255,255,255,0.02))`,
-                  border: `1px solid ${typeColor}20`,
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-              >
+            const cardStyle = {
+              borderRadius: '20px',
+              padding: '18px',
+              background: `linear-gradient(135deg, ${typeColor}08, rgba(255,255,255,0.02))`,
+              border: `1px solid ${typeColor}20`,
+              position: 'relative' as const,
+              overflow: 'hidden' as const,
+              textDecoration: 'none',
+              display: 'block',
+            }
+
+            return step.venue_id ? (
+              <Link key={i} href={`/venue/${step.venue_id}`} style={cardStyle}>
                 {/* Left accent bar */}
                 <div
                   style={{
@@ -257,6 +259,24 @@ export default async function SharePage({ params }: Props) {
                     >
                       {step.desc}
                     </p>
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <div key={i} style={cardStyle}>
+                {/* Left accent bar */}
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '3px', height: '100%', background: `linear-gradient(to bottom, ${typeColor}, ${typeColor}40)`, borderRadius: '3px 0 0 3px' }} />
+                <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', background: `${typeColor}14`, border: `1px solid ${typeColor}25`, flexShrink: 0 }}>
+                    {step.img}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', marginBottom: '4px' }}>
+                      <span style={{ color: '#fff', fontWeight: 700, fontSize: '15px' }}>{step.name}</span>
+                      <span style={{ color: typeColor, fontWeight: 700, fontSize: '12px', flexShrink: 0, opacity: 0.85 }}>{step.time}</span>
+                    </div>
+                    <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '12px', margin: '0 0 8px' }}>📍 {step.address} · 💰 {step.price}</p>
+                    <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', margin: 0, lineHeight: 1.5 }}>{step.desc}</p>
                   </div>
                 </div>
               </div>

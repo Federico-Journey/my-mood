@@ -65,6 +65,8 @@ export interface Venue {
   emoji: string | null
   google_place_id: string | null
   google_rating: number | null
+  photo_url: string | null
+  website_url: string | null
   opening_hours: Record<string, unknown>
   images: string[]
   is_active: boolean
