@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { MOODS, getPlan } from "@/lib/data";
+import { useState, useEffect, useRef } from "react";
+import { MOODS, getPlan, type Plan } from "@/lib/data";
+import { generatePlan } from "@/lib/planGenerator";
 import SplashScreen from "@/components/SplashScreen";
 import MoodSelector from "@/components/MoodSelector";
 import CompanySelector from "@/components/CompanySelector";
@@ -17,9 +18,13 @@ export default function Home() {
   const [mood, setMood] = useState<string | null>(null);
   const [company, setCompany] = useState<string | null>(null);
   const [budget, setBudget] = useState<string | null>(null);
+  const [plan, setPlan] = useState<Plan | null>(null);
   const [showShareCard, setShowShareCard] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
+
+  // Ref per conservare il piano fetched mentre l'animazione di loading è in corso
+  const pendingPlanRef = useRef<Plan | null>(null);
 
   // Accent color based on selected mood
   const selectedMood = MOODS.find((m) => m.id === mood);
@@ -33,10 +38,18 @@ export default function Home() {
     }
   }, [screen]);
 
-  // Loading animation
+  // Loading animation + fetch parallelo da Supabase
   useEffect(() => {
-    if (screen === "loading") {
+    if (screen === "loading" && mood && company && budget) {
       setLoadingProgress(0);
+      pendingPlanRef.current = null;
+
+      // Fetch da Supabase in parallelo con l'animazione
+      generatePlan(mood, company, budget).then((fetchedPlan) => {
+        pendingPlanRef.current = fetchedPlan;
+      });
+
+      // Animazione progress bar
       const steps = [12, 28, 45, 58, 72, 85, 93, 100];
       let i = 0;
       const interval = setInterval(() => {
@@ -45,23 +58,28 @@ export default function Home() {
           i++;
         } else {
           clearInterval(interval);
-          setTimeout(() => setScreen("plan"), 400);
+          setTimeout(() => {
+            // Usa il piano da Supabase se disponibile, altrimenti fallback statico
+            const finalPlan = pendingPlanRef.current ?? getPlan(mood, company, budget);
+            setPlan(finalPlan);
+            pendingPlanRef.current = null;
+            setScreen("plan");
+          }, 400);
         }
       }, 280);
       return () => clearInterval(interval);
     }
-  }, [screen]);
+  }, [screen, mood, company, budget]);
 
-  // Animate plan steps appearing
+  // Animate plan steps appearing one by one
   useEffect(() => {
-    if (screen === "plan" && mood && company && budget) {
+    if (screen === "plan" && plan) {
       setVisibleSteps([]);
-      const plan = getPlan(mood, company, budget);
       plan.steps.forEach((_, i) => {
         setTimeout(() => setVisibleSteps((prev) => [...prev, i]), 300 + i * 250);
       });
     }
-  }, [screen, mood, company, budget]);
+  }, [screen, plan]);
 
   // Handler: select mood
   const handleMoodSelect = (moodId: string) => {
@@ -75,29 +93,28 @@ export default function Home() {
     setScreen("budget");
   };
 
-  // Handler: select budget → trigger loading
+  // Handler: select budget → trigger loading + fetch
   const handleBudgetSelect = (budgetId: string) => {
     setBudget(budgetId);
     setScreen("loading");
   };
 
-  // Handler: regenerate (re-trigger loading animation)
+  // Handler: regenera piano (nuova selezione casuale di venue)
   const handleRegenerate = () => {
     setVisibleSteps([]);
+    setPlan(null);
     setScreen("loading");
   };
 
-  // Handler: start over
+  // Handler: ricomincia da capo
   const handleNewMood = () => {
     setMood(null);
     setCompany(null);
     setBudget(null);
+    setPlan(null);
     setVisibleSteps([]);
     setScreen("mood");
   };
-
-  // Get the current plan
-  const plan = mood && company && budget ? getPlan(mood, company, budget) : null;
 
   return (
     <main className="min-h-screen">
