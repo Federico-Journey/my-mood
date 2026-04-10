@@ -57,7 +57,7 @@ export default function ShareCard({ plan, mood, accentColor, onClose }: Props) {
       const json = await res.json();
       if (json.id) {
         const shareUrl = `${window.location.origin}/share/${json.id}`;
-        const msg = `🌙 *Ho trovato il piano perfetto per stasera!*\n\n👉 ${shareUrl}\n\n_${selectedMood?.emoji} ${selectedMood?.label} · Milano_\n\nChi viene? 🙋`;
+        const msg = `\u{1F319} *Ho trovato il piano perfetto per stasera!*\n\n\u{1F449} ${shareUrl}\n\n_${selectedMood?.emoji} ${selectedMood?.label} \u00B7 Milano_\n\nChi viene? \u{1F64B}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
       } else {
         // Fallback: testo plain
@@ -79,7 +79,7 @@ export default function ShareCard({ plan, mood, accentColor, onClose }: Props) {
         className="fixed top-4 right-4 z-[110] w-10 h-10 rounded-full bg-white/10 hover:bg-white/20
                    text-white text-xl flex items-center justify-center transition-colors"
       >
-        \u2715
+        {"\u2715"}
       </button>
 
       <p
