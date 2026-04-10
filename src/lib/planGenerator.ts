@@ -149,12 +149,15 @@ export async function generatePlan(
         const aperitivoVenue = pickVenue(venues, SLOT_TYPES.aperitivo, usedIds)
         if (aperitivoVenue) usedIds.add(aperitivoVenue.id)
 
-        // Slot 2 — Cena
+        // Slot 2 — Cena (se non trova ristoranti, prende qualsiasi venue non ancora usato)
+        const allTypes = Object.keys(VENUE_TO_STEP_TYPE)
         const cenaVenue = pickVenue(venues, SLOT_TYPES.cena, usedIds)
+          ?? pickVenue(venues, allTypes, usedIds)
         if (cenaVenue) usedIds.add(cenaVenue.id)
 
-        // Slot 3 — Dopocena
+        // Slot 3 — Dopocena (idem, fallback su tutto)
         const dopoVenue = pickVenue(venues, SLOT_TYPES.dopocena, usedIds)
+          ?? pickVenue(venues, allTypes, usedIds)
         if (dopoVenue) usedIds.add(dopoVenue.id)
 
         const steps: PlanStep[] = []
