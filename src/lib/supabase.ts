@@ -21,7 +21,13 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-// Crea il client Supabase
-// È "pubblico" — usa la chiave anonima, che permette solo operazioni
-// consentite dalle policy RLS (Row Level Security) che abbiamo definito.
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Crea il client Supabase con supporto auth.
+// flowType: 'implicit' = il token torna nel hash dell'URL dopo OAuth,
+// gestito interamente dal browser senza bisogno di un callback server.
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    flowType: 'implicit',
+    detectSessionInUrl: true,
+    persistSession: true,
+  }
+})

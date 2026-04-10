@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { User } from "@supabase/supabase-js";
 import { MOODS, STEP_TYPE_COLORS, type Plan } from "@/lib/data";
 
 type Props = {
@@ -8,9 +9,12 @@ type Props = {
   mood: string;
   accentColor: string;
   visibleSteps: number[];
+  user: User | null;
+  planSaved: boolean;
   onRegenerate: () => void;
   onNewMood: () => void;
   onShare: () => void;
+  onSave: () => void;
 };
 
 export default function PlanView({
@@ -18,9 +22,12 @@ export default function PlanView({
   mood,
   accentColor,
   visibleSteps,
+  user,
+  planSaved,
   onRegenerate,
   onNewMood,
   onShare,
+  onSave,
 }: Props) {
   const selectedMood = MOODS.find((m) => m.id === mood);
 
@@ -124,6 +131,29 @@ export default function PlanView({
           }}
         >
           {"\u{1F4E4}"} Condividi con gli amici
+        </button>
+
+        {/* Save button */}
+        <button
+          onClick={onSave}
+          disabled={planSaved}
+          className="w-full py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 transition-all"
+          style={planSaved ? {
+            background: "rgba(16,185,129,0.1)",
+            border: "1px solid rgba(16,185,129,0.3)",
+            color: "#10B981",
+          } : {
+            background: "rgba(255,255,255,0.05)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: user ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.45)",
+          }}
+        >
+          {planSaved
+            ? <>{"\u2713"} Piano salvato!</>
+            : user
+              ? <>{"\u{1F516}"} Salva questo piano</>
+              : <>{"\u{1F510}"} Salva piano &mdash; accedi</>
+          }
         </button>
 
         {/* Regenerate */}

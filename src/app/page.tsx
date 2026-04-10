@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import type { User } from "@supabase/supabase-js";
 import { MOODS, getPlan, type Plan } from "@/lib/data";
 import { generatePlan } from "@/lib/planGenerator";
+import { supabase } from "@/lib/supabase";
 import SplashScreen from "@/components/SplashScreen";
 import MoodSelector from "@/components/MoodSelector";
 import CompanySelector from "@/components/CompanySelector";
@@ -10,6 +12,7 @@ import BudgetSelector from "@/components/BudgetSelector";
 import LoadingScreen from "@/components/LoadingScreen";
 import PlanView from "@/components/PlanView";
 import ShareCard from "@/components/ShareCard";
+import LoginModal from "@/components/LoginModal";
 
 type Screen = "splash" | "mood" | "company" | "budget" | "loading" | "plan";
 
@@ -20,11 +23,29 @@ export default function Home() {
   const [budget, setBudget] = useState<string | null>(null);
   const [plan, setPlan] = useState<Plan | null>(null);
   const [showShareCard, setShowShareCard] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [planSaved, setPlanSaved] = useState(false);
 
   // Ref per conservare il piano fetched mentre l'animazione di loading è in corso
   const pendingPlanRef = useRef<Plan | null>(null);
+
+  // ─── Auth: ascolta i cambiamenti di sessione ──────────────────────────────
+  useEffect(() => {
+    // Controlla la sessione corrente (es. dopo redirect da Google OAuth)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Ascolta i cambiamenti futuri (login / logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   // Accent color based on selected mood
   const selectedMood = MOODS.find((m) => m.id === mood);
@@ -99,10 +120,31 @@ export default function Home() {
     setScreen("loading");
   };
 
+  // Handler: salva il piano su Supabase (richiede login)
+  const handleSavePlan = async () => {
+    if (!user) {
+      setShowLoginModal(true);
+      return;
+    }
+    if (!plan || !mood) return;
+
+    const selectedMood = MOODS.find((m) => m.id === mood);
+    const { error } = await supabase.from("user_plans").insert({
+      user_id: user.id,
+      mood_id: mood,
+      accent_color: selectedMood?.color ?? "#8B5CF6",
+      plan_data: plan,
+      title: plan.title,
+    });
+
+    if (!error) setPlanSaved(true);
+  };
+
   // Handler: regenera piano (nuova selezione casuale di venue)
   const handleRegenerate = () => {
     setVisibleSteps([]);
     setPlan(null);
+    setPlanSaved(false);
     setScreen("loading");
   };
 
@@ -112,6 +154,7 @@ export default function Home() {
     setCompany(null);
     setBudget(null);
     setPlan(null);
+    setPlanSaved(false);
     setVisibleSteps([]);
     setScreen("mood");
   };
@@ -148,9 +191,12 @@ export default function Home() {
           mood={mood!}
           accentColor={accentColor}
           visibleSteps={visibleSteps}
+          user={user}
+          planSaved={planSaved}
           onRegenerate={handleRegenerate}
           onNewMood={handleNewMood}
           onShare={() => setShowShareCard(true)}
+          onSave={handleSavePlan}
         />
       )}
 
@@ -161,6 +207,14 @@ export default function Home() {
           mood={mood!}
           accentColor={accentColor}
           onClose={() => setShowShareCard(false)}
+        />
+      )}
+
+      {/* Login modal */}
+      {showLoginModal && (
+        <LoginModal
+          accentColor={accentColor}
+          onClose={() => setShowLoginModal(false)}
         />
       )}
     </main>
