@@ -41,12 +41,28 @@ export type Plan = {
 };
 
 export const MOODS: Mood[] = [
-  { id: "romantic", emoji: "\u{1F339}", label: "Romantico", color: "#E8456B", desc: "Cena intima, luci soffuse, momenti speciali" },
-  { id: "adventure", emoji: "\u26A1", label: "Avventuroso", color: "#F59E0B", desc: "Posti nuovi, esperienze uniche, fuori dagli schemi" },
-  { id: "chill", emoji: "\u{1F30A}", label: "Rilassato", color: "#06B6D4", desc: "Atmosfera tranquilla, buon cibo, zero stress" },
-  { id: "social", emoji: "\u{1F389}", label: "Social", color: "#8B5CF6", desc: "Energia alta, tanta gente, divertimento puro" },
-  { id: "cultural", emoji: "\u{1F3AD}", label: "Culturale", color: "#EC4899", desc: "Arte, musica live, esperienze che arricchiscono" },
-  { id: "classy", emoji: "\u{1F942}", label: "Elegante", color: "#A78BFA", desc: "Cocktail bar, fine dining, look impeccabile" },
+  // — Originali —
+  { id: "romantic",    emoji: "🌹", label: "Romantico",    color: "#E8456B", desc: "Cena intima, luci soffuse, momenti speciali" },
+  { id: "adventure",   emoji: "⚡", label: "Avventuroso",  color: "#F59E0B", desc: "Posti nuovi, esperienze uniche, fuori dagli schemi" },
+  { id: "chill",       emoji: "🌊", label: "Rilassato",    color: "#06B6D4", desc: "Atmosfera tranquilla, buon cibo, zero stress" },
+  { id: "social",      emoji: "🎉", label: "Social",       color: "#8B5CF6", desc: "Energia alta, tanta gente, divertimento puro" },
+  { id: "cultural",    emoji: "🎭", label: "Culturale",    color: "#EC4899", desc: "Arte, musica live, esperienze che arricchiscono" },
+  { id: "classy",      emoji: "🥂", label: "Elegante",     color: "#A78BFA", desc: "Cocktail bar, fine dining, look impeccabile" },
+  // — Nuovi —
+  { id: "foodie",      emoji: "🍽️", label: "Foodie",       color: "#F97316", desc: "Scoprire cucine nuove, chef creativi, sapori inaspettati" },
+  { id: "nightlife",   emoji: "🌙", label: "Nottambulo",   color: "#4F46E5", desc: "Club, DJ set, ballare fino all'alba" },
+  { id: "sporty",      emoji: "🏃", label: "Sportivo",     color: "#10B981", desc: "Post-gym, post-padel, energia da sfogare" },
+  { id: "creative",    emoji: "🎨", label: "Creativo",     color: "#FBBF24", desc: "Workshop, gallerie, fare qualcosa con le mani" },
+  { id: "alternative", emoji: "🎸", label: "Alternativo",  color: "#84CC16", desc: "Indie, underground, fuori dai circuiti soliti" },
+  { id: "zen",         emoji: "🌿", label: "Zen",          color: "#14B8A6", desc: "Ritmo lento, niente notifiche, benessere" },
+  { id: "musical",     emoji: "🎵", label: "Musicale",     color: "#9333EA", desc: "Jazz live, concerti, musica dal vivo" },
+  { id: "indulgent",   emoji: "🤤", label: "Godereccio",   color: "#EF4444", desc: "Pizza, street food, abbondanza, birre artigianali" },
+  { id: "coffee",      emoji: "☕", label: "Coffee Lover", color: "#D97706", desc: "Specialty coffee, colazioni lunghe, rituale della tazza" },
+  { id: "mystery",     emoji: "🔮", label: "Misterioso",   color: "#7C3AED", desc: "Speakeasy, posti segreti, esperienze inaspettate" },
+  { id: "aperitivo",   emoji: "🍹", label: "Aperitivo",    color: "#FB923C", desc: "Il rito milanese per eccellenza, quello perfetto" },
+  { id: "party",       emoji: "🎊", label: "Festivo",      color: "#F43F5E", desc: "Compleanno, promozione, si festeggia grande" },
+  { id: "vintage",     emoji: "🎩", label: "Vintage",      color: "#B45309", desc: "Bar storici, vecchia Milano, atmosfera d'altri tempi" },
+  { id: "exclusive",   emoji: "💎", label: "Esclusivo",    color: "#818CF8", desc: "Members' club, rooftop privati, mi merito qualcosa di speciale" },
 ];
 
 export const COMPANIES: Company[] = [

@@ -36,6 +36,20 @@ export type MoodType =
   | 'social'
   | 'culturale'
   | 'elegante'
+  | 'foodie'
+  | 'nottambulo'
+  | 'sportivo'
+  | 'creativo'
+  | 'alternativo'
+  | 'zen'
+  | 'musicale'
+  | 'godereccio'
+  | 'coffeelover'
+  | 'misterioso'
+  | 'aperitivo'
+  | 'festivo'
+  | 'vintage'
+  | 'esclusivo'
 
 export interface Venue {
   id: string

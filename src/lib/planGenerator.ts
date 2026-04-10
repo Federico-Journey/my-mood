@@ -15,14 +15,28 @@ import type { Venue, MoodType, PriceRange } from '@/types/database'
 
 // ─── Mappature ───────────────────────────────────────────────────────────────
 
-/** Converte i mood ID del frontend (inglese) agli ID del DB (italiano) */
+/** Converte i mood ID del frontend agli ID del DB (italiano) */
 const MOOD_MAP: Record<string, MoodType> = {
-  romantic:  'romantico',
-  adventure: 'avventuroso',
-  chill:     'rilassato',
-  social:    'social',
-  cultural:  'culturale',
-  classy:    'elegante',
+  romantic:    'romantico',
+  adventure:   'avventuroso',
+  chill:       'rilassato',
+  social:      'social',
+  cultural:    'culturale',
+  classy:      'elegante',
+  foodie:      'foodie',
+  nightlife:   'nottambulo',
+  sporty:      'sportivo',
+  creative:    'creativo',
+  alternative: 'alternativo',
+  zen:         'zen',
+  musical:     'musicale',
+  indulgent:   'godereccio',
+  coffee:      'coffeelover',
+  mystery:     'misterioso',
+  aperitivo:   'aperitivo',
+  party:       'festivo',
+  vintage:     'vintage',
+  exclusive:   'esclusivo',
 }
 
 /** Converte il tipo di venue al tipo di step (per i colori in PlanView) */
@@ -65,21 +79,49 @@ const SLOT_DURATIONS = ['1h',    '1.5h',  '1–2h']
 // ─── Titoli per mood ──────────────────────────────────────────────────────────
 
 const MOOD_TITLES: Record<string, string[]> = {
-  romantic:  ['Serata da Sogno', 'Tramonto & Sapori', 'Notte Romantica', 'Il Piano Perfetto'],
-  adventure: ['Milano Segreta',  'Off the Beaten Track', 'Serata Inaspettata', 'Fuori Dagli Schemi'],
-  chill:     ['Me Time a Milano','Serata Senza Fretta', 'Zero Stress',     'Slow Evening'],
-  social:    ['Serata On Fire',  'Milano by Night',     'Full Energy',     'Non Si Dorme'],
-  cultural:  ['Arte & Sapori',   'Cultura e Buon Vino', 'Mente & Piacere', 'Serata Ispirata'],
-  classy:    ['Milano Chic',     'Eleganza Milanese',   'The Premium Night','Look Impeccabile'],
+  romantic:    ['Serata da Sogno',     'Tramonto & Sapori',    'Notte Romantica',      'Il Piano Perfetto'],
+  adventure:   ['Milano Segreta',      'Off the Beaten Track', 'Serata Inaspettata',   'Fuori Dagli Schemi'],
+  chill:       ['Me Time a Milano',    'Serata Senza Fretta',  'Zero Stress',          'Slow Evening'],
+  social:      ['Serata On Fire',      'Milano by Night',      'Full Energy',          'Non Si Dorme'],
+  cultural:    ['Arte & Sapori',       'Cultura e Buon Vino',  'Mente & Piacere',      'Serata Ispirata'],
+  classy:      ['Milano Chic',         'Eleganza Milanese',    'The Premium Night',    'Look Impeccabile'],
+  foodie:      ['Giro Gourmand',       'Sapori di Milano',     'Il Percorso del Gusto','Una Serata da Chef'],
+  nightlife:   ['Non Si Dorme',        'Milano dopo Mezzanotte','Full Night Mode',     'La Notte è Giovane'],
+  sporty:      ['Energy Mode ON',      'Post-Match Vibes',     'Endorfine & Spritz',   'Active Evening'],
+  creative:    ['Serata Creativa',     'Hands On',             'Workshop & Wine',      'Arte & Aperitivo'],
+  alternative: ['Off the Grid',        'La Milano che non sai','Underground Vibes',    'Fuori dal Coro'],
+  zen:         ['Slow Down',           'Respira',              'Zero Notifiche',       'The Quiet Evening'],
+  musical:     ['Notte in Musica',     'Live & Loud',          'Jazz & Cocktail',      'Sound & Soul'],
+  indulgent:   ['No Dieta Stasera',    'Full Godimento',       'Pizza & Birra Mode',   'Si Mangia'],
+  coffee:      ['Coffee Run Milano',   'Specialty Morning',    'Il Giro dei Caffè',    'Brew & Go'],
+  mystery:     ['Milano Nascosta',     'Speakeasy Night',      'Segreti & Cocktail',   'Il Posto Segreto'],
+  aperitivo:   ['L\'Aperitivo Perfetto','Golden Hour Milano',  'Sunset Spritz',        'Ora di Aperitivo'],
+  party:       ['Si Festeggia!',       'Grande Serata',        'Party Mode',           'Notte da Ricordare'],
+  vintage:     ['Vecchia Milano',      'La Milano di una Volta','Stile d\'Epoca',      'Classici Senza Tempo'],
+  exclusive:   ['VIP Mode',           'L\'Esclusiva Milanese', 'Serata Speciale',      'Il Meglio di Milano'],
 }
 
 const MOOD_SUBTITLES: Record<string, string> = {
-  romantic:  'Una serata pensata per creare momenti speciali',
-  adventure: 'I posti che i milanesi non conoscono ancora',
-  chill:     'Un piano rilassato, zero pensieri',
-  social:    'Da aperitivo a notte fonda senza fermarsi',
-  cultural:  'Cultura, sapori e qualcosa che ti resterà',
-  classy:    'La serata che posterai su Instagram',
+  romantic:    'Una serata pensata per creare momenti speciali',
+  adventure:   'I posti che i milanesi non conoscono ancora',
+  chill:       'Un piano rilassato, zero pensieri',
+  social:      'Da aperitivo a notte fonda senza fermarsi',
+  cultural:    'Cultura, sapori e qualcosa che ti resterà',
+  classy:      'La serata che posterai su Instagram',
+  foodie:      'Un viaggio gastronomico nel cuore di Milano',
+  nightlife:   'La notte milanese inizia adesso',
+  sporty:      'Scarichi l\'adrenalina, poi si celebra',
+  creative:    'Ispirazione, mani in pasta e un buon drink',
+  alternative: 'Milano fuori dai circuiti soliti',
+  zen:         'Stacca, rallenta, goditi il momento',
+  musical:     'Le note migliori della città, stasera per te',
+  indulgent:   'Niente sensi di colpa, solo piacere',
+  coffee:      'Il culto della tazza perfetta a Milano',
+  mystery:     'Posti che non trovi su Google Maps',
+  aperitivo:   'Il rito milanese per eccellenza, quello vero',
+  party:       'Perché alcune serate meritano di essere leggendarie',
+  vintage:     'La Milano autentica, quella degli anni d\'oro',
+  exclusive:   'Ti meriti qualcosa di fuori dall\'ordinario',
 }
 
 // ─── Utility ─────────────────────────────────────────────────────────────────
