@@ -8,35 +8,24 @@ export async function GET() {
   }
 
   try {
-    // Test con la nuova Places API (v1)
-    const res = await fetch(
-      'https://places.googleapis.com/v1/places:searchText',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Goog-Api-Key': apiKey,
-          'X-Goog-FieldMask': 'places.id,places.displayName,places.photos',
-        },
-        body: JSON.stringify({
-          textQuery: 'Navigli Milano',
-          maxResultCount: 1,
-        }),
-        cache: 'no-store',
-      }
-    )
+    // Test con la vecchia Places API (findplacefromtext)
+    const query = encodeURIComponent('Navigli Milano')
+    const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id,photos,name&key=${apiKey}`
 
+    const res = await fetch(url, { cache: 'no-store' })
     const data = await res.json()
-    const place = data.places?.[0]
+    const candidate = data.candidates?.[0]
 
     return NextResponse.json({
-      api_status: res.status,
-      found: !!place,
-      place_name: place?.displayName?.text ?? null,
-      place_id: place?.id ?? null,
-      has_photos: !!place?.photos?.length,
-      photo_name_preview: place?.photos?.[0]?.name ? place.photos[0].name.slice(0, 60) + '...' : null,
-      raw_error: data.error ?? null,
+      status: data.status,
+      error_message: data.error_message ?? null,
+      found: !!candidate,
+      name: candidate?.name ?? null,
+      place_id: candidate?.place_id ?? null,
+      has_photos: !!candidate?.photos?.length,
+      photo_ref_preview: candidate?.photos?.[0]?.photo_reference
+        ? candidate.photos[0].photo_reference.slice(0, 50) + '...'
+        : null,
     })
   } catch (err) {
     return NextResponse.json({ error: String(err) }, { status: 500 })
