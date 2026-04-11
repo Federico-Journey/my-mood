@@ -35,7 +35,7 @@ export async function GET() {
       place_name: place?.displayName?.text ?? null,
       place_id: place?.id ?? null,
       has_photos: !!place?.photos?.length,
-      photo_name_preview: place?.photos?.[0]?.name?.slice(0, 60) + '...' ?? null,
+      photo_name_preview: place?.photos?.[0]?.name ? place.photos[0].name.slice(0, 60) + '...' : null,
       raw_error: data.error ?? null,
     })
   } catch (err) {
