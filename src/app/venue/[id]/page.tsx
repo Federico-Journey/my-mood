@@ -4,22 +4,40 @@ import { notFound } from 'next/navigation'
 import type { Venue } from '@/types/database'
 import Link from 'next/link'
 
-/** Recupera foto reale via Google Places API (server-side, nessun costo extra lato client) */
+/** Recupera foto reale via Google Places API (New) — server-side */
 async function fetchPlacesPhoto(venue: Venue): Promise<string | null> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY
   if (!apiKey) return null
   try {
-    const query = encodeURIComponent(`${venue.name} ${venue.address} Milano`)
-    const res = await fetch(
-      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id,photos&key=${apiKey}`,
-      { next: { revalidate: 86400 } } // cache 24h
+    // Step 1: Text Search (New Places API) per trovare place_id e foto
+    const searchRes = await fetch(
+      'https://places.googleapis.com/v1/places:searchText',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': apiKey,
+          'X-Goog-FieldMask': 'places.id,places.photos',
+        },
+        body: JSON.stringify({
+          textQuery: `${venue.name} ${venue.address} Milano`,
+          maxResultCount: 1,
+          languageCode: 'it',
+        }),
+        next: { revalidate: 86400 }, // cache 24h
+      }
     )
-    const data = await res.json()
-    const photoRef = data.candidates?.[0]?.photos?.[0]?.photo_reference
-    if (!photoRef) return null
 
-    const placeId = data.candidates?.[0]?.place_id
-    const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${photoRef}&key=${apiKey}`
+    const searchData = await searchRes.json()
+    const place = searchData.places?.[0]
+    if (!place) return null
+
+    const placeId = place.id
+    const photoName = place.photos?.[0]?.name // es. "places/ChIJ.../photos/..."
+    if (!photoName) return null
+
+    // Step 2: costruisci URL diretto per la foto
+    const photoUrl = `https://places.googleapis.com/v1/${photoName}/media?maxWidthPx=800&key=${apiKey}`
 
     // Aggiorna il DB in background (fire and forget)
     supabase.from('venues').update({ photo_url: photoUrl, google_place_id: placeId }).eq('id', venue.id).then(() => {})
