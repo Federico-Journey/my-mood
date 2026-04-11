@@ -9,18 +9,20 @@ import SplashScreen from "@/components/SplashScreen";
 import MoodSelector from "@/components/MoodSelector";
 import CompanySelector from "@/components/CompanySelector";
 import BudgetSelector from "@/components/BudgetSelector";
+import ActivitySelector, { type ActivityMode } from "@/components/ActivitySelector";
 import LoadingScreen from "@/components/LoadingScreen";
 import PlanView from "@/components/PlanView";
 import ShareCard from "@/components/ShareCard";
 import LoginModal from "@/components/LoginModal";
 
-type Screen = "splash" | "mood" | "company" | "budget" | "loading" | "plan";
+type Screen = "splash" | "mood" | "company" | "budget" | "activities" | "loading" | "plan";
 
 export default function Home() {
   const [screen, setScreen] = useState<Screen>("splash");
   const [mood, setMood] = useState<string | null>(null);
   const [company, setCompany] = useState<string | null>(null);
   const [budget, setBudget] = useState<string | null>(null);
+  const [activities, setActivities] = useState<ActivityMode | null>(null);
   const [plan, setPlan] = useState<Plan | null>(null);
   const [showShareCard, setShowShareCard] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -66,7 +68,7 @@ export default function Home() {
       pendingPlanRef.current = null;
 
       // Fetch da Supabase in parallelo con l'animazione
-      generatePlan(mood, company, budget).then((fetchedPlan) => {
+      generatePlan(mood, company, budget, activities ?? undefined).then((fetchedPlan) => {
         pendingPlanRef.current = fetchedPlan;
       });
 
@@ -114,9 +116,15 @@ export default function Home() {
     setScreen("budget");
   };
 
-  // Handler: select budget → trigger loading + fetch
+  // Handler: select budget → vai alle attività
   const handleBudgetSelect = (budgetId: string) => {
     setBudget(budgetId);
+    setScreen("activities");
+  };
+
+  // Handler: select activities → trigger loading + fetch
+  const handleActivitySelect = (activity: ActivityMode) => {
+    setActivities(activity);
     setScreen("loading");
   };
 
@@ -153,6 +161,7 @@ export default function Home() {
     setMood(null);
     setCompany(null);
     setBudget(null);
+    setActivities(null);
     setPlan(null);
     setPlanSaved(false);
     setVisibleSteps([]);
@@ -178,6 +187,14 @@ export default function Home() {
           accentColor={accentColor}
           onSelect={handleBudgetSelect}
           onBack={() => setScreen("company")}
+        />
+      )}
+
+      {screen === "activities" && (
+        <ActivitySelector
+          accentColor={accentColor}
+          onSelect={handleActivitySelect}
+          onBack={() => setScreen("budget")}
         />
       )}
 

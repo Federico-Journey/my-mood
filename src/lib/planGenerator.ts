@@ -69,12 +69,58 @@ const PRICE_LABEL: Record<string, string> = {
 const SLOT_TYPES = {
   aperitivo: ['bar', 'cocktail_bar', 'rooftop', 'lounge'],
   cena:      ['ristorante', 'trattoria', 'pizzeria'],
-  dopocena:  ['club', 'lounge', 'cocktail_bar', 'bar', 'attivita', 'teatro', 'cinema', 'altro'],
+  dopocena:  ['club', 'lounge', 'cocktail_bar', 'bar', 'attivita', 'altro'],
+  club:      ['club'],
+  outdoor:   ['parco', 'attivita'],
+  cultura:   ['museo', 'teatro', 'cinema'],
 }
 
-/** Orari fissi per i 3 slot della serata */
-const SLOT_TIMES     = ['19:00', '20:30', '22:30']
-const SLOT_DURATIONS = ['1h',    '1.5h',  '1–2h']
+/** Definizione di uno slot nel piano */
+type SlotDef = {
+  types: string[]
+  fallbackTypes: string[]
+  time: string
+  duration: string
+}
+
+/** Mappa ActivityMode → sequenza di slot da costruire */
+const ACTIVITY_SLOTS: Record<string, SlotDef[]> = {
+  aperitivo: [
+    { types: SLOT_TYPES.aperitivo, fallbackTypes: SLOT_TYPES.dopocena, time: '19:00', duration: '2h' },
+  ],
+  cena: [
+    { types: SLOT_TYPES.cena, fallbackTypes: SLOT_TYPES.aperitivo, time: '20:00', duration: '2h' },
+  ],
+  aperitivo_cena: [
+    { types: SLOT_TYPES.aperitivo, fallbackTypes: SLOT_TYPES.dopocena, time: '19:00', duration: '1h' },
+    { types: SLOT_TYPES.cena,      fallbackTypes: SLOT_TYPES.aperitivo, time: '20:30', duration: '1.5h' },
+  ],
+  cena_dopocena: [
+    { types: SLOT_TYPES.cena,     fallbackTypes: SLOT_TYPES.aperitivo, time: '20:00', duration: '1.5h' },
+    { types: SLOT_TYPES.dopocena, fallbackTypes: SLOT_TYPES.aperitivo, time: '22:00', duration: '2h' },
+  ],
+  serata_completa: [
+    { types: SLOT_TYPES.aperitivo, fallbackTypes: SLOT_TYPES.dopocena, time: '19:00', duration: '1h' },
+    { types: SLOT_TYPES.cena,      fallbackTypes: SLOT_TYPES.aperitivo, time: '20:30', duration: '1.5h' },
+    { types: SLOT_TYPES.dopocena,  fallbackTypes: SLOT_TYPES.aperitivo, time: '22:30', duration: '2h' },
+  ],
+  ballare: [
+    { types: SLOT_TYPES.aperitivo, fallbackTypes: SLOT_TYPES.dopocena, time: '19:30', duration: '1h' },
+    { types: SLOT_TYPES.cena,      fallbackTypes: SLOT_TYPES.aperitivo, time: '21:00', duration: '1.5h' },
+    { types: SLOT_TYPES.club,      fallbackTypes: SLOT_TYPES.dopocena,  time: '23:00', duration: '2h+' },
+  ],
+  outdoor: [
+    { types: SLOT_TYPES.outdoor,  fallbackTypes: SLOT_TYPES.aperitivo, time: '18:00', duration: '2h' },
+    { types: SLOT_TYPES.cena,     fallbackTypes: SLOT_TYPES.dopocena,  time: '20:30', duration: '1.5h' },
+  ],
+  cultura: [
+    { types: SLOT_TYPES.cultura,  fallbackTypes: SLOT_TYPES.outdoor,  time: '18:30', duration: '2h' },
+    { types: SLOT_TYPES.cena,     fallbackTypes: SLOT_TYPES.aperitivo, time: '21:00', duration: '1.5h' },
+  ],
+}
+
+/** Slot di default (serata completa) se activities non è specificato */
+const DEFAULT_SLOTS: SlotDef[] = ACTIVITY_SLOTS.serata_completa
 
 // ─── Titoli per mood ──────────────────────────────────────────────────────────
 
@@ -166,50 +212,47 @@ function venueToStep(venue: Venue, time: string, duration: string): PlanStep {
  * Genera un piano serata.
  *
  * 1. Chiede a Supabase i venue per quel mood + budget
- * 2. Seleziona 3 venue: aperitivo → cena → dopocena
+ * 2. Seleziona i venue per ogni slot in base alle attività scelte dall'utente
  * 3. Li converte nel formato che PlanView si aspetta
  * 4. Fallback ai piani statici se il DB non ha abbastanza venue
  *
- * @param mood     - ID mood frontend ("romantic", "chill", ecc.)
- * @param company  - ID compagnia ("couple", "friends", ecc.)
- * @param budget   - ID budget ("low", "mid", "high", "luxury")
+ * @param mood       - ID mood frontend ("romantic", "chill", ecc.)
+ * @param company    - ID compagnia ("couple", "friends", ecc.)
+ * @param budget     - ID budget ("low", "mid", "high", "luxury")
+ * @param activities - Cosa vuole fare l'utente ("serata_completa", "ballare", ecc.)
  */
 export async function generatePlan(
   mood: string,
   company: string,
-  budget: string
+  budget: string,
+  activities?: string
 ): Promise<Plan> {
   const italianMood = MOOD_MAP[mood]
+  const slots = (activities && ACTIVITY_SLOTS[activities]) ? ACTIVITY_SLOTS[activities] : DEFAULT_SLOTS
+  const allTypes = Object.keys(VENUE_TO_STEP_TYPE)
 
   if (italianMood) {
     try {
       const venues = await getVenuesByMoodAndBudget(italianMood, budget as PriceRange)
 
-      if (venues.length >= 2) {
+      if (venues.length >= 1) {
         const usedIds = new Set<string>()
-
-        // Slot 1 — Aperitivo
-        const aperitivoVenue = pickVenue(venues, SLOT_TYPES.aperitivo, usedIds)
-        if (aperitivoVenue) usedIds.add(aperitivoVenue.id)
-
-        // Slot 2 — Cena (se non trova ristoranti, prende qualsiasi venue non ancora usato)
-        const allTypes = Object.keys(VENUE_TO_STEP_TYPE)
-        const cenaVenue = pickVenue(venues, SLOT_TYPES.cena, usedIds)
-          ?? pickVenue(venues, allTypes, usedIds)
-        if (cenaVenue) usedIds.add(cenaVenue.id)
-
-        // Slot 3 — Dopocena (idem, fallback su tutto)
-        const dopoVenue = pickVenue(venues, SLOT_TYPES.dopocena, usedIds)
-          ?? pickVenue(venues, allTypes, usedIds)
-        if (dopoVenue) usedIds.add(dopoVenue.id)
-
         const steps: PlanStep[] = []
-        if (aperitivoVenue) steps.push(venueToStep(aperitivoVenue, SLOT_TIMES[0], SLOT_DURATIONS[0]))
-        if (cenaVenue)      steps.push(venueToStep(cenaVenue,      SLOT_TIMES[1], SLOT_DURATIONS[1]))
-        if (dopoVenue)      steps.push(venueToStep(dopoVenue,      SLOT_TIMES[2], SLOT_DURATIONS[2]))
 
-        // Se abbiamo almeno 2 step, il piano è valido
-        if (steps.length >= 2) {
+        for (const slot of slots) {
+          // Prova prima i tipi primari, poi i fallback, poi qualsiasi venue rimasto
+          const venue = pickVenue(venues, slot.types, usedIds)
+            ?? pickVenue(venues, slot.fallbackTypes, usedIds)
+            ?? pickVenue(venues, allTypes, usedIds)
+
+          if (venue) {
+            usedIds.add(venue.id)
+            steps.push(venueToStep(venue, slot.time, slot.duration))
+          }
+        }
+
+        // Piano valido se ha almeno 1 step
+        if (steps.length >= 1) {
           const titles = MOOD_TITLES[mood] ?? ['Serata Perfetta']
           const title  = titles[Math.floor(Math.random() * titles.length)]
 
