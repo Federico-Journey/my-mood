@@ -4,30 +4,90 @@ import { notFound } from 'next/navigation'
 import type { Venue } from '@/types/database'
 import Link from 'next/link'
 
-/** Recupera foto reale via Google Places API (legacy) — server-side */
-async function fetchPlacesPhoto(venue: Venue): Promise<string | null> {
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY
-  if (!apiKey) return null
-  try {
-    const query = encodeURIComponent(`${venue.name} ${venue.address} Milano`)
-    const res = await fetch(
-      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id,photos&key=${apiKey}`,
-      { cache: 'no-store' } // no cache per evitare che un risultato vuoto venga cachato
-    )
-    const data = await res.json()
-    const photoRef = data.candidates?.[0]?.photos?.[0]?.photo_reference
-    if (!photoRef) return null
+/** Foto Unsplash curate per tipo di venue — nessuna API richiesta */
+const VENUE_PHOTOS: Record<string, string[]> = {
+  bar: [
+    'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80',
+    'https://images.unsplash.com/photo-1568644396922-5c3bfae12521?w=800&q=80',
+    'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&q=80',
+  ],
+  cocktail_bar: [
+    'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80',
+    'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=80',
+    'https://images.unsplash.com/photo-1527761939622-933c0a044f6e?w=800&q=80',
+  ],
+  rooftop: [
+    'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&q=80',
+    'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=80',
+    'https://images.unsplash.com/photo-1519671282429-b44660ead0a7?w=800&q=80',
+  ],
+  lounge: [
+    'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=80',
+    'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=800&q=80',
+    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',
+  ],
+  ristorante: [
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
+    'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=800&q=80',
+  ],
+  trattoria: [
+    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80',
+    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80',
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
+  ],
+  pizzeria: [
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80',
+    'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80',
+    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80',
+  ],
+  club: [
+    'https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80',
+    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80',
+    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+  ],
+  parco: [
+    'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800&q=80',
+    'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
+  ],
+  museo: [
+    'https://images.unsplash.com/photo-1584967918940-a7d51b064268?w=800&q=80',
+    'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80',
+    'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80',
+  ],
+  teatro: [
+    'https://images.unsplash.com/photo-1503095396549-807759245b35?w=800&q=80',
+    'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800&q=80',
+    'https://images.unsplash.com/photo-1460881680858-30d872d5b530?w=800&q=80',
+  ],
+  cinema: [
+    'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=800&q=80',
+    'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80',
+    'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80',
+  ],
+  attivita: [
+    'https://images.unsplash.com/photo-1526401485004-46910ecc8e51?w=800&q=80',
+    'https://images.unsplash.com/photo-1519671282429-b44660ead0a7?w=800&q=80',
+    'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&q=80',
+  ],
+}
 
-    const placeId = data.candidates?.[0]?.place_id
-    const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${photoRef}&key=${apiKey}`
+const FALLBACK_PHOTOS = [
+  'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80',
+  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
+  'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&q=80',
+]
 
-    // Aggiorna il DB in background (fire and forget)
-    supabase.from('venues').update({ photo_url: photoUrl, google_place_id: placeId }).eq('id', venue.id).then(() => {})
+/** Seleziona una foto in modo deterministico in base al nome del locale */
+function getVenuePhoto(venue: Venue): string {
+  // Se c'è già una foto salvata in DB, usala
+  if (venue.photo_url) return venue.photo_url
 
-    return photoUrl
-  } catch {
-    return null
-  }
+  const photos = VENUE_PHOTOS[venue.type] ?? FALLBACK_PHOTOS
+  // Hash semplice: somma dei char codes del nome → indice consistente
+  const hash = venue.name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+  return photos[hash % photos.length]
 }
 
 type Props = {
@@ -88,11 +148,8 @@ export default async function VenuePage({ params }: Props) {
 
   const venue = data as Venue
 
-  // Se non abbiamo la foto in DB, la recuperiamo da Google Places (e la salviamo per la prossima volta)
-  let photoUrl = venue.photo_url
-  if (!photoUrl) {
-    photoUrl = await fetchPlacesPhoto(venue)
-  }
+  // Foto: da DB se già salvata, altrimenti Unsplash curata per tipo venue
+  const photoUrl = getVenuePhoto(venue)
 
   const accentColor = STEP_TYPE_COLORS[VENUE_TO_STEP_TYPE[venue.type]] ?? '#8B5CF6'
   const moodObjects = MOODS.filter(m => venue.compatible_moods?.includes(m.id as never) ||
