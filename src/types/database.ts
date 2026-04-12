@@ -67,6 +67,7 @@ export interface Venue {
   google_rating: number | null
   photo_url: string | null
   website_url: string | null
+  neighborhood: string | null
   opening_hours: Record<string, unknown>
   images: string[]
   is_active: boolean

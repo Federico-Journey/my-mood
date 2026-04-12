@@ -10,12 +10,13 @@ import MoodSelector from "@/components/MoodSelector";
 import CompanySelector from "@/components/CompanySelector";
 import BudgetSelector from "@/components/BudgetSelector";
 import ActivitySelector, { type ActivityMode } from "@/components/ActivitySelector";
+import NeighborhoodSelector, { type NeighborhoodId } from "@/components/NeighborhoodSelector";
 import LoadingScreen from "@/components/LoadingScreen";
 import PlanView from "@/components/PlanView";
 import ShareCard from "@/components/ShareCard";
 import LoginModal from "@/components/LoginModal";
 
-type Screen = "splash" | "mood" | "company" | "budget" | "activities" | "loading" | "plan";
+type Screen = "splash" | "mood" | "company" | "budget" | "activities" | "neighborhood" | "loading" | "plan";
 
 export default function Home() {
   const [screen, setScreen] = useState<Screen>("splash");
@@ -23,6 +24,7 @@ export default function Home() {
   const [company, setCompany] = useState<string | null>(null);
   const [budget, setBudget] = useState<string | null>(null);
   const [activities, setActivities] = useState<ActivityMode | null>(null);
+  const [neighborhood, setNeighborhood] = useState<NeighborhoodId | null>(null);
   const [plan, setPlan] = useState<Plan | null>(null);
   const [showShareCard, setShowShareCard] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -68,7 +70,7 @@ export default function Home() {
       pendingPlanRef.current = null;
 
       // Fetch da Supabase in parallelo con l'animazione
-      generatePlan(mood, company, budget, activities ?? undefined).then((fetchedPlan) => {
+      generatePlan(mood, company, budget, activities ?? undefined, neighborhood ?? undefined).then((fetchedPlan) => {
         pendingPlanRef.current = fetchedPlan;
       });
 
@@ -122,9 +124,15 @@ export default function Home() {
     setScreen("activities");
   };
 
-  // Handler: select activities → trigger loading + fetch
+  // Handler: select activities → vai al quartiere
   const handleActivitySelect = (activity: ActivityMode) => {
     setActivities(activity);
+    setScreen("neighborhood");
+  };
+
+  // Handler: select neighborhood → trigger loading + fetch
+  const handleNeighborhoodSelect = (n: NeighborhoodId) => {
+    setNeighborhood(n);
     setScreen("loading");
   };
 
@@ -162,6 +170,7 @@ export default function Home() {
     setCompany(null);
     setBudget(null);
     setActivities(null);
+    setNeighborhood(null);
     setPlan(null);
     setPlanSaved(false);
     setVisibleSteps([]);
@@ -195,6 +204,14 @@ export default function Home() {
           accentColor={accentColor}
           onSelect={handleActivitySelect}
           onBack={() => setScreen("budget")}
+        />
+      )}
+
+      {screen === "neighborhood" && (
+        <NeighborhoodSelector
+          accentColor={accentColor}
+          onSelect={handleNeighborhoodSelect}
+          onBack={() => setScreen("activities")}
         />
       )}
 

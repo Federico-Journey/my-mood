@@ -212,38 +212,58 @@ function venueToStep(venue: Venue, time: string, duration: string): PlanStep {
  * Genera un piano serata.
  *
  * 1. Chiede a Supabase i venue per quel mood + budget
- * 2. Seleziona i venue per ogni slot in base alle attività scelte dall'utente
- * 3. Li converte nel formato che PlanView si aspetta
- * 4. Fallback ai piani statici se il DB non ha abbastanza venue
+ * 2. Filtra per quartiere (se specificato), con fallback su tutti i quartieri
+ * 3. Seleziona i venue per ogni slot in base alle attività scelte dall'utente
+ * 4. Li converte nel formato che PlanView si aspetta
+ * 5. Fallback ai piani statici se il DB non ha abbastanza venue
  *
- * @param mood       - ID mood frontend ("romantic", "chill", ecc.)
- * @param company    - ID compagnia ("couple", "friends", ecc.)
- * @param budget     - ID budget ("low", "mid", "high", "luxury")
- * @param activities - Cosa vuole fare l'utente ("serata_completa", "ballare", ecc.)
+ * @param mood         - ID mood frontend ("romantic", "chill", ecc.)
+ * @param company      - ID compagnia ("couple", "friends", ecc.)
+ * @param budget       - ID budget ("low", "mid", "high", "luxury")
+ * @param activities   - Cosa vuole fare l'utente ("serata_completa", "ballare", ecc.)
+ * @param neighborhood - Quartiere preferito ("navigli", "brera", ecc. — "anywhere" = nessun filtro)
  */
 export async function generatePlan(
   mood: string,
   company: string,
   budget: string,
-  activities?: string
+  activities?: string,
+  neighborhood?: string
 ): Promise<Plan> {
   const italianMood = MOOD_MAP[mood]
   const slots = (activities && ACTIVITY_SLOTS[activities]) ? ACTIVITY_SLOTS[activities] : DEFAULT_SLOTS
   const allTypes = Object.keys(VENUE_TO_STEP_TYPE)
+  const filterByZone = neighborhood && neighborhood !== 'anywhere'
 
   if (italianMood) {
     try {
       const venues = await getVenuesByMoodAndBudget(italianMood, budget as PriceRange)
 
       if (venues.length >= 1) {
+        // Se l'utente ha scelto un quartiere specifico, prova prima con quei venue
+        // Se non bastano (< numero di slot), usa tutti i venue come fallback
+        const zonedVenues = filterByZone
+          ? venues.filter(v => v.neighborhood === neighborhood)
+          : venues
+        const poolToUse = (filterByZone && zonedVenues.length < slots.length)
+          ? venues       // fallback su tutti i quartieri
+          : zonedVenues
+
         const usedIds = new Set<string>()
         const steps: PlanStep[] = []
 
         for (const slot of slots) {
-          // Prova prima i tipi primari, poi i fallback, poi qualsiasi venue rimasto
-          const venue = pickVenue(venues, slot.types, usedIds)
-            ?? pickVenue(venues, slot.fallbackTypes, usedIds)
-            ?? pickVenue(venues, allTypes, usedIds)
+          // Prima cerca nel pool filtrato per quartiere
+          let venue = pickVenue(poolToUse, slot.types, usedIds)
+            ?? pickVenue(poolToUse, slot.fallbackTypes, usedIds)
+            ?? pickVenue(poolToUse, allTypes, usedIds)
+
+          // Se non trova nulla nel pool zonato, allarga a tutti i venue
+          if (!venue && filterByZone) {
+            venue = pickVenue(venues, slot.types, usedIds)
+              ?? pickVenue(venues, slot.fallbackTypes, usedIds)
+              ?? pickVenue(venues, allTypes, usedIds)
+          }
 
           if (venue) {
             usedIds.add(venue.id)

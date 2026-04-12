@@ -76,7 +76,7 @@ export default function ActivitySelector({ accentColor, onSelect, onBack }: Prop
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-5 py-10">
       <p className="text-white/40 text-[10px] tracking-[3px] uppercase font-semibold mb-2 animate-fade-in-up">
-        step 4 di 4
+        step 4 di 5
       </p>
       <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2 animate-fade-in-up-delay-1">
         Cosa vuoi fare?
