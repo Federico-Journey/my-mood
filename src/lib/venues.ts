@@ -22,20 +22,22 @@ const ADJACENT_BUDGETS: Record<PriceRange, PriceRange[]> = {
 }
 
 /**
- * Prende tutti i locali attivi per un certo mood.
+ * Prende tutti i locali attivi compatibili con uno o più mood.
+ * Usa .overlaps() per trovare venue che hanno ALMENO UNO dei mood selezionati.
  * Include budget adiacenti per avere un pool ampio e piani sempre diversi.
  * I venue del budget esatto vengono messi prima (boost implicito).
  */
 export async function getVenuesByMoodAndBudget(
-  mood: MoodType,
+  moods: MoodType | MoodType[],
   priceRange: PriceRange
 ): Promise<Venue[]> {
   const budgets = ADJACENT_BUDGETS[priceRange]
+  const moodArray = Array.isArray(moods) ? moods : [moods]
 
   const { data, error } = await supabase
     .from('venues')
     .select('*')
-    .contains('compatible_moods', [mood])
+    .overlaps('compatible_moods', moodArray)   // match se ha ALMENO UNO dei mood
     .in('price_range', budgets)
     .eq('is_active', true)
     .order('boost_level', { ascending: false })

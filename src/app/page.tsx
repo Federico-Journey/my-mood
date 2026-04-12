@@ -20,7 +20,7 @@ type Screen = "splash" | "mood" | "company" | "budget" | "activities" | "neighbo
 
 export default function Home() {
   const [screen, setScreen] = useState<Screen>("splash");
-  const [mood, setMood] = useState<string | null>(null);
+  const [moods, setMoods] = useState<string[]>([]);
   const [company, setCompany] = useState<string | null>(null);
   const [budget, setBudget] = useState<string | null>(null);
   const [activities, setActivities] = useState<ActivityMode | null>(null);
@@ -51,8 +51,8 @@ export default function Home() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Accent color based on selected mood
-  const selectedMood = MOODS.find((m) => m.id === mood);
+  // Accent color basato sul primo mood selezionato
+  const selectedMood = MOODS.find((m) => m.id === moods[0]);
   const accentColor = selectedMood?.color || "#8B5CF6";
 
   // Splash → Mood auto-transition
@@ -65,12 +65,12 @@ export default function Home() {
 
   // Loading animation + fetch parallelo da Supabase
   useEffect(() => {
-    if (screen === "loading" && mood && company && budget) {
+    if (screen === "loading" && moods.length > 0 && company && budget) {
       setLoadingProgress(0);
       pendingPlanRef.current = null;
 
       // Fetch da Supabase in parallelo con l'animazione
-      generatePlan(mood, company, budget, activities ?? undefined, neighborhood ?? undefined).then((fetchedPlan) => {
+      generatePlan(moods, company, budget, activities ?? undefined, neighborhood ?? undefined).then((fetchedPlan) => {
         pendingPlanRef.current = fetchedPlan;
       });
 
@@ -85,7 +85,7 @@ export default function Home() {
           clearInterval(interval);
           setTimeout(() => {
             // Usa il piano da Supabase se disponibile, altrimenti fallback statico
-            const finalPlan = pendingPlanRef.current ?? getPlan(mood, company, budget);
+            const finalPlan = pendingPlanRef.current ?? getPlan(moods[0] ?? '', company, budget);
             setPlan(finalPlan);
             pendingPlanRef.current = null;
             setScreen("plan");
@@ -106,9 +106,9 @@ export default function Home() {
     }
   }, [screen, plan]);
 
-  // Handler: select mood
-  const handleMoodSelect = (moodId: string) => {
-    setMood(moodId);
+  // Handler: select moods (array)
+  const handleMoodSelect = (moodIds: string[]) => {
+    setMoods(moodIds);
     setScreen("company");
   };
 
@@ -142,13 +142,12 @@ export default function Home() {
       setShowLoginModal(true);
       return;
     }
-    if (!plan || !mood) return;
+    if (!plan || moods.length === 0) return;
 
-    const selectedMood = MOODS.find((m) => m.id === mood);
     const { error } = await supabase.from("user_plans").insert({
       user_id: user.id,
-      mood_id: mood,
-      accent_color: selectedMood?.color ?? "#8B5CF6",
+      mood_id: moods[0],
+      accent_color: accentColor,
       plan_data: plan,
       title: plan.title,
     });
@@ -166,7 +165,7 @@ export default function Home() {
 
   // Handler: ricomincia da capo
   const handleNewMood = () => {
-    setMood(null);
+    setMoods([]);
     setCompany(null);
     setBudget(null);
     setActivities(null);
@@ -222,7 +221,7 @@ export default function Home() {
       {screen === "plan" && plan && (
         <PlanView
           plan={plan}
-          mood={mood!}
+          mood={moods[0] ?? ''}
           accentColor={accentColor}
           visibleSteps={visibleSteps}
           user={user}
@@ -238,7 +237,7 @@ export default function Home() {
       {showShareCard && plan && (
         <ShareCard
           plan={plan}
-          mood={mood!}
+          mood={moods[0] ?? ''}
           accentColor={accentColor}
           onClose={() => setShowShareCard(false)}
         />

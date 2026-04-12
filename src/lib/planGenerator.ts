@@ -224,20 +224,28 @@ function venueToStep(venue: Venue, time: string, duration: string): PlanStep {
  * @param neighborhood - Quartiere preferito ("navigli", "brera", ecc. — "anywhere" = nessun filtro)
  */
 export async function generatePlan(
-  mood: string,
+  moods: string | string[],
   company: string,
   budget: string,
   activities?: string,
   neighborhood?: string
 ): Promise<Plan> {
-  const italianMood = MOOD_MAP[mood]
+  // Supporta sia singolo mood (retrocompatibilità) che array
+  const moodArray = Array.isArray(moods) ? moods : [moods]
+  const primaryMood = moodArray[0]  // usato per titoli e fallback statico
+
+  // Converti tutti i mood in italiano per la query al DB
+  const italianMoods = moodArray
+    .map(m => MOOD_MAP[m])
+    .filter(Boolean) as import('@/types/database').MoodType[]
+
   const slots = (activities && ACTIVITY_SLOTS[activities]) ? ACTIVITY_SLOTS[activities] : DEFAULT_SLOTS
   const allTypes = Object.keys(VENUE_TO_STEP_TYPE)
   const filterByZone = neighborhood && neighborhood !== 'anywhere'
 
-  if (italianMood) {
+  if (italianMoods.length > 0) {
     try {
-      const venues = await getVenuesByMoodAndBudget(italianMood, budget as PriceRange)
+      const venues = await getVenuesByMoodAndBudget(italianMoods, budget as PriceRange)
 
       if (venues.length >= 1) {
         // Se l'utente ha scelto un quartiere specifico, prova prima con quei venue
@@ -273,12 +281,12 @@ export async function generatePlan(
 
         // Piano valido se ha almeno 1 step
         if (steps.length >= 1) {
-          const titles = MOOD_TITLES[mood] ?? ['Serata Perfetta']
+          const titles = MOOD_TITLES[primaryMood] ?? ['Serata Perfetta']
           const title  = titles[Math.floor(Math.random() * titles.length)]
 
           return {
             title,
-            subtitle: MOOD_SUBTITLES[mood] ?? 'Un piano personalizzato per il tuo mood',
+            subtitle: MOOD_SUBTITLES[primaryMood] ?? 'Un piano personalizzato per il tuo mood',
             steps,
           }
         }
@@ -290,5 +298,5 @@ export async function generatePlan(
 
   // Fallback: piano statico da data.ts (sempre funziona)
   console.log('[MyMood] Fallback ai piani statici')
-  return getPlan(mood, company, budget)
+  return getPlan(primaryMood, company, budget)
 }
