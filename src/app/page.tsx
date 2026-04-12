@@ -94,7 +94,7 @@ export default function Home() {
       }, 280);
       return () => clearInterval(interval);
     }
-  }, [screen, mood, company, budget]);
+  }, [screen, moods, company, budget]);
 
   // Animate plan steps appearing one by one
   useEffect(() => {
