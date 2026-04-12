@@ -37,6 +37,41 @@ export default function Home() {
   // Ref per conservare il piano fetched mentre l'animazione di loading è in corso
   const pendingPlanRef = useRef<Plan | null>(null);
 
+  // ─── Ripristina stato piano da sessionStorage (es. ritorno da pagina venue) ──
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("mymood_plan_state");
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (saved.screen === "plan" && saved.plan) {
+        setMoods(saved.moods ?? []);
+        setCompany(saved.company ?? null);
+        setBudget(saved.budget ?? null);
+        setActivities(saved.activities ?? null);
+        setNeighborhood(saved.neighborhood ?? null);
+        setPlan(saved.plan);
+        // Mostra subito tutti gli step (l'animazione è già stata vista)
+        setVisibleSteps((saved.plan.steps ?? []).map((_: unknown, i: number) => i));
+        setScreen("plan");
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  // ─── Salva stato piano in sessionStorage (per sopravvivere alla navigazione) ─
+  useEffect(() => {
+    if (screen === "plan" && plan) {
+      sessionStorage.setItem("mymood_plan_state", JSON.stringify({
+        screen: "plan",
+        moods,
+        company,
+        budget,
+        activities,
+        neighborhood,
+        plan,
+      }));
+    }
+  }, [screen, plan, moods, company, budget, activities, neighborhood]);
+
   // ─── Auth: ascolta i cambiamenti di sessione ──────────────────────────────
   useEffect(() => {
     // Controlla la sessione corrente (es. dopo redirect da Google OAuth)
@@ -158,6 +193,7 @@ export default function Home() {
 
   // Handler: regenera piano (nuova selezione casuale di venue)
   const handleRegenerate = () => {
+    sessionStorage.removeItem("mymood_plan_state");
     setVisibleSteps([]);
     setPlan(null);
     setPlanSaved(false);
@@ -166,6 +202,7 @@ export default function Home() {
 
   // Handler: ricomincia da capo
   const handleNewMood = () => {
+    sessionStorage.removeItem("mymood_plan_state");
     setMoods([]);
     setCompany(null);
     setBudget(null);
