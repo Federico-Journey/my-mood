@@ -13,6 +13,7 @@ import ActivitySelector, { type ActivityMode } from "@/components/ActivitySelect
 import NeighborhoodSelector, { type NeighborhoodId } from "@/components/NeighborhoodSelector";
 import LoadingScreen from "@/components/LoadingScreen";
 import PlanView from "@/components/PlanView";
+import Footer from "@/components/Footer";
 import ShareCard from "@/components/ShareCard";
 import LoginModal from "@/components/LoginModal";
 
@@ -250,6 +251,7 @@ export default function Home() {
           onClose={() => setShowLoginModal(false)}
         />
       )}
+      <Footer />
     </main>
   );
 }
