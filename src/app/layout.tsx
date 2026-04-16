@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import PwaRegister from "@/components/PwaRegister";
+import UserButton from "@/components/UserButton";
 
 export const metadata: Metadata = {
   title: "my mood — Stop scrolling, start living",
@@ -45,6 +46,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <PwaRegister />
+        <UserButton />
         {children}
       </body>
     </html>

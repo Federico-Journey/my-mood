@@ -97,9 +97,37 @@ export default function LoginModal({ onClose, accentColor = "#8B5CF6" }: Props) 
             )}
           </button>
 
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-1">
+            <div className="flex-1 h-px bg-white/[0.06]" />
+            <span className="text-white/20 text-xs">oppure</span>
+            <div className="flex-1 h-px bg-white/[0.06]" />
+          </div>
+
+          {/* Link alla pagina auth completa */}
+          <a
+            href="/auth"
+            className="w-full py-3.5 rounded-2xl text-[15px] font-semibold text-center transition-all hover:scale-[1.02] active:scale-[0.98] block"
+            style={{
+              backgroundColor: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#F5F5F0",
+              textDecoration: "none",
+            }}
+          >
+            Accedi con email
+          </a>
+
           <p className="text-white/20 text-xs text-center leading-relaxed px-2">
-            Accedendo accetti i nostri Termini di Servizio.
-            Non condividiamo i tuoi dati con nessuno.
+            Accedendo accetti i nostri{" "}
+            <a href="/terms" className="underline underline-offset-2 text-white/30">
+              Termini di Servizio
+            </a>
+            {" "}e{" "}
+            <a href="/privacy" className="underline underline-offset-2 text-white/30">
+              Informativa Privacy
+            </a>
+            .
           </p>
 
           <button
