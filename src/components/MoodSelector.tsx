@@ -56,8 +56,8 @@ export default function MoodSelector({ onSelect }: Props) {
         )}
       </div>
 
-      {/* Mood grid */}
-      <div className="grid grid-cols-3 gap-2 w-full max-w-[420px]">
+      {/* Mood list */}
+      <div className="flex flex-col gap-2.5 w-full max-w-[420px]">
         {MOODS.map((mood: Mood, i: number) => {
           const isSelected = selected.includes(mood.id);
           const isDisabled = atMax && !isSelected;
@@ -67,15 +67,15 @@ export default function MoodSelector({ onSelect }: Props) {
               key={mood.id}
               onClick={() => toggle(mood.id)}
               disabled={isDisabled}
-              className="group relative rounded-xl p-3 text-left transition-all duration-200
-                         hover:scale-[1.04] active:scale-[0.97]"
+              className="group relative rounded-2xl px-4 py-3.5 text-left transition-all duration-200
+                         hover:scale-[1.015] active:scale-[0.98] flex items-center gap-4"
               style={{
                 background: isSelected
                   ? `linear-gradient(135deg, ${mood.color}22, ${mood.color}0a)`
                   : `linear-gradient(135deg, ${mood.color}0d, ${mood.color}04)`,
                 border: isSelected
                   ? `1.5px solid ${mood.color}60`
-                  : "1px solid rgba(255,255,255,0.06)",
+                  : "1px solid rgba(255,255,255,0.07)",
                 opacity: isDisabled ? 0.35 : 1,
                 animationDelay: `${i * 0.04}s`,
               }}
@@ -83,33 +83,43 @@ export default function MoodSelector({ onSelect }: Props) {
               {/* Glow se selezionato */}
               {isSelected && (
                 <div
-                  className="absolute inset-0 rounded-xl"
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
                   style={{
-                    background: `radial-gradient(circle at 50% 50%, ${mood.color}20, transparent 70%)`,
+                    background: `radial-gradient(ellipse at 20% 50%, ${mood.color}18, transparent 65%)`,
                   }}
                 />
               )}
 
-              {/* Checkmark */}
-              {isSelected && (
-                <div
-                  className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold z-20"
-                  style={{ background: mood.color, color: "#09090f" }}
-                >
-                  ✓
-                </div>
-              )}
+              {/* Emoji */}
+              <span className="text-3xl shrink-0 relative z-10">{mood.emoji}</span>
 
-              <span className="text-2xl mb-1 block relative z-10">{mood.emoji}</span>
-              <span
-                className="font-bold text-[11px] block relative z-10 leading-tight"
-                style={{ color: mood.color }}
+              {/* Testo */}
+              <div className="flex-1 min-w-0 relative z-10">
+                <span
+                  className="font-bold text-[15px] block leading-tight"
+                  style={{ color: mood.color }}
+                >
+                  {mood.label}
+                </span>
+                <span className="text-white/35 text-[12px] mt-0.5 block leading-snug">
+                  {mood.desc}
+                </span>
+              </div>
+
+              {/* Checkmark */}
+              <div
+                className="w-6 h-6 rounded-full shrink-0 flex items-center justify-center transition-all duration-200 relative z-10"
+                style={{
+                  background: isSelected ? mood.color : "rgba(255,255,255,0.06)",
+                  border: isSelected ? "none" : "1.5px solid rgba(255,255,255,0.15)",
+                }}
               >
-                {mood.label}
-              </span>
-              <span className="text-white/25 text-[9px] mt-0.5 block relative z-10 leading-snug line-clamp-2">
-                {mood.desc}
-              </span>
+                {isSelected && (
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M2 6l3 3 5-5" stroke="#09090f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </div>
             </button>
           );
         })}
