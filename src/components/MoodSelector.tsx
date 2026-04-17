@@ -126,7 +126,7 @@ export default function MoodSelector({ onSelect }: Props) {
       </div>
 
       {/* CTA fisso in basso */}
-      <div className="fixed bottom-0 left-0 right-0 px-5 pb-8 pt-4"
+      <div className="fixed bottom-0 left-0 right-0 px-5 pb-8 pt-4 z-50"
         style={{ background: "linear-gradient(to top, #09090f 70%, transparent)" }}
       >
         <button
