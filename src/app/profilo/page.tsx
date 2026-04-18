@@ -6,6 +6,7 @@ import { MOODS } from "@/lib/data";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { User } from "@supabase/supabase-js";
+import NavBar from "@/components/NavBar";
 
 interface Profile {
   name: string;
@@ -374,6 +375,7 @@ export default function ProfiloPage() {
           {saving ? "Salvataggio..." : saved ? "✓ Salvato" : "Salva profilo"}
         </button>
       </div>
+      <NavBar />
     </main>
   );
 }

@@ -14,6 +14,7 @@ import NeighborhoodSelector, { type NeighborhoodId } from "@/components/Neighbor
 import LoadingScreen from "@/components/LoadingScreen";
 import PlanView from "@/components/PlanView";
 import Footer from "@/components/Footer";
+import NavBar from "@/components/NavBar";
 import ShareCard from "@/components/ShareCard";
 import LoginModal from "@/components/LoginModal";
 
@@ -289,6 +290,8 @@ export default function Home() {
         />
       )}
       <Footer />
+      {/* NavBar visibile solo su mood e plan, non durante il wizard */}
+      {(screen === "mood" || screen === "plan") && <NavBar />}
     </main>
   );
 }

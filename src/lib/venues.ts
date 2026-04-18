@@ -73,6 +73,32 @@ export async function getVenueById(id: string): Promise<Venue | null> {
 }
 
 /**
+ * Prende tutti i locali attivi per un mood, con filtro opzionale per tipo.
+ * Usata nella sezione Esplora, senza vincoli di budget.
+ */
+export async function getVenuesByMood(
+  moodLabel: string,
+  type?: string
+): Promise<Venue[]> {
+  const base = supabase
+    .from('venues')
+    .select('*')
+    .overlaps('compatible_moods', [moodLabel])
+    .eq('is_active', true)
+    .order('boost_level', { ascending: false })
+
+  const { data, error } = type
+    ? await base.eq('type', type)
+    : await base
+
+  if (error) {
+    console.error('Errore nel caricare le venues per mood:', error)
+    return []
+  }
+  return data ?? []
+}
+
+/**
  * Cerca locali per nome o indirizzo (per la funzione di ricerca — Fase 2).
  */
 export async function searchVenues(query: string): Promise<Venue[]> {
