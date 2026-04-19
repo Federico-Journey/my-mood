@@ -34,7 +34,7 @@ export default function MoodSelector({ onSelect }: Props) {
   const accentColor = firstMood?.color ?? "#8B5CF6";
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 pt-10 pb-32">
+    <div className="min-h-screen flex flex-col items-center px-4 pt-10 pb-48">
       {/* Header */}
       <p className="text-white/40 text-[10px] tracking-[3px] uppercase font-semibold mb-2 animate-fade-in-up">
         step 1 di 5
@@ -125,9 +125,12 @@ export default function MoodSelector({ onSelect }: Props) {
         })}
       </div>
 
-      {/* CTA fisso in basso */}
-      <div className="fixed bottom-0 left-0 right-0 px-5 pb-8 pt-4 z-50"
-        style={{ background: "linear-gradient(to top, #09090f 70%, transparent)" }}
+      {/* CTA fisso in basso — pb-24 per stare sopra la NavBar (h-16 = 64px + safe area) */}
+      <div className="fixed bottom-0 left-0 right-0 px-5 pt-4 z-50"
+        style={{
+          background: "linear-gradient(to top, #09090f 70%, transparent)",
+          paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 5rem)",
+        }}
       >
         <button
           onClick={() => canContinue && onSelect(selected)}
