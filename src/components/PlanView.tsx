@@ -11,10 +11,12 @@ type Props = {
   visibleSteps: number[];
   user: User | null;
   planSaved: boolean;
+  planPublished?: boolean;
   onRegenerate: () => void;
   onNewMood: () => void;
   onShare: () => void;
   onSave: () => void;
+  onPublish?: () => void;
 };
 
 export default function PlanView({
@@ -24,10 +26,12 @@ export default function PlanView({
   visibleSteps,
   user,
   planSaved,
+  planPublished = false,
   onRegenerate,
   onNewMood,
   onShare,
   onSave,
+  onPublish,
 }: Props) {
   const selectedMood = MOODS.find((m) => m.id === mood);
 
@@ -155,6 +159,29 @@ export default function PlanView({
               : <>{"\u{1F510}"} Salva piano &mdash; accedi</>
           }
         </button>
+
+        {/* Publish button — visibile solo se loggato e piano salvato */}
+        {user && onPublish && (
+          <button
+            onClick={onPublish}
+            disabled={planPublished}
+            className="w-full py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 transition-all"
+            style={planPublished ? {
+              background: "rgba(139,92,246,0.1)",
+              border: "1px solid rgba(139,92,246,0.3)",
+              color: "#8B5CF6",
+            } : {
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              color: "rgba(255,255,255,0.5)",
+            }}
+          >
+            {planPublished
+              ? <>{"\u{1F30D}"} Pubblicato nel feed!</>
+              : <>{"\u{1F465}"} Pubblica nel feed social</>
+            }
+          </button>
+        )}
 
         {/* Regenerate */}
         <button

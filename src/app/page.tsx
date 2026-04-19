@@ -34,6 +34,9 @@ export default function Home() {
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [planSaved, setPlanSaved] = useState(false);
+  const [planPublished, setPlanPublished] = useState(false);
+  // Tiene l'id del piano salvato per poterlo pubblicare in seguito
+  const savedPlanIdRef = useRef<string | null>(null);
 
   // Ref per conservare il piano fetched mentre l'animazione di loading è in corso
   const pendingPlanRef = useRef<Plan | null>(null);
@@ -181,15 +184,52 @@ export default function Home() {
     }
     if (!plan || moods.length === 0) return;
 
-    const { error } = await supabase.from("user_plans").insert({
+    const { data, error } = await supabase.from("user_plans").insert({
       user_id: user.id,
       mood_id: moods[0],
       accent_color: accentColor,
       plan_data: plan,
       title: plan.title,
-    });
+      is_public: false,
+    }).select("id").single();
 
-    if (!error) setPlanSaved(true);
+    if (!error && data) {
+      setPlanSaved(true);
+      savedPlanIdRef.current = data.id;
+    }
+  };
+
+  // Handler: pubblica il piano nel feed community
+  const handlePublishPlan = async () => {
+    if (!user) {
+      setShowLoginModal(true);
+      return;
+    }
+    if (!plan || moods.length === 0) return;
+
+    // Se il piano non è ancora salvato, salvalo e pubblicalo insieme
+    if (!savedPlanIdRef.current) {
+      const { data, error } = await supabase.from("user_plans").insert({
+        user_id: user.id,
+        mood_id: moods[0],
+        accent_color: accentColor,
+        plan_data: plan,
+        title: plan.title,
+        is_public: true,
+      }).select("id").single();
+      if (!error && data) {
+        savedPlanIdRef.current = data.id;
+        setPlanSaved(true);
+        setPlanPublished(true);
+      }
+    } else {
+      // Piano già salvato: aggiorna is_public
+      const { error } = await supabase
+        .from("user_plans")
+        .update({ is_public: true })
+        .eq("id", savedPlanIdRef.current);
+      if (!error) setPlanPublished(true);
+    }
   };
 
   // Handler: regenera piano (nuova selezione casuale di venue)
@@ -211,6 +251,8 @@ export default function Home() {
     setNeighborhood(null);
     setPlan(null);
     setPlanSaved(false);
+    setPlanPublished(false);
+    savedPlanIdRef.current = null;
     setVisibleSteps([]);
     setScreen("mood");
   };
@@ -265,10 +307,12 @@ export default function Home() {
           visibleSteps={visibleSteps}
           user={user}
           planSaved={planSaved}
+          planPublished={planPublished}
           onRegenerate={handleRegenerate}
           onNewMood={handleNewMood}
           onShare={() => setShowShareCard(true)}
           onSave={handleSavePlan}
+          onPublish={handlePublishPlan}
         />
       )}
 
