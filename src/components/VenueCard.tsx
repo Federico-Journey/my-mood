@@ -53,12 +53,15 @@ export default function VenueCard({
   const typeEmoji =
     venue.emoji || VENUE_TYPE_EMOJI[venue.type] || "📍";
 
-  // Sorgente foto: usa la URL già salvata nel DB, oppure la nostra API proxy
+  // Sorgente foto:
+  // 1. photo_url già salvata nel DB (zero latenza)
+  // 2. google_place_id → API proxy con place_id diretto
+  // 3. fallback: Text Search per nome (funziona anche senza place_id nel DB)
   const photoSrc = venue.photo_url
     ? venue.photo_url
     : venue.google_place_id
-    ? `/api/place-photo?place_id=${venue.google_place_id}`
-    : null;
+    ? `/api/place-photo?place_id=${encodeURIComponent(venue.google_place_id)}`
+    : `/api/place-photo?name=${encodeURIComponent(venue.name)}`;
 
   if (variant === "card") {
     return <VenueCardLarge venue={venue} photoSrc={photoSrc} typeEmoji={typeEmoji} accentColor={accentColor} />;
