@@ -6,6 +6,7 @@ import { getVenuesByMood } from "@/lib/venues";
 import type { Venue } from "@/types/database";
 import NavBar from "@/components/NavBar";
 import Link from "next/link";
+import VenueCard from "@/components/VenueCard";
 
 const VENUE_TYPES: { id: string; label: string; emoji: string }[] = [
   { id: "",            label: "Tutti",       emoji: "✨" },
@@ -143,48 +144,11 @@ export default function EsploraPage() {
           </div>
         ) : (
           venues.map((venue) => (
-            <Link
+            <VenueCard
               key={venue.id}
-              href={`/venue/${venue.id}`}
-              className="flex items-center gap-3.5 rounded-2xl px-4 py-3.5 transition-all duration-200 hover:scale-[1.015] active:scale-[0.98]"
-              style={{
-                background: `linear-gradient(135deg, ${activeMood.color}0d, rgba(255,255,255,0.03))`,
-                border: "1px solid rgba(255,255,255,0.07)",
-              }}
-            >
-              {/* Emoji / tipo icona */}
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0"
-                style={{
-                  background: `${activeMood.color}14`,
-                  border: `1px solid ${activeMood.color}25`,
-                }}
-              >
-                {venue.emoji || VENUE_TYPES.find((t) => t.id === venue.type)?.emoji || "📍"}
-              </div>
-
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-bold text-[15px] truncate">{venue.name}</p>
-                <p className="text-white/35 text-xs mt-0.5 truncate">{venue.address}</p>
-              </div>
-
-              {/* Badge tipo + prezzo */}
-              <div className="flex flex-col items-end gap-1 shrink-0">
-                <span
-                  className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                  style={{
-                    background: `${activeMood.color}18`,
-                    color: activeMood.color,
-                  }}
-                >
-                  {VENUE_TYPES.find((t) => t.id === venue.type)?.label ?? venue.type}
-                </span>
-                <span className="text-white/40 text-xs font-semibold">
-                  {PRICE_LABELS[venue.price_range] ?? venue.price_range}
-                </span>
-              </div>
-            </Link>
+              venue={venue}
+              accentColor={activeMood.color}
+            />
           ))
         )}
       </div>
