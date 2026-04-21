@@ -95,22 +95,45 @@ export default function AuthPage() {
         flexDirection: "column",
       }}
     >
-      {/* Header */}
+      {/* Header con glow */}
       <div
         style={{
           padding: "20px 24px",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
+        {/* Glow sottile */}
+        <div
+          style={{
+            position: "absolute",
+            top: -40,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "200px",
+            height: "120px",
+            background: "radial-gradient(ellipse at top, rgba(139,92,246,0.12) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
         <Link
           href="/"
           style={{
-            color: "rgba(255,255,255,0.4)",
+            color: "rgba(255,255,255,0.35)",
             textDecoration: "none",
             fontSize: "14px",
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            position: "relative",
           }}
         >
-          ← my mood
+          <span style={{ fontSize: "13px" }}>🌙</span>
+          <span style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700, color: "rgba(255,255,255,0.2)" }}>my mood</span>
         </Link>
       </div>
 

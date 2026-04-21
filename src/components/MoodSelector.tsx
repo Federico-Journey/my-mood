@@ -3,6 +3,17 @@
 import { useState } from "react";
 import { MOODS, type Mood } from "@/lib/data";
 
+// Stelle fisse per l'header cosmico (no Math.random → safe per SSR)
+const HEADER_STARS = [
+  { x: 6,  y: 16, s: 1,   o: 0.45, d: 3.4, dl: 0   },
+  { x: 22, y:  8, s: 1.5, o: 0.55, d: 4.2, dl: 0.7 },
+  { x: 45, y: 12, s: 1,   o: 0.35, d: 2.9, dl: 1.3 },
+  { x: 68, y:  6, s: 2,   o: 0.3,  d: 5.1, dl: 0.4 },
+  { x: 82, y: 20, s: 1,   o: 0.5,  d: 3.7, dl: 1.9 },
+  { x: 93, y: 10, s: 1.5, o: 0.4,  d: 4.5, dl: 0.9 },
+  { x: 35, y: 22, s: 1,   o: 0.3,  d: 3.1, dl: 2.1 },
+];
+
 const MAX_MOODS = 3;
 
 type Props = {
@@ -34,20 +45,72 @@ export default function MoodSelector({ onSelect }: Props) {
   const accentColor = firstMood?.color ?? "#8B5CF6";
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 pt-10 pb-48">
-      {/* Header */}
-      <p className="text-white/40 text-[10px] tracking-[3px] uppercase font-semibold mb-2 animate-fade-in-up">
-        step 1 di 5
-      </p>
-      <h2 className="text-3xl font-extrabold text-white tracking-tight mb-1 animate-fade-in-up-delay-1">
-        Com&apos;è il tuo mood?
-      </h2>
-      <p className="text-white/40 text-sm mb-2 animate-fade-in-up-delay-2">
-        Scegli fino a {MAX_MOODS} mood che senti stasera
-      </p>
+    <div className="min-h-screen flex flex-col items-center px-4 pb-48">
+      {/* ── Header cosmico ──────────────────────────────────────── */}
+      <div className="w-full relative overflow-hidden pt-12 pb-4 flex flex-col items-center">
+        {/* Glow della luna */}
+        <div
+          style={{
+            position: "absolute",
+            top: -50,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "320px",
+            height: "220px",
+            background: `radial-gradient(ellipse at top, ${accentColor}1e 0%, ${accentColor}08 40%, transparent 70%)`,
+            pointerEvents: "none",
+            transition: "background 0.5s",
+          }}
+        />
+        {/* Stelle */}
+        {HEADER_STARS.map((star, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: `${star.x}%`,
+              top: `${star.y}px`,
+              width: `${star.s}px`,
+              height: `${star.s}px`,
+              borderRadius: "50%",
+              background: "white",
+              opacity: star.o,
+              animation: `twinkle ${star.d}s ease-in-out ${star.dl}s infinite alternate`,
+              pointerEvents: "none",
+            }}
+          />
+        ))}
+
+        {/* Wordmark */}
+        <div className="flex items-center gap-1.5 mb-4 animate-fade-in-up" style={{ position: "relative" }}>
+          <span style={{ fontSize: "14px" }}>🌙</span>
+          <span
+            style={{
+              fontSize: "10px",
+              fontWeight: 700,
+              letterSpacing: "3px",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.22)",
+            }}
+          >
+            my mood
+          </span>
+        </div>
+
+        {/* Step indicator */}
+        <p className="text-white/35 text-[10px] tracking-[2px] uppercase font-semibold mb-2 animate-fade-in-up" style={{ position: "relative" }}>
+          step 1 di 5
+        </p>
+        <h2 className="text-3xl font-extrabold text-white tracking-tight mb-1 animate-fade-in-up-delay-1 text-center" style={{ position: "relative" }}>
+          Com&apos;è il tuo mood?
+        </h2>
+        <p className="text-white/40 text-sm mb-2 animate-fade-in-up-delay-2 text-center" style={{ position: "relative" }}>
+          Scegli fino a {MAX_MOODS} mood che senti stasera
+        </p>
+      </div>
 
       {/* Contatore selezione */}
-      <div className="mb-6 h-5 animate-fade-in-up-delay-2">
+      <div className="mb-4 h-5 animate-fade-in-up-delay-2">
         {selected.length > 0 && (
           <p className="text-xs font-semibold" style={{ color: accentColor }}>
             {selected.length}/{MAX_MOODS} selezionati

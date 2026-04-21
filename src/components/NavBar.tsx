@@ -86,12 +86,14 @@ export default function NavBar() {
     <nav
       className="fixed bottom-0 left-0 right-0 z-50"
       style={{
-        background: "linear-gradient(to top, #09090f 85%, rgba(9,9,15,0.95))",
+        background: "rgba(7,7,14,0.82)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
         borderTop: "1px solid rgba(255,255,255,0.07)",
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
     >
-      <div className="flex items-center justify-around max-w-[480px] mx-auto h-16">
+      <div className="flex items-center justify-around max-w-[480px] mx-auto h-[66px]">
         {TABS.map((tab) => {
           const active = pathname === tab.href;
           return (
@@ -99,9 +101,35 @@ export default function NavBar() {
               key={tab.href}
               href={tab.href}
               className="flex flex-col items-center gap-1 flex-1 py-2 transition-all duration-200 relative"
-              style={{ color: active ? "#8B5CF6" : "rgba(255,255,255,0.35)" }}
+              style={{ color: active ? "#8B5CF6" : "rgba(255,255,255,0.32)" }}
             >
-              <div className="relative">
+              {/* Indicatore luminoso in cima alla tab attiva */}
+              {active && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "24px",
+                    height: "2px",
+                    borderRadius: "2px",
+                    background: "#8B5CF6",
+                    boxShadow: "0 0 8px rgba(139,92,246,0.9), 0 0 20px rgba(139,92,246,0.4)",
+                  }}
+                />
+              )}
+
+              {/* Icona con glow se attiva */}
+              <div
+                className="relative"
+                style={{
+                  filter: active
+                    ? "drop-shadow(0 0 5px rgba(139,92,246,0.55))"
+                    : "none",
+                  transition: "filter 0.25s",
+                }}
+              >
                 {tab.icon(active)}
                 {tab.isSocial && unread > 0 && (
                   <span
@@ -112,9 +140,13 @@ export default function NavBar() {
                   </span>
                 )}
               </div>
+
               <span
                 className="text-[9px] font-semibold tracking-wide"
-                style={{ color: active ? "#8B5CF6" : "rgba(255,255,255,0.3)" }}
+                style={{
+                  color: active ? "#8B5CF6" : "rgba(255,255,255,0.28)",
+                  transition: "color 0.2s",
+                }}
               >
                 {tab.label}
               </span>

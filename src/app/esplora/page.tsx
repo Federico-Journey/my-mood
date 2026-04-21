@@ -7,6 +7,7 @@ import type { Venue } from "@/types/database";
 import NavBar from "@/components/NavBar";
 import Link from "next/link";
 import VenueCard from "@/components/VenueCard";
+import MoonHeader from "@/components/MoonHeader";
 
 const VENUE_TYPES: { id: string; label: string; emoji: string }[] = [
   { id: "",            label: "Tutti",       emoji: "✨" },
@@ -53,17 +54,11 @@ export default function EsploraPage() {
       style={{ background: "#09090f", color: "#F5F5F0" }}
     >
       {/* Header */}
-      <div className="pt-12 px-5 pb-4">
-        <p className="text-white/40 text-[10px] tracking-[3px] uppercase font-semibold mb-1">
-          Milano
-        </p>
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">
-          Esplora
-        </h1>
-        <p className="text-white/40 text-sm mt-1">
-          Trova i posti giusti per il tuo mood
-        </p>
-      </div>
+      <MoonHeader
+        title="Esplora"
+        subtitle="Trova i posti giusti per il tuo mood"
+        accentColor={activeMood.color}
+      />
 
       {/* Mood selector — scroll orizzontale */}
       <div className="overflow-x-auto scrollbar-hide px-5 pb-1">

@@ -12,6 +12,7 @@ import { MOODS } from "@/lib/data";
 import type { User } from "@supabase/supabase-js";
 import NavBar from "@/components/NavBar";
 import Link from "next/link";
+import MoonHeader from "@/components/MoonHeader";
 
 export default function CommunityPage() {
   const [plans, setPlans] = useState<PublicPlan[]>([]);
@@ -58,30 +59,32 @@ export default function CommunityPage() {
   return (
     <main style={pageStyle}>
       {/* Header */}
-      <div style={{ padding: "20px 20px 0", maxWidth: "480px", margin: "0 auto" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
-          <h1 style={{ fontSize: "22px", fontWeight: 800, color: "#F5F5F0", letterSpacing: "-0.5px" }}>
-            🌍 Social
-          </h1>
-          {user && (
-            <Link
-              href="/messaggi"
-              style={{
-                fontSize: "13px",
-                color: "rgba(255,255,255,0.45)",
-                textDecoration: "none",
-                padding: "6px 12px",
-                borderRadius: "20px",
-                border: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              💬 Messaggi
-            </Link>
-          )}
-        </div>
-        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginBottom: "20px" }}>
-          Piani pubblicati dalla community di Milano
-        </p>
+      <div style={{ maxWidth: "480px", margin: "0 auto" }}>
+        <MoonHeader
+          title="Social"
+          subtitle="Piani pubblicati dalla community di Milano"
+          right={
+            user ? (
+              <Link
+                href="/messaggi"
+                style={{
+                  fontSize: "13px",
+                  color: "rgba(255,255,255,0.5)",
+                  textDecoration: "none",
+                  padding: "7px 14px",
+                  borderRadius: "20px",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "rgba(255,255,255,0.04)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                }}
+              >
+                💬 <span style={{ fontSize: "12px" }}>Messaggi</span>
+              </Link>
+            ) : null
+          }
+        />
       </div>
 
       {/* Feed */}
