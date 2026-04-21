@@ -3,10 +3,11 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Informativa sulla Privacy — my mood',
-  description: 'Come my mood raccoglie, utilizza e protegge i tuoi dati personali.',
+  description: 'Come my mood raccoglie, utilizza e protegge i tuoi dati personali. GDPR-compliant.',
 };
 
-const LAST_UPDATED = '12 aprile 2025';
+const LAST_UPDATED = 'Aprile 2026';
+const VERSION = '2.0';
 const CONTROLLER_EMAIL = 'privacy@mymood.app';
 
 export default function PrivacyPage() {
@@ -31,30 +32,16 @@ export default function PrivacyPage() {
       >
         <Link
           href="/"
-          style={{
-            color: 'rgba(255,255,255,0.4)',
-            textDecoration: 'none',
-            fontSize: '14px',
-          }}
+          style={{ color: 'rgba(255,255,255,0.4)', textDecoration: 'none', fontSize: '14px' }}
         >
           ← my mood
         </Link>
-        <span style={{ color: 'rgba(255,255,255,0.15)', fontSize: '14px' }}>
-          /
-        </span>
-        <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
-          Privacy
-        </span>
+        <span style={{ color: 'rgba(255,255,255,0.15)', fontSize: '14px' }}>/</span>
+        <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>Privacy</span>
       </div>
 
       {/* Content */}
-      <div
-        style={{
-          maxWidth: '680px',
-          margin: '0 auto',
-          padding: '48px 24px 80px',
-        }}
-      >
+      <div style={{ maxWidth: '680px', margin: '0 auto', padding: '48px 24px 80px' }}>
         <h1
           style={{
             fontSize: 'clamp(28px, 6vw, 40px)',
@@ -65,16 +52,20 @@ export default function PrivacyPage() {
         >
           Informativa sulla Privacy
         </h1>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '14px', marginBottom: '48px' }}>
-          Ultimo aggiornamento: {LAST_UPDATED}
+        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '14px', marginBottom: '8px' }}>
+          Versione {VERSION} — Ultimo aggiornamento: {LAST_UPDATED}
+        </p>
+        <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '13px', marginBottom: '48px' }}>
+          Ai sensi degli artt. 13–14 del Regolamento (UE) 2016/679 (GDPR)
         </p>
 
-        <Section title="1. Chi siamo">
+        {/* ── 1. TITOLARE ── */}
+        <Section title="1. Chi siamo — Il Titolare del Trattamento">
           <P>
             <strong>my mood</strong> è un servizio digitale che ti aiuta a pianificare serate a
-            Milano in base al tuo mood. Il titolare del trattamento dei dati personali è{' '}
-            <strong>my mood</strong> (di seguito &quot;noi&quot;, &quot;il Titolare&quot;). Per
-            qualsiasi richiesta relativa ai tuoi dati puoi scrivere a{' '}
+            Milano in base al tuo mood e a incontrare nuove persone con interessi simili. Il
+            titolare del trattamento dei tuoi dati personali è <strong>my mood</strong>. Per
+            qualsiasi richiesta relativa alla privacy scrivici a{' '}
             <a href={`mailto:${CONTROLLER_EMAIL}`} style={{ color: '#F5C842' }}>
               {CONTROLLER_EMAIL}
             </a>
@@ -82,139 +73,273 @@ export default function PrivacyPage() {
           </P>
         </Section>
 
-        <Section title="2. Dati che raccogliamo">
+        {/* ── 2. DATI RACCOLTI ── */}
+        <Section title="2. Dati che Raccogliamo — Per Funzionalità">
           <P>
-            <strong>Oggi (versione attuale):</strong> my mood non richiede registrazione. Non
-            raccogliamo dati anagrafici, email o informazioni personali identificabili. Le
-            preferenze di mood, budget e attività che selezioni restano esclusivamente sul tuo
-            dispositivo e non vengono trasmesse a server.
+            Raccogliamo solo i dati strettamente necessari a offrirti il servizio. Ecco cosa
+            raccogliamo per ciascuna funzionalità:
+          </P>
+
+          <FeatureTable
+            rows={[
+              {
+                feature: 'Registrazione e account',
+                data: 'Email, nickname, password (hashed), data di nascita',
+                basis: 'Esecuzione del contratto (art. 6.1.b)',
+                retention: '5 anni dopo la cancellazione',
+              },
+              {
+                feature: 'Piani serata e filtro quartiere',
+                data: 'Mood, compagnia, budget, quartiere selezionato',
+                basis: 'Esecuzione del contratto (art. 6.1.b) + legittimo interesse (art. 6.1.f)',
+                retention: '24 mesi (aggregati: illimitato)',
+              },
+              {
+                feature: 'Voto di Gruppo',
+                data: 'ID Piano, voto espresso (anonimo), timestamp',
+                basis: 'Esecuzione del contratto (art. 6.1.b)',
+                retention: '30 giorni dalla scadenza del link',
+              },
+              {
+                feature: 'Matching Sociale (Premium)',
+                data: 'Mood, interessi, fascia d\'età preferita, disponibilità, foto profilo (opzionale)',
+                basis: 'Esecuzione del contratto (art. 6.1.b) + consenso (art. 6.1.a)',
+                retention: '12 mesi dall\'ultimo utilizzo',
+              },
+              {
+                feature: 'Feedback Post-Serata',
+                data: 'Rating (1–5), commento testuale (opzionale), Piano associato',
+                basis: 'Legittimo interesse (art. 6.1.f) + consenso per condivisione con Partner (art. 6.1.a)',
+                retention: '36 mesi',
+              },
+              {
+                feature: 'Notifiche push (PWA)',
+                data: 'Token dispositivo, preferenze di notifica',
+                basis: 'Consenso esplicito (art. 6.1.a)',
+                retention: 'Fino alla revoca del consenso',
+              },
+              {
+                feature: 'Log tecnici e sicurezza',
+                data: 'Indirizzo IP, browser, pagine visitate, timestamp',
+                basis: 'Legittimo interesse (art. 6.1.f)',
+                retention: '90 giorni',
+              },
+              {
+                feature: 'Piano Premium — pagamenti',
+                data: 'Dati fatturazione (tokenizzati dal provider di pagamento)',
+                basis: 'Esecuzione del contratto + obbligo legale (art. 6.1.b/c)',
+                retention: '10 anni (normativa fiscale)',
+              },
+              {
+                feature: 'Newsletter e marketing',
+                data: 'Email, preferenze di comunicazione',
+                basis: 'Consenso esplicito (art. 6.1.a)',
+                retention: 'Fino alla revoca del consenso',
+              },
+            ]}
+          />
+        </Section>
+
+        {/* ── 3. COOKIE ── */}
+        <Section title="3. Cookie e Tecnologie di Tracciamento">
+          <P>
+            <strong>Cookie tecnici essenziali</strong> — Necessari al funzionamento della
+            Piattaforma (sessione di login, preferenze UI). Non richiedono consenso ai sensi
+            dell'art. 122 del D.Lgs. 196/2003.
           </P>
           <P>
-            <strong>In futuro (funzionalità in arrivo):</strong> con l&apos;introduzione dei
-            profili utente e delle funzioni sociali potremo raccogliere:
+            <strong>Cookie analitici</strong> — Se attivi, utilizziamo strumenti privacy-first
+            (nessun tracciamento cross-site, nessun fingerprinting) per raccogliere statistiche
+            aggregate. Richiediamo il tuo consenso tramite banner dedicato.
+          </P>
+          <P>
+            <strong>Cookie di marketing</strong> — my mood non utilizza cookie pubblicitari di
+            terze parti. In caso di futura introduzione, il banner cookie verrà aggiornato e il
+            consenso preventivo richiesto.
+          </P>
+          <P>
+            Puoi gestire le preferenze cookie in qualsiasi momento tramite le impostazioni del
+            browser o il pannello cookie presente nella Piattaforma.
+          </P>
+        </Section>
+
+        {/* ── 4. DESTINATARI ── */}
+        <Section title="4. Chi Riceve i Tuoi Dati">
+          <P>
+            I tuoi dati non vengono venduti a terzi. Possono essere comunicati a:
           </P>
           <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: 'rgba(255,255,255,0.7)' }}>
-            <li>Indirizzo email e nome scelto dall&apos;utente per la creazione del profilo</li>
-            <li>Preferenze di mood e attività salvate volontariamente</li>
-            <li>Piani serata generati e condivisi con altri utenti</li>
             <li>
-              Dati di utilizzo anonimi (pagine visitate, interazioni) tramite strumenti di
-              analisi aggregati
+              <strong>Supabase</strong> (database e autenticazione) — responsabile del trattamento
+              ai sensi dell'art. 28 GDPR, con trasferimento extra-UE coperto da Clausole
+              Contrattuali Standard (SCC).
+            </li>
+            <li>
+              <strong>Vercel</strong> (hosting e CDN) — responsabile del trattamento, con
+              trasferimento extra-UE coperto da SCC e EU-US Data Privacy Framework.
+            </li>
+            <li>
+              <strong>Stripe</strong> (pagamenti) — per la gestione degli abbonamenti Premium.
+              Stripe non riceve i dati completi della carta, bensì token sicuri (PCI-DSS Level 1).
+            </li>
+            <li>
+              <strong>Partner della Piattaforma</strong> — ricevono esclusivamente feedback
+              anonimi/aggregati, o il tuo nome solo se hai autorizzato esplicitamente una
+              prenotazione.
+            </li>
+            <li>
+              <strong>Autorità giudiziarie o amministrative</strong> — quando richiesto dalla
+              legge vigente.
             </li>
           </ul>
-          <P>
-            Questa informativa verrà aggiornata prima dell&apos;introduzione di ciascuna nuova
-            funzionalità.
-          </P>
         </Section>
 
-        <Section title="3. Perché trattiamo i tuoi dati (finalità e base giuridica)">
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-            <thead>
-              <tr>
-                <Th>Finalità</Th>
-                <Th>Base giuridica (GDPR)</Th>
-              </tr>
-            </thead>
-            <tbody>
-              <Tr>
-                <Td>Fornire il servizio di pianificazione serata</Td>
-                <Td>Esecuzione del contratto (art. 6.1.b)</Td>
-              </Tr>
-              <Tr>
-                <Td>Gestione del profilo utente (future)</Td>
-                <Td>Esecuzione del contratto (art. 6.1.b)</Td>
-              </Tr>
-              <Tr>
-                <Td>Analisi anonima dell&apos;utilizzo per migliorare il servizio</Td>
-                <Td>Legittimo interesse (art. 6.1.f)</Td>
-              </Tr>
-              <Tr>
-                <Td>Comunicazioni di marketing (future, opt-in)</Td>
-                <Td>Consenso (art. 6.1.a)</Td>
-              </Tr>
-              <Tr>
-                <Td>Adempimento obblighi legali</Td>
-                <Td>Obbligo legale (art. 6.1.c)</Td>
-              </Tr>
-            </tbody>
-          </table>
-        </Section>
-
-        <Section title="4. Cookie e tecnologie di tracciamento">
+        {/* ── 5. TRASFERIMENTI EXTRA-UE ── */}
+        <Section title="5. Trasferimenti Internazionali dei Dati">
           <P>
-            Il sito utilizza esclusivamente cookie tecnici essenziali al funzionamento del
-            servizio (es. session storage per mantenere le tue selezioni durante la navigazione).
-            Non utilizziamo cookie di profilazione o di terze parti a scopo pubblicitario.
-          </P>
-          <P>
-            Prima di introdurre eventuali cookie analitici, ti chiederemo il consenso esplicito
-            tramite banner dedicato.
-          </P>
-        </Section>
-
-        <Section title="5. Conservazione dei dati">
-          <P>
-            I dati tecnici minimi necessari al funzionamento del servizio sono conservati per il
-            tempo strettamente necessario. Qualora in futuro raccogliessimo dati di profilo,
-            saranno conservati per tutta la durata del rapporto contrattuale e per un massimo di
-            24 mesi dopo la cancellazione dell&apos;account, salvo obblighi legali di
-            conservazione più lunghi.
-          </P>
-        </Section>
-
-        <Section title="6. Condivisione dei dati con terze parti">
-          <P>
-            Non vendiamo, affittiamo o cediamo i tuoi dati personali a terze parti per scopi di
-            marketing. I dati possono essere trattati da fornitori tecnici selezionati
-            (sub-responsabili), tra cui:
+            Alcuni dei nostri fornitori tecnici (Vercel, Supabase/AWS) elaborano i dati in paesi
+            al di fuori dello Spazio Economico Europeo (SEE). Garantiamo che tali trasferimenti
+            avvengano con adeguate garanzie:
           </P>
           <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: 'rgba(255,255,255,0.7)' }}>
-            <li>
-              <strong>Supabase</strong> (database e autenticazione) — sede in USA, trasferimento
-              dati coperto da Standard Contractual Clauses
-            </li>
-            <li>
-              <strong>Vercel</strong> (hosting e CDN) — sede in USA, trasferimento dati coperto
-              da Standard Contractual Clauses
-            </li>
-          </ul>
-        </Section>
-
-        <Section title="7. I tuoi diritti (GDPR, artt. 15–22)">
-          <P>In qualità di interessato hai il diritto di:</P>
-          <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: 'rgba(255,255,255,0.7)' }}>
-            <li>
-              <strong>Accesso</strong> — sapere quali dati conserviamo su di te
-            </li>
-            <li>
-              <strong>Rettifica</strong> — correggere dati inesatti o incompleti
-            </li>
-            <li>
-              <strong>Cancellazione</strong> (&quot;diritto all&apos;oblio&quot;) — eliminare i
-              tuoi dati
-            </li>
-            <li>
-              <strong>Portabilità</strong> — ricevere i tuoi dati in formato strutturato
-            </li>
-            <li>
-              <strong>Opposizione</strong> — opporti al trattamento basato su legittimo interesse
-            </li>
-            <li>
-              <strong>Limitazione</strong> — richiedere la limitazione del trattamento
-            </li>
-            <li>
-              <strong>Revoca del consenso</strong> — in qualsiasi momento, senza pregiudizio per
-              la liceità del trattamento precedente
-            </li>
+            <li>Clausole Contrattuali Standard (SCC) — Decisione UE 2021/914.</li>
+            <li>Meccanismi di adeguatezza riconosciuti dalla Commissione Europea (es. EU-US Data Privacy Framework).</li>
           </ul>
           <P>
-            Per esercitare i tuoi diritti scrivi a{' '}
+            L'elenco aggiornato dei sub-responsabili del trattamento è disponibile su richiesta
+            a{' '}
             <a href={`mailto:${CONTROLLER_EMAIL}`} style={{ color: '#F5C842' }}>
               {CONTROLLER_EMAIL}
             </a>
-            . Hai inoltre il diritto di proporre reclamo al Garante per la Protezione dei Dati
-            Personali (
+            .
+          </P>
+        </Section>
+
+        {/* ── 6. DIRITTI ── */}
+        <Section title="6. I Tuoi Diritti (GDPR, artt. 15–22)">
+          <P>In qualità di interessato hai il diritto di:</P>
+          <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: 'rgba(255,255,255,0.7)' }}>
+            <li>
+              <strong>Accesso (art. 15)</strong> — Sapere quali dati conserviamo su di te e
+              ottenerne una copia.
+            </li>
+            <li>
+              <strong>Rettifica (art. 16)</strong> — Correggere dati inesatti o incompleti.
+            </li>
+            <li>
+              <strong>Cancellazione (art. 17)</strong> — Eliminare i tuoi dati («diritto
+              all'oblio»), salvo obblighi di legge.
+            </li>
+            <li>
+              <strong>Portabilità (art. 20)</strong> — Ricevere i tuoi dati in formato
+              strutturato e leggibile da macchina.
+            </li>
+            <li>
+              <strong>Opposizione (art. 21)</strong> — Opporti al trattamento basato su legittimo
+              interesse o per marketing diretto.
+            </li>
+            <li>
+              <strong>Limitazione (art. 18)</strong> — Richiedere la limitazione del trattamento
+              in determinate circostanze.
+            </li>
+            <li>
+              <strong>Revoca del consenso</strong> — In qualsiasi momento, senza pregiudizio per
+              la liceità del trattamento precedente.
+            </li>
+          </ul>
+          <P>
+            Invia la tua richiesta a{' '}
+            <a href={`mailto:${CONTROLLER_EMAIL}`} style={{ color: '#F5C842' }}>
+              {CONTROLLER_EMAIL}
+            </a>
+            . Risponderemo entro <strong>30 giorni</strong> (proroga di 60 giorni in caso di
+            complessità). Hai inoltre il diritto di proporre reclamo al{' '}
+            <a
+              href="https://www.garanteprivacy.it"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#F5C842' }}
+            >
+              Garante per la Protezione dei Dati Personali
+            </a>
+            .
+          </P>
+        </Section>
+
+        {/* ── 7. SICUREZZA ── */}
+        <Section title="7. Come Proteggiamo i Tuoi Dati">
+          <P>Adottiamo misure tecniche e organizzative adeguate al rischio:</P>
+          <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: 'rgba(255,255,255,0.7)' }}>
+            <li>Cifratura dei dati in transito (TLS 1.2+) e a riposo.</li>
+            <li>Password conservate esclusivamente in formato hashed (bcrypt/argon2).</li>
+            <li>Accesso ai dati limitato al personale autorizzato, con autenticazione a due fattori (2FA) per gli accessi amministrativi.</li>
+            <li>Backup periodici con cifratura.</li>
+            <li>Monitoraggio continuo per la rilevazione di accessi anomali.</li>
+          </ul>
+          <P>
+            In caso di violazione dei dati personali (data breach) che possa comportare un rischio
+            elevato per i tuoi diritti, ti notificheremo senza ingiustificato ritardo, ai sensi
+            dell'art. 34 GDPR.
+          </P>
+        </Section>
+
+        {/* ── 8. MINORI ── */}
+        <Section title="8. Minori">
+          <P>
+            my mood è rivolto a persone di età pari o superiore a <strong>16 anni</strong>, in
+            conformità all'art. 8 GDPR e all'art. 2-quinquies del Codice Privacy italiano. Non
+            raccogliamo consapevolmente dati di minori di 16 anni senza consenso parentale.
+          </P>
+          <P>
+            Se ritieni che un minore abbia fornito dati senza il consenso del genitore o tutore,
+            contattaci immediatamente a{' '}
+            <a href={`mailto:${CONTROLLER_EMAIL}`} style={{ color: '#F5C842' }}>
+              {CONTROLLER_EMAIL}
+            </a>
+            : provvederemo alla cancellazione dei dati.
+          </P>
+        </Section>
+
+        {/* ── 9. MATCHING SOCIALE ── */}
+        <Section title="9. Una nota sul Matching Sociale">
+          <P>
+            Il Matching Sociale elabora dati relativi a mood e interessi per abbinare Utenti
+            compatibili. Questo trattamento è soggetto a una{' '}
+            <strong>Valutazione d'Impatto sulla Protezione dei Dati (DPIA)</strong> ai sensi
+            dell'art. 35 GDPR, data la natura sistematica del trattamento.
+          </P>
+          <P>
+            Il Matching Sociale <strong>non</strong> elabora categorie particolari di dati
+            (art. 9 GDPR) come orientamento sessuale, origine etnica o condizioni di salute.
+            La foto profilo è facoltativa e non viene utilizzata come criterio di abbinamento.
+          </P>
+          <P>
+            Puoi disattivare il Matching Sociale in qualsiasi momento dalle impostazioni del
+            profilo. I tuoi dati di matching vengono eliminati entro 30 giorni dalla
+            disattivazione.
+          </P>
+        </Section>
+
+        {/* ── 10. MODIFICHE ── */}
+        <Section title="10. Modifiche a questa Informativa">
+          <P>
+            Ci riserviamo il diritto di aggiornare questa informativa per riflettere modifiche
+            normative, tecnologiche o operative. Gli aggiornamenti saranno pubblicati nella
+            Piattaforma con la data di revisione. Per modifiche sostanziali, ti avviseremo
+            tramite email con almeno 15 giorni di preavviso.
+          </P>
+        </Section>
+
+        {/* ── 11. CONTATTI ── */}
+        <Section title="11. Contatti">
+          <P>
+            Per domande, richieste o reclami relativi alla privacy:{' '}
+            <a href={`mailto:${CONTROLLER_EMAIL}`} style={{ color: '#F5C842' }}>
+              {CONTROLLER_EMAIL}
+            </a>
+          </P>
+          <P>
+            Hai il diritto di proporre reclamo al Garante per la Protezione dei Dati Personali:{' '}
             <a
               href="https://www.garanteprivacy.it"
               target="_blank"
@@ -222,41 +347,6 @@ export default function PrivacyPage() {
               style={{ color: '#F5C842' }}
             >
               garanteprivacy.it
-            </a>
-            ).
-          </P>
-        </Section>
-
-        <Section title="8. Sicurezza dei dati">
-          <P>
-            Adottiamo misure tecniche e organizzative adeguate per proteggere i dati da accessi
-            non autorizzati, perdita o distruzione. Le comunicazioni tra il tuo dispositivo e i
-            nostri server sono cifrate tramite TLS/HTTPS. I dati archiviati su Supabase sono
-            protetti da cifratura a riposo.
-          </P>
-        </Section>
-
-        <Section title="9. Minori">
-          <P>
-            my mood è rivolto a persone di età pari o superiore a 16 anni. Non raccogliamo
-            consapevolmente dati di minori di 16 anni. Se ritieni che un minore abbia fornito
-            dati personali senza consenso parentale, contattaci immediatamente.
-          </P>
-        </Section>
-
-        <Section title="10. Modifiche a questa informativa">
-          <P>
-            Ci riserviamo il diritto di aggiornare questa informativa. In caso di modifiche
-            sostanziali, ti avviseremo tramite avviso prominente sul sito o — quando disponibile
-            — via email. La data in cima al documento indica l&apos;ultima revisione.
-          </P>
-        </Section>
-
-        <Section title="11. Contatti">
-          <P>
-            Per domande o richieste relative alla privacy:{' '}
-            <a href={`mailto:${CONTROLLER_EMAIL}`} style={{ color: '#F5C842' }}>
-              {CONTROLLER_EMAIL}
             </a>
           </P>
         </Section>
@@ -270,14 +360,7 @@ export default function PrivacyPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section style={{ marginBottom: '40px' }}>
-      <h2
-        style={{
-          fontSize: '18px',
-          fontWeight: 600,
-          marginBottom: '16px',
-          color: '#F5F5F0',
-        }}
-      >
+      <h2 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '16px', color: '#F5F5F0' }}>
         {title}
       </h2>
       {children}
@@ -300,42 +383,62 @@ function P({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Th({ children }: { children: React.ReactNode }) {
-  return (
-    <th
-      style={{
-        textAlign: 'left',
-        padding: '10px 12px',
-        fontSize: '12px',
-        fontWeight: 600,
-        letterSpacing: '0.06em',
-        textTransform: 'uppercase',
-        color: 'rgba(255,255,255,0.4)',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-      }}
-    >
-      {children}
-    </th>
-  );
-}
+type FeatureRow = {
+  feature: string;
+  data: string;
+  basis: string;
+  retention: string;
+};
 
-function Tr({ children }: { children: React.ReactNode }) {
-  return (
-    <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>{children}</tr>
-  );
-}
+function FeatureTable({ rows }: { rows: FeatureRow[] }) {
+  const thStyle: React.CSSProperties = {
+    textAlign: 'left',
+    padding: '10px 12px',
+    fontSize: '11px',
+    fontWeight: 600,
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+    color: 'rgba(255,255,255,0.4)',
+    borderBottom: '1px solid rgba(255,255,255,0.1)',
+    whiteSpace: 'nowrap',
+  };
+  const tdStyle: React.CSSProperties = {
+    padding: '12px',
+    color: 'rgba(255,255,255,0.65)',
+    verticalAlign: 'top',
+    lineHeight: '1.6',
+    fontSize: '13px',
+    borderBottom: '1px solid rgba(255,255,255,0.06)',
+  };
+  const tdFeatureStyle: React.CSSProperties = {
+    ...tdStyle,
+    color: '#F5F5F0',
+    fontWeight: 600,
+    fontSize: '13px',
+  };
 
-function Td({ children }: { children: React.ReactNode }) {
   return (
-    <td
-      style={{
-        padding: '12px',
-        color: 'rgba(255,255,255,0.65)',
-        verticalAlign: 'top',
-        lineHeight: '1.6',
-      }}
-    >
-      {children}
-    </td>
+    <div style={{ overflowX: 'auto', marginBottom: '14px' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+        <thead>
+          <tr>
+            <th style={thStyle}>Funzionalità</th>
+            <th style={thStyle}>Dati raccolti</th>
+            <th style={thStyle}>Base GDPR</th>
+            <th style={thStyle}>Conservazione</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.feature}>
+              <td style={tdFeatureStyle}>{row.feature}</td>
+              <td style={tdStyle}>{row.data}</td>
+              <td style={tdStyle}>{row.basis}</td>
+              <td style={tdStyle}>{row.retention}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
