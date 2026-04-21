@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import NavBar from '@/components/NavBar';
 
 export const metadata: Metadata = {
   title: 'Informativa sulla Privacy — my mood',
@@ -41,7 +42,7 @@ export default function PrivacyPage() {
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: '680px', margin: '0 auto', padding: '48px 24px 80px' }}>
+      <div style={{ maxWidth: '680px', margin: '0 auto', padding: '48px 24px 120px' }}>
         <h1
           style={{
             fontSize: 'clamp(28px, 6vw, 40px)',
@@ -351,6 +352,7 @@ export default function PrivacyPage() {
           </P>
         </Section>
       </div>
+      <NavBar />
     </main>
   );
 }

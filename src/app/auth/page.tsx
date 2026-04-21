@@ -128,6 +128,24 @@ export default function AuthPage() {
           width: "100%",
         }}
       >
+        {/* Logo/icon */}
+        <div
+          style={{
+            width: "56px",
+            height: "56px",
+            borderRadius: "16px",
+            background: "linear-gradient(135deg, rgba(139,92,246,0.3), rgba(139,92,246,0.1))",
+            border: "1px solid rgba(139,92,246,0.3)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "26px",
+            marginBottom: "20px",
+          }}
+        >
+          🌙
+        </div>
+
         <h1
           style={{
             fontSize: "28px",
@@ -145,6 +163,7 @@ export default function AuthPage() {
             fontSize: "14px",
             marginBottom: "32px",
             textAlign: "center",
+            lineHeight: "1.5",
           }}
         >
           {mode === "signin"
@@ -330,6 +349,29 @@ export default function AuthPage() {
             {mode === "signin" ? "Registrati" : "Accedi"}
           </button>
         </p>
+
+        {/* Legal notice — visibile solo in signup */}
+        {mode === "signup" && (
+          <p
+            style={{
+              marginTop: "20px",
+              fontSize: "12px",
+              color: "rgba(255,255,255,0.25)",
+              textAlign: "center",
+              lineHeight: "1.6",
+            }}
+          >
+            Registrandoti accetti i nostri{" "}
+            <Link href="/terms" style={{ color: "rgba(255,255,255,0.45)", textDecoration: "underline", textUnderlineOffset: "2px" }}>
+              Termini di Servizio
+            </Link>{" "}
+            e la nostra{" "}
+            <Link href="/privacy" style={{ color: "rgba(255,255,255,0.45)", textDecoration: "underline", textUnderlineOffset: "2px" }}>
+              Informativa sulla Privacy
+            </Link>
+            .
+          </p>
+        )}
       </div>
     </main>
   );

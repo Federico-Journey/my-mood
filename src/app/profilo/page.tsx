@@ -374,6 +374,39 @@ export default function ProfiloPage() {
         >
           {saving ? "Salvataggio..." : saved ? "✓ Salvato" : "Salva profilo"}
         </button>
+
+        {/* ─── Footer legale ──────────────────────────────────── */}
+        <div
+          style={{
+            marginTop: "40px",
+            paddingTop: "24px",
+            borderTop: "1px solid rgba(255,255,255,0.06)",
+            display: "flex",
+            justifyContent: "center",
+            gap: "24px",
+          }}
+        >
+          <Link
+            href="/terms"
+            style={{
+              color: "rgba(255,255,255,0.25)",
+              fontSize: "12px",
+              textDecoration: "none",
+            }}
+          >
+            Termini di Servizio
+          </Link>
+          <Link
+            href="/privacy"
+            style={{
+              color: "rgba(255,255,255,0.25)",
+              fontSize: "12px",
+              textDecoration: "none",
+            }}
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
       <NavBar />
     </main>
