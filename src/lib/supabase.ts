@@ -26,7 +26,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 // gestito interamente dal browser senza bisogno di un callback server.
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    flowType: 'implicit',
+    flowType: 'pkce',          // più affidabile di 'implicit' per email auth
     detectSessionInUrl: true,
     persistSession: true,
   }

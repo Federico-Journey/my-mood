@@ -19,6 +19,8 @@ export default function AuthPage() {
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendDone, setResendDone] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setShowSplash(false), 2200);
@@ -32,7 +34,13 @@ export default function AuthPage() {
     const { error: err } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (err) {
-      setError(err.message === "Invalid login credentials" ? "Email o password non corretti" : err.message);
+      if (err.message === "Invalid login credentials") {
+        setError("Email o password non corretti.");
+      } else if (err.message.toLowerCase().includes("email not confirmed")) {
+        setError("Devi confermare la tua email prima di accedere. Controlla la casella di posta (anche lo spam).");
+      } else {
+        setError(err.message);
+      }
     } else {
       router.push("/");
     }
@@ -40,17 +48,38 @@ export default function AuthPage() {
 
   const handleEmailSignUp = async () => {
     setLoading(true); setError(null);
-    const { error: err } = await supabase.auth.signUp({
+    const redirectTo = `${window.location.origin}/auth`;
+    const { data, error: err } = await supabase.auth.signUp({
       email, password,
-      options: { data: { full_name: "" } },
+      options: {
+        data: { full_name: "" },
+        emailRedirectTo: redirectTo,
+      },
     });
     setLoading(false);
     if (err) {
-      setError(err.message.includes("already registered") ? "Questa email è già registrata. Prova ad accedere." : err.message);
+      if (err.message.toLowerCase().includes("already registered") || err.message.toLowerCase().includes("already in use")) {
+        setError("Questa email è già registrata. Prova ad accedere.");
+      } else if (err.message.toLowerCase().includes("rate limit")) {
+        setError("Troppe richieste. Aspetta qualche minuto e riprova.");
+      } else {
+        setError(err.message);
+      }
+    } else if (data.user && !data.user.confirmed_at) {
+      // Nuova registrazione — email di conferma inviata
+      setSuccessMsg("Controlla la tua email per confermare l'account, poi torna qui per accedere. Controlla anche lo spam.");
     } else {
-      // New user → redirect to onboarding after email confirmation
-      setSuccessMsg("Controlla la tua email per confermare l'account, poi torna qui per accedere.");
+      // Email già confermata (es. login silenzioso) → vai alla home
+      router.push("/");
     }
+  };
+
+  const handleResendEmail = async () => {
+    if (!email) return;
+    setResendLoading(true);
+    await supabase.auth.resend({ type: "signup", email });
+    setResendLoading(false);
+    setResendDone(true);
   };
 
   const handleGoogle = async () => {
@@ -173,12 +202,35 @@ export default function AuthPage() {
           </div>
 
           {successMsg ? (
-            <div style={{
-              padding: "16px", borderRadius: "14px",
-              background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)",
-              color: "#4ade80", fontSize: "14px", lineHeight: 1.5, textAlign: "center", marginBottom: "20px",
-            }}>
-              {successMsg}
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <div style={{
+                padding: "16px", borderRadius: "14px",
+                background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)",
+                color: "#4ade80", fontSize: "14px", lineHeight: 1.6, textAlign: "center",
+              }}>
+                ✉️ {successMsg}
+              </div>
+              <button
+                onClick={handleResendEmail}
+                disabled={resendLoading || resendDone}
+                style={{
+                  width: "100%", padding: "12px", borderRadius: "12px", border: "none", cursor: resendDone ? "default" : "pointer",
+                  background: resendDone ? "rgba(34,197,94,0.08)" : "rgba(255,255,255,0.05)",
+                  color: resendDone ? "#4ade80" : "rgba(255,255,255,0.45)",
+                  fontSize: "13px", fontFamily: "inherit", opacity: resendLoading ? 0.6 : 1,
+                }}
+              >
+                {resendDone ? "✓ Email rinviata!" : resendLoading ? "Invio..." : "Non hai ricevuto l'email? Rinvia"}
+              </button>
+              <button
+                onClick={() => { setMode("signin"); setSuccessMsg(null); setResendDone(false); setShowEmailForm(true); }}
+                style={{
+                  width: "100%", padding: "12px", borderRadius: "12px", border: "none", cursor: "pointer",
+                  background: "#8B5CF6", color: "#fff", fontSize: "14px", fontWeight: 600, fontFamily: "inherit",
+                }}
+              >
+                Torna ad Accedi
+              </button>
             </div>
           ) : (
             <>
