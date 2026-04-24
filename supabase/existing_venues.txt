@@ -1,0 +1,510 @@
+# Venue esistenti nel database (504 uniche)
+# Usare come riferimento per evitare duplicati nei prossimi batch
+# Aggiornato: 2026-04-20
+# NOTA: venue chiuse rimosse, JustMe Milano (ex Just Cavalli) aggiunta
+# Batch 5 corretto: Mono Milano, Social Club Milano, The Club Milano aggiunte
+
+10 Corso Como
+1930 Cocktail Bar
+28 Posti
+ADI Design Museum
+Acapulco Cucina Mexicana
+Acquario Civico di Milano
+Africana Ristorante
+Al Fresco
+Al Garghet
+Al Maqam
+Al Matarel
+Al Pont de Ferr
+Al Porto
+Al Vecchio Porco
+Alcatraz
+Alcatraz Live
+Alchemist Garden
+Alice Pizza
+Alice Ristorante
+Altatto
+Amnesia Milano
+Amnesia Milano — Giardino
+Anteo Palazzo del Cinema
+Anteo Palazzo del Cinema — Caffè
+Antica Osteria il Ronchettone
+Antica Trattoria della Pesa
+Apollo Club
+Apollo Milano
+Apollo Zero
+Arci Bellezza
+Arci Biko — Cinema all'Aperto
+Armani/Bamboo Bar
+Armani/Silos
+Armani/Silos Exhibition
+Aroma Caffè
+Artico Gelateria Tradizionale
+Aspria Harbour Club
+Axe Throwing Milano
+BASE Milano
+Ba Asian Mood
+Backdoor 43
+Backdoor Speakeasy
+Bagni Misteriosi
+Baladin Milano
+Bar Basso
+Bar Rita
+Barbacoa
+Basara Milano
+Beefbar Milano
+Belle Hélène
+Berbere
+Berberè (Isola)
+Berberè (Navigli)
+Berberè Milano
+Berton
+Biancolatte
+Biblioteca degli Alberi
+Big Karaoke
+Bike Tour Milano
+Biko Giardino
+Biko Milano
+Birra & Blues
+Birrificio Lambrate
+Birrificio di Lambrate — Golgi
+Blue Note Lounge
+Blue Note Milano
+Blue Rose Cabaret
+Board Game Café L'Orso
+Bobino Club
+Bok
+Bomaki
+Bosco Verticale — Passeggiata
+Boscoincittà
+Botanical Club
+Botanical Club Città Studi
+Bouldering Hub
+Bowling Bicocca
+Bowling Rozzano
+Brellin
+Brewdog Milano
+Bulgari Hotel Bar
+Burgez Porta Nuova
+Burnout Grill
+Bésame Mucho
+Cafezal
+California Bakery
+Camparino in Galleria
+Campo Sportivo XXV Aprile
+Canottieri San Cristoforo
+Cantina Urbana
+Cantine Isola
+Cape Town Café
+Casa Ramen
+Cascina Cuccagna
+Castello Sforzesco — Cortili
+Centro Balneare Romano
+Ceresio 7
+Ceresio 7 Gym & Spa
+Ceresio 7 Pools & Restaurant
+Ceviche Bar Lima
+Champagneria Giulia
+Charcoal BBQ Coreano
+Chic Noodle Bar
+Chiccheria Sushi
+Chiosco Mentana
+Churrasco Paulista
+Ciacco Lab
+Cinema Arlecchino
+Cinema Beltrade
+Cinema Beltrade — Arena Estiva
+Cinema Gnomo
+Cinema Mexico
+Cineteca Milano MEET
+Cioccolat Italiani Navigli
+Cioccolatitaliani
+Circle Milano
+Circolo Magnolia
+CityLife Park
+Civico Planetario
+Coa Asian Food & Drinks
+Colibrì Café
+Combat Arena — Bubble Football
+Combo Milano
+Confine
+Contraste
+Cooking Class at Eataly
+Cova
+Crema
+Crosta
+Da Giacomo
+Da Giannino — L'Angolo d'Abruzzo
+Da Martino
+Da Zero
+Davide Longoni Pane
+Depot Milano
+Dim Sum
+Dim Sum Gallery
+Dongiò
+Dopolavoro Bicocca
+Drinc. Mixology
+Dry Cocktails & Pizza
+Dry Milano Solferino
+East Market
+East Market Shop
+Eataly Smeraldo
+El Carnicero
+El Porteño Grill
+Emporio Armani Caffè
+Emporio Brera Coffee
+Enoteca Cotti
+Enoteca Naturale
+Enoteca Sabbia d'Oro
+Enrico Bartolini al Mudec
+Erba Brusca
+Erba Brusca al Parco
+Escape Room Milano
+Escape Room Milano - Intrappola.to
+Ethiopian Restaurant Mesob
+Fabrique
+Fico Climbing
+Fiera di Sinigaglia
+Finger's Garden
+Fioraio Bianchi Caffè
+Float Hub Milano
+Flower Burger
+Fondazione Feltrinelli
+Fondazione Giangiacomo Feltrinelli
+Fondazione ICA Milano
+Fondazione Prada
+Fondazione Prada Bar Luce
+Fonderie Milanesi
+Forno Collettivo
+Forno del Mastro
+Frida
+Frida Isola
+GAM — Galleria d'Arte Moderna
+GROM
+Galleria Lia Rumma
+Galleria Massimo de Carlo
+Garage Italia
+Gate Milano
+Gattopardo Café
+Gattullo
+Gelato Bianco
+Gelato Giusto
+Ghe Sem
+Giardini Indro Montanelli
+Giardini Indro Montanelli — Percorso Mindfulness
+Giardino della Guastalla
+Gineria Brera
+Gino Sorbillo
+Giocolandia
+Giulio Pane e Ojo
+Gong Lambrate
+Gong Oriental Attitude
+Guangzhou
+Haam Korean Restaurant
+Hakuna Matata Gelato
+Ham Holy Burger
+Hammam Milano
+Hammam della Rosa
+Hangar Bicocca
+Hollywood Milano
+Hop Stuff
+Hop Stuff Brew Pub
+Hug Milano
+Idroscalo
+Idroscalo — Spiaggia e Sport
+Iginio Massari Alta Pasticceria
+Il Liberty
+Il Massimo del Gelato
+Ippodromo SNAI San Siro
+Iter
+Iter Cocktail Bar
+Iyo
+Iyo Aalto
+Jamaica
+Jazz Café
+JustMe Milano
+K1 Speed Milano
+KTV Karaoke
+Kathay
+Kawa Sushi
+Kebab de Milan
+Kebhouze
+Killer Ristorante
+Korean BBQ Koreatown
+La Piadineria
+La Salumeria della Musica
+La Triennale - Design Library
+Lacerba
+LambicZoon
+LambiczZoon
+Lambretto Studios Café
+Langosteria
+Langosteria Bistrot
+Langosteria Café
+Langosteria Cucina
+Laser Game Milano - LaserMaxx
+Le Banque
+Legend Club
+Leoncavallo
+Libreria Gogol & Company
+Libreria Hoepli
+Libreria Open
+Libreria Utopia
+Libreria Verso
+Lievito Madre al Duomo
+Lievità
+Lievità Porta Nuova
+Lollo's Coffee
+Loolapaloosa
+Lubar Ristorante
+Luini Panzerotti
+Lume
+Lùbar
+Lùini Panzerotti
+MAG La Pusterla
+MUDEC — Museo delle Culture
+Macha Café
+Macinata
+Mag Cafè
+Mag Café
+Mag Café (Naviglio Pavese)
+Mag Moustache
+Magazzini Generali
+Maido
+Maio Restaurant
+Mama Shelter Restaurant
+Mama's Burger — Loreto
+Manforte Studio Yoga
+Maoji Street Food
+Maoz Falafel
+Marchesi 1824
+Mare Culturale Urbano
+Marghe
+Martesana
+Masuelli San Marco
+Memoriale della Shoah
+Mercato Centrale Milano
+Mercato Comunale di Wagner
+Mercato Isola
+Mercato Metropolitano
+Mercato del Suffragio
+Mercato di Via Fauché
+Milano Climbing Lambrate
+Milano Climbing — Sesto
+Milano Kart Indoor
+Milano Padel Arena
+Milano Wine Week
+Miscusi
+Moleskine Café
+Mono Milano
+Motelombroso
+Mudec Photo
+Mudec — Museo delle Culture
+Museo Bagatti Valsecchi
+Museo Nazionale Scienza e Tecnologia
+Museo Nazionale della Scienza — Sottomarino
+Museo Poldi Pezzoli
+Museo Teatrale alla Scala
+Museo del Design Italiano
+Museo del Novecento
+Muu Muuzzarella
+N'Ombra de Vin
+Navigli Walk & Drink
+Naviglio Grande
+Naviglio Grande - Mercatone dell'Antiquariato
+Naviglio Grande — Passeggiata
+Nebbia
+Nobu Milano
+Nolo Bar Social Club
+Noor Milano
+Nottingham Forest
+Nottingham Forest (Navigli)
+Nottingham Forest Città Studi
+Oh Bej! Oh Bej!
+Open Milano
+Open — Care of
+Oriental Market Superstore
+Orsonero Coffee
+Orto Botanico di Brera
+Ostello Bello Grande
+Osteria Brunello
+Osteria alla Concorrenza
+Osteria dei Vecchi Sapori
+Osteria del Mare
+Osteria del Treno
+Osteria dell'Acquabella
+Osteria della Bistecca
+Padel City Milano
+Palazzo Reale
+Panificio Davide Longoni
+Panino Giusto
+Parco Biblioteca degli Alberi
+Parco Forlanini
+Parco Lambro
+Parco Nord Milano
+Parco Ravizza
+Parco Sempione
+Parco Sempione — Zona Yoga
+Parco delle Basiliche
+Parco delle Cave
+Pasticceria Cucchi
+Pave Navigli
+Pavè Gelati e Granite
+Pavé
+Peck — Il Bar
+Persian House
+Pescaria
+Piccolo Teatro
+Piccolo Teatro Grassi
+Piccolo Teatro Strehler
+Piccolo Teatro di Milano
+Pinacoteca di Brera
+Pinch — Spirits & Kitchen
+Pirelli HangarBicocca
+Pirelli HangarBicocca — Café
+Piscina Cozzi
+Piz
+Pizza Am
+Pizzeria Spontini — Corso Buenos Aires
+Planetario di Milano
+Poke House
+Poke'it
+Polimi Bovisa — Caffè Politecnico
+Polpo Brace & Griglia
+Poporoya
+Porterhouse Milano
+Premiata Forneria
+Princi
+Pub LOM
+Puttshack Milano
+QC Terme Milano
+Radetzky
+Radio Rooftop
+Radio Rooftop Milan
+Ratanà
+Ratanà Bistrot
+Ravioleria Sarpi
+Rebelot
+Ride Milano — Cycling Studio
+Ristorante Torre
+Rita & Cocktails
+Rita Cocktails Isola
+Rizzoli Galleria
+Rocket Club
+Rockspot - Arrampicata Milano
+Rooftop Manzoni
+Rossopomodoro
+Røst
+Røst Coffee & Kitchen
+SNAG Milano — Padel & Tennis
+SPA Suite Milano
+SUP Naviglio
+Sakeya
+Salumeria della Musica Live
+Santeria Paladini 8
+Santeria Social Club
+Santeria Toscana 31
+Sarti Mercato del Pesce
+Sartoria Panatoni
+Serraglio Jazz Club
+Seta by Antonio Guida
+Shi Feng Bao
+Shiro Poporoya
+Shisha Café
+Sine by Di Pinto
+Skateboard Park Lampugnano
+Slow Sud
+Social Club Milano
+Soda Jerk
+Spazio Avanzi
+Spazio Maiocchi
+Spirit de Milan
+Spirit de Milan — Giardino
+Spontini
+Stadio Giuseppe Meazza — Tour
+Starita
+Stork Milano
+Straf Bar
+Sushi Daily Bar
+T'a Milano
+Tacos Locos
+Tagiura
+Taglio
+Taglio Caffè
+Talent Garden Calabiana
+Tandoor Indian Restaurant
+Tandoori Nights
+Tano Passami l'Olio
+Taqueria El Nuevo Mariachi
+Teatro Carcano
+Teatro Dal Verme
+Teatro Elfo Puccini
+Teatro Franco Parenti
+Teatro Gerolamo
+Teatro Menotti
+Teatro Parenti — Sala Grande
+Teatro alla Scala
+Teatro degli Arcimboldi
+Teatro del Buratto
+Teatro della Cooperativa
+Temaki Home
+Temakinho
+Tempio del Futuro Perduto
+Tennis Club Bonacossa
+Terme Milano
+Terme QC Porta Romana
+Terrazza 12
+Terrazza Aperol
+Terrazza Gallia
+Terrazza Martini
+Terrazza Triennale
+Terzo Piano Rooftop
+Thai Gallery
+That's Bakery
+That's Vapore
+That's Vapore Ristorante
+The Botanical Club
+The Cage — Escape Room
+The Club Milano
+The Doping Club
+The Drunken Ship
+The Fisherman Pasta
+The Roof Milano
+The Sign Room — Escape Room
+The Space Cinema Odeon
+The Spirit
+The Yard Milano
+Tocqueville 13
+Trampoline Park Jump World
+Trattoria Milanese
+Trattoria Sabbioneda
+Trattoria Torre di Pisa
+Trattoria Trippa
+Trattoria dalla Cecilia
+Trattoria del Nuovo Macello
+Trattoria del Pesce
+Trattoria la Brisa
+Triennale Milano
+Trippa
+Tunnel
+Tunnel Club
+UCI Cinemas Bicocca
+Ugo
+Un Posto a Milano
+Urban Paintball Milano
+VR Star
+Venchi Duomo
+Vesta Coffee Roasters
+ViVi Bistrot — Città Studi
+Viet Mood
+Vineria Londei
+Virgin Active CityLife
+Virtual Arena Milano
+Virtual Reality Experience - VRUMS
+Volt Club
+Vòce Aimo e Nadia
+Wicky's Innovative Japanese Cuisine
+Yan Fish
+YogaOne Milano
+Zazà Ramen
+Zibo

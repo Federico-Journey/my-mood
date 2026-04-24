@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { countUnreadMessages } from "@/lib/community";
 
-const TABS = [
+const LEFT_TABS = [
   {
     href: "/",
-    label: "Piano",
-    isSocial: false,
+    label: "Home",
     icon: (active: boolean) => (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" />
@@ -21,7 +20,6 @@ const TABS = [
   {
     href: "/esplora",
     label: "Esplora",
-    isSocial: false,
     icon: (active: boolean) => (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
         <circle cx="11" cy="11" r="8" />
@@ -29,17 +27,9 @@ const TABS = [
       </svg>
     ),
   },
-  {
-    href: "/custom",
-    label: "Crea",
-    isSocial: false,
-    icon: (active: boolean) => (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 5h-7a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-7" />
-        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
-      </svg>
-    ),
-  },
+];
+
+const RIGHT_TABS = [
   {
     href: "/community",
     label: "Social",
@@ -69,6 +59,7 @@ const TABS = [
 export default function NavBar() {
   const pathname = usePathname();
   const [unread, setUnread] = useState(0);
+  const isCenterActive = pathname === "/genera" || pathname.startsWith("/genera/");
 
   useEffect(() => {
     const checkUnread = async () => {
@@ -86,15 +77,17 @@ export default function NavBar() {
     <nav
       className="fixed bottom-0 left-0 right-0 z-50"
       style={{
-        background: "rgba(7,7,14,0.82)",
+        background: "rgba(7,7,14,0.90)",
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",
         borderTop: "1px solid rgba(255,255,255,0.07)",
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
     >
-      <div className="flex items-center justify-around max-w-[480px] mx-auto h-[66px]">
-        {TABS.map((tab) => {
+      <div className="flex items-center justify-around max-w-[480px] mx-auto h-[66px] relative">
+
+        {/* Left tabs */}
+        {LEFT_TABS.map((tab) => {
           const active = pathname === tab.href;
           return (
             <Link
@@ -103,56 +96,85 @@ export default function NavBar() {
               className="flex flex-col items-center gap-1 flex-1 py-2 transition-all duration-200 relative"
               style={{ color: active ? "#8B5CF6" : "rgba(255,255,255,0.32)" }}
             >
-              {/* Indicatore luminoso in cima alla tab attiva */}
               {active && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "24px",
-                    height: "2px",
-                    borderRadius: "2px",
-                    background: "#8B5CF6",
-                    boxShadow: "0 0 8px rgba(139,92,246,0.9), 0 0 20px rgba(139,92,246,0.4)",
-                  }}
-                />
+                <div style={{
+                  position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
+                  width: "24px", height: "2px", borderRadius: "2px", background: "#8B5CF6",
+                  boxShadow: "0 0 8px rgba(139,92,246,0.9), 0 0 20px rgba(139,92,246,0.4)",
+                }} />
               )}
-
-              {/* Icona con glow se attiva */}
-              <div
-                className="relative"
-                style={{
-                  filter: active
-                    ? "drop-shadow(0 0 5px rgba(139,92,246,0.55))"
-                    : "none",
-                  transition: "filter 0.25s",
-                }}
-              >
+              <div style={{ filter: active ? "drop-shadow(0 0 5px rgba(139,92,246,0.55))" : "none", transition: "filter 0.25s" }}>
                 {tab.icon(active)}
-                {tab.isSocial && unread > 0 && (
-                  <span
-                    className="absolute -top-1 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white"
-                    style={{ background: "#EF4444" }}
-                  >
-                    {unread > 9 ? "9+" : unread}
-                  </span>
-                )}
               </div>
-
-              <span
-                className="text-[9px] font-semibold tracking-wide"
-                style={{
-                  color: active ? "#8B5CF6" : "rgba(255,255,255,0.28)",
-                  transition: "color 0.2s",
-                }}
-              >
+              <span className="text-[9px] font-semibold tracking-wide" style={{ color: active ? "#8B5CF6" : "rgba(255,255,255,0.28)" }}>
                 {tab.label}
               </span>
             </Link>
           );
         })}
+
+        {/* Center floating Mood button */}
+        <div className="flex-1 flex justify-center items-center relative">
+          <Link
+            href="/genera"
+            style={{
+              position: "absolute",
+              bottom: "12px",
+              width: "58px",
+              height: "58px",
+              borderRadius: "50%",
+              background: isCenterActive
+                ? "linear-gradient(135deg, #A78BFA, #7C3AED)"
+                : "linear-gradient(135deg, #8B5CF6, #6D28D9)",
+              boxShadow: isCenterActive
+                ? "0 0 0 4px rgba(139,92,246,0.25), 0 6px 28px rgba(139,92,246,0.55)"
+                : "0 4px 20px rgba(139,92,246,0.45)",
+              transform: isCenterActive ? "scale(1.05)" : "scale(1)",
+              transition: "all 0.25s ease",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textDecoration: "none",
+            }}
+          >
+            <span style={{ fontSize: "22px", lineHeight: 1 }}>🌙</span>
+            <span style={{ fontSize: "8px", fontWeight: 700, color: "rgba(255,255,255,0.75)", letterSpacing: "0.5px", marginTop: "1px" }}>MOOD</span>
+          </Link>
+        </div>
+
+        {/* Right tabs */}
+        {RIGHT_TABS.map((tab) => {
+          const active = pathname === tab.href;
+          return (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className="flex flex-col items-center gap-1 flex-1 py-2 transition-all duration-200 relative"
+              style={{ color: active ? "#8B5CF6" : "rgba(255,255,255,0.32)" }}
+            >
+              {active && (
+                <div style={{
+                  position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
+                  width: "24px", height: "2px", borderRadius: "2px", background: "#8B5CF6",
+                  boxShadow: "0 0 8px rgba(139,92,246,0.9), 0 0 20px rgba(139,92,246,0.4)",
+                }} />
+              )}
+              <div className="relative" style={{ filter: active ? "drop-shadow(0 0 5px rgba(139,92,246,0.55))" : "none", transition: "filter 0.25s" }}>
+                {tab.icon(active)}
+                {tab.isSocial && unread > 0 && (
+                  <span className="absolute -top-1 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white" style={{ background: "#EF4444" }}>
+                    {unread > 9 ? "9+" : unread}
+                  </span>
+                )}
+              </div>
+              <span className="text-[9px] font-semibold tracking-wide" style={{ color: active ? "#8B5CF6" : "rgba(255,255,255,0.28)" }}>
+                {tab.label}
+              </span>
+            </Link>
+          );
+        })}
+
       </div>
     </nav>
   );

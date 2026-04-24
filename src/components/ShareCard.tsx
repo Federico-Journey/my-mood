@@ -57,7 +57,7 @@ export default function ShareCard({ plan, mood, accentColor, onClose }: Props) {
       const json = await res.json();
       if (json.id) {
         const shareUrl = `${window.location.origin}/share/${json.id}`;
-        const msg = `\u{1F319} *Ho trovato il piano perfetto per stasera!*\n\n\u{1F449} ${shareUrl}\n\n_${selectedMood?.emoji} ${selectedMood?.label} \u00B7 Milano_\n\nChi viene? \u{1F64B}`;
+        const msg = `\u{1F319} *${plan.title}*\n${selectedMood?.emoji} ${selectedMood?.label} \u00B7 Milano\n\n${shareUrl}\n\nChi viene? \u{1F64B}`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
       } else {
         // Fallback: testo plain
