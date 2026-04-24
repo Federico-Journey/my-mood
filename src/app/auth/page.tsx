@@ -250,6 +250,26 @@ export default function AuthPage() {
               <a href="/privacy" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "underline" }}>Privacy Policy</a>
             </p>
           )}
+
+          {/* Skip */}
+          {!successMsg && (
+            <button
+              onClick={() => router.push("/genera")}
+              style={{
+                marginTop: "20px",
+                width: "100%",
+                background: "none",
+                border: "none",
+                color: "rgba(255,255,255,0.28)",
+                fontSize: "13px",
+                cursor: "pointer",
+                fontFamily: "inherit",
+                padding: "8px",
+              }}
+            >
+              Continua senza account →
+            </button>
+          )}
         </div>
       </div>
     </main>

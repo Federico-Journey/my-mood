@@ -43,7 +43,8 @@ export default function HomePage() {
     const init = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.user) {
-        router.push("/auth");
+        // Utente non loggato: mostra home in modalità guest
+        setLoading(false);
         return;
       }
       setUser(session.user);
@@ -83,6 +84,7 @@ export default function HomePage() {
     init();
   }, [router]);
 
+  const isGuest = !user;
   const displayName =
     profile?.name ||
     user?.user_metadata?.full_name ||
@@ -131,30 +133,39 @@ export default function HomePage() {
               my mood
             </span>
           </div>
-          <Link href="/profilo" style={{ textDecoration: "none" }}>
-            <div style={{
-              width: "38px", height: "38px", borderRadius: "50%",
-              background: "linear-gradient(135deg, rgba(139,92,246,0.4), rgba(139,92,246,0.15))",
-              border: "1.5px solid rgba(139,92,246,0.4)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              overflow: "hidden",
+          {isGuest ? (
+            <Link href="/auth" style={{
+              textDecoration: "none", padding: "7px 14px", borderRadius: "20px",
+              background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.35)",
+              color: "#A78BFA", fontSize: "12px", fontWeight: 700,
             }}>
-              {avatarUrl ? (
-                <img src={avatarUrl} alt="avatar" width={38} height={38} style={{ objectFit: "cover" }} referrerPolicy="no-referrer" />
-              ) : (
-                <span style={{ fontSize: "16px", fontWeight: 700, color: "#A78BFA" }}>{initial}</span>
-              )}
-            </div>
-          </Link>
+              Accedi
+            </Link>
+          ) : (
+            <Link href="/profilo" style={{ textDecoration: "none" }}>
+              <div style={{
+                width: "38px", height: "38px", borderRadius: "50%",
+                background: "linear-gradient(135deg, rgba(139,92,246,0.4), rgba(139,92,246,0.15))",
+                border: "1.5px solid rgba(139,92,246,0.4)",
+                display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden",
+              }}>
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt="avatar" width={38} height={38} style={{ objectFit: "cover" }} referrerPolicy="no-referrer" />
+                ) : (
+                  <span style={{ fontSize: "16px", fontWeight: 700, color: "#A78BFA" }}>{initial}</span>
+                )}
+              </div>
+            </Link>
+          )}
         </div>
 
         {/* Welcome text */}
         <div style={{ padding: "20px 20px 8px", position: "relative" }}>
           <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "13px", marginBottom: "4px" }}>
-            Bentornato 👋
+            {isGuest ? "Benvenuto 👋" : "Bentornato 👋"}
           </p>
           <h1 style={{ fontSize: "26px", fontWeight: 800, letterSpacing: "-0.02em", color: "#F5F5F0", margin: 0 }}>
-            Ciao, {displayName}
+            {isGuest ? "Ciao, Mooder!" : `Ciao, ${displayName}`}
           </h1>
         </div>
       </div>
@@ -197,9 +208,31 @@ export default function HomePage() {
         </Link>
       </div>
 
+      {/* ─── Guest banner ────────────────────────────────────── */}
+      {isGuest && (
+        <div style={{ padding: "8px 20px 4px" }}>
+          <Link href="/auth" style={{ textDecoration: "none", display: "block" }}>
+            <div style={{
+              borderRadius: "16px", padding: "16px 18px",
+              background: "rgba(139,92,246,0.08)", border: "1px solid rgba(139,92,246,0.2)",
+              display: "flex", alignItems: "center", gap: "14px",
+            }}>
+              <span style={{ fontSize: "22px" }}>🔐</span>
+              <div style={{ flex: 1 }}>
+                <p style={{ color: "#A78BFA", fontWeight: 700, fontSize: "13px", margin: 0 }}>Crea un account gratuito</p>
+                <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "12px", margin: "3px 0 0" }}>Salva i piani, vota con gli amici e molto altro</p>
+              </div>
+              <span style={{ color: "#8B5CF6", fontSize: "18px" }}>→</span>
+            </div>
+          </Link>
+        </div>
+      )}
+
       {/* ─── I miei piani ────────────────────────────────────── */}
-      <Section title="I miei piani" href="/piani">
-        {plans.length === 0 ? (
+      <Section title="I miei piani" href={isGuest ? undefined : "/piani"}>
+        {isGuest ? (
+          <EmptySlot icon="🔒" text="Accedi per vedere i tuoi piani salvati" />
+        ) : plans.length === 0 ? (
           <EmptySlot icon="📋" text="Nessun piano salvato ancora" subtext="Genera il tuo primo piano!" />
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
