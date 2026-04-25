@@ -34,7 +34,7 @@ export default function AuthPage() {
         setError(err.message);
       }
     } else {
-      router.push("/");
+      await handlePostLogin();
     }
   };
 
@@ -92,6 +92,22 @@ export default function AuthPage() {
     } catch {
       setError("Apple Sign-In non ancora configurato.");
       setLoading(false);
+    }
+  };
+
+  // Dopo login email: controlla onboarding
+  const handlePostLogin = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) return;
+    const { data: prof } = await supabase
+      .from("profiles")
+      .select("onboarding_complete")
+      .eq("id", session.user.id)
+      .single();
+    if (!prof || !prof.onboarding_complete) {
+      router.push("/onboarding");
+    } else {
+      router.push("/");
     }
   };
 

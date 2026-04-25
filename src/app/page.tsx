@@ -65,9 +65,16 @@ export default function HomePage() {
       // Fetch profile
       const { data: prof } = await supabase
         .from("profiles")
-        .select("name, avatar_url")
+        .select("name, avatar_url, onboarding_complete")
         .eq("id", session.user.id)
         .single();
+
+      // Se onboarding non completato → vai all'onboarding
+      if (!prof || !prof.onboarding_complete) {
+        router.replace("/onboarding");
+        return;
+      }
+
       if (prof) setProfile(prof as Profile);
 
       // Fetch user plans with like counts
