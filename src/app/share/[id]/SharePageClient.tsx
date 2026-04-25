@@ -208,7 +208,7 @@ export default function SharePageClient({ shareId, plan, moodId, accentColor, in
         </div>
 
         {/* CTA */}
-        <a href="https://my-mood-eight.vercel.app" style={{
+        <a href="https://mymoodapp.it" style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
           width: "100%", padding: "16px", borderRadius: "18px",
           background: `linear-gradient(135deg, ${accentColor}, ${accentColor}bb)`,
