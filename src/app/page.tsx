@@ -6,6 +6,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { MOODS } from "@/lib/data";
 import NavBar from "@/components/NavBar";
+import SplashScreen from "@/components/SplashScreen";
 import type { User } from "@supabase/supabase-js";
 
 interface UserPlan {
@@ -38,13 +39,25 @@ export default function HomePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [plans, setPlans] = useState<UserPlan[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(false);
+
+  useEffect(() => {
+    // Mostra splash solo una volta per sessione
+    const splashShown = sessionStorage.getItem("splashShown");
+    if (!splashShown) {
+      setShowSplash(true);
+      sessionStorage.setItem("splashShown", "1");
+      setTimeout(() => setShowSplash(false), 2200);
+    }
+  }, []);
 
   useEffect(() => {
     const init = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.user) {
-        // Utente non loggato: mostra home in modalità guest
+        // Utente non loggato → vai alla pagina di auth
         setLoading(false);
+        router.replace("/auth");
         return;
       }
       setUser(session.user);
@@ -93,6 +106,8 @@ export default function HomePage() {
 
   const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url || null;
   const initial = displayName[0]?.toUpperCase() || "M";
+
+  if (showSplash) return <SplashScreen />;
 
   if (loading) {
     return (

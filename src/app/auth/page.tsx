@@ -3,15 +3,12 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import SplashScreen from "@/components/SplashScreen";
-
 type Mode = "signin" | "signup";
 
 const MILAN_PHOTO = "https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?q=80&w=800&auto=format&fit=crop";
 
 export default function AuthPage() {
   const router = useRouter();
-  const [showSplash, setShowSplash] = useState(true);
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,11 +18,6 @@ export default function AuthPage() {
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendDone, setResendDone] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setShowSplash(false), 2200);
-    return () => clearTimeout(t);
-  }, []);
 
   const accent = "#8B5CF6";
 
@@ -111,7 +103,6 @@ export default function AuthPage() {
 
   const canSubmit = email.length > 0 && password.length >= 6;
 
-  if (showSplash) return <SplashScreen />;
 
   return (
     <main style={{ minHeight: "100vh", position: "relative", overflow: "hidden", fontFamily: '"DM Sans", sans-serif' }}>
