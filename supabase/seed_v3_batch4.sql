@@ -104,7 +104,7 @@ VALUES
  ARRAY['elegante','foodie','romantico','creativo'],
  'Ristorante stellato dello chef Luigi Taglienti: cucina ligure-milanese contemporanea, ingredienti di stagione, piatti esteticamente perfetti.',
  'Il menu degustazione è il modo migliore per vivere l''esperienza completa — lasciati guidare.',
- '⭐', 'https://lumemilano.com', 'altro'),
+ '⭐', NULL, 'altro'),
 
 ('Erba Brusca al Parco',
  'Alzaia Naviglio Pavese 286',
@@ -212,7 +212,7 @@ VALUES
  ARRAY['foodie','godereccio','social','elegante'],
  'Pizza fritta e al forno in versione gourmet: frittatine napoletane, montanare, pizze con impasti lunghi. La pizza come esperienza.',
  'Le frittatine ripiene sono il piatto da non perdere — croccanti fuori, filanti dentro.',
- '🫓', 'https://lievita.it', 'porta_nuova'),
+ '🫓', NULL, 'porta_nuova'),
 
 ('Starita',
  'Via Ampère 49',
@@ -348,7 +348,7 @@ VALUES
  ARRAY['culturale','zen'],
  'Memoriale sotto la Stazione Centrale: il binario 21 da cui partivano i treni per i campi. Un luogo di memoria potente e necessario.',
  'La visita guidata aggiunge molto — i volontari raccontano storie che non trovi nei pannelli.',
- '🕯️', 'https://memfranceoriale.it', 'altro'),
+ '🕯️', NULL, 'altro'),
 
 ('Museo Poldi Pezzoli',
  'Via Manzoni 12',
@@ -380,7 +380,7 @@ VALUES
  ARRAY['culturale','creativo','elegante'],
  'Museo del Compasso d''Oro: tutti i premi del design italiano dal 1954 a oggi. Un viaggio nella creatività che ha cambiato il quotidiano.',
  'Il bookshop è eccellente — perfetto per regali di design a prezzi ragionevoli.',
- '📐', 'https://adidesignmuseum.org', 'porta_nuova'),
+ '📐', NULL, 'porta_nuova'),
 
 ('Museo Nazionale della Scienza — Sottomarino',
  'Via San Vittore 21',
@@ -396,7 +396,7 @@ VALUES
  ARRAY['culturale','elegante','creativo','esclusivo'],
  'Lo spazio espositivo di Giorgio Armani: 40 anni di moda italiana raccontati attraverso abiti, accessori e visioni. Gratuito e sorprendente.',
  'L''ultimo piano con i vestiti da red carpet è il più spettacolare — non perderlo.',
- '👔', 'https://armanisilos.com', 'navigli'),
+ '👔', NULL, 'navigli'),
 
 -- ══════════════════════════════════════════════════════════════
 -- RISTORANTI ETNICI — ASIA & AMERICAS (10)
@@ -540,7 +540,7 @@ VALUES
  ARRAY['musicale','social','festivo','nottambulo'],
  'La sala concerti più grande di Milano: 3000 posti, lineup internazionali, serate a tema. Da band indie a artisti mainstream.',
  'Compra i biglietti in prevendita — i concerti importanti vanno sold out in poche ore.',
- '🎤', 'https://alcatrazmilano.it', 'isola'),
+ '🎤', NULL, 'isola'),
 
 ('Jazz Café',
  'Corso Sempione 8',
@@ -636,7 +636,7 @@ VALUES
  ARRAY['godereccio','elegante','romantico'],
  'La cioccolateria piemontese nel cuore di Milano: cioccolato artigianale, gelato, cremini. Il tempio del cacao per palati esigenti.',
  'Il gelato al cioccolato fondente con granella di nocciola è pura estasi — provalo in cono.',
- '🍫', 'https://venchi.com', 'centro'),
+ '🍫', NULL, 'centro'),
 
 ('Pasticceria Cucchi',
  'Corso Genova 1',
@@ -668,7 +668,7 @@ VALUES
  ARRAY['foodie','elegante','godereccio','vintage','esclusivo'],
  'Il bar della storica gastronomia Peck: aperitivo con stuzzichini gourmet, vini pregiati, cocktail classici. L''aperitivo milanese nella sua forma più nobile.',
  'Il tagliere con i salumi di Peck e un calice di Franciacorta è l''aperitivo perfetto.',
- '🥂', 'https://peck.it', 'centro'),
+ '🥂', NULL, 'centro'),
 
 ('Martesana',
  'Via Cagliero 14',
@@ -676,7 +676,7 @@ VALUES
  ARRAY['godereccio','coffee_lover','creativo','elegante'],
  'Pasticceria contemporanea dello chef Vincenzo Santoro: dolci architettonici, monoporzioni scultoree, colazioni da urlo. La pasticceria come design.',
  'La monoporzione al cioccolato e passion fruit è un''opera d''arte — bella e buona.',
- '🍰', 'https://martfranceesana.it', 'isola'),
+ '🍰', 'https://martesana.it', 'isola'),
 
 -- ══════════════════════════════════════════════════════════════
 -- TEATRI & SPETTACOLO (5)

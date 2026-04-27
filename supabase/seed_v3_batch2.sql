@@ -53,7 +53,7 @@ VALUES
  ARRAY['foodie','elegante','romantico','creativo'],
  'Cucina di Viviana Varese su Eataly: menu che cambiano con le stagioni, forte impronta vegetale, piatti visivamente stupendi.',
  'I piatti vegetariani qui sono talmente buoni che non rimpiangierai la carne.',
- '🌿', 'https://vivianavarese.it', 'porta_nuova'),
+ '🌿', NULL, 'porta_nuova'),
 
 ('Lubar Ristorante',
  'Via Palermo 21',
@@ -93,7 +93,7 @@ VALUES
  ARRAY['foodie','creativo','social','alternativo','zen'],
  'Solo 28 coperti, cucina a vista, menu cortissimo che cambia settimanalmente. Progetto sociale con reinserimento lavorativo. Cibo e significato.',
  'Il pranzo fisso del mercoledì è un segreto: qualità altissima, prezzo accessibilissimo.',
- '🪑', 'https://28posti.org', 'navigli'),
+ '🪑', NULL, 'navigli'),
 
 -- ══════════════════════════════════════════════════════════════
 -- RISTORANTI — CUCINA QUOTIDIANA (10)
@@ -145,7 +145,7 @@ VALUES
  ARRAY['foodie','social','godereccio','rilassato'],
  'Street food di pesce pugliese: panini con polpo, tartare, fritture. Veloce, fresco e di qualità. Coda garantita ma scorre veloce.',
  'Il panino con polpo arrosto e burrata è il piatto signature — vale ogni minuto di coda.',
- '🐙', 'https://pescfrancearia.it', 'navigli'),
+ '🐙', NULL, 'navigli'),
 
 ('Flower Burger',
  'Via Tortona 12',
@@ -169,7 +169,7 @@ VALUES
  ARRAY['social','rilassato','foodie','zen'],
  'Poke bowl personalizzabili con basi, proteine e topping freschi. Veloce, leggero, perfetto per un pranzo sano senza rinunce.',
  'La base di riso sushi con salmone e avocado è il classico che non sbaglia.',
- '🥗', 'https://pfranceokehouse.it', 'porta_nuova'),
+ '🥗', 'https://pokehouse.it', 'porta_nuova'),
 
 ('Mercato Metropolitano',
  'Via Valenza 2',
@@ -221,7 +221,7 @@ VALUES
  ARRAY['foodie','elegante','godereccio','coffee_lover'],
  'Il maestro dei maestri della pasticceria italiana. Ogni dolce è un''opera di precisione assoluta. Il panettone è il migliore d''Italia.',
  'Il croissant al burro è il test: croccante, sfogliato, burroso. Perfezione.',
- '🎂', 'https://iginiomassari.it', 'sempione'),
+ '🎂', NULL, 'sempione'),
 
 ('Marchesi 1824',
  'Via Santa Maria alla Porta 11a',
@@ -245,7 +245,7 @@ VALUES
  ARRAY['rilassato','godereccio','social'],
  'Catena di gelato artigianale con ingredienti bio e filiera controllata. Gusti classici ben eseguiti, sedi in posizioni strategiche.',
  'Il cioccolato extra-noir è intenso al punto giusto — perfetto dopo cena.',
- '🍦', 'https://grom.it', 'centro'),
+ '🍦', NULL, 'centro'),
 
 -- ══════════════════════════════════════════════════════════════
 -- WINE BAR & ENOTECHE (8)
@@ -281,7 +281,7 @@ VALUES
  ARRAY['alternativo','creativo','social','aperitivo','foodie'],
  'Cantina urbana che produce vino nel cuore dei Navigli. Degustazioni, workshop e possibilità di fare il tuo blend personalizzato.',
  'Il workshop di blend dove crei il tuo vino è un''esperienza che non trovi altrove a Milano.',
- '🍇', 'https://cantinfranceaurbana.it', 'navigli'),
+ '🍇', NULL, 'navigli'),
 
 ('Enoteca Naturale',
  'Via Savona 27',
@@ -305,7 +305,7 @@ VALUES
  ARRAY['social','aperitivo','foodie','creativo','alternativo'],
  'L''accoppiata geniale: cocktail d''autore e pizza gourmet sotto lo stesso tetto. Ambiente industrial-chic, sempre pieno, sempre buono.',
  'Ordina un cocktail e una pizza da condividere — è il format perfetto per questo posto.',
- '🍸', 'https://drymilano.it', 'brera'),
+ '🍸', NULL, 'brera'),
 
 ('Champagneria Giulia',
  'Via Giulia 3',
@@ -341,7 +341,7 @@ VALUES
  ARRAY['foodie','godereccio','social','vintage'],
  'Dal 1888 la famiglia Luini sforna panzerotti fritti e al forno. Un''istituzione milanese: coda perenne ma ne vale ogni secondo.',
  'Quello classico fritto con mozzarella e pomodoro è la perfezione — non cercare alternative.',
- '🥟', 'https://luini.it', 'centro'),
+ '🥟', NULL, 'centro'),
 
 ('Princi',
  'Via Speronari 6',
@@ -357,7 +357,7 @@ VALUES
  ARRAY['elegante','coffee_lover','rilassato','romantico'],
  'Caffè e cioccolateria di lusso: praline artigianali, cioccolata calda densa, caffè preparato con cura estrema. Ambiente sofisticato.',
  'La cioccolata calda densa (non quella annacquata) è un''esperienza — scegli il fondente 70%.',
- '🍫', 'https://tfranceamilano.it', 'centro'),
+ '🍫', 'https://tamilano.it', 'centro'),
 
 ('Emporio Armani Caffè',
  'Via Croce Rossa 2',
@@ -381,7 +381,7 @@ VALUES
  ARRAY['foodie','coffee_lover','rilassato','godereccio'],
  'Il panificio più celebre di Milano: pane con grani antichi, focacce e dolci da lievito. Longoni ha cambiato il modo in cui Milano pensa al pane.',
  'Il pane integrale con semi è straordinario — compralo intero e gustalo nei giorni successivi.',
- '🍞', 'https://davidelongoni.com', 'porta_romana'),
+ '🍞', NULL, 'porta_romana'),
 
 -- ══════════════════════════════════════════════════════════════
 -- LOCALI CON GIARDINO / CORTILE (8)
@@ -393,7 +393,7 @@ VALUES
  ARRAY['elegante','creativo','aperitivo','esclusivo','culturale'],
  'Concept store leggendario con bar, ristorante, galleria, libreria e giardino segreto. Aperitivo nel cortile verde tra arte e moda.',
  'Il giardino interno è il cuore del posto — siediti fuori e goditi il mix di arte e drink.',
- '🌿', 'https://10corsfranceocomo.com', 'porta_nuova'),
+ '🌿', 'https://10corsocomo.com', 'porta_nuova'),
 
 ('Mag Café (Naviglio Pavese)',
  'Ripa di Porta Ticinese 43',
@@ -425,7 +425,7 @@ VALUES
  ARRAY['rilassato','zen','foodie','social','alternativo'],
  'Cascina del ''600 restaurata: ristorante bio, orto urbano, mercato contadino e spazio eventi. Un pezzo di campagna in Porta Romana.',
  'Il brunch della domenica con prodotti dell''orto è un rito — prenota.',
- '🏡', 'https://cfranceascfrancecinacuccagna.org', 'porta_romana'),
+ '🏡', NULL, 'porta_romana'),
 
 ('Santeria Paladini 8',
  'Via Ettore Paladini 8',
@@ -433,7 +433,7 @@ VALUES
  ARRAY['social','alternativo','creativo','musicale','festivo'],
  'Spazio ibrido con bar, ristorante, palco per concerti e cortile. Il centro culturale di Lambrate: musica, arte, socialità.',
  'I concerti nel cortile d''estate sono eventi imperdibili — controlla il programma.',
- '🎵', 'https://santfranceeria.it', 'altro'),
+ '🎵', NULL, 'altro'),
 
 ('Hug Milano',
  'Via Tortona 22',
@@ -469,7 +469,7 @@ VALUES
  ARRAY['vintage','creativo','alternativo','social'],
  'Mercatino mensile di vintage, vinili, design e street food in un''ex fabbrica. L''evento per cacciatori di pezzi unici.',
  'Arriva la mattina presto per i pezzi migliori — nel pomeriggio i migliori sono già andati.',
- '💿', 'https://eastfrancemarketmilano.com', 'altro'),
+ '💿', NULL, 'altro'),
 
 ('Mercato Comunale di Wagner',
  'Piazza Wagner',
@@ -493,7 +493,7 @@ VALUES
  ARRAY['foodie','social','godereccio','culturale'],
  'Tre piani di eccellenze enogastronomiche italiane: ristoranti, banchi, corsi di cucina e mercato. Il tempio del cibo italiano a Milano.',
  'Il piano terra con il banco pasta fresca e la gastronomia è il cuore — fermati lì.',
- '🇮🇹', 'https://eataly.net', 'porta_nuova'),
+ '🇮🇹', NULL, 'porta_nuova'),
 
 ('Milano Wine Week',
  'Varie sedi, Milano',
@@ -501,7 +501,7 @@ VALUES
  ARRAY['foodie','social','aperitivo','elegante','culturale'],
  'Festival annuale del vino (ottobre) con degustazioni, masterclass e cene a tema in tutta Milano. La settimana più enoica dell''anno.',
  'Le masterclass gratuite si esauriscono in poche ore — iscriviti appena aprono le registrazioni.',
- '🍷', 'https://milanfranceowinfranceeweek.com', 'centro'),
+ '🍷', 'https://milanowineweek.com', 'centro'),
 
 ('Mercato Centrale Milano',
  'Via Giovanni Battista Sammartini',
@@ -537,7 +537,7 @@ VALUES
  ARRAY['rilassato','zen','romantico','misterioso'],
  'Bagno turco autentico ispirato alla tradizione marocchina. Scrub con sapone nero, massaggio con olio di argan, tè alla menta.',
  'Il rituale completo (hammam + scrub + massaggio) dura 2 ore — regalati il pacchetto intero.',
- '🫧', 'https://hammamdellarosa.it', 'porta_venezia'),
+ '🫧', NULL, 'porta_venezia'),
 
 ('Aspria Harbour Club',
  'Via Cascina Bellaria 19',
@@ -545,7 +545,7 @@ VALUES
  ARRAY['sportivo','elegante','rilassato','esclusivo','zen'],
  'Club sportivo di lusso con piscine, tennis, spa e ristorante. L''esperienza fitness più esclusiva di Milano.',
  'Il day pass per la spa è il modo più accessibile per provare il club senza abbonamento.',
- '🏊', 'https://aspfranceria.com', 'sempione'),
+ '🏊', 'https://aspria.com', 'sempione'),
 
 ('Bagni Misteriosi',
  'Via Carlo Botta 18',
@@ -581,7 +581,7 @@ VALUES
  ARRAY['creativo','social','coffee_lover','zen'],
  'Campus di co-working e innovazione in un giardino. Spazi luminosi, caffetteria, eventi tech e startup. Il network conta quanto la scrivania.',
  'Il caffè al piano terra è aperto a tutti — perfetto per lavorare qualche ora in un ambiente stimolante.',
- '💻', 'https://talfranceentgarden.org', 'porta_romana'),
+ '💻', 'https://talentgarden.org', 'porta_romana'),
 
 ('Fondazione Giangiacomo Feltrinelli',
  'Viale Pasubio 5',
@@ -605,7 +605,7 @@ VALUES
  ARRAY['culturale','creativo','zen','coffee_lover'],
  'La biblioteca specializzata in design e architettura della Triennale. Accesso gratuito, spazio luminoso, perfetto per studiare circondati da bellezza.',
  'Portati il portatile — Wi-Fi gratuito, prese ovunque, e un caffè a portata di mano.',
- '📐', 'https://triennale.org', 'sempione');
+ '📐', NULL, 'sempione');
 
 -- Batch 2 continua — ultimi 30 venue
 
@@ -646,7 +646,7 @@ VALUES
  ARRAY['misterioso','creativo','alternativo','vintage'],
  'Dal 1970 il laboratorio di cocktail più folle di Milano. Drink serviti in provette, alambicchi e oggetti assurdi. Un''esperienza più che un bar.',
  'Non guardare il menu — dì al barman cosa ti piace e lascia che crei qualcosa di unico.',
- '🧪', 'https://nottinghamforest.it', 'porta_venezia'),
+ '🧪', NULL, 'porta_venezia'),
 
 ('Camparino in Galleria',
  'Piazza del Duomo 21',
@@ -654,7 +654,7 @@ VALUES
  ARRAY['elegante','vintage','aperitivo','culturale','romantico'],
  'Aperto nel 1915 nella Galleria Vittorio Emanuele: dove è nato l''aperitivo milanese. Interni liberty mozzafiato, cocktail classici impeccabili.',
  'Bevi un Campari al piano terra tra gli affreschi — il posto dove tutto è iniziato.',
- '🏛️', 'https://camfranceparino.com', 'centro'),
+ '🏛️', 'https://camparino.com', 'centro'),
 
 ('Stork Milano',
  'Via Gian Giacomo Mora 2',
@@ -690,7 +690,7 @@ VALUES
  ARRAY['foodie','godereccio','social','vintage'],
  'Dal 1888: panzerotti fritti e al forno, coda perenne. Il fast food milanese originale, prima che esistesse il concetto.',
  'Il panzerotto classico fritto mozzarella-pomodoro è un dogma — non deviare.',
- '🥟', 'https://luini.it', 'centro'),
+ '🥟', NULL, 'centro'),
 
 ('Spontini',
  'Via Santa Radegonda 11',
@@ -698,7 +698,7 @@ VALUES
  ARRAY['godereccio','social','vintage','foodie'],
  'Pizza al trancio altissima e mozzarellosa dal 1953. Si mangia in piedi, veloce e senza cerimonie. Milano in un morso.',
  'Lo spicchio margherita classico è quello che devi prendere — è grande come un piatto.',
- '🍕', 'https://spontinfranceimilano.com', 'centro'),
+ '🍕', 'https://spontinimilano.com', 'centro'),
 
 ('Kebhouze',
  'Via Vigevano 18',
@@ -714,7 +714,7 @@ VALUES
  ARRAY['foodie','social','rilassato','creativo'],
  'La sede Navigli della pizzeria bolognese: stessi impasti perfetti, ambiente più grande e vivace con dehors sulla via.',
  'La pizza con salsiccia artigianale e friarielli è il piatto da habitué.',
- '🍕', 'https://bereberepizza.it', 'navigli'),
+ '🍕', NULL, 'navigli'),
 
 ('Temakinho',
  'Via Vigevano 18',
@@ -750,7 +750,7 @@ VALUES
  ARRAY['musicale','elegante','romantico','culturale','social'],
  'Il tempio del jazz a Milano e l''unico Blue Note in Europa. Artisti internazionali, acustica perfetta, cena-concerto con cucina di livello.',
  'I posti in platea vicino al palco sono i migliori — prenota il dinner show per l''esperienza completa.',
- '🎷', 'https://blfranceuenotemilano.com', 'isola'),
+ '🎷', NULL, 'isola'),
 
 ('Serraglio Jazz Club',
  'Via Valenza 19',
@@ -774,7 +774,7 @@ VALUES
  ARRAY['social','alternativo','creativo','musicale','aperitivo'],
  'Spazio multifunzione con bar, cucina, palco e cortile. Concerti, presentazioni di libri, workshop e aperitivi. Il cuore culturale di Città Studi.',
  'Il cortile d''estate è il posto perfetto per un aperitivo con musica live gratuita.',
- '🎤', 'https://santfranceeria.it', 'altro'),
+ '🎤', 'https://santeria.it', 'altro'),
 
 ('Circolo Magnolia',
  'Via Idro 10, Segrate',
@@ -834,7 +834,7 @@ VALUES
  ARRAY['elegante','esclusivo','foodie','social'],
  'Steakhouse di lusso del gruppo Monte Carlo: carni pregiate da tutto il mondo, tartare al coltello, interni spettacolari.',
  'La tartare preparata al tavolo è uno show — la wagyu giapponese è un''altra dimensione.',
- '🥩', 'https://beefbar.com', 'brera'),
+ '🥩', NULL, 'brera'),
 
 ('Al Pont de Ferr',
  'Ripa di Porta Ticinese 55',

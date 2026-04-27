@@ -188,7 +188,7 @@ VALUES
  ARRAY['elegante','romantico','aperitivo','social','esclusivo'],
  'Rooftop dell''Excelsior Hotel Gallia: vista sulla Stazione Centrale e sullo skyline, cocktail d''autore, finger food. Lusso discreto sopra i tetti.',
  'Al tramonto il panorama è spettacolare — prenota un tavolo esterno con vista.',
- '🌆', 'https://excelsiorhotelgallia.com', 'altro'),
+ '🌆', NULL, 'altro'),
 
 ('Terrazza 12',
  'Via Borsieri 12',
@@ -220,7 +220,7 @@ VALUES
  ARRAY['elegante','social','aperitivo','esclusivo','rilassato'],
  'Il celebre rooftop con due piscine affacciate sullo skyline: aperitivo, cena, pool party estivi. L''icona del rooftop milanese.',
  'La piscina è riservata ai soci del club — ma il ristorante e il bar sono aperti a tutti.',
- '🏊', 'https://ceresio7.com', 'porta_nuova'),
+ '🏊', NULL, 'porta_nuova'),
 
 ('Mare Culturale Urbano',
  'Via Giuseppe Gabetti 15',
@@ -248,7 +248,7 @@ VALUES
  ARRAY['foodie','social','rilassato','elegante'],
  'Il café della famiglia Langosteria: pesce in versione casual, crudi, insalate di mare, cocktail. La qualità Langosteria in formato accessibile.',
  'Il plateau di crudi è il piatto da cui partire — freschezza garantita come nelle sedi principali.',
- '🦪', 'https://langosteria.com', 'navigli'),
+ '🦪', NULL, 'navigli'),
 
 ('The Fisherman Pasta',
  'Via Vigevano 9',

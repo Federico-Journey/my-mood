@@ -21,7 +21,7 @@ VALUES
  ARRAY['culturale','rilassato','romantico','creativo'],
  'Multisala indipendente con caffetteria, ristorante e terrazza. Programmazione d''autore e blockbuster selezionati. Il cinema più amato dai milanesi.',
  'La terrazza al terzo piano è perfetta per un aperitivo pre-film.',
- '🎬', 'https://antfranceocinema.it', 'porta_nuova'),
+ '🎬', NULL, 'porta_nuova'),
 
 ('Cinema Mexico',
  'Via Savona 57',
@@ -37,7 +37,7 @@ VALUES
  ARRAY['alternativo','culturale','rilassato','creativo','vintage'],
  'Monosala di quartiere con programmazione curatissima: classici restaurati, documentari, cinema indipendente da tutto il mondo.',
  'Il bar interno è gestito da un collettivo — prova la birra artigianale prima del film.',
- '📽️', 'https://cinemabeltrade.it', 'isola'),
+ '📽️', NULL, 'isola'),
 
 ('Cineteca Milano MEET',
  'Viale Vittorio Veneto 2',
@@ -77,7 +77,7 @@ VALUES
  ARRAY['social','rilassato','festivo'],
  'Multiplex con 18 sale, IMAX e ScreenX. L''opzione classica per serate film in compagnia con parcheggio facile e ogni comfort.',
  'Compra online per evitare la coda alle casse del venerdì sera.',
- '🎬', 'https://ucicinemas.it', 'altro'),
+ '🎬', NULL, 'altro'),
 
 -- ══════════════════════════════════════════════════════════════
 -- TEATRI (7)
@@ -233,7 +233,7 @@ VALUES
  ARRAY['foodie','elegante','romantico','rilassato'],
  'Cucina milanese rivisitata in una ex casa dei ferrovieri con vista su Porta Nuova. Risotto allo zafferano tra i migliori della città.',
  'Prenota il tavolo in giardino d''estate — il risotto giallo è imperdibile.',
- '🍚', 'https://ratana.it', 'porta_nuova'),
+ '🍚', NULL, 'porta_nuova'),
 
 ('Tokuyoshi',
  'Via San Calocero 3',
@@ -273,7 +273,7 @@ VALUES
  ARRAY['foodie','creativo','elegante','alternativo'],
  'Panificazione d''autore di giorno, ristorante creativo di sera. Ogni piatto ruota attorno al pane e ai cereali. Esperienza unica.',
  'Il pane al carbone con burro affumicato è il piatto simbolo — non perderlo.',
- '🍞', 'https://rost.milano.it', 'navigli'),
+ '🍞', NULL, 'navigli'),
 
 ('Langosteria Bistrot',
  'Via Privata Bobbio 2',
@@ -305,7 +305,7 @@ VALUES
  ARRAY['foodie','social','creativo','rilassato'],
  'Pizza a lunga lievitazione con farine macinate a pietra e topping stagionali creativi. Birre artigianali selezionate con cura.',
  'La margherita con pomodorino giallo è il benchmark — poi esplora le speciali.',
- '🍕', 'https://berfranceberepizza.it', 'isola'),
+ '🍕', 'https://berberepizza.it', 'isola'),
 
 ('Lievità',
  'Via Privata Cesare Battisti 1',
@@ -313,7 +313,7 @@ VALUES
  ARRAY['foodie','social','godereccio','rilassato'],
  'Pizza gourmet napoletana in varie sedi milanesi. Impasto leggero, ingredienti di alta qualità, fritture da urlo.',
  'Il fritto misto all''ingresso non è decorativo — ordinalo come antipasto, è spettacolare.',
- '🍕', 'https://lfranceievitapizzagourmet.it', 'centro'),
+ '🍕', 'https://lievitapizzagourmet.it', 'centro'),
 
 ('Gino Sorbillo',
  'Largo Corsia dei Servi 11',
@@ -321,7 +321,7 @@ VALUES
  ARRAY['foodie','godereccio','social','festivo'],
  'Il re della pizza napoletana è sbarcato a Milano. Impasto soffice, cornicione alto, ingredienti campani doc. Sempre coda, sempre vale la pena.',
  'Arriva all''apertura o dopo le 14:30 per evitare la coda peggiore.',
- '🍕', 'https://sfranceorbillo.it', 'centro'),
+ '🍕', 'https://sorbillo.it', 'centro'),
 
 -- ══════════════════════════════════════════════════════════════
 -- TRATTORIE (5)
@@ -349,7 +349,7 @@ VALUES
  ARRAY['foodie','vintage','rilassato','social','godereccio'],
  'Dentro l''ex dopolavoro ferroviario: soffitti liberty, piatti della tradizione lombarda, porzioni generose. Un viaggio nel tempo gastronomico.',
  'Il bollito misto del giovedì è un rito — se capiti quel giorno, non ordinare altro.',
- '🚂', 'https://osteriadeltreno.it', 'porta_venezia'),
+ '🚂', NULL, 'porta_venezia'),
 
 ('Trattoria Trippa',
  'Via Giorgio Vasari 1',
@@ -377,7 +377,7 @@ VALUES
  ARRAY['nottambulo','festivo','social','musicale','alternativo'],
  'Ex capannone industriale da 3000 persone. Ospita i nomi più grossi dell''elettronica internazionale: Amelie Lens, Charlotte de Witte, Bicep.',
  'Compra i biglietti su Dice appena escono — i live sold out in poche ore.',
- '🔊', 'https://fafrancebriquemilano.it', 'altro'),
+ '🔊', 'https://fabriquemilano.it', 'altro'),
 
 ('Amnesia Milano',
  'Via Gatto 1',
@@ -385,7 +385,7 @@ VALUES
  ARRAY['nottambulo','festivo','social','musicale'],
  'Club storico di Milano con line-up che spaziano dalla techno alla house. Due sale, impianto audio devastante, atmosfera vera da clubbing.',
  'Il venerdì è la serata più forte — sabato è più commerciale.',
- '🪩', 'https://amnfranceesiamilano.com', 'altro'),
+ '🪩', 'https://amnesiamilano.com', 'altro'),
 
 ('Alcatraz',
  'Via Valtellina 25',
@@ -433,7 +433,7 @@ VALUES
  ARRAY['nottambulo','social','festivo','alternativo','musicale'],
  'Venue storica per concerti e serate club in zona Porta Vigentina. Programmazione varia: indie, elettronica, hip-hop italiano.',
  'Il cortile esterno è l''area chill perfetta per riprendere fiato tra un set e l''altro.',
- '📦', 'https://magazfrancezinigenerali.it', 'porta_romana'),
+ '📦', 'https://magazzinigenerali.it', 'porta_romana'),
 
 -- ══════════════════════════════════════════════════════════════
 -- PUB & BIRRERIE (7)
@@ -445,7 +445,7 @@ VALUES
  ARRAY['social','rilassato','godereccio','alternativo','aperitivo'],
  'Il birrificio artigianale più storico di Milano. Birre prodotte a pochi metri dal bancone, atmosphere da pub inglese ma con anima milanese.',
  'La Ghisa (ambrata) è la birra simbolo — perfetta con il tagliere di salumi.',
- '🍺', 'https://birfranceificiolambrate.com', 'altro'),
+ '🍺', NULL, 'altro'),
 
 ('Baladin Milano',
  'Via Solferino 56',
@@ -505,7 +505,7 @@ VALUES
  ARRAY['aperitivo','social','elegante','festivo'],
  'Terrazza con vista frontale sul Duomo. Spritz ovviamente protagonista, atmosfera turistica ma la vista ripaga tutto.',
  'Vai al tramonto per lo scatto migliore — la luce sulle guglie è perfetta.',
- '🍊', 'https://terrazzaaperol.com', 'centro'),
+ '🍊', NULL, 'centro'),
 
 ('Radio Rooftop',
  'Via Marco Polo 18',
@@ -513,7 +513,7 @@ VALUES
  ARRAY['elegante','aperitivo','romantico','esclusivo'],
  'Rooftop bar dell''hotel ME Milan il Duca: cocktail d''autore, skyline mozzafiato, musica lounge. Milano dall''alto con stile.',
  'Prenota un tavolo per il tramonto — il panorama a 360° è il migliore di Milano.',
- '📻', 'https://mfranceelia.com/radio-rooftop-bar', 'centro'),
+ '📻', 'https://melia.com/radio-rooftop-bar', 'centro'),
 
 ('Ceresio 7',
  'Via Ceresio 7',
@@ -565,7 +565,7 @@ VALUES
  ARRAY['rilassato','zen','romantico','social','sportivo'],
  'Parco contemporaneo nel cuore di Porta Nuova: giardini botanici, yoga gratuito, concerti estivi. Il salotto verde della Milano moderna.',
  'Le lezioni gratuite di yoga la mattina sono un modo incredibile per iniziare la giornata.',
- '🌸', 'https://bfranceam.milano.it', 'porta_nuova'),
+ '🌸', 'https://bam.milano.it', 'porta_nuova'),
 
 ('Giardini Indro Montanelli',
  'Corso Venezia',
@@ -589,7 +589,7 @@ VALUES
  ARRAY['sportivo','zen','rilassato','avventuroso'],
  '110 ettari di bosco urbano a ovest di Milano: sentieri per bici, orti comunitari, aree pic-nic e percorsi natura. La fuga dalla città senza uscirne.',
  'Il percorso ad anello da 5 km è perfetto per una corsa immersi nel verde.',
- '🌲', 'https://boscoincittfranceà.it', 'altro'),
+ '🌲', 'https://boscoincittà.it', 'altro'),
 
 ('Parco Nord Milano',
  'Via Clerici 150, Sesto San Giovanni',
@@ -597,7 +597,7 @@ VALUES
  ARRAY['sportivo','zen','rilassato','avventuroso','social'],
  'Enorme parco metropolitano a nord: bunker della WWII visitabili, piste ciclabili, osservazione uccelli. Natura e storia insieme.',
  'I tour guidati ai bunker della Breda sono un''esperienza unica — prenotazione obbligatoria.',
- '🏃', 'https://parfranceonord.milano.it', 'altro'),
+ '🏃', NULL, 'altro'),
 
 ('CityLife Park',
  'Piazza Tre Torri',
@@ -649,7 +649,7 @@ VALUES
  ARRAY['sportivo','avventuroso','social','zen'],
  'Palestra di arrampicata con boulder e pareti da 15 metri. Corsi per tutti i livelli, dalla prima volta al training avanzato.',
  'Il corso introduttivo di 2 ore è il modo migliore per iniziare — ti insegnano tutto.',
- '🧗', 'https://rockspot.it', 'navigli'),
+ '🧗', NULL, 'navigli'),
 
 ('QC Terme Milano',
  'Piazzale Medaglie d''Oro 2',
@@ -673,7 +673,7 @@ VALUES
  ARRAY['avventuroso','misterioso','social','creativo'],
  'Escape room con stanze a tema: horror, investigazione, avventura. Enigmi ben progettati per gruppi da 2 a 6 persone. Adrenalina e logica.',
  'La stanza "Serial Killer" è la più difficile — provaci solo se hai già esperienza.',
- '🔑', 'https://intrappola.to', 'porta_nuova'),
+ '🔑', NULL, 'porta_nuova'),
 
 ('Virtual Reality Experience - VRUMS',
  'Via Donatello 11',
@@ -774,7 +774,7 @@ VALUES
  ARRAY['foodie','elegante','esclusivo','creativo','romantico'],
  'Primo ristorante giapponese con stella Michelin in Italia. Omakase di livello assoluto, fusion nippo-italiano.',
  'L''omakase al bancone è l''esperienza definitiva — guardare lo chef lavorare è uno spettacolo.',
- '🍣', 'https://iyo.it', 'sempione'),
+ '🍣', NULL, 'sempione'),
 
 ('Ba Asian Mood',
  'Via Raffaello Sanzio 22',
@@ -790,7 +790,7 @@ VALUES
  ARRAY['foodie','avventuroso','social','rilassato'],
  'Ramen artigianale con brodi cotti per ore. Ambiente minimal giapponese, sapori profondi, porzioni soddisfacenti.',
  'Il tonkotsu extra-rich con uovo marinato è il piatto che non puoi sbagliare.',
- '🍜', 'https://zazaramen.com', 'brera'),
+ '🍜', NULL, 'brera'),
 
 ('Tagiura',
  'Via Tagiura 5',
@@ -806,7 +806,7 @@ VALUES
  ARRAY['foodie','social','elegante','creativo'],
  'Fusion nippo-brasiliana: sushi rolls creativi, poke bowl colorati, temaki giganti. Fresco e fotogenico.',
  'Il Bomaki roll signature con tempura di gambero è il piatto bandiera.',
- '🍣', 'https://bomaki.it', 'brera'),
+ '🍣', NULL, 'brera'),
 
 ('El Porteño Grill',
  'Viale Corsica 5',
@@ -822,7 +822,7 @@ VALUES
  ARRAY['social','festivo','foodie','aperitivo','creativo'],
  'Ristorante dell''hotel Mama Shelter con cucina italiana rivisitata, pizza e cocktail. Atmosfera colorata e festosa.',
  'Il brunch della domenica è una festa — con DJ, cocktail e buffet infinito.',
- '🎉', 'https://mamashelter.com/milan', 'navigli'),
+ '🎉', NULL, 'navigli'),
 
 ('Taqueria El Nuevo Mariachi',
  'Via Giuseppe Sirtori 11',
@@ -854,7 +854,7 @@ VALUES
  ARRAY['foodie','social','creativo','alternativo'],
  'Seconda sede milanese della celebre pizzeria bolognese. Impasto a lunga lievitazione, ingredienti ricercati e birre artigianali.',
  'La pizza con nduja e burrata è la scelta che non delude mai.',
- '🍕', 'https://bereberepizza.it', 'isola'),
+ '🍕', NULL, 'isola'),
 
 ('Da Zero',
  'Via Caminadella 2',

@@ -1,8 +1,7 @@
-# Venue esistenti nel database (504 uniche)
+# Venue esistenti nel database (604 uniche)
 # Usare come riferimento per evitare duplicati nei prossimi batch
-# Aggiornato: 2026-04-20
-# NOTA: venue chiuse rimosse, JustMe Milano (ex Just Cavalli) aggiunta
-# Batch 5 corretto: Mono Milano, Social Club Milano, The Club Milano aggiunte
+# Aggiornato: 2026-04-25
+# Batch 6 aggiunto
 
 10 Corso Como
 1930 Cocktail Bar
@@ -11,6 +10,7 @@ ADI Design Museum
 Acapulco Cucina Mexicana
 Acquario Civico di Milano
 Africana Ristorante
+After Line
 Al Fresco
 Al Garghet
 Al Maqam
@@ -28,11 +28,15 @@ Amnesia Milano
 Amnesia Milano — Giardino
 Anteo Palazzo del Cinema
 Anteo Palazzo del Cinema — Caffè
+Anteo nel Parco
 Antica Osteria il Ronchettone
 Antica Trattoria della Pesa
+Ape Cesare
 Apollo Club
+Apollo Live Club
 Apollo Milano
 Apollo Zero
+Arancini Factory
 Arci Bellezza
 Arci Biko — Cinema all'Aperto
 Armani/Bamboo Bar
@@ -48,26 +52,35 @@ Backdoor 43
 Backdoor Speakeasy
 Bagni Misteriosi
 Baladin Milano
+Balera Cocktail Club
 Bar Basso
+Bar Luce Wes Anderson
+Bar Magenta
 Bar Rita
 Barbacoa
 Basara Milano
+Base Radio
 Beefbar Milano
+Beirut Kitchen
 Belle Hélène
 Berbere
 Berberè (Isola)
 Berberè (Navigli)
 Berberè Milano
+Bere Bene Porta Nuova
 Berton
 Biancolatte
 Biblioteca degli Alberi
 Big Karaoke
 Bike Tour Milano
+Biko Club
 Biko Giardino
 Biko Milano
+Bikram Yoga Milano
 Birra & Blues
 Birrificio Lambrate
 Birrificio di Lambrate — Golgi
+Birrificio di Lambrate — San Babila
 Blue Note Lounge
 Blue Note Milano
 Blue Rose Cabaret
@@ -75,10 +88,12 @@ Board Game Café L'Orso
 Bobino Club
 Bok
 Bomaki
+Bomba Fritta
 Bosco Verticale — Passeggiata
 Boscoincittà
 Botanical Club
 Botanical Club Città Studi
+Bottiglieria di Roberto
 Bouldering Hub
 Bowling Bicocca
 Bowling Rozzano
@@ -94,10 +109,12 @@ Camparino in Galleria
 Campo Sportivo XXV Aprile
 Canottieri San Cristoforo
 Cantina Urbana
+Cantina della Vetra
 Cantine Isola
 Cape Town Café
 Casa Ramen
 Cascina Cuccagna
+Cascinet — Spazio Culturale
 Castello Sforzesco — Cortili
 Centro Balneare Romano
 Ceresio 7
@@ -116,23 +133,33 @@ Cinema Beltrade
 Cinema Beltrade — Arena Estiva
 Cinema Gnomo
 Cinema Mexico
+Cinema all'Aperto Arianteo
 Cineteca Milano MEET
 Cioccolat Italiani Navigli
 Cioccolatitaliani
 Circle Milano
+Circolo Arci Orfeo
 Circolo Magnolia
 CityLife Park
 Civico Planetario
 Coa Asian Food & Drinks
+Colibrì Brunch Isola
 Colibrì Café
 Combat Arena — Bubble Football
 Combo Milano
+Comedy Ring Milano
+Company Club
 Confine
 Contraste
+Contrasto Caffè
 Cooking Class at Eataly
 Cova
+Cozze & Vino
 Crema
 Crosta
+Crudo Milano
+Cucina Lab Experience
+Curry Up Milano
 Da Giacomo
 Da Giannino — L'Angolo d'Abruzzo
 Da Martino
@@ -151,27 +178,34 @@ East Market Shop
 Eataly Smeraldo
 El Carnicero
 El Porteño Grill
+Empanadas Buenos Aires
 Emporio Armani Caffè
 Emporio Brera Coffee
 Enoteca Cotti
 Enoteca Naturale
 Enoteca Sabbia d'Oro
+Enoteca della Vetra
 Enrico Bartolini al Mudec
 Erba Brusca
 Erba Brusca al Parco
 Escape Room Milano
 Escape Room Milano - Intrappola.to
 Ethiopian Restaurant Mesob
+Fabbrica del Vapore Bar
 Fabrique
 Fico Climbing
 Fiera di Sinigaglia
 Finger's Garden
 Fioraio Bianchi Caffè
+Fiorellino Brera
 Float Hub Milano
+Float Therapy Lab
 Flower Burger
 Fondazione Feltrinelli
+Fondazione Forma
 Fondazione Giangiacomo Feltrinelli
 Fondazione ICA Milano
+Fondazione Luciana Matalon
 Fondazione Prada
 Fondazione Prada Bar Luce
 Fonderie Milanesi
@@ -184,27 +218,35 @@ GROM
 Galleria Lia Rumma
 Galleria Massimo de Carlo
 Garage Italia
+Garage Moulinski
+Gastronomia del Mare
 Gate Milano
 Gattopardo Café
 Gattullo
+Gattullo Colazione
 Gelato Bianco
 Gelato Giusto
 Ghe Sem
 Giardini Indro Montanelli
 Giardini Indro Montanelli — Percorso Mindfulness
+Giardino Nascosto
 Giardino della Guastalla
 Gineria Brera
+Ginger Cocktail Lab
 Gino Sorbillo
 Giocolandia
 Giulio Pane e Ojo
+Glitter Bar
 Gong Lambrate
 Gong Oriental Attitude
 Guangzhou
+Gyoza Bar Navigli
 Haam Korean Restaurant
 Hakuna Matata Gelato
 Ham Holy Burger
 Hammam Milano
 Hammam della Rosa
+Hana Bistrò
 Hangar Bicocca
 Hollywood Milano
 Hop Stuff
@@ -227,10 +269,15 @@ K1 Speed Milano
 KTV Karaoke
 Kathay
 Kawa Sushi
+Kebab Turco Originale
 Kebab de Milan
 Kebhouze
 Killer Ristorante
+Kimchi House
 Korean BBQ Koreatown
+La Balera dell'Ortica
+La Colazione Milano
+La Paella de Miguel
 La Piadineria
 La Salumeria della Musica
 La Triennale - Design Library
@@ -244,8 +291,11 @@ Langosteria Café
 Langosteria Cucina
 Laser Game Milano - LaserMaxx
 Le Banque
+Leccomilano
 Legend Club
 Leoncavallo
+Libreria Centofiori
+Libreria Cortina
 Libreria Gogol & Company
 Libreria Hoepli
 Libreria Open
@@ -268,13 +318,16 @@ Macinata
 Mag Cafè
 Mag Café
 Mag Café (Naviglio Pavese)
+Mag Café Brunch
 Mag Moustache
 Magazzini Generali
 Maido
 Maio Restaurant
 Mama Shelter Restaurant
 Mama's Burger — Loreto
+Mamà Bakery
 Manforte Studio Yoga
+Manifesto Bar
 Maoji Street Food
 Maoz Falafel
 Marchesi 1824
@@ -296,8 +349,10 @@ Milano Padel Arena
 Milano Wine Week
 Miscusi
 Moleskine Café
+Mono Bar
 Mono Milano
 Motelombroso
+Mudec Lab
 Mudec Photo
 Mudec — Museo delle Culture
 Museo Bagatti Valsecchi
@@ -317,10 +372,15 @@ Nebbia
 Nobu Milano
 Nolo Bar Social Club
 Noor Milano
+Nordik Spa
 Nottingham Forest
 Nottingham Forest (Navigli)
 Nottingham Forest Città Studi
+Nuova Era Cocktails
 Oh Bej! Oh Bej!
+Ohibò Live
+Onda Poké
+Onigiri Lab
 Open Milano
 Open — Care of
 Oriental Market Superstore
@@ -334,7 +394,9 @@ Osteria del Mare
 Osteria del Treno
 Osteria dell'Acquabella
 Osteria della Bistecca
+Oyster Bar Brera
 Padel City Milano
+Paint & Wine
 Palazzo Reale
 Panificio Davide Longoni
 Panino Giusto
@@ -351,13 +413,17 @@ Pasticceria Cucchi
 Pave Navigli
 Pavè Gelati e Granite
 Pavé
+Pavé Brunch
 Peck — Il Bar
 Persian House
 Pescaria
+Pho Milano
+Piadineria Romagnola Brera
 Piccolo Teatro
 Piccolo Teatro Grassi
 Piccolo Teatro Strehler
 Piccolo Teatro di Milano
+Pilates Garage
 Pinacoteca di Brera
 Pinch — Spirits & Kitchen
 Pirelli HangarBicocca
@@ -367,12 +433,15 @@ Piz
 Pizza Am
 Pizzeria Spontini — Corso Buenos Aires
 Planetario di Milano
+Plastic Fantastic Café
 Poke House
 Poke'it
 Polimi Bovisa — Caffè Politecnico
 Polpo Brace & Griglia
+Pop Milano
 Poporoya
 Porterhouse Milano
+Pottery Lab Milano
 Premiata Forneria
 Princi
 Pub LOM
@@ -381,6 +450,7 @@ QC Terme Milano
 Radetzky
 Radio Rooftop
 Radio Rooftop Milan
+Rainbow Lounge
 Ratanà
 Ratanà Bistrot
 Ravioleria Sarpi
@@ -391,9 +461,13 @@ Rita & Cocktails
 Rita Cocktails Isola
 Rizzoli Galleria
 Rocket Club
+Rocket Milano
 Rockspot - Arrampicata Milano
 Rooftop Manzoni
+Roots Milano
 Rossopomodoro
+Running Club Parco Sempione
+Ruyi Dumpling Bar
 Røst
 Røst Coffee & Kitchen
 SNAG Milano — Padel & Tennis
@@ -401,32 +475,43 @@ SPA Suite Milano
 SUP Naviglio
 Sakeya
 Salumeria della Musica Live
+Santambroeus
 Santeria Paladini 8
 Santeria Social Club
 Santeria Toscana 31
+Santeria Toscana Live
 Sarti Mercato del Pesce
 Sartoria Panatoni
+Secret Room Escape
 Serraglio Jazz Club
 Seta by Antonio Guida
+Shala Yoga Milano
 Shi Feng Bao
 Shiro Poporoya
 Shisha Café
+Sidecar Milano
 Sine by Di Pinto
 Skateboard Park Lampugnano
 Slow Sud
+Smørrebrød Milano
 Social Club Milano
 Soda Jerk
+Sound Bath Milano
 Spazio Avanzi
+Spazio Eataly Arte
 Spazio Maiocchi
 Spirit de Milan
 Spirit de Milan — Giardino
+Spirito Cocktail Bar
 Spontini
 Stadio Giuseppe Meazza — Tour
 Starita
 Stork Milano
 Straf Bar
 Sushi Daily Bar
+Sushi Masterclass
 T'a Milano
+Taco Luchador
 Tacos Locos
 Tagiura
 Taglio
@@ -434,6 +519,7 @@ Taglio Caffè
 Talent Garden Calabiana
 Tandoor Indian Restaurant
 Tandoori Nights
+Tango Milonga
 Tano Passami l'Olio
 Taqueria El Nuevo Mariachi
 Teatro Carcano
@@ -453,6 +539,7 @@ Tempio del Futuro Perduto
 Tennis Club Bonacossa
 Terme Milano
 Terme QC Porta Romana
+Terme di Porta Romana
 Terrazza 12
 Terrazza Aperol
 Terrazza Gallia
@@ -474,6 +561,8 @@ The Sign Room — Escape Room
 The Space Cinema Odeon
 The Spirit
 The Yard Milano
+Tigelle & Gnocco
+Toast Milano
 Tocqueville 13
 Trampoline Park Jump World
 Trattoria Milanese
@@ -482,10 +571,13 @@ Trattoria Torre di Pisa
 Trattoria Trippa
 Trattoria dalla Cecilia
 Trattoria del Nuovo Macello
+Trattoria del Pescatore
 Trattoria del Pesce
 Trattoria la Brisa
 Triennale Milano
 Trippa
+Trippa Panino
+Tropico Milano
 Tunnel
 Tunnel Club
 UCI Cinemas Bicocca
@@ -498,13 +590,20 @@ Vesta Coffee Roasters
 ViVi Bistrot — Città Studi
 Viet Mood
 Vineria Londei
+Vinile Wine Bar
+Vino al Vino
+Vintage Market Milano
 Virgin Active CityLife
 Virtual Arena Milano
 Virtual Reality Experience - VRUMS
+Vivace Spritz Bar
 Volt Club
 Vòce Aimo e Nadia
 Wicky's Innovative Japanese Cuisine
+Wine Tasting Club
+Wow Spazio Fumetto
 Yan Fish
 YogaOne Milano
 Zazà Ramen
+Zen Zone Meditation
 Zibo

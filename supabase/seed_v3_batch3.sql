@@ -45,7 +45,7 @@ VALUES
  ARRAY['foodie','elegante','social','creativo'],
  'Cucina pan-asiatica in un ambiente elegante: sushi, dim sum, curry, wok. La versione raffinata della cucina orientale per serate speciali.',
  'Il sashimi misto e i gyoza sono i piatti da ordinare sempre — qualità costante.',
- '🏮', 'https://gong.it', 'sempione'),
+ '🏮', NULL, 'sempione'),
 
 ('Bok',
  'Via Paolo Sarpi 17',
@@ -113,7 +113,7 @@ VALUES
  ARRAY['social','festivo','avventuroso','alternativo'],
  'Il bar dell''ostello più cool di Milano: aperto a tutti, terrazza con vista, serate a tema e gente da tutto il mondo. Perfetto per incontrare sconosciuti.',
  'Il rooftop è aperto a chiunque — non devi dormire all''ostello per accedervi.',
- '🌍', 'https://ostellobello.com', 'porta_nuova'),
+ '🌍', NULL, 'porta_nuova'),
 
 ('Birrificio di Lambrate — Golgi',
  'Via Golgi 60',
@@ -121,7 +121,7 @@ VALUES
  ARRAY['social','rilassato','godereccio','alternativo'],
  'La seconda sede del Birrificio Lambrate, in zona Città Studi: birre artigianali, panini, atmosfera da pub inglese tra universitari.',
  'La birra Montestella (bionda) è perfetta per iniziare — poi esplora le stagionali.',
- '🍺', 'https://birriffranceiciolambrate.com', 'altro'),
+ '🍺', NULL, 'altro'),
 
 ('Pizzeria Spontini — Corso Buenos Aires',
  'Corso Buenos Aires 60',
@@ -173,7 +173,7 @@ VALUES
  ARRAY['elegante','esclusivo','foodie','creativo','romantico'],
  'Il ristorante di Nobu Matsuhisa all''Armani Hotel: fusion nippo-peruviana al massimo livello. Black cod con miso è leggendario.',
  'Il black cod miso e il yellowtail jalapeño sono i piatti che hanno reso Nobu famoso nel mondo.',
- '🐟', 'https://noburestaurants.com', 'centro'),
+ '🐟', NULL, 'centro'),
 
 ('Iyo Aalto',
  'Via Piero della Francesca 70',
@@ -197,7 +197,7 @@ VALUES
  ARRAY['foodie','elegante','social','romantico'],
  'Ristorante giapponese con giardino giapponese interno. Sushi tradizionale di qualità, tempura perfetta, sake curato.',
  'Il giardino è un''oasi — cenare fuori tra bambù e lanterne è un''esperienza unica a Milano.',
- '🎋', 'https://fingerfrances.it', 'isola'),
+ '🎋', 'https://fingers.it', 'isola'),
 
 ('Basara Milano',
  'Via Tortona 12',
@@ -205,7 +205,7 @@ VALUES
  ARRAY['foodie','social','elegante','rilassato'],
  'Sushi all-you-can-eat premium: pesce di qualità nettamente superiore alla media, ambiente curato, servizio attento.',
  'Scegli il menu premium — la differenza di qualità nel pesce rispetto al base si sente.',
- '🍣', 'https://basarfranceamilano.it', 'navigli'),
+ '🍣', 'https://basaramilano.it', 'navigli'),
 
 ('Sakeya',
  'Via Sottocorno 5',
@@ -361,7 +361,7 @@ VALUES
  ARRAY['culturale','creativo','elegante','alternativo'],
  'Una delle gallerie più importanti d''Italia, nel cuore del design district di Lambrate. Artisti emergenti e star dell''arte contemporanea.',
  'Visita durante il Salone del Mobile (aprile) quando tutta la zona diventa un museo a cielo aperto.',
- '🎨', 'https://massimodecarlo.com', 'altro'),
+ '🎨', NULL, 'altro'),
 
 ('Armani/Silos',
  'Via Bergognone 40',
@@ -385,7 +385,7 @@ VALUES
  ARRAY['culturale','zen','coffee_lover','creativo'],
  'La libreria più grande di Milano dal 1870: sei piani di libri su ogni argomento. Perdersi tra gli scaffali è un''esperienza in sé.',
  'Il reparto arte e architettura al terzo piano è un gioiello — sedie per sfogliare con calma.',
- '📚', 'https://hoepli.it', 'centro'),
+ '📚', NULL, 'centro'),
 
 ('Libreria Utopia',
  'Via Vallazze 34',
@@ -409,7 +409,7 @@ VALUES
  ARRAY['culturale','creativo','alternativo'],
  'Lo spazio fotografico del MUDEC: mostre di fotografia contemporanea e reportage. Formato più intimo rispetto al museo principale.',
  'Combina la visita con il museo principale e un caffè al bar del MUDEC — mezza giornata perfetta.',
- '📷', 'https://mudec.it', 'navigli'),
+ '📷', NULL, 'navigli'),
 
 -- ══════════════════════════════════════════════════════════════
 -- PIADINERIE, FOCACCERIE & FAST CASUAL (8)
@@ -437,7 +437,7 @@ VALUES
  ARRAY['foodie','social','rilassato','godereccio'],
  'Pastificio con pasta fresca fatta in casa e condita al momento. Menu che cambia con le stagioni, ingredienti italiani, atmosfera conviviale.',
  'Le cacio e pepe e l''amatriciana sono i piatti da giudicare — qui sono fatti col cuore.',
- '🍝', 'https://miscfranceusi.com', 'porta_venezia'),
+ '🍝', 'https://miscusi.com', 'porta_venezia'),
 
 ('Alice Pizza',
  'Via Santa Radegonda 11',
@@ -453,7 +453,7 @@ VALUES
  ARRAY['foodie','social','godereccio','rilassato'],
  'Pizzeria napoletana con forno a legna e ingredienti campani DOP. Impasto soffice, mozzarella filante, atmosfera da trattoria del sud.',
  'La DOC con mozzarella di bufala e pomodorini è la scelta sicura — semplice e perfetta.',
- '🍕', 'https://rossopomodoro.it', 'sempione'),
+ '🍕', NULL, 'sempione'),
 
 ('Panino Giusto',
  'Piazza Beccaria 4',
@@ -461,7 +461,7 @@ VALUES
  ARRAY['foodie','rilassato','social','godereccio'],
  'Panini gourmet con ingredienti di alta qualità: prosciutto tagliato al momento, formaggi DOP, pane croccante. L''evoluzione del panino italiano.',
  'Il Panino del Nonno con bresaola e robiola è il classico che non tradisce.',
- '🥪', 'https://pfranceanfranceinogiusto.it', 'centro'),
+ '🥪', 'https://paninogiusto.it', 'centro'),
 
 ('Kebab de Milan',
  'Via Lecco 7',
@@ -589,7 +589,7 @@ VALUES
  ARRAY['nottambulo','elegante','social','festivo','esclusivo'],
  'Club dentro Parco Sempione: terrazza all''aperto, dress code elegante, serate a tema. Il clubbing milanese in versione glam.',
  'D''estate la terrazza è il posto dove stare — prenota un tavolo con bottiglia.',
- '🥂', 'https://oldfashion.it', 'sempione'),
+ '🥂', NULL, 'sempione'),
 
 ('Just Cavalli',
  'Via Luigi Camoens 1',
@@ -617,7 +617,7 @@ VALUES
  ARRAY['social','rilassato','foodie','godereccio','alternativo'],
  'Il birrificio artigianale storico di Milano: birre prodotte in loco, giardino, taglieri. Un pezzo di storia della craft beer italiana.',
  'La Ghisa (amber ale) e la Montestella (IPA) sono le signature — accompagna con i taglieri.',
- '🍺', 'https://birrificiolambrate.com', 'altro'),
+ '🍺', NULL, 'altro'),
 
 ('Baladin Milano',
  'Via Solferino 56',
@@ -693,7 +693,7 @@ VALUES
  ARRAY['social','festivo','rilassato','godereccio'],
  'Mini golf tech-infused in CityLife: piste con tracking automatico, cocktail, cibo. La versione moderna e social del minigolf.',
  'Prenota il weekend sera con il pacchetto drink — è la formula migliore per gruppi.',
- '⛳', 'https://puttshack.com', 'sempione'),
+ '⛳', NULL, 'sempione'),
 
 -- ══════════════════════════════════════════════════════════════
 -- COLAZIONI & BRUNCH SPOT (5)
@@ -713,7 +713,7 @@ VALUES
  ARRAY['coffee_lover','rilassato','zen','creativo'],
  'Specialty coffee bar di riferimento a Milano: caffè filtro, V60, aeropress. Chicchi selezionati, baristi competenti, zero compromessi.',
  'Prova il filtro del giorno — ogni settimana un''origine diversa, ogni tazza una scoperta.',
- '☕', 'https://orfrancesonero.coffee', 'porta_venezia'),
+ '☕', 'https://orsonero.coffee', 'porta_venezia'),
 
 ('Forno del Mastro',
  'Via Spontini 8',
@@ -729,7 +729,7 @@ VALUES
  ARRAY['coffee_lover','culturale','elegante','creativo','vintage'],
  'Il bar disegnato da Wes Anderson dentro Fondazione Prada: interni pastello, formica, jukebox. Colazione o aperitivo in un set cinematografico.',
  'Vai la mattina presto per goderti il bar vuoto — la luce è perfetta e non c''è coda.',
- '🎬', 'https://fondazioneprada.org', 'porta_romana'),
+ '🎬', NULL, 'porta_romana'),
 
 ('Marchesi 1824',
  'Via Santa Maria alla Porta 11a',
@@ -785,7 +785,7 @@ VALUES
  ARRAY['creativo','social','rilassato','alternativo','coffee_lover'],
  'Spazio ibrido: caffè, coworking, concerti, mostre. Di giorno si lavora al laptop, di sera si ascolta musica live. Il multitasking milanese.',
  'Di giorno prendi il caffè e lavora al piano superiore — la sera controlla la programmazione concerti.',
- '🎤', 'https://santfranceeria.it', 'altro'),
+ '🎤', NULL, 'altro'),
 
 ('Colibrì Café',
  'Via Solferino 5',
@@ -809,7 +809,7 @@ VALUES
  ARRAY['creativo','coffee_lover','elegante','culturale','zen'],
  'Il caffè letterario di Moleskine: design curato, mostre, workshop creativi. Perfetto per scrivere, disegnare, pensare con un caffè perfetto.',
  'Il tavolo vicino alla vetrina è il posto più instagrammabile — ma il mezzanino è il più tranquillo.',
- '📓', 'https://moleskine.com', 'brera'),
+ '📓', NULL, 'brera'),
 
 ('BASE Milano',
  'Via Bergognone 34',
@@ -829,7 +829,7 @@ VALUES
  ARRAY['social','rilassato','creativo','alternativo','festivo'],
  'Piscina all''aperto del Teatro Franco Parenti: si nuota d''estate, d''inverno diventa pista di pattinaggio. Bar, sdraio, eventi culturali a bordo vasca.',
  'D''estate vai al tramonto — nuoti con la luce dorata e poi aperitivo a bordo piscina.',
- '🏊', 'https://bfranceagnimisteriosi.it', 'porta_romana'),
+ '🏊', 'https://bagnimisteriosi.it', 'porta_romana'),
 
 ('Spirit de Milan',
  'Via Bovisasca 59',

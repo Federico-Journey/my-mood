@@ -1,0 +1,599 @@
+name,address,website_url_current,website_url_correct,google_maps_url
+10 Corso Como,Corso Como 10,https://10corsocomo.com,,https://www.google.com/maps/search/?api=1&query=10%20Corso%20Como%2C%20Corso%20Como%2010%2C%20Milano%2C%20Italia
+1930 Cocktail Bar,Via Tivoli 2,https://1930cocktailbar.com,,https://www.google.com/maps/search/?api=1&query=1930%20Cocktail%20Bar%2C%20Via%20Tivoli%202%2C%20Milano%2C%20Italia
+28 Posti,Via Corsico 1,,,https://www.google.com/maps/search/?api=1&query=28%20Posti%2C%20Via%20Corsico%201%2C%20Milano%2C%20Italia
+ADI Design Museum,Piazza Compasso d'Oro 1,,,https://www.google.com/maps/search/?api=1&query=ADI%20Design%20Museum%2C%20Piazza%20Compasso%20d%27Oro%201%2C%20Milano%2C%20Italia
+Acapulco Cucina Mexicana,Via Borsieri 16,,,https://www.google.com/maps/search/?api=1&query=Acapulco%20Cucina%20Mexicana%2C%20Via%20Borsieri%2016%2C%20Milano%2C%20Italia
+Acquario Civico di Milano,Viale Gadio 2,https://acquariocivicomilano.eu,,https://www.google.com/maps/search/?api=1&query=Acquario%20Civico%20di%20Milano%2C%20Viale%20Gadio%202%2C%20Milano%2C%20Italia
+Africana Ristorante,Via Padova 47,,,https://www.google.com/maps/search/?api=1&query=Africana%20Ristorante%2C%20Via%20Padova%2047%2C%20Milano%2C%20Italia
+After Line,Via Sammartini 25,,,https://www.google.com/maps/search/?api=1&query=After%20Line%2C%20Via%20Sammartini%2025%2C%20Milano%2C%20Italia
+Al Fresco,Via Savona 50,,,https://www.google.com/maps/search/?api=1&query=Al%20Fresco%2C%20Via%20Savona%2050%2C%20Milano%2C%20Italia
+Al Garghet,Via Valpetrosa 5,,,https://www.google.com/maps/search/?api=1&query=Al%20Garghet%2C%20Via%20Valpetrosa%205%2C%20Milano%2C%20Italia
+Al Maqam,Via Melzo 7,,,https://www.google.com/maps/search/?api=1&query=Al%20Maqam%2C%20Via%20Melzo%207%2C%20Milano%2C%20Italia
+Al Matarel,Via Maria Calvi 2,,,https://www.google.com/maps/search/?api=1&query=Al%20Matarel%2C%20Via%20Maria%20Calvi%202%2C%20Milano%2C%20Italia
+Al Pont de Ferr,Ripa di Porta Ticinese 55,,,https://www.google.com/maps/search/?api=1&query=Al%20Pont%20de%20Ferr%2C%20Ripa%20di%20Porta%20Ticinese%2055%2C%20Milano%2C%20Italia
+Al Porto,Piazzale Generale Cantore 9,,,https://www.google.com/maps/search/?api=1&query=Al%20Porto%2C%20Piazzale%20Generale%20Cantore%209%2C%20Milano%2C%20Italia
+Al Vecchio Porco,Via Valenza 5,,,https://www.google.com/maps/search/?api=1&query=Al%20Vecchio%20Porco%2C%20Via%20Valenza%205%2C%20Milano%2C%20Italia
+Alcatraz,Via Valtellina 25,https://alcatrazmilano.it,,https://www.google.com/maps/search/?api=1&query=Alcatraz%2C%20Via%20Valtellina%2025%2C%20Milano%2C%20Italia
+Alcatraz Live,Via Valtellina 25,,,https://www.google.com/maps/search/?api=1&query=Alcatraz%20Live%2C%20Via%20Valtellina%2025%2C%20Milano%2C%20Italia
+Alchemist Garden,Via Vigevano 18,,,https://www.google.com/maps/search/?api=1&query=Alchemist%20Garden%2C%20Via%20Vigevano%2018%2C%20Milano%2C%20Italia
+Alice Pizza,Via Santa Radegonda 11,,,https://www.google.com/maps/search/?api=1&query=Alice%20Pizza%2C%20Via%20Santa%20Radegonda%2011%2C%20Milano%2C%20Italia
+Alice Ristorante,Piazza XXV Aprile 10,,,https://www.google.com/maps/search/?api=1&query=Alice%20Ristorante%2C%20Piazza%20XXV%20Aprile%2010%2C%20Milano%2C%20Italia
+Altatto,Via Melzo 24,,,https://www.google.com/maps/search/?api=1&query=Altatto%2C%20Via%20Melzo%2024%2C%20Milano%2C%20Italia
+Amnesia Milano,Via Gatto 1,https://amnesiamilano.com,,https://www.google.com/maps/search/?api=1&query=Amnesia%20Milano%2C%20Via%20Gatto%201%2C%20Milano%2C%20Italia
+Amnesia Milano — Giardino,Via Forlanini 65,,,https://www.google.com/maps/search/?api=1&query=Amnesia%20Milano%20%E2%80%94%20Giardino%2C%20Via%20Forlanini%2065%2C%20Milano%2C%20Italia
+Anteo Palazzo del Cinema,Piazza XXV Aprile 8,,,https://www.google.com/maps/search/?api=1&query=Anteo%20Palazzo%20del%20Cinema%2C%20Piazza%20XXV%20Aprile%208%2C%20Milano%2C%20Italia
+Anteo Palazzo del Cinema — Caffè,Via Milazzo 9,,,https://www.google.com/maps/search/?api=1&query=Anteo%20Palazzo%20del%20Cinema%20%E2%80%94%20Caff%C3%A8%2C%20Via%20Milazzo%209%2C%20Milano%2C%20Italia
+Anteo nel Parco,Parco Sempione,,,https://www.google.com/maps/search/?api=1&query=Anteo%20nel%20Parco%2C%20Parco%20Sempione%2C%20Milano%2C%20Italia
+Antica Osteria il Ronchettone,Via Moncucco 1,,,https://www.google.com/maps/search/?api=1&query=Antica%20Osteria%20il%20Ronchettone%2C%20Via%20Moncucco%201%2C%20Milano%2C%20Italia
+Antica Trattoria della Pesa,Viale Pasubio 10,,,https://www.google.com/maps/search/?api=1&query=Antica%20Trattoria%20della%20Pesa%2C%20Viale%20Pasubio%2010%2C%20Milano%2C%20Italia
+Ape Cesare,Piazza XXIV Maggio,,,https://www.google.com/maps/search/?api=1&query=Ape%20Cesare%2C%20Piazza%20XXIV%20Maggio%2C%20Milano%2C%20Italia
+Apollo Club,Via Giosuè Borsi 9,,,https://www.google.com/maps/search/?api=1&query=Apollo%20Club%2C%20Via%20Giosu%C3%A8%20Borsi%209%2C%20Milano%2C%20Italia
+Apollo Live Club,Via Borsi 9,,,https://www.google.com/maps/search/?api=1&query=Apollo%20Live%20Club%2C%20Via%20Borsi%209%2C%20Milano%2C%20Italia
+Apollo Milano,Via Giosue Borsi 9,https://apollomilano.it,,https://www.google.com/maps/search/?api=1&query=Apollo%20Milano%2C%20Via%20Giosue%20Borsi%209%2C%20Milano%2C%20Italia
+Apollo Zero,Via Borsi 9,,,https://www.google.com/maps/search/?api=1&query=Apollo%20Zero%2C%20Via%20Borsi%209%2C%20Milano%2C%20Italia
+Arancini Factory,Via Solferino 20,,,https://www.google.com/maps/search/?api=1&query=Arancini%20Factory%2C%20Via%20Solferino%2020%2C%20Milano%2C%20Italia
+Arci Bellezza,Via Bellezza 16a,,,https://www.google.com/maps/search/?api=1&query=Arci%20Bellezza%2C%20Via%20Bellezza%2016a%2C%20Milano%2C%20Italia
+Arci Biko — Cinema all'Aperto,Viale d'Annunzio 7,,,https://www.google.com/maps/search/?api=1&query=Arci%20Biko%20%E2%80%94%20Cinema%20all%27Aperto%2C%20Viale%20d%27Annunzio%207%2C%20Milano%2C%20Italia
+Armani/Silos,Via Bergognone 40,https://armanisilos.com,,https://www.google.com/maps/search/?api=1&query=Armani/Silos%2C%20Via%20Bergognone%2040%2C%20Milano%2C%20Italia
+Armani/Silos Exhibition,Via Bergognone 40,,,https://www.google.com/maps/search/?api=1&query=Armani/Silos%20Exhibition%2C%20Via%20Bergognone%2040%2C%20Milano%2C%20Italia
+Aroma Caffè,Via Napo Torriani 21,,,https://www.google.com/maps/search/?api=1&query=Aroma%20Caff%C3%A8%2C%20Via%20Napo%20Torriani%2021%2C%20Milano%2C%20Italia
+Artico Gelateria Tradizionale,Via Luigi Porro Lambertenghi 15,,,https://www.google.com/maps/search/?api=1&query=Artico%20Gelateria%20Tradizionale%2C%20Via%20Luigi%20Porro%20Lambertenghi%2015%2C%20Milano%2C%20Italia
+Aspria Harbour Club,Via Cascina Bellaria 19,https://aspria.com,,https://www.google.com/maps/search/?api=1&query=Aspria%20Harbour%20Club%2C%20Via%20Cascina%20Bellaria%2019%2C%20Milano%2C%20Italia
+Axe Throwing Milano,Via Mecenate 76,,,https://www.google.com/maps/search/?api=1&query=Axe%20Throwing%20Milano%2C%20Via%20Mecenate%2076%2C%20Milano%2C%20Italia
+BASE Milano,Via Bergognone 34,https://base.milano.it,,https://www.google.com/maps/search/?api=1&query=BASE%20Milano%2C%20Via%20Bergognone%2034%2C%20Milano%2C%20Italia
+Ba Asian Mood,Via Raffaello Sanzio 22,,,https://www.google.com/maps/search/?api=1&query=Ba%20Asian%20Mood%2C%20Via%20Raffaello%20Sanzio%2022%2C%20Milano%2C%20Italia
+Backdoor 43,Via Scaldasole 43,https://backdoor43.it,,https://www.google.com/maps/search/?api=1&query=Backdoor%2043%2C%20Via%20Scaldasole%2043%2C%20Milano%2C%20Italia
+Backdoor Speakeasy,Via Solferino 36,,,https://www.google.com/maps/search/?api=1&query=Backdoor%20Speakeasy%2C%20Via%20Solferino%2036%2C%20Milano%2C%20Italia
+Bagni Misteriosi,Via Carlo Botta 18,https://bagnimisteriosi.it,,https://www.google.com/maps/search/?api=1&query=Bagni%20Misteriosi%2C%20Via%20Carlo%20Botta%2018%2C%20Milano%2C%20Italia
+Baladin Milano,Via Solferino 56,https://baladin.it,,https://www.google.com/maps/search/?api=1&query=Baladin%20Milano%2C%20Via%20Solferino%2056%2C%20Milano%2C%20Italia
+Balera Cocktail Club,Via Ascanio Sforza 57,,,https://www.google.com/maps/search/?api=1&query=Balera%20Cocktail%20Club%2C%20Via%20Ascanio%20Sforza%2057%2C%20Milano%2C%20Italia
+Bar Basso,Via Plinio 39,,,https://www.google.com/maps/search/?api=1&query=Bar%20Basso%2C%20Via%20Plinio%2039%2C%20Milano%2C%20Italia
+Bar Luce Wes Anderson,Largo Isarco 2,,,https://www.google.com/maps/search/?api=1&query=Bar%20Luce%20Wes%20Anderson%2C%20Largo%20Isarco%202%2C%20Milano%2C%20Italia
+Bar Magenta,Via Carducci 13,,,https://www.google.com/maps/search/?api=1&query=Bar%20Magenta%2C%20Via%20Carducci%2013%2C%20Milano%2C%20Italia
+Bar Rita,Via Angelo Fumagalli 1,,,https://www.google.com/maps/search/?api=1&query=Bar%20Rita%2C%20Via%20Angelo%20Fumagalli%201%2C%20Milano%2C%20Italia
+Barbacoa,Via Savona 43,,,https://www.google.com/maps/search/?api=1&query=Barbacoa%2C%20Via%20Savona%2043%2C%20Milano%2C%20Italia
+Basara Milano,Via Tortona 12,https://basaramilano.it,,https://www.google.com/maps/search/?api=1&query=Basara%20Milano%2C%20Via%20Tortona%2012%2C%20Milano%2C%20Italia
+Base Radio,Via Bergognone 34,,,https://www.google.com/maps/search/?api=1&query=Base%20Radio%2C%20Via%20Bergognone%2034%2C%20Milano%2C%20Italia
+Beefbar Milano,Via Privata Fratelli Gabba 7a,,,https://www.google.com/maps/search/?api=1&query=Beefbar%20Milano%2C%20Via%20Privata%20Fratelli%20Gabba%207a%2C%20Milano%2C%20Italia
+Beirut Kitchen,Via Sammartini 21,,,https://www.google.com/maps/search/?api=1&query=Beirut%20Kitchen%2C%20Via%20Sammartini%2021%2C%20Milano%2C%20Italia
+Belle Hélène,Via Vincenzo Monti 55,,,https://www.google.com/maps/search/?api=1&query=Belle%20H%C3%A9l%C3%A8ne%2C%20Via%20Vincenzo%20Monti%2055%2C%20Milano%2C%20Italia
+Berbere,Via Sebenico 21,https://berberemilano.it,,https://www.google.com/maps/search/?api=1&query=Berbere%2C%20Via%20Sebenico%2021%2C%20Milano%2C%20Italia
+Berberè (Isola),Via Sebenico 21,https://berberemilano.it,,https://www.google.com/maps/search/?api=1&query=Berber%C3%A8%20%28Isola%29%2C%20Via%20Sebenico%2021%2C%20Milano%2C%20Italia
+Berberè (Navigli),Via Vigevano 8,https://berberemilano.it,,https://www.google.com/maps/search/?api=1&query=Berber%C3%A8%20%28Navigli%29%2C%20Via%20Vigevano%208%2C%20Milano%2C%20Italia
+Berberè Milano,Via Vigevano 8,https://berberemilano.it,,https://www.google.com/maps/search/?api=1&query=Berber%C3%A8%20Milano%2C%20Via%20Vigevano%208%2C%20Milano%2C%20Italia
+Bere Bene Porta Nuova,Via Maroncelli 8,,,https://www.google.com/maps/search/?api=1&query=Bere%20Bene%20Porta%20Nuova%2C%20Via%20Maroncelli%208%2C%20Milano%2C%20Italia
+Berton,Via Mike Bongiorno 13,https://ristoranteberton.com,,https://www.google.com/maps/search/?api=1&query=Berton%2C%20Via%20Mike%20Bongiorno%2013%2C%20Milano%2C%20Italia
+Biancolatte,Via Turati 30,,,https://www.google.com/maps/search/?api=1&query=Biancolatte%2C%20Via%20Turati%2030%2C%20Milano%2C%20Italia
+Biblioteca degli Alberi,Via Gaetano de Castillia,https://bam.milano.it,,https://www.google.com/maps/search/?api=1&query=Biblioteca%20degli%20Alberi%2C%20Via%20Gaetano%20de%20Castillia%2C%20Milano%2C%20Italia
+Big Karaoke,Via Cusani 10,,,https://www.google.com/maps/search/?api=1&query=Big%20Karaoke%2C%20Via%20Cusani%2010%2C%20Milano%2C%20Italia
+Bike Tour Milano,Via Dante 14,,,https://www.google.com/maps/search/?api=1&query=Bike%20Tour%20Milano%2C%20Via%20Dante%2014%2C%20Milano%2C%20Italia
+Biko Club,Viale d'Annunzio 15,,,https://www.google.com/maps/search/?api=1&query=Biko%20Club%2C%20Viale%20d%27Annunzio%2015%2C%20Milano%2C%20Italia
+Biko Giardino,Viale d'Annunzio 7,,,https://www.google.com/maps/search/?api=1&query=Biko%20Giardino%2C%20Viale%20d%27Annunzio%207%2C%20Milano%2C%20Italia
+Biko Milano,Viale d'Annunzio 7,,,https://www.google.com/maps/search/?api=1&query=Biko%20Milano%2C%20Viale%20d%27Annunzio%207%2C%20Milano%2C%20Italia
+Bikram Yoga Milano,Via Borsieri 12,,,https://www.google.com/maps/search/?api=1&query=Bikram%20Yoga%20Milano%2C%20Via%20Borsieri%2012%2C%20Milano%2C%20Italia
+Birra & Blues,Via Ascanio Sforza 9,,,https://www.google.com/maps/search/?api=1&query=Birra%20%26%20Blues%2C%20Via%20Ascanio%20Sforza%209%2C%20Milano%2C%20Italia
+Birrificio Lambrate,Via Adelchi 5,,,https://www.google.com/maps/search/?api=1&query=Birrificio%20Lambrate%2C%20Via%20Adelchi%205%2C%20Milano%2C%20Italia
+Birrificio di Lambrate — Golgi,Via Golgi 60,,,https://www.google.com/maps/search/?api=1&query=Birrificio%20di%20Lambrate%20%E2%80%94%20Golgi%2C%20Via%20Golgi%2060%2C%20Milano%2C%20Italia
+Birrificio di Lambrate — San Babila,Via San Damiano 1,,,https://www.google.com/maps/search/?api=1&query=Birrificio%20di%20Lambrate%20%E2%80%94%20San%20Babila%2C%20Via%20San%20Damiano%201%2C%20Milano%2C%20Italia
+Blue Note Lounge,Via Borsieri 37,https://bluenote.it,,https://www.google.com/maps/search/?api=1&query=Blue%20Note%20Lounge%2C%20Via%20Borsieri%2037%2C%20Milano%2C%20Italia
+Blue Note Milano,Via Pietro Borsieri 37,https://bluenote.it,,https://www.google.com/maps/search/?api=1&query=Blue%20Note%20Milano%2C%20Via%20Pietro%20Borsieri%2037%2C%20Milano%2C%20Italia
+Blue Rose Cabaret,Via Lombroso 24,,,https://www.google.com/maps/search/?api=1&query=Blue%20Rose%20Cabaret%2C%20Via%20Lombroso%2024%2C%20Milano%2C%20Italia
+Board Game Café L'Orso,Via Savona 14,,,https://www.google.com/maps/search/?api=1&query=Board%20Game%20Caf%C3%A9%20L%27Orso%2C%20Via%20Savona%2014%2C%20Milano%2C%20Italia
+Bobino Club,Piazzale Stazione Genova 4,,,https://www.google.com/maps/search/?api=1&query=Bobino%20Club%2C%20Piazzale%20Stazione%20Genova%204%2C%20Milano%2C%20Italia
+Bok,Via Paolo Sarpi 17,,,https://www.google.com/maps/search/?api=1&query=Bok%2C%20Via%20Paolo%20Sarpi%2017%2C%20Milano%2C%20Italia
+Bomaki,Via Mercato 3,,,https://www.google.com/maps/search/?api=1&query=Bomaki%2C%20Via%20Mercato%203%2C%20Milano%2C%20Italia
+Bomba Fritta,Via Vigevano 20,,,https://www.google.com/maps/search/?api=1&query=Bomba%20Fritta%2C%20Via%20Vigevano%2020%2C%20Milano%2C%20Italia
+Bosco Verticale — Passeggiata,Via Gaetano de Castillia,,,https://www.google.com/maps/search/?api=1&query=Bosco%20Verticale%20%E2%80%94%20Passeggiata%2C%20Via%20Gaetano%20de%20Castillia%2C%20Milano%2C%20Italia
+Boscoincittà,Via Novara 340,https://boscoincittà.it,,https://www.google.com/maps/search/?api=1&query=Boscoincitt%C3%A0%2C%20Via%20Novara%20340%2C%20Milano%2C%20Italia
+Botanical Club,Via Pastrengo 11,https://thebotanicalclub.com,,https://www.google.com/maps/search/?api=1&query=Botanical%20Club%2C%20Via%20Pastrengo%2011%2C%20Milano%2C%20Italia
+Botanical Club Città Studi,Via Pasteur 18,,,https://www.google.com/maps/search/?api=1&query=Botanical%20Club%20Citt%C3%A0%20Studi%2C%20Via%20Pasteur%2018%2C%20Milano%2C%20Italia
+Bottiglieria di Roberto,Via Sottocorno 17,,,https://www.google.com/maps/search/?api=1&query=Bottiglieria%20di%20Roberto%2C%20Via%20Sottocorno%2017%2C%20Milano%2C%20Italia
+Bouldering Hub,Via Rogoredo 69,,,https://www.google.com/maps/search/?api=1&query=Bouldering%20Hub%2C%20Via%20Rogoredo%2069%2C%20Milano%2C%20Italia
+Bowling Bicocca,Viale Sarca 186,https://hangarbicocca.org,,https://www.google.com/maps/search/?api=1&query=Bowling%20Bicocca%2C%20Viale%20Sarca%20186%2C%20Milano%2C%20Italia
+Bowling Rozzano,Strada Vecchia Binasco,,,https://www.google.com/maps/search/?api=1&query=Bowling%20Rozzano%2C%20Strada%20Vecchia%20Binasco%2C%20Milano%2C%20Italia
+Brellin,Vicolo dei Lavandai 1,,,https://www.google.com/maps/search/?api=1&query=Brellin%2C%20Vicolo%20dei%20Lavandai%201%2C%20Milano%2C%20Italia
+Brewdog Milano,Viale Pasubio 3,https://brewdog.com,,https://www.google.com/maps/search/?api=1&query=Brewdog%20Milano%2C%20Viale%20Pasubio%203%2C%20Milano%2C%20Italia
+Bulgari Hotel Bar,Via Privata Fratelli Gabba 7b,https://bulgarihotels.com/milan,,https://www.google.com/maps/search/?api=1&query=Bulgari%20Hotel%20Bar%2C%20Via%20Privata%20Fratelli%20Gabba%207b%2C%20Milano%2C%20Italia
+Burgez Porta Nuova,Viale della Liberazione 15,,,https://www.google.com/maps/search/?api=1&query=Burgez%20Porta%20Nuova%2C%20Viale%20della%20Liberazione%2015%2C%20Milano%2C%20Italia
+Burnout Grill,Via Borsieri 28,,,https://www.google.com/maps/search/?api=1&query=Burnout%20Grill%2C%20Via%20Borsieri%2028%2C%20Milano%2C%20Italia
+Bésame Mucho,Via Corsico 1,,,https://www.google.com/maps/search/?api=1&query=B%C3%A9same%20Mucho%2C%20Via%20Corsico%201%2C%20Milano%2C%20Italia
+Cafezal,Via Lecco 14,,,https://www.google.com/maps/search/?api=1&query=Cafezal%2C%20Via%20Lecco%2014%2C%20Milano%2C%20Italia
+California Bakery,Piazza Sant'Eustorgio 4,https://californiabakery.it,,https://www.google.com/maps/search/?api=1&query=California%20Bakery%2C%20Piazza%20Sant%27Eustorgio%204%2C%20Milano%2C%20Italia
+Camparino in Galleria,Piazza del Duomo 21,https://camparino.com,,https://www.google.com/maps/search/?api=1&query=Camparino%20in%20Galleria%2C%20Piazza%20del%20Duomo%2021%2C%20Milano%2C%20Italia
+Campo Sportivo XXV Aprile,Via Melchiorre Gioia 59,,,https://www.google.com/maps/search/?api=1&query=Campo%20Sportivo%20XXV%20Aprile%2C%20Via%20Melchiorre%20Gioia%2059%2C%20Milano%2C%20Italia
+Canottieri San Cristoforo,Alzaia Naviglio Grande 162,,,https://www.google.com/maps/search/?api=1&query=Canottieri%20San%20Cristoforo%2C%20Alzaia%20Naviglio%20Grande%20162%2C%20Milano%2C%20Italia
+Cantina Urbana,Via Vigevano 33,,,https://www.google.com/maps/search/?api=1&query=Cantina%20Urbana%2C%20Via%20Vigevano%2033%2C%20Milano%2C%20Italia
+Cantina della Vetra,Parco delle Basiliche,,,https://www.google.com/maps/search/?api=1&query=Cantina%20della%20Vetra%2C%20Parco%20delle%20Basiliche%2C%20Milano%2C%20Italia
+Cantine Isola,Via Paolo Sarpi 30,,,https://www.google.com/maps/search/?api=1&query=Cantine%20Isola%2C%20Via%20Paolo%20Sarpi%2030%2C%20Milano%2C%20Italia
+Cape Town Café,Via Vigevano 3,,,https://www.google.com/maps/search/?api=1&query=Cape%20Town%20Caf%C3%A9%2C%20Via%20Vigevano%203%2C%20Milano%2C%20Italia
+Casa Ramen,Via Lazzaro Papi 28,,,https://www.google.com/maps/search/?api=1&query=Casa%20Ramen%2C%20Via%20Lazzaro%20Papi%2028%2C%20Milano%2C%20Italia
+Cascina Cuccagna,Via Cuccagna 2,,,https://www.google.com/maps/search/?api=1&query=Cascina%20Cuccagna%2C%20Via%20Cuccagna%202%2C%20Milano%2C%20Italia
+Cascinet — Spazio Culturale,Via Cavriana 38,,,https://www.google.com/maps/search/?api=1&query=Cascinet%20%E2%80%94%20Spazio%20Culturale%2C%20Via%20Cavriana%2038%2C%20Milano%2C%20Italia
+Castello Sforzesco — Cortili,Piazza Castello,https://milanocastello.it,,https://www.google.com/maps/search/?api=1&query=Castello%20Sforzesco%20%E2%80%94%20Cortili%2C%20Piazza%20Castello%2C%20Milano%2C%20Italia
+Centro Balneare Romano,Via Ponzio 28,,,https://www.google.com/maps/search/?api=1&query=Centro%20Balneare%20Romano%2C%20Via%20Ponzio%2028%2C%20Milano%2C%20Italia
+Ceresio 7,Via Ceresio 7,https://ceresio7.com,,https://www.google.com/maps/search/?api=1&query=Ceresio%207%2C%20Via%20Ceresio%207%2C%20Milano%2C%20Italia
+Ceresio 7 Gym & Spa,Via Ceresio 7,https://ceresio7.com,,https://www.google.com/maps/search/?api=1&query=Ceresio%207%20Gym%20%26%20Spa%2C%20Via%20Ceresio%207%2C%20Milano%2C%20Italia
+Ceresio 7 Pools & Restaurant,Via Ceresio 7,https://ceresio7.com,,https://www.google.com/maps/search/?api=1&query=Ceresio%207%20Pools%20%26%20Restaurant%2C%20Via%20Ceresio%207%2C%20Milano%2C%20Italia
+Ceviche Bar Lima,Via Tortona 12,,,https://www.google.com/maps/search/?api=1&query=Ceviche%20Bar%20Lima%2C%20Via%20Tortona%2012%2C%20Milano%2C%20Italia
+Champagneria Giulia,Via Giulia 3,,,https://www.google.com/maps/search/?api=1&query=Champagneria%20Giulia%2C%20Via%20Giulia%203%2C%20Milano%2C%20Italia
+Charcoal BBQ Coreano,Via Maiocchi 11,,,https://www.google.com/maps/search/?api=1&query=Charcoal%20BBQ%20Coreano%2C%20Via%20Maiocchi%2011%2C%20Milano%2C%20Italia
+Chic Noodle Bar,Via Solferino 12,,,https://www.google.com/maps/search/?api=1&query=Chic%20Noodle%20Bar%2C%20Via%20Solferino%2012%2C%20Milano%2C%20Italia
+Chiccheria Sushi,Via Casale 11,,,https://www.google.com/maps/search/?api=1&query=Chiccheria%20Sushi%2C%20Via%20Casale%2011%2C%20Milano%2C%20Italia
+Chiosco Mentana,Largo Donegani 1,,,https://www.google.com/maps/search/?api=1&query=Chiosco%20Mentana%2C%20Largo%20Donegani%201%2C%20Milano%2C%20Italia
+Churrasco Paulista,Via Washington 70,,,https://www.google.com/maps/search/?api=1&query=Churrasco%20Paulista%2C%20Via%20Washington%2070%2C%20Milano%2C%20Italia
+Ciacco Lab,Via Spadari 13,,,https://www.google.com/maps/search/?api=1&query=Ciacco%20Lab%2C%20Via%20Spadari%2013%2C%20Milano%2C%20Italia
+Cinema Arlecchino,Via San Pietro all'Orto 9,,,https://www.google.com/maps/search/?api=1&query=Cinema%20Arlecchino%2C%20Via%20San%20Pietro%20all%27Orto%209%2C%20Milano%2C%20Italia
+Cinema Beltrade,Via Nino Oxilia 10,,,https://www.google.com/maps/search/?api=1&query=Cinema%20Beltrade%2C%20Via%20Nino%20Oxilia%2010%2C%20Milano%2C%20Italia
+Cinema Beltrade — Arena Estiva,Via N. A. Porpora 44,,,https://www.google.com/maps/search/?api=1&query=Cinema%20Beltrade%20%E2%80%94%20Arena%20Estiva%2C%20Via%20N.%20A.%20Porpora%2044%2C%20Milano%2C%20Italia
+Cinema Gnomo,Via Lanzone 30,,,https://www.google.com/maps/search/?api=1&query=Cinema%20Gnomo%2C%20Via%20Lanzone%2030%2C%20Milano%2C%20Italia
+Cinema Mexico,Via Savona 57,,,https://www.google.com/maps/search/?api=1&query=Cinema%20Mexico%2C%20Via%20Savona%2057%2C%20Milano%2C%20Italia
+Cinema all'Aperto Arianteo,Palazzo Reale — Cortile,,,https://www.google.com/maps/search/?api=1&query=Cinema%20all%27Aperto%20Arianteo%2C%20Palazzo%20Reale%20%E2%80%94%20Cortile%2C%20Milano%2C%20Italia
+Cineteca Milano MEET,Viale Vittorio Veneto 2,https://meetcenter.it,,https://www.google.com/maps/search/?api=1&query=Cineteca%20Milano%20MEET%2C%20Viale%20Vittorio%20Veneto%202%2C%20Milano%2C%20Italia
+Cioccolat Italiani Navigli,Ripa di Porta Ticinese 1,,,https://www.google.com/maps/search/?api=1&query=Cioccolat%20Italiani%20Navigli%2C%20Ripa%20di%20Porta%20Ticinese%201%2C%20Milano%2C%20Italia
+Cioccolatitaliani,Via Boccaccio 9,,,https://www.google.com/maps/search/?api=1&query=Cioccolatitaliani%2C%20Via%20Boccaccio%209%2C%20Milano%2C%20Italia
+Circle Milano,Via Stendhal 36,https://circlemilano.com,,https://www.google.com/maps/search/?api=1&query=Circle%20Milano%2C%20Via%20Stendhal%2036%2C%20Milano%2C%20Italia
+Circolo Arci Orfeo,Via dell'Orso 18,,,https://www.google.com/maps/search/?api=1&query=Circolo%20Arci%20Orfeo%2C%20Via%20dell%27Orso%2018%2C%20Milano%2C%20Italia
+Circolo Magnolia,"Via Idro 10, Segrate",https://circolomagnolia.it,,https://www.google.com/maps/search/?api=1&query=Circolo%20Magnolia%2C%20Via%20Idro%2010%2C%20Segrate%2C%20Milano%2C%20Italia
+CityLife Park,Piazza Tre Torri,,,https://www.google.com/maps/search/?api=1&query=CityLife%20Park%2C%20Piazza%20Tre%20Torri%2C%20Milano%2C%20Italia
+Civico Planetario,Corso Venezia 57,https://comune.milano.it/planetario,,https://www.google.com/maps/search/?api=1&query=Civico%20Planetario%2C%20Corso%20Venezia%2057%2C%20Milano%2C%20Italia
+Coa Asian Food & Drinks,Via Vigevano 27,,,https://www.google.com/maps/search/?api=1&query=Coa%20Asian%20Food%20%26%20Drinks%2C%20Via%20Vigevano%2027%2C%20Milano%2C%20Italia
+Colibrì Brunch Isola,Via Pastrengo 14,,,https://www.google.com/maps/search/?api=1&query=Colibr%C3%AC%20Brunch%20Isola%2C%20Via%20Pastrengo%2014%2C%20Milano%2C%20Italia
+Colibrì Café,Via Solferino 5,,,https://www.google.com/maps/search/?api=1&query=Colibr%C3%AC%20Caf%C3%A9%2C%20Via%20Solferino%205%2C%20Milano%2C%20Italia
+Combat Arena — Bubble Football,Via Ripamonti 89,,,https://www.google.com/maps/search/?api=1&query=Combat%20Arena%20%E2%80%94%20Bubble%20Football%2C%20Via%20Ripamonti%2089%2C%20Milano%2C%20Italia
+Combo Milano,Ripa di Porta Ticinese 83,,,https://www.google.com/maps/search/?api=1&query=Combo%20Milano%2C%20Ripa%20di%20Porta%20Ticinese%2083%2C%20Milano%2C%20Italia
+Comedy Ring Milano,Via De Amicis 17,,,https://www.google.com/maps/search/?api=1&query=Comedy%20Ring%20Milano%2C%20Via%20De%20Amicis%2017%2C%20Milano%2C%20Italia
+Company Club,Via Benadir 14,,,https://www.google.com/maps/search/?api=1&query=Company%20Club%2C%20Via%20Benadir%2014%2C%20Milano%2C%20Italia
+Confine,Piazza Felice Cavallotti 1,https://confineristorante.com,,https://www.google.com/maps/search/?api=1&query=Confine%2C%20Piazza%20Felice%20Cavallotti%201%2C%20Milano%2C%20Italia
+Contraste,Via Meda 2,https://contrastemilano.it,,https://www.google.com/maps/search/?api=1&query=Contraste%2C%20Via%20Meda%202%2C%20Milano%2C%20Italia
+Contrasto Caffè,Via Tortona 12,,,https://www.google.com/maps/search/?api=1&query=Contrasto%20Caff%C3%A8%2C%20Via%20Tortona%2012%2C%20Milano%2C%20Italia
+Cooking Class at Eataly,Piazza XXV Aprile 10,https://eataly.net/it_it/negozi/milano-smeraldo,,https://www.google.com/maps/search/?api=1&query=Cooking%20Class%20at%20Eataly%2C%20Piazza%20XXV%20Aprile%2010%2C%20Milano%2C%20Italia
+Cova,Via Montenapoleone 8,,,https://www.google.com/maps/search/?api=1&query=Cova%2C%20Via%20Montenapoleone%208%2C%20Milano%2C%20Italia
+Cozze & Vino,Via Casale 5,,,https://www.google.com/maps/search/?api=1&query=Cozze%20%26%20Vino%2C%20Via%20Casale%205%2C%20Milano%2C%20Italia
+Crema,Via Luigi Porro Lambertenghi 15,,,https://www.google.com/maps/search/?api=1&query=Crema%2C%20Via%20Luigi%20Porro%20Lambertenghi%2015%2C%20Milano%2C%20Italia
+Crosta,Via Pascoli 4,,,https://www.google.com/maps/search/?api=1&query=Crosta%2C%20Via%20Pascoli%204%2C%20Milano%2C%20Italia
+Crudo Milano,Via Solferino 44,,,https://www.google.com/maps/search/?api=1&query=Crudo%20Milano%2C%20Via%20Solferino%2044%2C%20Milano%2C%20Italia
+Cucina Lab Experience,Via Festa del Perdono 6,,,https://www.google.com/maps/search/?api=1&query=Cucina%20Lab%20Experience%2C%20Via%20Festa%20del%20Perdono%206%2C%20Milano%2C%20Italia
+Curry Up Milano,Via Tadino 15,,,https://www.google.com/maps/search/?api=1&query=Curry%20Up%20Milano%2C%20Via%20Tadino%2015%2C%20Milano%2C%20Italia
+Da Giacomo,Via Pasquale Sottocorno 6,,,https://www.google.com/maps/search/?api=1&query=Da%20Giacomo%2C%20Via%20Pasquale%20Sottocorno%206%2C%20Milano%2C%20Italia
+Da Giannino — L'Angolo d'Abruzzo,Via Pio II 20,,,https://www.google.com/maps/search/?api=1&query=Da%20Giannino%20%E2%80%94%20L%27Angolo%20d%27Abruzzo%2C%20Via%20Pio%20II%2020%2C%20Milano%2C%20Italia
+Da Martino,Via Anfossi 6,,,https://www.google.com/maps/search/?api=1&query=Da%20Martino%2C%20Via%20Anfossi%206%2C%20Milano%2C%20Italia
+Da Zero,Via Caminadella 2,https://dazeropizza.it,,https://www.google.com/maps/search/?api=1&query=Da%20Zero%2C%20Via%20Caminadella%202%2C%20Milano%2C%20Italia
+Davide Longoni Pane,Via Tiraboschi 19,,,https://www.google.com/maps/search/?api=1&query=Davide%20Longoni%20Pane%2C%20Via%20Tiraboschi%2019%2C%20Milano%2C%20Italia
+Depot Milano,Via Valtorta 5,,,https://www.google.com/maps/search/?api=1&query=Depot%20Milano%2C%20Via%20Valtorta%205%2C%20Milano%2C%20Italia
+Dim Sum,Via Nino Bixio 29,,,https://www.google.com/maps/search/?api=1&query=Dim%20Sum%2C%20Via%20Nino%20Bixio%2029%2C%20Milano%2C%20Italia
+Dim Sum Gallery,Via Castaldi 24,,,https://www.google.com/maps/search/?api=1&query=Dim%20Sum%20Gallery%2C%20Via%20Castaldi%2024%2C%20Milano%2C%20Italia
+Dongiò,Via Bernardino Corio 3,,,https://www.google.com/maps/search/?api=1&query=Dongi%C3%B2%2C%20Via%20Bernardino%20Corio%203%2C%20Milano%2C%20Italia
+Dopolavoro Bicocca,Via Emanueli 15,https://hangarbicocca.org,,https://www.google.com/maps/search/?api=1&query=Dopolavoro%20Bicocca%2C%20Via%20Emanueli%2015%2C%20Milano%2C%20Italia
+Drinc. Mixology,Via Plinio 32,,,https://www.google.com/maps/search/?api=1&query=Drinc.%20Mixology%2C%20Via%20Plinio%2032%2C%20Milano%2C%20Italia
+Dry Cocktails & Pizza,Via Solferino 33,https://drymilano.it,,https://www.google.com/maps/search/?api=1&query=Dry%20Cocktails%20%26%20Pizza%2C%20Via%20Solferino%2033%2C%20Milano%2C%20Italia
+Dry Milano Solferino,Via Solferino 33,https://drymilano.it,,https://www.google.com/maps/search/?api=1&query=Dry%20Milano%20Solferino%2C%20Via%20Solferino%2033%2C%20Milano%2C%20Italia
+East Market,Via Mecenate 88/A,,,https://www.google.com/maps/search/?api=1&query=East%20Market%2C%20Via%20Mecenate%2088/A%2C%20Milano%2C%20Italia
+East Market Shop,Via Privata Giovanni Ventura 6,,,https://www.google.com/maps/search/?api=1&query=East%20Market%20Shop%2C%20Via%20Privata%20Giovanni%20Ventura%206%2C%20Milano%2C%20Italia
+Eataly Smeraldo,Piazza XXV Aprile 10,,,https://www.google.com/maps/search/?api=1&query=Eataly%20Smeraldo%2C%20Piazza%20XXV%20Aprile%2010%2C%20Milano%2C%20Italia
+El Carnicero,Via Melzo 16,,,https://www.google.com/maps/search/?api=1&query=El%20Carnicero%2C%20Via%20Melzo%2016%2C%20Milano%2C%20Italia
+El Porteño Grill,Viale Corsica 5,,,https://www.google.com/maps/search/?api=1&query=El%20Porte%C3%B1o%20Grill%2C%20Viale%20Corsica%205%2C%20Milano%2C%20Italia
+Empanadas Buenos Aires,Corso Buenos Aires 54,,,https://www.google.com/maps/search/?api=1&query=Empanadas%20Buenos%20Aires%2C%20Corso%20Buenos%20Aires%2054%2C%20Milano%2C%20Italia
+Emporio Armani Caffè,Via Croce Rossa 2,,,https://www.google.com/maps/search/?api=1&query=Emporio%20Armani%20Caff%C3%A8%2C%20Via%20Croce%20Rossa%202%2C%20Milano%2C%20Italia
+Emporio Brera Coffee,Via Fiori Chiari 8,,,https://www.google.com/maps/search/?api=1&query=Emporio%20Brera%20Coffee%2C%20Via%20Fiori%20Chiari%208%2C%20Milano%2C%20Italia
+Enoteca Cotti,Via Solferino 42,,,https://www.google.com/maps/search/?api=1&query=Enoteca%20Cotti%2C%20Via%20Solferino%2042%2C%20Milano%2C%20Italia
+Enoteca Naturale,Via Savona 27,,,https://www.google.com/maps/search/?api=1&query=Enoteca%20Naturale%2C%20Via%20Savona%2027%2C%20Milano%2C%20Italia
+Enoteca Sabbia d'Oro,Via Ravizza 23,,,https://www.google.com/maps/search/?api=1&query=Enoteca%20Sabbia%20d%27Oro%2C%20Via%20Ravizza%2023%2C%20Milano%2C%20Italia
+Enoteca della Vetra,Via Pio IV 3,,,https://www.google.com/maps/search/?api=1&query=Enoteca%20della%20Vetra%2C%20Via%20Pio%20IV%203%2C%20Milano%2C%20Italia
+Enrico Bartolini al Mudec,Via Tortona 56,https://enricobartolini.net,,https://www.google.com/maps/search/?api=1&query=Enrico%20Bartolini%20al%20Mudec%2C%20Via%20Tortona%2056%2C%20Milano%2C%20Italia
+Erba Brusca,Alzaia Naviglio Pavese 286,https://erbabrusca.it,,https://www.google.com/maps/search/?api=1&query=Erba%20Brusca%2C%20Alzaia%20Naviglio%20Pavese%20286%2C%20Milano%2C%20Italia
+Erba Brusca al Parco,Alzaia Naviglio Pavese 286,,,https://www.google.com/maps/search/?api=1&query=Erba%20Brusca%20al%20Parco%2C%20Alzaia%20Naviglio%20Pavese%20286%2C%20Milano%2C%20Italia
+Escape Room Milano,Via Moisè Loria 37,,,https://www.google.com/maps/search/?api=1&query=Escape%20Room%20Milano%2C%20Via%20Mois%C3%A8%20Loria%2037%2C%20Milano%2C%20Italia
+Escape Room Milano - Intrappola.to,Via Melchiorre Gioia 3,,,https://www.google.com/maps/search/?api=1&query=Escape%20Room%20Milano%20-%20Intrappola.to%2C%20Via%20Melchiorre%20Gioia%203%2C%20Milano%2C%20Italia
+Ethiopian Restaurant Mesob,Via Piacenza 12,,,https://www.google.com/maps/search/?api=1&query=Ethiopian%20Restaurant%20Mesob%2C%20Via%20Piacenza%2012%2C%20Milano%2C%20Italia
+Fabbrica del Vapore Bar,Via Procaccini 4,,,https://www.google.com/maps/search/?api=1&query=Fabbrica%20del%20Vapore%20Bar%2C%20Via%20Procaccini%204%2C%20Milano%2C%20Italia
+Fabrique,Via Gaudenzio Fantoli 9,https://fabriquemilano.it,,https://www.google.com/maps/search/?api=1&query=Fabrique%2C%20Via%20Gaudenzio%20Fantoli%209%2C%20Milano%2C%20Italia
+Fico Climbing,Via Segantini 79,,,https://www.google.com/maps/search/?api=1&query=Fico%20Climbing%2C%20Via%20Segantini%2079%2C%20Milano%2C%20Italia
+Fiera di Sinigaglia,Ripa di Porta Ticinese (Darsena),,,https://www.google.com/maps/search/?api=1&query=Fiera%20di%20Sinigaglia%2C%20Ripa%20di%20Porta%20Ticinese%20%28Darsena%29%2C%20Milano%2C%20Italia
+Finger's Garden,Via Keplero 2,https://fingers.it,,https://www.google.com/maps/search/?api=1&query=Finger%27s%20Garden%2C%20Via%20Keplero%202%2C%20Milano%2C%20Italia
+Fioraio Bianchi Caffè,Via Montebello 7,,,https://www.google.com/maps/search/?api=1&query=Fioraio%20Bianchi%20Caff%C3%A8%2C%20Via%20Montebello%207%2C%20Milano%2C%20Italia
+Fiorellino Brera,Via Fiori Chiari 12,,,https://www.google.com/maps/search/?api=1&query=Fiorellino%20Brera%2C%20Via%20Fiori%20Chiari%2012%2C%20Milano%2C%20Italia
+Float Hub Milano,Via Thaon di Revel 1,,,https://www.google.com/maps/search/?api=1&query=Float%20Hub%20Milano%2C%20Via%20Thaon%20di%20Revel%201%2C%20Milano%2C%20Italia
+Float Therapy Lab,Via Copernico 38,,,https://www.google.com/maps/search/?api=1&query=Float%20Therapy%20Lab%2C%20Via%20Copernico%2038%2C%20Milano%2C%20Italia
+Flower Burger,Via Tortona 12,,,https://www.google.com/maps/search/?api=1&query=Flower%20Burger%2C%20Via%20Tortona%2012%2C%20Milano%2C%20Italia
+Fondazione Feltrinelli,Viale Pasubio 5,https://fondazionefeltrinelli.it,,https://www.google.com/maps/search/?api=1&query=Fondazione%20Feltrinelli%2C%20Viale%20Pasubio%205%2C%20Milano%2C%20Italia
+Fondazione Forma,Piazza Tito Lucrezio Caro 1,,,https://www.google.com/maps/search/?api=1&query=Fondazione%20Forma%2C%20Piazza%20Tito%20Lucrezio%20Caro%201%2C%20Milano%2C%20Italia
+Fondazione Giangiacomo Feltrinelli,Viale Pasubio 5,https://fondazionefeltrinelli.it,,https://www.google.com/maps/search/?api=1&query=Fondazione%20Giangiacomo%20Feltrinelli%2C%20Viale%20Pasubio%205%2C%20Milano%2C%20Italia
+Fondazione ICA Milano,Via Orobia 26,,,https://www.google.com/maps/search/?api=1&query=Fondazione%20ICA%20Milano%2C%20Via%20Orobia%2026%2C%20Milano%2C%20Italia
+Fondazione Luciana Matalon,Foro Buonaparte 67,,,https://www.google.com/maps/search/?api=1&query=Fondazione%20Luciana%20Matalon%2C%20Foro%20Buonaparte%2067%2C%20Milano%2C%20Italia
+Fondazione Prada,Largo Isarco 2,https://fondazioneprada.org,,https://www.google.com/maps/search/?api=1&query=Fondazione%20Prada%2C%20Largo%20Isarco%202%2C%20Milano%2C%20Italia
+Fondazione Prada Bar Luce,Largo Isarco 2,https://fondazioneprada.org,,https://www.google.com/maps/search/?api=1&query=Fondazione%20Prada%20Bar%20Luce%2C%20Largo%20Isarco%202%2C%20Milano%2C%20Italia
+Fonderie Milanesi,Via Giovenale 7,,,https://www.google.com/maps/search/?api=1&query=Fonderie%20Milanesi%2C%20Via%20Giovenale%207%2C%20Milano%2C%20Italia
+Forno Collettivo,Via Borsieri 6,,,https://www.google.com/maps/search/?api=1&query=Forno%20Collettivo%2C%20Via%20Borsieri%206%2C%20Milano%2C%20Italia
+Forno del Mastro,Via Spontini 8,,,https://www.google.com/maps/search/?api=1&query=Forno%20del%20Mastro%2C%20Via%20Spontini%208%2C%20Milano%2C%20Italia
+Frida,Via Antonio Pollaiuolo 3,,,https://www.google.com/maps/search/?api=1&query=Frida%2C%20Via%20Antonio%20Pollaiuolo%203%2C%20Milano%2C%20Italia
+Frida Isola,Via Pollaiuolo 3,,,https://www.google.com/maps/search/?api=1&query=Frida%20Isola%2C%20Via%20Pollaiuolo%203%2C%20Milano%2C%20Italia
+GAM — Galleria d'Arte Moderna,Via Palestro 16,,,https://www.google.com/maps/search/?api=1&query=GAM%20%E2%80%94%20Galleria%20d%27Arte%20Moderna%2C%20Via%20Palestro%2016%2C%20Milano%2C%20Italia
+GROM,Via Santa Margherita 16,,,https://www.google.com/maps/search/?api=1&query=GROM%2C%20Via%20Santa%20Margherita%2016%2C%20Milano%2C%20Italia
+Galleria Lia Rumma,Via Stilicone 19,,,https://www.google.com/maps/search/?api=1&query=Galleria%20Lia%20Rumma%2C%20Via%20Stilicone%2019%2C%20Milano%2C%20Italia
+Galleria Massimo de Carlo,Via Ventura 5,,,https://www.google.com/maps/search/?api=1&query=Galleria%20Massimo%20de%20Carlo%2C%20Via%20Ventura%205%2C%20Milano%2C%20Italia
+Garage Italia,Piazzale Accursio 1,,,https://www.google.com/maps/search/?api=1&query=Garage%20Italia%2C%20Piazzale%20Accursio%201%2C%20Milano%2C%20Italia
+Garage Moulinski,Via Magolfa 14,,,https://www.google.com/maps/search/?api=1&query=Garage%20Moulinski%2C%20Via%20Magolfa%2014%2C%20Milano%2C%20Italia
+Gastronomia del Mare,Via Vigevano 42,,,https://www.google.com/maps/search/?api=1&query=Gastronomia%20del%20Mare%2C%20Via%20Vigevano%2042%2C%20Milano%2C%20Italia
+Gate Milano,Via Valtellina 36,,,https://www.google.com/maps/search/?api=1&query=Gate%20Milano%2C%20Via%20Valtellina%2036%2C%20Milano%2C%20Italia
+Gattopardo Café,Via Piero della Francesca 47,https://gattopardocafe.com,,https://www.google.com/maps/search/?api=1&query=Gattopardo%20Caf%C3%A9%2C%20Via%20Piero%20della%20Francesca%2047%2C%20Milano%2C%20Italia
+Gattullo,Piazzale di Porta Lodovica 2,,,https://www.google.com/maps/search/?api=1&query=Gattullo%2C%20Piazzale%20di%20Porta%20Lodovica%202%2C%20Milano%2C%20Italia
+Gattullo Colazione,Piazzale di Porta Lodovica 2,,,https://www.google.com/maps/search/?api=1&query=Gattullo%20Colazione%2C%20Piazzale%20di%20Porta%20Lodovica%202%2C%20Milano%2C%20Italia
+Gelato Bianco,Via Turati 11,,,https://www.google.com/maps/search/?api=1&query=Gelato%20Bianco%2C%20Via%20Turati%2011%2C%20Milano%2C%20Italia
+Gelato Giusto,Via San Gregorio 1,,,https://www.google.com/maps/search/?api=1&query=Gelato%20Giusto%2C%20Via%20San%20Gregorio%201%2C%20Milano%2C%20Italia
+Ghe Sem,Via Celentano 1,,,https://www.google.com/maps/search/?api=1&query=Ghe%20Sem%2C%20Via%20Celentano%201%2C%20Milano%2C%20Italia
+Giardini Indro Montanelli,Corso Venezia,,,https://www.google.com/maps/search/?api=1&query=Giardini%20Indro%20Montanelli%2C%20Corso%20Venezia%2C%20Milano%2C%20Italia
+Giardini Indro Montanelli — Percorso Mindfulness,Bastioni di Porta Venezia,,,https://www.google.com/maps/search/?api=1&query=Giardini%20Indro%20Montanelli%20%E2%80%94%20Percorso%20Mindfulness%2C%20Bastioni%20di%20Porta%20Venezia%2C%20Milano%2C%20Italia
+Giardino Nascosto,Via Privata Leida 4,,,https://www.google.com/maps/search/?api=1&query=Giardino%20Nascosto%2C%20Via%20Privata%20Leida%204%2C%20Milano%2C%20Italia
+Giardino della Guastalla,Via Francesco Sforza 28,,,https://www.google.com/maps/search/?api=1&query=Giardino%20della%20Guastalla%2C%20Via%20Francesco%20Sforza%2028%2C%20Milano%2C%20Italia
+Gineria Brera,Via Fiori Chiari 12,,,https://www.google.com/maps/search/?api=1&query=Gineria%20Brera%2C%20Via%20Fiori%20Chiari%2012%2C%20Milano%2C%20Italia
+Ginger Cocktail Lab,Via Plinio 19,,,https://www.google.com/maps/search/?api=1&query=Ginger%20Cocktail%20Lab%2C%20Via%20Plinio%2019%2C%20Milano%2C%20Italia
+Gino Sorbillo,Largo Corsia dei Servi 11,https://sorbillo.it,,https://www.google.com/maps/search/?api=1&query=Gino%20Sorbillo%2C%20Largo%20Corsia%20dei%20Servi%2011%2C%20Milano%2C%20Italia
+Giocolandia,Via dei Missaglia 97,,,https://www.google.com/maps/search/?api=1&query=Giocolandia%2C%20Via%20dei%20Missaglia%2097%2C%20Milano%2C%20Italia
+Giulio Pane e Ojo,Via Ludovico Muratori 10,,,https://www.google.com/maps/search/?api=1&query=Giulio%20Pane%20e%20Ojo%2C%20Via%20Ludovico%20Muratori%2010%2C%20Milano%2C%20Italia
+Glitter Bar,Via Panfilo Castaldi 20,,,https://www.google.com/maps/search/?api=1&query=Glitter%20Bar%2C%20Via%20Panfilo%20Castaldi%2020%2C%20Milano%2C%20Italia
+Gong Lambrate,Via Oslavia 2,,,https://www.google.com/maps/search/?api=1&query=Gong%20Lambrate%2C%20Via%20Oslavia%202%2C%20Milano%2C%20Italia
+Gong Oriental Attitude,Corso Sempione 4,,,https://www.google.com/maps/search/?api=1&query=Gong%20Oriental%20Attitude%2C%20Corso%20Sempione%204%2C%20Milano%2C%20Italia
+Guangzhou,Via Paolo Sarpi 30,,,https://www.google.com/maps/search/?api=1&query=Guangzhou%2C%20Via%20Paolo%20Sarpi%2030%2C%20Milano%2C%20Italia
+Gyoza Bar Navigli,Via Corsico 12,,,https://www.google.com/maps/search/?api=1&query=Gyoza%20Bar%20Navigli%2C%20Via%20Corsico%2012%2C%20Milano%2C%20Italia
+Haam Korean Restaurant,Via Melzo 1,,,https://www.google.com/maps/search/?api=1&query=Haam%20Korean%20Restaurant%2C%20Via%20Melzo%201%2C%20Milano%2C%20Italia
+Hakuna Matata Gelato,Via Spontini 14,,,https://www.google.com/maps/search/?api=1&query=Hakuna%20Matata%20Gelato%2C%20Via%20Spontini%2014%2C%20Milano%2C%20Italia
+Ham Holy Burger,Via Palermo 15,https://hamholyburger.com,,https://www.google.com/maps/search/?api=1&query=Ham%20Holy%20Burger%2C%20Via%20Palermo%2015%2C%20Milano%2C%20Italia
+Hammam Milano,Via Fiamma 54,,,https://www.google.com/maps/search/?api=1&query=Hammam%20Milano%2C%20Via%20Fiamma%2054%2C%20Milano%2C%20Italia
+Hammam della Rosa,Via Panfilo Castaldi 17,,,https://www.google.com/maps/search/?api=1&query=Hammam%20della%20Rosa%2C%20Via%20Panfilo%20Castaldi%2017%2C%20Milano%2C%20Italia
+Hana Bistrò,Via Vigevano 35,,,https://www.google.com/maps/search/?api=1&query=Hana%20Bistr%C3%B2%2C%20Via%20Vigevano%2035%2C%20Milano%2C%20Italia
+Hangar Bicocca,Via Chiese 2,https://hangarbicocca.org,,https://www.google.com/maps/search/?api=1&query=Hangar%20Bicocca%2C%20Via%20Chiese%202%2C%20Milano%2C%20Italia
+Hollywood Milano,Corso Como 15,https://hollywoodmilano.it,,https://www.google.com/maps/search/?api=1&query=Hollywood%20Milano%2C%20Corso%20Como%2015%2C%20Milano%2C%20Italia
+Hop Stuff,Via Pastrengo 16,,,https://www.google.com/maps/search/?api=1&query=Hop%20Stuff%2C%20Via%20Pastrengo%2016%2C%20Milano%2C%20Italia
+Hop Stuff Brew Pub,Via Negroli 4,,,https://www.google.com/maps/search/?api=1&query=Hop%20Stuff%20Brew%20Pub%2C%20Via%20Negroli%204%2C%20Milano%2C%20Italia
+Hug Milano,Via Tortona 22,,,https://www.google.com/maps/search/?api=1&query=Hug%20Milano%2C%20Via%20Tortona%2022%2C%20Milano%2C%20Italia
+Idroscalo,"Via dei Salici 27, Segrate",https://idroscalo.it,,https://www.google.com/maps/search/?api=1&query=Idroscalo%2C%20Via%20dei%20Salici%2027%2C%20Segrate%2C%20Milano%2C%20Italia
+Idroscalo — Spiaggia e Sport,"Via Rivoltana, Segrate",,,https://www.google.com/maps/search/?api=1&query=Idroscalo%20%E2%80%94%20Spiaggia%20e%20Sport%2C%20Via%20Rivoltana%2C%20Segrate%2C%20Milano%2C%20Italia
+Iginio Massari Alta Pasticceria,Via Piero Della Francesca 20,,,https://www.google.com/maps/search/?api=1&query=Iginio%20Massari%20Alta%20Pasticceria%2C%20Via%20Piero%20Della%20Francesca%2020%2C%20Milano%2C%20Italia
+Il Liberty,Viale Monte Grappa 6,,,https://www.google.com/maps/search/?api=1&query=Il%20Liberty%2C%20Viale%20Monte%20Grappa%206%2C%20Milano%2C%20Italia
+Il Massimo del Gelato,Via Lodovico Castelvetro 18,,,https://www.google.com/maps/search/?api=1&query=Il%20Massimo%20del%20Gelato%2C%20Via%20Lodovico%20Castelvetro%2018%2C%20Milano%2C%20Italia
+Ippodromo SNAI San Siro,Piazzale dello Sport 16,,,https://www.google.com/maps/search/?api=1&query=Ippodromo%20SNAI%20San%20Siro%2C%20Piazzale%20dello%20Sport%2016%2C%20Milano%2C%20Italia
+Iter,Via Marcona 37,,,https://www.google.com/maps/search/?api=1&query=Iter%2C%20Via%20Marcona%2037%2C%20Milano%2C%20Italia
+Iter Cocktail Bar,Via Castaldi 18,,,https://www.google.com/maps/search/?api=1&query=Iter%20Cocktail%20Bar%2C%20Via%20Castaldi%2018%2C%20Milano%2C%20Italia
+Iyo,Via Piero della Francesca 74,,,https://www.google.com/maps/search/?api=1&query=Iyo%2C%20Via%20Piero%20della%20Francesca%2074%2C%20Milano%2C%20Italia
+Iyo Aalto,Via Piero della Francesca 70,https://iyo.it,,https://www.google.com/maps/search/?api=1&query=Iyo%20Aalto%2C%20Via%20Piero%20della%20Francesca%2070%2C%20Milano%2C%20Italia
+Jamaica,Via Brera 32,,,https://www.google.com/maps/search/?api=1&query=Jamaica%2C%20Via%20Brera%2032%2C%20Milano%2C%20Italia
+Jazz Café,Corso Sempione 8,,,https://www.google.com/maps/search/?api=1&query=Jazz%20Caf%C3%A9%2C%20Corso%20Sempione%208%2C%20Milano%2C%20Italia
+K1 Speed Milano,Via Mecenate 76,,,https://www.google.com/maps/search/?api=1&query=K1%20Speed%20Milano%2C%20Via%20Mecenate%2076%2C%20Milano%2C%20Italia
+KTV Karaoke,Via Edmondo De Amicis 25,,,https://www.google.com/maps/search/?api=1&query=KTV%20Karaoke%2C%20Via%20Edmondo%20De%20Amicis%2025%2C%20Milano%2C%20Italia
+Kathay,Via Paolo Sarpi 46,,,https://www.google.com/maps/search/?api=1&query=Kathay%2C%20Via%20Paolo%20Sarpi%2046%2C%20Milano%2C%20Italia
+Kawa Sushi,Via Lecco 4,,,https://www.google.com/maps/search/?api=1&query=Kawa%20Sushi%2C%20Via%20Lecco%204%2C%20Milano%2C%20Italia
+Kebab Turco Originale,Via Padova 38,,,https://www.google.com/maps/search/?api=1&query=Kebab%20Turco%20Originale%2C%20Via%20Padova%2038%2C%20Milano%2C%20Italia
+Kebab de Milan,Via Lecco 7,,,https://www.google.com/maps/search/?api=1&query=Kebab%20de%20Milan%2C%20Via%20Lecco%207%2C%20Milano%2C%20Italia
+Kebhouze,Via Vigevano 18,,,https://www.google.com/maps/search/?api=1&query=Kebhouze%2C%20Via%20Vigevano%2018%2C%20Milano%2C%20Italia
+Killer Ristorante,Viale Umbria 120,,,https://www.google.com/maps/search/?api=1&query=Killer%20Ristorante%2C%20Viale%20Umbria%20120%2C%20Milano%2C%20Italia
+Kimchi House,Via Nino Bixio 30,,,https://www.google.com/maps/search/?api=1&query=Kimchi%20House%2C%20Via%20Nino%20Bixio%2030%2C%20Milano%2C%20Italia
+Korean BBQ Koreatown,Via Paolo Sarpi 50,,,https://www.google.com/maps/search/?api=1&query=Korean%20BBQ%20Koreatown%2C%20Via%20Paolo%20Sarpi%2050%2C%20Milano%2C%20Italia
+La Balera dell'Ortica,Via San Faustino 7,,,https://www.google.com/maps/search/?api=1&query=La%20Balera%20dell%27Ortica%2C%20Via%20San%20Faustino%207%2C%20Milano%2C%20Italia
+La Colazione Milano,Via Savona 50,,,https://www.google.com/maps/search/?api=1&query=La%20Colazione%20Milano%2C%20Via%20Savona%2050%2C%20Milano%2C%20Italia
+La Paella de Miguel,Via Caminadella 7,,,https://www.google.com/maps/search/?api=1&query=La%20Paella%20de%20Miguel%2C%20Via%20Caminadella%207%2C%20Milano%2C%20Italia
+La Piadineria,Via Torino 5,,,https://www.google.com/maps/search/?api=1&query=La%20Piadineria%2C%20Via%20Torino%205%2C%20Milano%2C%20Italia
+La Salumeria della Musica,Via Pasinetti 4,,,https://www.google.com/maps/search/?api=1&query=La%20Salumeria%20della%20Musica%2C%20Via%20Pasinetti%204%2C%20Milano%2C%20Italia
+La Triennale - Design Library,Viale Alemagna 6,,,https://www.google.com/maps/search/?api=1&query=La%20Triennale%20-%20Design%20Library%2C%20Viale%20Alemagna%206%2C%20Milano%2C%20Italia
+Lacerba,Via Orti 4,https://lacerba.it,,https://www.google.com/maps/search/?api=1&query=Lacerba%2C%20Via%20Orti%204%2C%20Milano%2C%20Italia
+LambicZoon,Via Friuli 46,,,https://www.google.com/maps/search/?api=1&query=LambicZoon%2C%20Via%20Friuli%2046%2C%20Milano%2C%20Italia
+LambiczZoon,Via Friuli 46,,,https://www.google.com/maps/search/?api=1&query=LambiczZoon%2C%20Via%20Friuli%2046%2C%20Milano%2C%20Italia
+Lambretto Studios Café,Via Massimiano 25,,,https://www.google.com/maps/search/?api=1&query=Lambretto%20Studios%20Caf%C3%A9%2C%20Via%20Massimiano%2025%2C%20Milano%2C%20Italia
+Langosteria Bistrot,Via Privata Bobbio 2,https://langosteria.com,,https://www.google.com/maps/search/?api=1&query=Langosteria%20Bistrot%2C%20Via%20Privata%20Bobbio%202%2C%20Milano%2C%20Italia
+Langosteria Café,Via Savona 10,https://langosteria.com,,https://www.google.com/maps/search/?api=1&query=Langosteria%20Caf%C3%A9%2C%20Via%20Savona%2010%2C%20Milano%2C%20Italia
+Langosteria Cucina,Via Savona 10,https://langosteria.com,,https://www.google.com/maps/search/?api=1&query=Langosteria%20Cucina%2C%20Via%20Savona%2010%2C%20Milano%2C%20Italia
+Laser Game Milano - LaserMaxx,Via Tertulliano 68,,,https://www.google.com/maps/search/?api=1&query=Laser%20Game%20Milano%20-%20LaserMaxx%2C%20Via%20Tertulliano%2068%2C%20Milano%2C%20Italia
+Le Banque,Via Bassano Porrone 6,,,https://www.google.com/maps/search/?api=1&query=Le%20Banque%2C%20Via%20Bassano%20Porrone%206%2C%20Milano%2C%20Italia
+Leccomilano,Via Lecco 5,,,https://www.google.com/maps/search/?api=1&query=Leccomilano%2C%20Via%20Lecco%205%2C%20Milano%2C%20Italia
+Legend Club,Via Leoncavallo 20,,,https://www.google.com/maps/search/?api=1&query=Legend%20Club%2C%20Via%20Leoncavallo%2020%2C%20Milano%2C%20Italia
+Leoncavallo,Via Watteau 7,,,https://www.google.com/maps/search/?api=1&query=Leoncavallo%2C%20Via%20Watteau%207%2C%20Milano%2C%20Italia
+Libreria Centofiori,Via delle Asole 2,,,https://www.google.com/maps/search/?api=1&query=Libreria%20Centofiori%2C%20Via%20delle%20Asole%202%2C%20Milano%2C%20Italia
+Libreria Cortina,Via Festa del Perdono 2,,,https://www.google.com/maps/search/?api=1&query=Libreria%20Cortina%2C%20Via%20Festa%20del%20Perdono%202%2C%20Milano%2C%20Italia
+Libreria Gogol & Company,Via Savona 101,,,https://www.google.com/maps/search/?api=1&query=Libreria%20Gogol%20%26%20Company%2C%20Via%20Savona%20101%2C%20Milano%2C%20Italia
+Libreria Hoepli,Via Ulrico Hoepli 5,,,https://www.google.com/maps/search/?api=1&query=Libreria%20Hoepli%2C%20Via%20Ulrico%20Hoepli%205%2C%20Milano%2C%20Italia
+Libreria Open,Via Volta 14,,,https://www.google.com/maps/search/?api=1&query=Libreria%20Open%2C%20Via%20Volta%2014%2C%20Milano%2C%20Italia
+Libreria Utopia,Via Vallazze 34,,,https://www.google.com/maps/search/?api=1&query=Libreria%20Utopia%2C%20Via%20Vallazze%2034%2C%20Milano%2C%20Italia
+Libreria Verso,Corso di Porta Ticinese 40,,,https://www.google.com/maps/search/?api=1&query=Libreria%20Verso%2C%20Corso%20di%20Porta%20Ticinese%2040%2C%20Milano%2C%20Italia
+Lievito Madre al Duomo,Largo Corsia dei Servi 11,,,https://www.google.com/maps/search/?api=1&query=Lievito%20Madre%20al%20Duomo%2C%20Largo%20Corsia%20dei%20Servi%2011%2C%20Milano%2C%20Italia
+Lievità,Via Privata Cesare Battisti 1,https://lievitapizzagourmet.it,,https://www.google.com/maps/search/?api=1&query=Lievit%C3%A0%2C%20Via%20Privata%20Cesare%20Battisti%201%2C%20Milano%2C%20Italia
+Lievità Porta Nuova,Via Moscova 29,,,https://www.google.com/maps/search/?api=1&query=Lievit%C3%A0%20Porta%20Nuova%2C%20Via%20Moscova%2029%2C%20Milano%2C%20Italia
+Lollo's Coffee,Via Anfossi 10,,,https://www.google.com/maps/search/?api=1&query=Lollo%27s%20Coffee%2C%20Via%20Anfossi%2010%2C%20Milano%2C%20Italia
+Loolapaloosa,Piazzale Cantore 12,,,https://www.google.com/maps/search/?api=1&query=Loolapaloosa%2C%20Piazzale%20Cantore%2012%2C%20Milano%2C%20Italia
+Lubar Ristorante,Via Palermo 21,,,https://www.google.com/maps/search/?api=1&query=Lubar%20Ristorante%2C%20Via%20Palermo%2021%2C%20Milano%2C%20Italia
+Luini Panzerotti,Via Santa Radegonda 16,,,https://www.google.com/maps/search/?api=1&query=Luini%20Panzerotti%2C%20Via%20Santa%20Radegonda%2016%2C%20Milano%2C%20Italia
+Lume,Via Giacomo Watt 37,,,https://www.google.com/maps/search/?api=1&query=Lume%2C%20Via%20Giacomo%20Watt%2037%2C%20Milano%2C%20Italia
+Lùbar,Via Carmagnola 5,,,https://www.google.com/maps/search/?api=1&query=L%C3%B9bar%2C%20Via%20Carmagnola%205%2C%20Milano%2C%20Italia
+Lùini Panzerotti,Via Santa Radegonda 16,,,https://www.google.com/maps/search/?api=1&query=L%C3%B9ini%20Panzerotti%2C%20Via%20Santa%20Radegonda%2016%2C%20Milano%2C%20Italia
+MAG La Pusterla,Via Cesare Correnti 21,,,https://www.google.com/maps/search/?api=1&query=MAG%20La%20Pusterla%2C%20Via%20Cesare%20Correnti%2021%2C%20Milano%2C%20Italia
+MUDEC — Museo delle Culture,Via Tortona 56,https://mudec.it,,https://www.google.com/maps/search/?api=1&query=MUDEC%20%E2%80%94%20Museo%20delle%20Culture%2C%20Via%20Tortona%2056%2C%20Milano%2C%20Italia
+Macha Café,Via Lodovico Lazzaro Zamenhof 11,,,https://www.google.com/maps/search/?api=1&query=Macha%20Caf%C3%A9%2C%20Via%20Lodovico%20Lazzaro%20Zamenhof%2011%2C%20Milano%2C%20Italia
+Macinata,Via Vigevano 19,,,https://www.google.com/maps/search/?api=1&query=Macinata%2C%20Via%20Vigevano%2019%2C%20Milano%2C%20Italia
+Mag Café,Ripa di Porta Ticinese 43,,,https://www.google.com/maps/search/?api=1&query=Mag%20Caf%C3%A9%2C%20Ripa%20di%20Porta%20Ticinese%2043%2C%20Milano%2C%20Italia
+Mag Café (Naviglio Pavese),Ripa di Porta Ticinese 43,,,https://www.google.com/maps/search/?api=1&query=Mag%20Caf%C3%A9%20%28Naviglio%20Pavese%29%2C%20Ripa%20di%20Porta%20Ticinese%2043%2C%20Milano%2C%20Italia
+Mag Café Brunch,Ripa di Porta Ticinese 43,,,https://www.google.com/maps/search/?api=1&query=Mag%20Caf%C3%A9%20Brunch%2C%20Ripa%20di%20Porta%20Ticinese%2043%2C%20Milano%2C%20Italia
+Mag Moustache,Via Corsico 3,,,https://www.google.com/maps/search/?api=1&query=Mag%20Moustache%2C%20Via%20Corsico%203%2C%20Milano%2C%20Italia
+Magazzini Generali,Via Pietrasanta 14,https://magazzinigenerali.it,,https://www.google.com/maps/search/?api=1&query=Magazzini%20Generali%2C%20Via%20Pietrasanta%2014%2C%20Milano%2C%20Italia
+Maido,Via Savona 15,,,https://www.google.com/maps/search/?api=1&query=Maido%2C%20Via%20Savona%2015%2C%20Milano%2C%20Italia
+Maio Restaurant,Piazza XXIV Maggio 1,,,https://www.google.com/maps/search/?api=1&query=Maio%20Restaurant%2C%20Piazza%20XXIV%20Maggio%201%2C%20Milano%2C%20Italia
+Mama Shelter Restaurant,Via Tortona 12,,,https://www.google.com/maps/search/?api=1&query=Mama%20Shelter%20Restaurant%2C%20Via%20Tortona%2012%2C%20Milano%2C%20Italia
+Mama's Burger — Loreto,Viale Brianza 30,,,https://www.google.com/maps/search/?api=1&query=Mama%27s%20Burger%20%E2%80%94%20Loreto%2C%20Viale%20Brianza%2030%2C%20Milano%2C%20Italia
+Mamà Bakery,Via Lecco 14,,,https://www.google.com/maps/search/?api=1&query=Mam%C3%A0%20Bakery%2C%20Via%20Lecco%2014%2C%20Milano%2C%20Italia
+Manforte Studio Yoga,Via Manfredo Camperio 14,,,https://www.google.com/maps/search/?api=1&query=Manforte%20Studio%20Yoga%2C%20Via%20Manfredo%20Camperio%2014%2C%20Milano%2C%20Italia
+Manifesto Bar,Via Govone 2,,,https://www.google.com/maps/search/?api=1&query=Manifesto%20Bar%2C%20Via%20Govone%202%2C%20Milano%2C%20Italia
+Maoji Street Food,Via Paolo Sarpi 42,,,https://www.google.com/maps/search/?api=1&query=Maoji%20Street%20Food%2C%20Via%20Paolo%20Sarpi%2042%2C%20Milano%2C%20Italia
+Maoz Falafel,Via Larga 8,,,https://www.google.com/maps/search/?api=1&query=Maoz%20Falafel%2C%20Via%20Larga%208%2C%20Milano%2C%20Italia
+Marchesi 1824,Via Santa Maria alla Porta 11a,https://pasticceriamarchesi.com,,https://www.google.com/maps/search/?api=1&query=Marchesi%201824%2C%20Via%20Santa%20Maria%20alla%20Porta%2011a%2C%20Milano%2C%20Italia
+Mare Culturale Urbano,Via Giuseppe Gabetti 15,https://maremilano.org,,https://www.google.com/maps/search/?api=1&query=Mare%20Culturale%20Urbano%2C%20Via%20Giuseppe%20Gabetti%2015%2C%20Milano%2C%20Italia
+Marghe,Via Cadore 26,,,https://www.google.com/maps/search/?api=1&query=Marghe%2C%20Via%20Cadore%2026%2C%20Milano%2C%20Italia
+Martesana,Via Cagliero 14,https://martesana.it,,https://www.google.com/maps/search/?api=1&query=Martesana%2C%20Via%20Cagliero%2014%2C%20Milano%2C%20Italia
+Masuelli San Marco,Viale Umbria 80,,,https://www.google.com/maps/search/?api=1&query=Masuelli%20San%20Marco%2C%20Viale%20Umbria%2080%2C%20Milano%2C%20Italia
+Memoriale della Shoah,Piazza Edmond J. Safra 1,,,https://www.google.com/maps/search/?api=1&query=Memoriale%20della%20Shoah%2C%20Piazza%20Edmond%20J.%20Safra%201%2C%20Milano%2C%20Italia
+Mercato Centrale Milano,Via Giovanni Battista Sammartini,https://mercatocentrale.com/milano,,https://www.google.com/maps/search/?api=1&query=Mercato%20Centrale%20Milano%2C%20Via%20Giovanni%20Battista%20Sammartini%2C%20Milano%2C%20Italia
+Mercato Comunale di Wagner,Piazza Wagner,,,https://www.google.com/maps/search/?api=1&query=Mercato%20Comunale%20di%20Wagner%2C%20Piazza%20Wagner%2C%20Milano%2C%20Italia
+Mercato Isola,Via Borsieri 12,,,https://www.google.com/maps/search/?api=1&query=Mercato%20Isola%2C%20Via%20Borsieri%2012%2C%20Milano%2C%20Italia
+Mercato Metropolitano,Via Valenza 2,https://mercatometropolitano.it,,https://www.google.com/maps/search/?api=1&query=Mercato%20Metropolitano%2C%20Via%20Valenza%202%2C%20Milano%2C%20Italia
+Mercato del Suffragio,Piazza Santa Maria del Suffragio,,,https://www.google.com/maps/search/?api=1&query=Mercato%20del%20Suffragio%2C%20Piazza%20Santa%20Maria%20del%20Suffragio%2C%20Milano%2C%20Italia
+Mercato di Via Fauché,Via Fauché,,,https://www.google.com/maps/search/?api=1&query=Mercato%20di%20Via%20Fauch%C3%A9%2C%20Via%20Fauch%C3%A9%2C%20Milano%2C%20Italia
+Milano Climbing Lambrate,Via Conte Rosso 20,,,https://www.google.com/maps/search/?api=1&query=Milano%20Climbing%20Lambrate%2C%20Via%20Conte%20Rosso%2020%2C%20Milano%2C%20Italia
+Milano Climbing — Sesto,"Via Gramsci 19, Sesto San Giovanni",,,https://www.google.com/maps/search/?api=1&query=Milano%20Climbing%20%E2%80%94%20Sesto%2C%20Via%20Gramsci%2019%2C%20Sesto%20San%20Giovanni%2C%20Milano%2C%20Italia
+Milano Kart Indoor,Via G.B. Grasselli 7,,,https://www.google.com/maps/search/?api=1&query=Milano%20Kart%20Indoor%2C%20Via%20G.B.%20Grasselli%207%2C%20Milano%2C%20Italia
+Milano Padel Arena,Via Fantoli 7,,,https://www.google.com/maps/search/?api=1&query=Milano%20Padel%20Arena%2C%20Via%20Fantoli%207%2C%20Milano%2C%20Italia
+Milano Wine Week,"Varie sedi, Milano",,,https://www.google.com/maps/search/?api=1&query=Milano%20Wine%20Week%2C%20Varie%20sedi%2C%20Milano%2C%20Milano%2C%20Italia
+Miscusi,Piazza Oberdan 3,https://miscusi.com,,https://www.google.com/maps/search/?api=1&query=Miscusi%2C%20Piazza%20Oberdan%203%2C%20Milano%2C%20Italia
+Moleskine Café,Corso Garibaldi 65,,,https://www.google.com/maps/search/?api=1&query=Moleskine%20Caf%C3%A9%2C%20Corso%20Garibaldi%2065%2C%20Milano%2C%20Italia
+Mono Bar,Via Lecco 6,,,https://www.google.com/maps/search/?api=1&query=Mono%20Bar%2C%20Via%20Lecco%206%2C%20Milano%2C%20Italia
+Mono Milano,Via Lecco 6,,,https://www.google.com/maps/search/?api=1&query=Mono%20Milano%2C%20Via%20Lecco%206%2C%20Milano%2C%20Italia
+Motelombroso,Via Lombroso 16,,,https://www.google.com/maps/search/?api=1&query=Motelombroso%2C%20Via%20Lombroso%2016%2C%20Milano%2C%20Italia
+Mudec Lab,Via Tortona 56,,,https://www.google.com/maps/search/?api=1&query=Mudec%20Lab%2C%20Via%20Tortona%2056%2C%20Milano%2C%20Italia
+Mudec Photo,Via Tortona 56,,,https://www.google.com/maps/search/?api=1&query=Mudec%20Photo%2C%20Via%20Tortona%2056%2C%20Milano%2C%20Italia
+Mudec — Museo delle Culture,Via Tortona 56,https://mudec.it,,https://www.google.com/maps/search/?api=1&query=Mudec%20%E2%80%94%20Museo%20delle%20Culture%2C%20Via%20Tortona%2056%2C%20Milano%2C%20Italia
+Museo Bagatti Valsecchi,Via Gesù 5,https://museobagattivalsecchi.org,,https://www.google.com/maps/search/?api=1&query=Museo%20Bagatti%20Valsecchi%2C%20Via%20Ges%C3%B9%205%2C%20Milano%2C%20Italia
+Museo Nazionale Scienza e Tecnologia,Via San Vittore 21,https://museoscienza.org,,https://www.google.com/maps/search/?api=1&query=Museo%20Nazionale%20Scienza%20e%20Tecnologia%2C%20Via%20San%20Vittore%2021%2C%20Milano%2C%20Italia
+Museo Nazionale della Scienza — Sottomarino,Via San Vittore 21,,,https://www.google.com/maps/search/?api=1&query=Museo%20Nazionale%20della%20Scienza%20%E2%80%94%20Sottomarino%2C%20Via%20San%20Vittore%2021%2C%20Milano%2C%20Italia
+Museo Poldi Pezzoli,Via Manzoni 12,https://museopoldipezzoli.it,,https://www.google.com/maps/search/?api=1&query=Museo%20Poldi%20Pezzoli%2C%20Via%20Manzoni%2012%2C%20Milano%2C%20Italia
+Museo Teatrale alla Scala,Largo Antonio Ghiringhelli 1,https://teatroallascala.org,,https://www.google.com/maps/search/?api=1&query=Museo%20Teatrale%20alla%20Scala%2C%20Largo%20Antonio%20Ghiringhelli%201%2C%20Milano%2C%20Italia
+Museo del Design Italiano,Piazza Castello (Triennale),,,https://www.google.com/maps/search/?api=1&query=Museo%20del%20Design%20Italiano%2C%20Piazza%20Castello%20%28Triennale%29%2C%20Milano%2C%20Italia
+Museo del Novecento,Piazza del Duomo 8,https://museodelnovecento.org,,https://www.google.com/maps/search/?api=1&query=Museo%20del%20Novecento%2C%20Piazza%20del%20Duomo%208%2C%20Milano%2C%20Italia
+Muu Muuzzarella,Via Vigevano 9,,,https://www.google.com/maps/search/?api=1&query=Muu%20Muuzzarella%2C%20Via%20Vigevano%209%2C%20Milano%2C%20Italia
+N'Ombra de Vin,Via San Marco 2,,,https://www.google.com/maps/search/?api=1&query=N%27Ombra%20de%20Vin%2C%20Via%20San%20Marco%202%2C%20Milano%2C%20Italia
+Naviglio Grande,Alzaia Naviglio Grande,,,https://www.google.com/maps/search/?api=1&query=Naviglio%20Grande%2C%20Alzaia%20Naviglio%20Grande%2C%20Milano%2C%20Italia
+Naviglio Grande - Mercatone dell'Antiquariato,Alzaia Naviglio Grande,,,https://www.google.com/maps/search/?api=1&query=Naviglio%20Grande%20-%20Mercatone%20dell%27Antiquariato%2C%20Alzaia%20Naviglio%20Grande%2C%20Milano%2C%20Italia
+Naviglio Grande — Passeggiata,Alzaia Naviglio Grande,,,https://www.google.com/maps/search/?api=1&query=Naviglio%20Grande%20%E2%80%94%20Passeggiata%2C%20Alzaia%20Naviglio%20Grande%2C%20Milano%2C%20Italia
+Nebbia,Via Ravizza 8,,,https://www.google.com/maps/search/?api=1&query=Nebbia%2C%20Via%20Ravizza%208%2C%20Milano%2C%20Italia
+Nobu Milano,Via Pisoni 1,,,https://www.google.com/maps/search/?api=1&query=Nobu%20Milano%2C%20Via%20Pisoni%201%2C%20Milano%2C%20Italia
+Nolo Bar Social Club,Via Antonio Kramer 19,,,https://www.google.com/maps/search/?api=1&query=Nolo%20Bar%20Social%20Club%2C%20Via%20Antonio%20Kramer%2019%2C%20Milano%2C%20Italia
+Noor Milano,Via Savona 1,,,https://www.google.com/maps/search/?api=1&query=Noor%20Milano%2C%20Via%20Savona%201%2C%20Milano%2C%20Italia
+Nordik Spa,Via Procaccini 10,,,https://www.google.com/maps/search/?api=1&query=Nordik%20Spa%2C%20Via%20Procaccini%2010%2C%20Milano%2C%20Italia
+Nottingham Forest,Via Piave 1,https://nottinghamforest.it,,https://www.google.com/maps/search/?api=1&query=Nottingham%20Forest%2C%20Via%20Piave%201%2C%20Milano%2C%20Italia
+Nottingham Forest (Navigli),Via Ascanio Sforza 47,https://nottinghamforest.it,,https://www.google.com/maps/search/?api=1&query=Nottingham%20Forest%20%28Navigli%29%2C%20Via%20Ascanio%20Sforza%2047%2C%20Milano%2C%20Italia
+Nottingham Forest Città Studi,Via Celoria 2,https://nottinghamforest.it,,https://www.google.com/maps/search/?api=1&query=Nottingham%20Forest%20Citt%C3%A0%20Studi%2C%20Via%20Celoria%202%2C%20Milano%2C%20Italia
+Nuova Era Cocktails,Via Lambro 7,,,https://www.google.com/maps/search/?api=1&query=Nuova%20Era%20Cocktails%2C%20Via%20Lambro%207%2C%20Milano%2C%20Italia
+Oh Bej! Oh Bej!,Castello Sforzesco,,,https://www.google.com/maps/search/?api=1&query=Oh%20Bej%21%20Oh%20Bej%21%2C%20Castello%20Sforzesco%2C%20Milano%2C%20Italia
+Ohibò Live,Via Benaco 1,,,https://www.google.com/maps/search/?api=1&query=Ohib%C3%B2%20Live%2C%20Via%20Benaco%201%2C%20Milano%2C%20Italia
+Onda Poké,Via Washington 70,,,https://www.google.com/maps/search/?api=1&query=Onda%20Pok%C3%A9%2C%20Via%20Washington%2070%2C%20Milano%2C%20Italia
+Onigiri Lab,Via Paolo Sarpi 15,,,https://www.google.com/maps/search/?api=1&query=Onigiri%20Lab%2C%20Via%20Paolo%20Sarpi%2015%2C%20Milano%2C%20Italia
+Open Milano,Viale Monte Nero 6,,,https://www.google.com/maps/search/?api=1&query=Open%20Milano%2C%20Viale%20Monte%20Nero%206%2C%20Milano%2C%20Italia
+Open — Care of,Via Piranesi 10,,,https://www.google.com/maps/search/?api=1&query=Open%20%E2%80%94%20Care%20of%2C%20Via%20Piranesi%2010%2C%20Milano%2C%20Italia
+Oriental Market Superstore,Via Paolo Sarpi 22,,,https://www.google.com/maps/search/?api=1&query=Oriental%20Market%20Superstore%2C%20Via%20Paolo%20Sarpi%2022%2C%20Milano%2C%20Italia
+Orsonero Coffee,Via Broggi 15,https://orsonero.coffee,,https://www.google.com/maps/search/?api=1&query=Orsonero%20Coffee%2C%20Via%20Broggi%2015%2C%20Milano%2C%20Italia
+Orto Botanico di Brera,Via Brera 28,,,https://www.google.com/maps/search/?api=1&query=Orto%20Botanico%20di%20Brera%2C%20Via%20Brera%2028%2C%20Milano%2C%20Italia
+Ostello Bello Grande,Via Roberto Lepetit 33,,,https://www.google.com/maps/search/?api=1&query=Ostello%20Bello%20Grande%2C%20Via%20Roberto%20Lepetit%2033%2C%20Milano%2C%20Italia
+Osteria Brunello,Via Solferino 37,,,https://www.google.com/maps/search/?api=1&query=Osteria%20Brunello%2C%20Via%20Solferino%2037%2C%20Milano%2C%20Italia
+Osteria alla Concorrenza,Via Orefici 17,,,https://www.google.com/maps/search/?api=1&query=Osteria%20alla%20Concorrenza%2C%20Via%20Orefici%2017%2C%20Milano%2C%20Italia
+Osteria dei Vecchi Sapori,Via San Calocero 3,,,https://www.google.com/maps/search/?api=1&query=Osteria%20dei%20Vecchi%20Sapori%2C%20Via%20San%20Calocero%203%2C%20Milano%2C%20Italia
+Osteria del Mare,Via Savona 50,,,https://www.google.com/maps/search/?api=1&query=Osteria%20del%20Mare%2C%20Via%20Savona%2050%2C%20Milano%2C%20Italia
+Osteria del Treno,Via San Gregorio 46,https://osteriadeltreno.it,,https://www.google.com/maps/search/?api=1&query=Osteria%20del%20Treno%2C%20Via%20San%20Gregorio%2046%2C%20Milano%2C%20Italia
+Osteria dell'Acquabella,Via San Rocco 11,,,https://www.google.com/maps/search/?api=1&query=Osteria%20dell%27Acquabella%2C%20Via%20San%20Rocco%2011%2C%20Milano%2C%20Italia
+Osteria della Bistecca,Via Solferino 42,,,https://www.google.com/maps/search/?api=1&query=Osteria%20della%20Bistecca%2C%20Via%20Solferino%2042%2C%20Milano%2C%20Italia
+Oyster Bar Brera,Via Pontaccio 19,,,https://www.google.com/maps/search/?api=1&query=Oyster%20Bar%20Brera%2C%20Via%20Pontaccio%2019%2C%20Milano%2C%20Italia
+Padel City Milano,Via Rizzoli 4,,,https://www.google.com/maps/search/?api=1&query=Padel%20City%20Milano%2C%20Via%20Rizzoli%204%2C%20Milano%2C%20Italia
+Paint & Wine,Via Tortona 8,,,https://www.google.com/maps/search/?api=1&query=Paint%20%26%20Wine%2C%20Via%20Tortona%208%2C%20Milano%2C%20Italia
+Palazzo Reale,Piazza del Duomo 12,https://palazzorealemilano.it,,https://www.google.com/maps/search/?api=1&query=Palazzo%20Reale%2C%20Piazza%20del%20Duomo%2012%2C%20Milano%2C%20Italia
+Panificio Davide Longoni,Via Tiraboschi 19,,,https://www.google.com/maps/search/?api=1&query=Panificio%20Davide%20Longoni%2C%20Via%20Tiraboschi%2019%2C%20Milano%2C%20Italia
+Panino Giusto,Piazza Beccaria 4,https://paninogiusto.it,,https://www.google.com/maps/search/?api=1&query=Panino%20Giusto%2C%20Piazza%20Beccaria%204%2C%20Milano%2C%20Italia
+Parco Biblioteca degli Alberi,Piazza Gae Aulenti,,,https://www.google.com/maps/search/?api=1&query=Parco%20Biblioteca%20degli%20Alberi%2C%20Piazza%20Gae%20Aulenti%2C%20Milano%2C%20Italia
+Parco Forlanini,Via Corelli,,,https://www.google.com/maps/search/?api=1&query=Parco%20Forlanini%2C%20Via%20Corelli%2C%20Milano%2C%20Italia
+Parco Lambro,Via Feltre,,,https://www.google.com/maps/search/?api=1&query=Parco%20Lambro%2C%20Via%20Feltre%2C%20Milano%2C%20Italia
+Parco Nord Milano,"Via Clerici 150, Sesto San Giovanni",,,https://www.google.com/maps/search/?api=1&query=Parco%20Nord%20Milano%2C%20Via%20Clerici%20150%2C%20Sesto%20San%20Giovanni%2C%20Milano%2C%20Italia
+Parco Ravizza,Via Tito Livio,,,https://www.google.com/maps/search/?api=1&query=Parco%20Ravizza%2C%20Via%20Tito%20Livio%2C%20Milano%2C%20Italia
+Parco Sempione,Piazza Sempione,,,https://www.google.com/maps/search/?api=1&query=Parco%20Sempione%2C%20Piazza%20Sempione%2C%20Milano%2C%20Italia
+Parco Sempione — Zona Yoga,Viale Gadio (Parco Sempione),,,https://www.google.com/maps/search/?api=1&query=Parco%20Sempione%20%E2%80%94%20Zona%20Yoga%2C%20Viale%20Gadio%20%28Parco%20Sempione%29%2C%20Milano%2C%20Italia
+Parco delle Basiliche,Via Molino delle Armi,,,https://www.google.com/maps/search/?api=1&query=Parco%20delle%20Basiliche%2C%20Via%20Molino%20delle%20Armi%2C%20Milano%2C%20Italia
+Parco delle Cave,Via Fratelli Zoia,,,https://www.google.com/maps/search/?api=1&query=Parco%20delle%20Cave%2C%20Via%20Fratelli%20Zoia%2C%20Milano%2C%20Italia
+Pasticceria Cucchi,Corso Genova 1,,,https://www.google.com/maps/search/?api=1&query=Pasticceria%20Cucchi%2C%20Corso%20Genova%201%2C%20Milano%2C%20Italia
+Pave Navigli,Ripa di Porta Ticinese 55,,,https://www.google.com/maps/search/?api=1&query=Pave%20Navigli%2C%20Ripa%20di%20Porta%20Ticinese%2055%2C%20Milano%2C%20Italia
+Pavè Gelati e Granite,Via Cesare Battisti 21,,,https://www.google.com/maps/search/?api=1&query=Pav%C3%A8%20Gelati%20e%20Granite%2C%20Via%20Cesare%20Battisti%2021%2C%20Milano%2C%20Italia
+Pavé,Via Felice Casati 27,https://pavemilano.com,,https://www.google.com/maps/search/?api=1&query=Pav%C3%A9%2C%20Via%20Felice%20Casati%2027%2C%20Milano%2C%20Italia
+Pavé Brunch,Via Felice Casati 27,,,https://www.google.com/maps/search/?api=1&query=Pav%C3%A9%20Brunch%2C%20Via%20Felice%20Casati%2027%2C%20Milano%2C%20Italia
+Peck — Il Bar,Via Spadari 9,,,https://www.google.com/maps/search/?api=1&query=Peck%20%E2%80%94%20Il%20Bar%2C%20Via%20Spadari%209%2C%20Milano%2C%20Italia
+Persian House,Via Lecco 13,,,https://www.google.com/maps/search/?api=1&query=Persian%20House%2C%20Via%20Lecco%2013%2C%20Milano%2C%20Italia
+Pescaria,Via Tortona 11,,,https://www.google.com/maps/search/?api=1&query=Pescaria%2C%20Via%20Tortona%2011%2C%20Milano%2C%20Italia
+Pho Milano,Via Paolo Sarpi 42,,,https://www.google.com/maps/search/?api=1&query=Pho%20Milano%2C%20Via%20Paolo%20Sarpi%2042%2C%20Milano%2C%20Italia
+Piadineria Romagnola Brera,Via Madonnina 3,,,https://www.google.com/maps/search/?api=1&query=Piadineria%20Romagnola%20Brera%2C%20Via%20Madonnina%203%2C%20Milano%2C%20Italia
+Piccolo Teatro Grassi,Via Rovello 2,https://piccoloteatro.org,,https://www.google.com/maps/search/?api=1&query=Piccolo%20Teatro%20Grassi%2C%20Via%20Rovello%202%2C%20Milano%2C%20Italia
+Piccolo Teatro Strehler,Largo Greppi 1,https://piccoloteatro.org,,https://www.google.com/maps/search/?api=1&query=Piccolo%20Teatro%20Strehler%2C%20Largo%20Greppi%201%2C%20Milano%2C%20Italia
+Piccolo Teatro di Milano,Via Rovello 2,https://piccoloteatro.org,,https://www.google.com/maps/search/?api=1&query=Piccolo%20Teatro%20di%20Milano%2C%20Via%20Rovello%202%2C%20Milano%2C%20Italia
+Pilates Garage,Via Tortona 5,,,https://www.google.com/maps/search/?api=1&query=Pilates%20Garage%2C%20Via%20Tortona%205%2C%20Milano%2C%20Italia
+Pinacoteca di Brera,Via Brera 28,https://pinacotecabrera.org,,https://www.google.com/maps/search/?api=1&query=Pinacoteca%20di%20Brera%2C%20Via%20Brera%2028%2C%20Milano%2C%20Italia
+Pinch — Spirits & Kitchen,Ripa di Porta Ticinese 63,,,https://www.google.com/maps/search/?api=1&query=Pinch%20%E2%80%94%20Spirits%20%26%20Kitchen%2C%20Ripa%20di%20Porta%20Ticinese%2063%2C%20Milano%2C%20Italia
+Pirelli HangarBicocca,Via Chiese 2,https://hangarbicocca.org,,https://www.google.com/maps/search/?api=1&query=Pirelli%20HangarBicocca%2C%20Via%20Chiese%202%2C%20Milano%2C%20Italia
+Pirelli HangarBicocca — Café,Via Chiese 2,https://hangarbicocca.org,,https://www.google.com/maps/search/?api=1&query=Pirelli%20HangarBicocca%20%E2%80%94%20Caf%C3%A9%2C%20Via%20Chiese%202%2C%20Milano%2C%20Italia
+Piscina Cozzi,Viale Tunisia 35,,,https://www.google.com/maps/search/?api=1&query=Piscina%20Cozzi%2C%20Viale%20Tunisia%2035%2C%20Milano%2C%20Italia
+Piz,Via Torino 34,,,https://www.google.com/maps/search/?api=1&query=Piz%2C%20Via%20Torino%2034%2C%20Milano%2C%20Italia
+Pizza Am,Via Lambrate 15,,,https://www.google.com/maps/search/?api=1&query=Pizza%20Am%2C%20Via%20Lambrate%2015%2C%20Milano%2C%20Italia
+Pizzeria Spontini — Corso Buenos Aires,Corso Buenos Aires 60,https://spontinimilano.com,,https://www.google.com/maps/search/?api=1&query=Pizzeria%20Spontini%20%E2%80%94%20Corso%20Buenos%20Aires%2C%20Corso%20Buenos%20Aires%2060%2C%20Milano%2C%20Italia
+Planetario di Milano,Corso Venezia 57,https://comune.milano.it/aree-tematiche/cultura,,https://www.google.com/maps/search/?api=1&query=Planetario%20di%20Milano%2C%20Corso%20Venezia%2057%2C%20Milano%2C%20Italia
+Plastic Fantastic Café,Via Gian Giacomo Mora 3,,,https://www.google.com/maps/search/?api=1&query=Plastic%20Fantastic%20Caf%C3%A9%2C%20Via%20Gian%20Giacomo%20Mora%203%2C%20Milano%2C%20Italia
+Poke House,Piazza XXV Aprile 1,https://pokehouse.it,,https://www.google.com/maps/search/?api=1&query=Poke%20House%2C%20Piazza%20XXV%20Aprile%201%2C%20Milano%2C%20Italia
+Poke'it,Via Mercato 28,,,https://www.google.com/maps/search/?api=1&query=Poke%27it%2C%20Via%20Mercato%2028%2C%20Milano%2C%20Italia
+Polimi Bovisa — Caffè Politecnico,Via Lambruschini 4,,,https://www.google.com/maps/search/?api=1&query=Polimi%20Bovisa%20%E2%80%94%20Caff%C3%A8%20Politecnico%2C%20Via%20Lambruschini%204%2C%20Milano%2C%20Italia
+Polpo Brace & Griglia,Via Casale 4,,,https://www.google.com/maps/search/?api=1&query=Polpo%20Brace%20%26%20Griglia%2C%20Via%20Casale%204%2C%20Milano%2C%20Italia
+Pop Milano,Via Panfilo Castaldi 22,,,https://www.google.com/maps/search/?api=1&query=Pop%20Milano%2C%20Via%20Panfilo%20Castaldi%2022%2C%20Milano%2C%20Italia
+Poporoya,Via Eustachi 17,,,https://www.google.com/maps/search/?api=1&query=Poporoya%2C%20Via%20Eustachi%2017%2C%20Milano%2C%20Italia
+Porterhouse Milano,Via De Amicis 1,,,https://www.google.com/maps/search/?api=1&query=Porterhouse%20Milano%2C%20Via%20De%20Amicis%201%2C%20Milano%2C%20Italia
+Pottery Lab Milano,Via Savona 56,,,https://www.google.com/maps/search/?api=1&query=Pottery%20Lab%20Milano%2C%20Via%20Savona%2056%2C%20Milano%2C%20Italia
+Premiata Forneria,Via Alzaia Naviglio Grande 2,,,https://www.google.com/maps/search/?api=1&query=Premiata%20Forneria%2C%20Via%20Alzaia%20Naviglio%20Grande%202%2C%20Milano%2C%20Italia
+Princi,Via Speronari 6,https://princi.it,,https://www.google.com/maps/search/?api=1&query=Princi%2C%20Via%20Speronari%206%2C%20Milano%2C%20Italia
+Pub LOM,Viale Monte Nero 15,,,https://www.google.com/maps/search/?api=1&query=Pub%20LOM%2C%20Viale%20Monte%20Nero%2015%2C%20Milano%2C%20Italia
+Puttshack Milano,Piazza Lina Bo Bardi 1,,,https://www.google.com/maps/search/?api=1&query=Puttshack%20Milano%2C%20Piazza%20Lina%20Bo%20Bardi%201%2C%20Milano%2C%20Italia
+QC Terme Milano,Piazzale Medaglie d'Oro 2,https://qcterme.com/milano,,https://www.google.com/maps/search/?api=1&query=QC%20Terme%20Milano%2C%20Piazzale%20Medaglie%20d%27Oro%202%2C%20Milano%2C%20Italia
+Radetzky,Corso Garibaldi 105,,,https://www.google.com/maps/search/?api=1&query=Radetzky%2C%20Corso%20Garibaldi%20105%2C%20Milano%2C%20Italia
+Radio Rooftop,Via Marco Polo 18,https://melia.com/radio-rooftop-bar,,https://www.google.com/maps/search/?api=1&query=Radio%20Rooftop%2C%20Via%20Marco%20Polo%2018%2C%20Milano%2C%20Italia
+Radio Rooftop Milan,Piazza della Repubblica 13,https://melia.com/it/hotels/italia/milan/me-milan-il-duca,,https://www.google.com/maps/search/?api=1&query=Radio%20Rooftop%20Milan%2C%20Piazza%20della%20Repubblica%2013%2C%20Milano%2C%20Italia
+Rainbow Lounge,Via Castel Morrone 6,,,https://www.google.com/maps/search/?api=1&query=Rainbow%20Lounge%2C%20Via%20Castel%20Morrone%206%2C%20Milano%2C%20Italia
+Ratanà,Via Gaetano de Castillia 28,https://ratana.it,,https://www.google.com/maps/search/?api=1&query=Ratan%C3%A0%2C%20Via%20Gaetano%20de%20Castillia%2028%2C%20Milano%2C%20Italia
+Ratanà Bistrot,Via Gaetano de Castillia 28,,,https://www.google.com/maps/search/?api=1&query=Ratan%C3%A0%20Bistrot%2C%20Via%20Gaetano%20de%20Castillia%2028%2C%20Milano%2C%20Italia
+Ravioleria Sarpi,Via Paolo Sarpi 27,,,https://www.google.com/maps/search/?api=1&query=Ravioleria%20Sarpi%2C%20Via%20Paolo%20Sarpi%2027%2C%20Milano%2C%20Italia
+Rebelot,Ripa di Porta Ticinese 55,,,https://www.google.com/maps/search/?api=1&query=Rebelot%2C%20Ripa%20di%20Porta%20Ticinese%2055%2C%20Milano%2C%20Italia
+Ride Milano — Cycling Studio,Via Vigevano 18,,,https://www.google.com/maps/search/?api=1&query=Ride%20Milano%20%E2%80%94%20Cycling%20Studio%2C%20Via%20Vigevano%2018%2C%20Milano%2C%20Italia
+Ristorante Torre,Piazza XXV Aprile 10,,,https://www.google.com/maps/search/?api=1&query=Ristorante%20Torre%2C%20Piazza%20XXV%20Aprile%2010%2C%20Milano%2C%20Italia
+Rita & Cocktails,Via Angelo Fumagalli 1,https://ritamilano.com,,https://www.google.com/maps/search/?api=1&query=Rita%20%26%20Cocktails%2C%20Via%20Angelo%20Fumagalli%201%2C%20Milano%2C%20Italia
+Rita Cocktails Isola,Via Borsieri 30,,,https://www.google.com/maps/search/?api=1&query=Rita%20Cocktails%20Isola%2C%20Via%20Borsieri%2030%2C%20Milano%2C%20Italia
+Rizzoli Galleria,Galleria Vittorio Emanuele II,,,https://www.google.com/maps/search/?api=1&query=Rizzoli%20Galleria%2C%20Galleria%20Vittorio%20Emanuele%20II%2C%20Milano%2C%20Italia
+Rocket Club,Via Pezzotti 52,,,https://www.google.com/maps/search/?api=1&query=Rocket%20Club%2C%20Via%20Pezzotti%2052%2C%20Milano%2C%20Italia
+Rocket Milano,Via Pezzotti 52,,,https://www.google.com/maps/search/?api=1&query=Rocket%20Milano%2C%20Via%20Pezzotti%2052%2C%20Milano%2C%20Italia
+Rockspot - Arrampicata Milano,Via Segantini 61,,,https://www.google.com/maps/search/?api=1&query=Rockspot%20-%20Arrampicata%20Milano%2C%20Via%20Segantini%2061%2C%20Milano%2C%20Italia
+Rooftop Manzoni,Via Manzoni 31,,,https://www.google.com/maps/search/?api=1&query=Rooftop%20Manzoni%2C%20Via%20Manzoni%2031%2C%20Milano%2C%20Italia
+Roots Milano,Via Passubio 4,,,https://www.google.com/maps/search/?api=1&query=Roots%20Milano%2C%20Via%20Passubio%204%2C%20Milano%2C%20Italia
+Rossopomodoro,Via Boccaccio 9,,,https://www.google.com/maps/search/?api=1&query=Rossopomodoro%2C%20Via%20Boccaccio%209%2C%20Milano%2C%20Italia
+Running Club Parco Sempione,Piazza Sempione 1,,,https://www.google.com/maps/search/?api=1&query=Running%20Club%20Parco%20Sempione%2C%20Piazza%20Sempione%201%2C%20Milano%2C%20Italia
+Ruyi Dumpling Bar,Via Paolo Sarpi 28,,,https://www.google.com/maps/search/?api=1&query=Ruyi%20Dumpling%20Bar%2C%20Via%20Paolo%20Sarpi%2028%2C%20Milano%2C%20Italia
+Røst,Ripa di Porta Ticinese 7,,,https://www.google.com/maps/search/?api=1&query=R%C3%B8st%2C%20Ripa%20di%20Porta%20Ticinese%207%2C%20Milano%2C%20Italia
+Røst Coffee & Kitchen,Via Cadore 9,,,https://www.google.com/maps/search/?api=1&query=R%C3%B8st%20Coffee%20%26%20Kitchen%2C%20Via%20Cadore%209%2C%20Milano%2C%20Italia
+SNAG Milano — Padel & Tennis,Via Giovanni Battista Piranesi 10,,,https://www.google.com/maps/search/?api=1&query=SNAG%20Milano%20%E2%80%94%20Padel%20%26%20Tennis%2C%20Via%20Giovanni%20Battista%20Piranesi%2010%2C%20Milano%2C%20Italia
+SPA Suite Milano,Via Savona 52,,,https://www.google.com/maps/search/?api=1&query=SPA%20Suite%20Milano%2C%20Via%20Savona%2052%2C%20Milano%2C%20Italia
+SUP Naviglio,Alzaia Naviglio Grande 44,,,https://www.google.com/maps/search/?api=1&query=SUP%20Naviglio%2C%20Alzaia%20Naviglio%20Grande%2044%2C%20Milano%2C%20Italia
+Sakeya,Via Sottocorno 5,,,https://www.google.com/maps/search/?api=1&query=Sakeya%2C%20Via%20Sottocorno%205%2C%20Milano%2C%20Italia
+Salumeria della Musica Live,Via Antonio Pasinetti 4,,,https://www.google.com/maps/search/?api=1&query=Salumeria%20della%20Musica%20Live%2C%20Via%20Antonio%20Pasinetti%204%2C%20Milano%2C%20Italia
+Santambroeus,Corso Matteotti 7,,,https://www.google.com/maps/search/?api=1&query=Santambroeus%2C%20Corso%20Matteotti%207%2C%20Milano%2C%20Italia
+Santeria Paladini 8,Via Paladini 8,,,https://www.google.com/maps/search/?api=1&query=Santeria%20Paladini%208%2C%20Via%20Paladini%208%2C%20Milano%2C%20Italia
+Santeria Social Club,Via Ettore Ponti 3,,,https://www.google.com/maps/search/?api=1&query=Santeria%20Social%20Club%2C%20Via%20Ettore%20Ponti%203%2C%20Milano%2C%20Italia
+Santeria Toscana 31,Via Toscana 31,https://santeria.it,,https://www.google.com/maps/search/?api=1&query=Santeria%20Toscana%2031%2C%20Via%20Toscana%2031%2C%20Milano%2C%20Italia
+Santeria Toscana Live,Via Toscana 31,,,https://www.google.com/maps/search/?api=1&query=Santeria%20Toscana%20Live%2C%20Via%20Toscana%2031%2C%20Milano%2C%20Italia
+Sarti Mercato del Pesce,Via Romagnosi 3,,,https://www.google.com/maps/search/?api=1&query=Sarti%20Mercato%20del%20Pesce%2C%20Via%20Romagnosi%203%2C%20Milano%2C%20Italia
+Sartoria Panatoni,Via Niccolò Jommelli 13,,,https://www.google.com/maps/search/?api=1&query=Sartoria%20Panatoni%2C%20Via%20Niccol%C3%B2%20Jommelli%2013%2C%20Milano%2C%20Italia
+Secret Room Escape,Via Meda 3,,,https://www.google.com/maps/search/?api=1&query=Secret%20Room%20Escape%2C%20Via%20Meda%203%2C%20Milano%2C%20Italia
+Serraglio Jazz Club,Via Valenza 19,,,https://www.google.com/maps/search/?api=1&query=Serraglio%20Jazz%20Club%2C%20Via%20Valenza%2019%2C%20Milano%2C%20Italia
+Seta by Antonio Guida,Via Gesù 6/8,,,https://www.google.com/maps/search/?api=1&query=Seta%20by%20Antonio%20Guida%2C%20Via%20Ges%C3%B9%206/8%2C%20Milano%2C%20Italia
+Shala Yoga Milano,Via Savona 97,,,https://www.google.com/maps/search/?api=1&query=Shala%20Yoga%20Milano%2C%20Via%20Savona%2097%2C%20Milano%2C%20Italia
+Shi Feng Bao,Via Rosmini 11,,,https://www.google.com/maps/search/?api=1&query=Shi%20Feng%20Bao%2C%20Via%20Rosmini%2011%2C%20Milano%2C%20Italia
+Shiro Poporoya,Via Eustachi 17,,,https://www.google.com/maps/search/?api=1&query=Shiro%20Poporoya%2C%20Via%20Eustachi%2017%2C%20Milano%2C%20Italia
+Shisha Café,Via Casale 5,,,https://www.google.com/maps/search/?api=1&query=Shisha%20Caf%C3%A9%2C%20Via%20Casale%205%2C%20Milano%2C%20Italia
+Sidecar Milano,Via Borsieri 32,,,https://www.google.com/maps/search/?api=1&query=Sidecar%20Milano%2C%20Via%20Borsieri%2032%2C%20Milano%2C%20Italia
+Sine by Di Pinto,Via Lambro 11,,,https://www.google.com/maps/search/?api=1&query=Sine%20by%20Di%20Pinto%2C%20Via%20Lambro%2011%2C%20Milano%2C%20Italia
+Skateboard Park Lampugnano,Via Lampugnano 76,,,https://www.google.com/maps/search/?api=1&query=Skateboard%20Park%20Lampugnano%2C%20Via%20Lampugnano%2076%2C%20Milano%2C%20Italia
+Slow Sud,Via Casale 7,,,https://www.google.com/maps/search/?api=1&query=Slow%20Sud%2C%20Via%20Casale%207%2C%20Milano%2C%20Italia
+Smørrebrød Milano,Via Solferino 11,,,https://www.google.com/maps/search/?api=1&query=Sm%C3%B8rrebr%C3%B8d%20Milano%2C%20Via%20Solferino%2011%2C%20Milano%2C%20Italia
+Social Club Milano,Via Ascanio Sforza 47,,,https://www.google.com/maps/search/?api=1&query=Social%20Club%20Milano%2C%20Via%20Ascanio%20Sforza%2047%2C%20Milano%2C%20Italia
+Soda Jerk,Via Meravigli 16,,,https://www.google.com/maps/search/?api=1&query=Soda%20Jerk%2C%20Via%20Meravigli%2016%2C%20Milano%2C%20Italia
+Sound Bath Milano,Via Vigevano 8,,,https://www.google.com/maps/search/?api=1&query=Sound%20Bath%20Milano%2C%20Via%20Vigevano%208%2C%20Milano%2C%20Italia
+Spazio Avanzi,Via Ampère 61,,,https://www.google.com/maps/search/?api=1&query=Spazio%20Avanzi%2C%20Via%20Amp%C3%A8re%2061%2C%20Milano%2C%20Italia
+Spazio Eataly Arte,Piazza XXV Aprile 10,,,https://www.google.com/maps/search/?api=1&query=Spazio%20Eataly%20Arte%2C%20Piazza%20XXV%20Aprile%2010%2C%20Milano%2C%20Italia
+Spazio Maiocchi,Via Achille Maiocchi 7,,,https://www.google.com/maps/search/?api=1&query=Spazio%20Maiocchi%2C%20Via%20Achille%20Maiocchi%207%2C%20Milano%2C%20Italia
+Spirit de Milan,Via Bovisasca 59,https://spiritdemilan.it,,https://www.google.com/maps/search/?api=1&query=Spirit%20de%20Milan%2C%20Via%20Bovisasca%2059%2C%20Milano%2C%20Italia
+Spirit de Milan — Giardino,Via Bovisasca 59,,,https://www.google.com/maps/search/?api=1&query=Spirit%20de%20Milan%20%E2%80%94%20Giardino%2C%20Via%20Bovisasca%2059%2C%20Milano%2C%20Italia
+Spirito Cocktail Bar,Via Borsieri 28,,,https://www.google.com/maps/search/?api=1&query=Spirito%20Cocktail%20Bar%2C%20Via%20Borsieri%2028%2C%20Milano%2C%20Italia
+Spontini,Via Santa Radegonda 11,https://spontinimilano.com,,https://www.google.com/maps/search/?api=1&query=Spontini%2C%20Via%20Santa%20Radegonda%2011%2C%20Milano%2C%20Italia
+Stadio Giuseppe Meazza — Tour,Piazzale Angelo Moratti,,,https://www.google.com/maps/search/?api=1&query=Stadio%20Giuseppe%20Meazza%20%E2%80%94%20Tour%2C%20Piazzale%20Angelo%20Moratti%2C%20Milano%2C%20Italia
+Starita,Via Ampère 49,,,https://www.google.com/maps/search/?api=1&query=Starita%2C%20Via%20Amp%C3%A8re%2049%2C%20Milano%2C%20Italia
+Stork Milano,Via Gian Giacomo Mora 2,,,https://www.google.com/maps/search/?api=1&query=Stork%20Milano%2C%20Via%20Gian%20Giacomo%20Mora%202%2C%20Milano%2C%20Italia
+Straf Bar,Via San Raffaele 3,,,https://www.google.com/maps/search/?api=1&query=Straf%20Bar%2C%20Via%20San%20Raffaele%203%2C%20Milano%2C%20Italia
+Sushi Daily Bar,Via Padova 36,,,https://www.google.com/maps/search/?api=1&query=Sushi%20Daily%20Bar%2C%20Via%20Padova%2036%2C%20Milano%2C%20Italia
+Sushi Masterclass,Via Tortona 33,,,https://www.google.com/maps/search/?api=1&query=Sushi%20Masterclass%2C%20Via%20Tortona%2033%2C%20Milano%2C%20Italia
+T'a Milano,Via Clerici 1,,,https://www.google.com/maps/search/?api=1&query=T%27a%20Milano%2C%20Via%20Clerici%201%2C%20Milano%2C%20Italia
+Taco Luchador,Via Tortona 20,,,https://www.google.com/maps/search/?api=1&query=Taco%20Luchador%2C%20Via%20Tortona%2020%2C%20Milano%2C%20Italia
+Tacos Locos,Via Lecco 15,,,https://www.google.com/maps/search/?api=1&query=Tacos%20Locos%2C%20Via%20Lecco%2015%2C%20Milano%2C%20Italia
+Tagiura,Via Tagiura 5,,,https://www.google.com/maps/search/?api=1&query=Tagiura%2C%20Via%20Tagiura%205%2C%20Milano%2C%20Italia
+Taglio,Via Vigevano 10,,,https://www.google.com/maps/search/?api=1&query=Taglio%2C%20Via%20Vigevano%2010%2C%20Milano%2C%20Italia
+Taglio Caffè,Via Vigevano 10,,,https://www.google.com/maps/search/?api=1&query=Taglio%20Caff%C3%A8%2C%20Via%20Vigevano%2010%2C%20Milano%2C%20Italia
+Talent Garden Calabiana,Via Arcivescovo Calabiana 6,https://talentgarden.org,,https://www.google.com/maps/search/?api=1&query=Talent%20Garden%20Calabiana%2C%20Via%20Arcivescovo%20Calabiana%206%2C%20Milano%2C%20Italia
+Tandoor Indian Restaurant,Via Maddalena 3,,,https://www.google.com/maps/search/?api=1&query=Tandoor%20Indian%20Restaurant%2C%20Via%20Maddalena%203%2C%20Milano%2C%20Italia
+Tandoori Nights,Via Melchiorre Gioia 73,,,https://www.google.com/maps/search/?api=1&query=Tandoori%20Nights%2C%20Via%20Melchiorre%20Gioia%2073%2C%20Milano%2C%20Italia
+Tango Milonga,Via Piacenza 11,,,https://www.google.com/maps/search/?api=1&query=Tango%20Milonga%2C%20Via%20Piacenza%2011%2C%20Milano%2C%20Italia
+Tano Passami l'Olio,Via Francesco Petrarca 4,,,https://www.google.com/maps/search/?api=1&query=Tano%20Passami%20l%27Olio%2C%20Via%20Francesco%20Petrarca%204%2C%20Milano%2C%20Italia
+Taqueria El Nuevo Mariachi,Via Giuseppe Sirtori 11,,,https://www.google.com/maps/search/?api=1&query=Taqueria%20El%20Nuevo%20Mariachi%2C%20Via%20Giuseppe%20Sirtori%2011%2C%20Milano%2C%20Italia
+Teatro Carcano,Corso di Porta Romana 63,,,https://www.google.com/maps/search/?api=1&query=Teatro%20Carcano%2C%20Corso%20di%20Porta%20Romana%2063%2C%20Milano%2C%20Italia
+Teatro Dal Verme,Via San Giovanni sul Muro 2,https://dalverme.org,,https://www.google.com/maps/search/?api=1&query=Teatro%20Dal%20Verme%2C%20Via%20San%20Giovanni%20sul%20Muro%202%2C%20Milano%2C%20Italia
+Teatro Elfo Puccini,Corso Buenos Aires 33,https://elfo.org,,https://www.google.com/maps/search/?api=1&query=Teatro%20Elfo%20Puccini%2C%20Corso%20Buenos%20Aires%2033%2C%20Milano%2C%20Italia
+Teatro Franco Parenti,Via Pier Lombardo 14,https://teatrofrancoparenti.it,,https://www.google.com/maps/search/?api=1&query=Teatro%20Franco%20Parenti%2C%20Via%20Pier%20Lombardo%2014%2C%20Milano%2C%20Italia
+Teatro Gerolamo,Piazza Beccaria 8,https://teatrogerolamo.it,,https://www.google.com/maps/search/?api=1&query=Teatro%20Gerolamo%2C%20Piazza%20Beccaria%208%2C%20Milano%2C%20Italia
+Teatro Menotti,Via Ciro Menotti 11,https://teatromenotti.org,,https://www.google.com/maps/search/?api=1&query=Teatro%20Menotti%2C%20Via%20Ciro%20Menotti%2011%2C%20Milano%2C%20Italia
+Teatro Parenti — Sala Grande,Via Pier Lombardo 14,https://teatrofrancoparenti.it,,https://www.google.com/maps/search/?api=1&query=Teatro%20Parenti%20%E2%80%94%20Sala%20Grande%2C%20Via%20Pier%20Lombardo%2014%2C%20Milano%2C%20Italia
+Teatro alla Scala,Piazza della Scala,https://teatroallascala.org,,https://www.google.com/maps/search/?api=1&query=Teatro%20alla%20Scala%2C%20Piazza%20della%20Scala%2C%20Milano%2C%20Italia
+Teatro degli Arcimboldi,Viale dell'Innovazione 20,https://teatroarcimboldi.it,,https://www.google.com/maps/search/?api=1&query=Teatro%20degli%20Arcimboldi%2C%20Viale%20dell%27Innovazione%2020%2C%20Milano%2C%20Italia
+Teatro del Buratto,Via Giovanni Bovio 5,,,https://www.google.com/maps/search/?api=1&query=Teatro%20del%20Buratto%2C%20Via%20Giovanni%20Bovio%205%2C%20Milano%2C%20Italia
+Teatro della Cooperativa,Via Hermada 8,,,https://www.google.com/maps/search/?api=1&query=Teatro%20della%20Cooperativa%2C%20Via%20Hermada%208%2C%20Milano%2C%20Italia
+Temaki Home,Via Vigevano 44,,,https://www.google.com/maps/search/?api=1&query=Temaki%20Home%2C%20Via%20Vigevano%2044%2C%20Milano%2C%20Italia
+Temakinho,Via Vigevano 18,https://temakinho.com,,https://www.google.com/maps/search/?api=1&query=Temakinho%2C%20Via%20Vigevano%2018%2C%20Milano%2C%20Italia
+Tempio del Futuro Perduto,Via Luigi Nono 7,,,https://www.google.com/maps/search/?api=1&query=Tempio%20del%20Futuro%20Perduto%2C%20Via%20Luigi%20Nono%207%2C%20Milano%2C%20Italia
+Tennis Club Bonacossa,Via G. Arimondi 15,,,https://www.google.com/maps/search/?api=1&query=Tennis%20Club%20Bonacossa%2C%20Via%20G.%20Arimondi%2015%2C%20Milano%2C%20Italia
+Terme Milano,Piazza Medaglie d'Oro 2,,,https://www.google.com/maps/search/?api=1&query=Terme%20Milano%2C%20Piazza%20Medaglie%20d%27Oro%202%2C%20Milano%2C%20Italia
+Terme QC Porta Romana,Piazzale Medaglie d'Oro 2,,,https://www.google.com/maps/search/?api=1&query=Terme%20QC%20Porta%20Romana%2C%20Piazzale%20Medaglie%20d%27Oro%202%2C%20Milano%2C%20Italia
+Terme di Porta Romana,Via Lamarmora 13,,,https://www.google.com/maps/search/?api=1&query=Terme%20di%20Porta%20Romana%2C%20Via%20Lamarmora%2013%2C%20Milano%2C%20Italia
+Terrazza 12,Via Borsieri 12,,,https://www.google.com/maps/search/?api=1&query=Terrazza%2012%2C%20Via%20Borsieri%2012%2C%20Milano%2C%20Italia
+Terrazza Aperol,Piazza del Duomo,,,https://www.google.com/maps/search/?api=1&query=Terrazza%20Aperol%2C%20Piazza%20del%20Duomo%2C%20Milano%2C%20Italia
+Terrazza Gallia,Via Pirelli 20,,,https://www.google.com/maps/search/?api=1&query=Terrazza%20Gallia%2C%20Via%20Pirelli%2020%2C%20Milano%2C%20Italia
+Terrazza Martini,Piazza Armando Diaz 7,,,https://www.google.com/maps/search/?api=1&query=Terrazza%20Martini%2C%20Piazza%20Armando%20Diaz%207%2C%20Milano%2C%20Italia
+Terrazza Triennale,Viale Emilio Alemagna 6,https://triennale.org,,https://www.google.com/maps/search/?api=1&query=Terrazza%20Triennale%2C%20Viale%20Emilio%20Alemagna%206%2C%20Milano%2C%20Italia
+Terzo Piano Rooftop,Via Tortona 33,,,https://www.google.com/maps/search/?api=1&query=Terzo%20Piano%20Rooftop%2C%20Via%20Tortona%2033%2C%20Milano%2C%20Italia
+Thai Gallery,Via Vigevano 35,,,https://www.google.com/maps/search/?api=1&query=Thai%20Gallery%2C%20Via%20Vigevano%2035%2C%20Milano%2C%20Italia
+That's Bakery,Via Vigevano 41,,,https://www.google.com/maps/search/?api=1&query=That%27s%20Bakery%2C%20Via%20Vigevano%2041%2C%20Milano%2C%20Italia
+That's Vapore,Via Vigevano 8,,,https://www.google.com/maps/search/?api=1&query=That%27s%20Vapore%2C%20Via%20Vigevano%208%2C%20Milano%2C%20Italia
+That's Vapore Ristorante,Via Procaccini 30,,,https://www.google.com/maps/search/?api=1&query=That%27s%20Vapore%20Ristorante%2C%20Via%20Procaccini%2030%2C%20Milano%2C%20Italia
+The Botanical Club,Via Tortona 33,https://thebotanicalclub.it,,https://www.google.com/maps/search/?api=1&query=The%20Botanical%20Club%2C%20Via%20Tortona%2033%2C%20Milano%2C%20Italia
+The Cage — Escape Room,Via Donatello 36,,,https://www.google.com/maps/search/?api=1&query=The%20Cage%20%E2%80%94%20Escape%20Room%2C%20Via%20Donatello%2036%2C%20Milano%2C%20Italia
+The Club Milano,Corso Como 10,https://theclubmilano.com,,https://www.google.com/maps/search/?api=1&query=The%20Club%20Milano%2C%20Corso%20Como%2010%2C%20Milano%2C%20Italia
+The Doping Club,Via Pastrengo 4,,,https://www.google.com/maps/search/?api=1&query=The%20Doping%20Club%2C%20Via%20Pastrengo%204%2C%20Milano%2C%20Italia
+The Drunken Ship,Ripa di Porta Ticinese 9,,,https://www.google.com/maps/search/?api=1&query=The%20Drunken%20Ship%2C%20Ripa%20di%20Porta%20Ticinese%209%2C%20Milano%2C%20Italia
+The Fisherman Pasta,Via Vigevano 9,https://thefisherman.it,,https://www.google.com/maps/search/?api=1&query=The%20Fisherman%20Pasta%2C%20Via%20Vigevano%209%2C%20Milano%2C%20Italia
+The Roof Milano,Via Mazzini 8,,,https://www.google.com/maps/search/?api=1&query=The%20Roof%20Milano%2C%20Via%20Mazzini%208%2C%20Milano%2C%20Italia
+The Sign Room — Escape Room,Via Cardano 3,,,https://www.google.com/maps/search/?api=1&query=The%20Sign%20Room%20%E2%80%94%20Escape%20Room%2C%20Via%20Cardano%203%2C%20Milano%2C%20Italia
+The Space Cinema Odeon,Via Santa Radegonda 8,https://thespacecinema.it,,https://www.google.com/maps/search/?api=1&query=The%20Space%20Cinema%20Odeon%2C%20Via%20Santa%20Radegonda%208%2C%20Milano%2C%20Italia
+The Spirit,Via Boscovich 36,,,https://www.google.com/maps/search/?api=1&query=The%20Spirit%2C%20Via%20Boscovich%2036%2C%20Milano%2C%20Italia
+The Yard Milano,Piazza XXIV Maggio 8,https://theyardmilano.it,,https://www.google.com/maps/search/?api=1&query=The%20Yard%20Milano%2C%20Piazza%20XXIV%20Maggio%208%2C%20Milano%2C%20Italia
+Tigelle & Gnocco,Via Forcella 7,,,https://www.google.com/maps/search/?api=1&query=Tigelle%20%26%20Gnocco%2C%20Via%20Forcella%207%2C%20Milano%2C%20Italia
+Toast Milano,Via Tortona 15,,,https://www.google.com/maps/search/?api=1&query=Toast%20Milano%2C%20Via%20Tortona%2015%2C%20Milano%2C%20Italia
+Tocqueville 13,Via Alexis de Tocqueville 13,,,https://www.google.com/maps/search/?api=1&query=Tocqueville%2013%2C%20Via%20Alexis%20de%20Tocqueville%2013%2C%20Milano%2C%20Italia
+Trampoline Park Jump World,Via Mecenate 76,,,https://www.google.com/maps/search/?api=1&query=Trampoline%20Park%20Jump%20World%2C%20Via%20Mecenate%2076%2C%20Milano%2C%20Italia
+Trattoria Milanese,Via Santa Marta 11,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20Milanese%2C%20Via%20Santa%20Marta%2011%2C%20Milano%2C%20Italia
+Trattoria Sabbioneda,Via Sabbioneta 3,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20Sabbioneda%2C%20Via%20Sabbioneta%203%2C%20Milano%2C%20Italia
+Trattoria Torre di Pisa,Via Fiori Chiari 21/5,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20Torre%20di%20Pisa%2C%20Via%20Fiori%20Chiari%2021/5%2C%20Milano%2C%20Italia
+Trattoria Trippa,Via Giorgio Vasari 1,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20Trippa%2C%20Via%20Giorgio%20Vasari%201%2C%20Milano%2C%20Italia
+Trattoria dalla Cecilia,Via Pordenone 4,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20dalla%20Cecilia%2C%20Via%20Pordenone%204%2C%20Milano%2C%20Italia
+Trattoria del Nuovo Macello,Via Cesare Lombroso 20,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20del%20Nuovo%20Macello%2C%20Via%20Cesare%20Lombroso%2020%2C%20Milano%2C%20Italia
+Trattoria del Pescatore,Via Anfossi 10,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20del%20Pescatore%2C%20Via%20Anfossi%2010%2C%20Milano%2C%20Italia
+Trattoria del Pesce,Via Atto Vannucci 5,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20del%20Pesce%2C%20Via%20Atto%20Vannucci%205%2C%20Milano%2C%20Italia
+Trattoria la Brisa,Via Brisa 15,,,https://www.google.com/maps/search/?api=1&query=Trattoria%20la%20Brisa%2C%20Via%20Brisa%2015%2C%20Milano%2C%20Italia
+Triennale Milano,Viale Alemagna 6,https://triennale.org,,https://www.google.com/maps/search/?api=1&query=Triennale%20Milano%2C%20Viale%20Alemagna%206%2C%20Milano%2C%20Italia
+Trippa,Via Giorgio Vasari 1,,,https://www.google.com/maps/search/?api=1&query=Trippa%2C%20Via%20Giorgio%20Vasari%201%2C%20Milano%2C%20Italia
+Trippa Panino,Via Giorgio Vasari 1,,,https://www.google.com/maps/search/?api=1&query=Trippa%20Panino%2C%20Via%20Giorgio%20Vasari%201%2C%20Milano%2C%20Italia
+Tropico Milano,Via Carmagnola 9,,,https://www.google.com/maps/search/?api=1&query=Tropico%20Milano%2C%20Via%20Carmagnola%209%2C%20Milano%2C%20Italia
+Tunnel,Via Sammartini 30,,,https://www.google.com/maps/search/?api=1&query=Tunnel%2C%20Via%20Sammartini%2030%2C%20Milano%2C%20Italia
+Tunnel Club,Via Sammartini 30,,,https://www.google.com/maps/search/?api=1&query=Tunnel%20Club%2C%20Via%20Sammartini%2030%2C%20Milano%2C%20Italia
+UCI Cinemas Bicocca,Viale Sarca 336,https://hangarbicocca.org,,https://www.google.com/maps/search/?api=1&query=UCI%20Cinemas%20Bicocca%2C%20Viale%20Sarca%20336%2C%20Milano%2C%20Italia
+Ugo,Via Corsico 12,,,https://www.google.com/maps/search/?api=1&query=Ugo%2C%20Via%20Corsico%2012%2C%20Milano%2C%20Italia
+Un Posto a Milano,Via Cuccagna 2,,,https://www.google.com/maps/search/?api=1&query=Un%20Posto%20a%20Milano%2C%20Via%20Cuccagna%202%2C%20Milano%2C%20Italia
+Urban Paintball Milano,Via Fantoli 15,,,https://www.google.com/maps/search/?api=1&query=Urban%20Paintball%20Milano%2C%20Via%20Fantoli%2015%2C%20Milano%2C%20Italia
+VR Star,Via Gian Battista Pergolesi 8,,,https://www.google.com/maps/search/?api=1&query=VR%20Star%2C%20Via%20Gian%20Battista%20Pergolesi%208%2C%20Milano%2C%20Italia
+Venchi Duomo,Via Hugo 1,,,https://www.google.com/maps/search/?api=1&query=Venchi%20Duomo%2C%20Via%20Hugo%201%2C%20Milano%2C%20Italia
+Vesta Coffee Roasters,Via Tortona 20,,,https://www.google.com/maps/search/?api=1&query=Vesta%20Coffee%20Roasters%2C%20Via%20Tortona%2020%2C%20Milano%2C%20Italia
+ViVi Bistrot — Città Studi,Piazza Leonardo da Vinci 7,,,https://www.google.com/maps/search/?api=1&query=ViVi%20Bistrot%20%E2%80%94%20Citt%C3%A0%20Studi%2C%20Piazza%20Leonardo%20da%20Vinci%207%2C%20Milano%2C%20Italia
+Viet Mood,Via Vigevano 44,,,https://www.google.com/maps/search/?api=1&query=Viet%20Mood%2C%20Via%20Vigevano%2044%2C%20Milano%2C%20Italia
+Vineria Londei,Via Carmagnola 4,,,https://www.google.com/maps/search/?api=1&query=Vineria%20Londei%2C%20Via%20Carmagnola%204%2C%20Milano%2C%20Italia
+Vinile Wine Bar,Via Clusone 6,,,https://www.google.com/maps/search/?api=1&query=Vinile%20Wine%20Bar%2C%20Via%20Clusone%206%2C%20Milano%2C%20Italia
+Vino al Vino,Via Castel Morrone 14,,,https://www.google.com/maps/search/?api=1&query=Vino%20al%20Vino%2C%20Via%20Castel%20Morrone%2014%2C%20Milano%2C%20Italia
+Vintage Market Milano,Piazza Frattini,,,https://www.google.com/maps/search/?api=1&query=Vintage%20Market%20Milano%2C%20Piazza%20Frattini%2C%20Milano%2C%20Italia
+Virgin Active CityLife,Piazza Tre Torri 3,https://virginactive.it,,https://www.google.com/maps/search/?api=1&query=Virgin%20Active%20CityLife%2C%20Piazza%20Tre%20Torri%203%2C%20Milano%2C%20Italia
+Virtual Arena Milano,Via Mecenate 84/10,,,https://www.google.com/maps/search/?api=1&query=Virtual%20Arena%20Milano%2C%20Via%20Mecenate%2084/10%2C%20Milano%2C%20Italia
+Virtual Reality Experience - VRUMS,Via Donatello 11,,,https://www.google.com/maps/search/?api=1&query=Virtual%20Reality%20Experience%20-%20VRUMS%2C%20Via%20Donatello%2011%2C%20Milano%2C%20Italia
+Vivace Spritz Bar,Corso di Porta Ticinese 83,,,https://www.google.com/maps/search/?api=1&query=Vivace%20Spritz%20Bar%2C%20Corso%20di%20Porta%20Ticinese%2083%2C%20Milano%2C%20Italia
+Volt Club,Via F. Casati 7,,,https://www.google.com/maps/search/?api=1&query=Volt%20Club%2C%20Via%20F.%20Casati%207%2C%20Milano%2C%20Italia
+Vòce Aimo e Nadia,Piazza XXV Aprile,,,https://www.google.com/maps/search/?api=1&query=V%C3%B2ce%20Aimo%20e%20Nadia%2C%20Piazza%20XXV%20Aprile%2C%20Milano%2C%20Italia
+Wicky's Innovative Japanese Cuisine,Corso Italia 6,,,https://www.google.com/maps/search/?api=1&query=Wicky%27s%20Innovative%20Japanese%20Cuisine%2C%20Corso%20Italia%206%2C%20Milano%2C%20Italia
+Wine Tasting Club,Via Solferino 35,,,https://www.google.com/maps/search/?api=1&query=Wine%20Tasting%20Club%2C%20Via%20Solferino%2035%2C%20Milano%2C%20Italia
+Wow Spazio Fumetto,Viale Campania 12,,,https://www.google.com/maps/search/?api=1&query=Wow%20Spazio%20Fumetto%2C%20Viale%20Campania%2012%2C%20Milano%2C%20Italia
+Yan Fish,Via Padova 2,,,https://www.google.com/maps/search/?api=1&query=Yan%20Fish%2C%20Via%20Padova%202%2C%20Milano%2C%20Italia
+YogaOne Milano,Via Solferino 27,,,https://www.google.com/maps/search/?api=1&query=YogaOne%20Milano%2C%20Via%20Solferino%2027%2C%20Milano%2C%20Italia
+Zazà Ramen,Via Solferino 48,,,https://www.google.com/maps/search/?api=1&query=Zaz%C3%A0%20Ramen%2C%20Via%20Solferino%2048%2C%20Milano%2C%20Italia
+Zen Zone Meditation,Via Solferino 28,,,https://www.google.com/maps/search/?api=1&query=Zen%20Zone%20Meditation%2C%20Via%20Solferino%2028%2C%20Milano%2C%20Italia
+Zibo,Via Piero della Francesca 32,,,https://www.google.com/maps/search/?api=1&query=Zibo%2C%20Via%20Piero%20della%20Francesca%2032%2C%20Milano%2C%20Italia
