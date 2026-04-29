@@ -13,6 +13,7 @@ const NEIGHBORHOOD_LABELS: Record<string, string> = {
 };
 
 interface Photo { id: string; url: string; order_index: number; caption: string | null; }
+interface VenueResult { id: string; name: string; address: string | null; type: string; }
 
 export default function BusinessProfiloPage() {
   const router = useRouter();
@@ -25,6 +26,14 @@ export default function BusinessProfiloPage() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
+
+  // Venue linking
+  const [linkedVenueId, setLinkedVenueId] = useState<string | null>(null);
+  const [linkedVenueName, setLinkedVenueName] = useState<string | null>(null);
+  const [venueSearch, setVenueSearch] = useState("");
+  const [venueResults, setVenueResults] = useState<VenueResult[]>([]);
+  const [venueSearching, setVenueSearching] = useState(false);
+  const [venueLinking, setVenueLinking] = useState(false);
 
   // Form fields
   const [name, setName] = useState("");
@@ -59,6 +68,17 @@ export default function BusinessProfiloPage() {
       setWebsite(biz.website ?? "");
       setInstagram(biz.instagram ?? "");
 
+      // Venue collegata
+      if (biz.venue_id) {
+        setLinkedVenueId(biz.venue_id);
+        const { data: v } = await supabase
+          .from("venues")
+          .select("name")
+          .eq("id", biz.venue_id)
+          .single();
+        if (v) setLinkedVenueName(v.name);
+      }
+
       // Carica foto
       const { data: photosData } = await supabase
         .from("business_photos")
@@ -70,6 +90,45 @@ export default function BusinessProfiloPage() {
     };
     load();
   }, [router]);
+
+  // Ricerca venue nel database
+  const handleVenueSearch = async (query: string) => {
+    setVenueSearch(query);
+    if (query.length < 2) { setVenueResults([]); return; }
+    setVenueSearching(true);
+    const { data } = await supabase
+      .from("venues")
+      .select("id, name, address, type")
+      .ilike("name", `%${query}%`)
+      .limit(6);
+    setVenueResults(data ?? []);
+    setVenueSearching(false);
+  };
+
+  // Collega venue al business
+  const handleLinkVenue = async (venue: VenueResult) => {
+    if (!bizId) return;
+    setVenueLinking(true);
+    const { error: err } = await supabase
+      .from("businesses")
+      .update({ venue_id: venue.id })
+      .eq("id", bizId);
+    if (!err) {
+      setLinkedVenueId(venue.id);
+      setLinkedVenueName(venue.name);
+      setVenueSearch("");
+      setVenueResults([]);
+    }
+    setVenueLinking(false);
+  };
+
+  // Scollega venue
+  const handleUnlinkVenue = async () => {
+    if (!bizId) return;
+    await supabase.from("businesses").update({ venue_id: null }).eq("id", bizId);
+    setLinkedVenueId(null);
+    setLinkedVenueName(null);
+  };
 
   const handleSave = async () => {
     if (!bizId) return;
@@ -204,6 +263,95 @@ export default function BusinessProfiloPage() {
         <Field label="Instagram">
           <input value={instagram} onChange={e => setInstagram(e.target.value)} style={inputStyle} placeholder="@nomeprofilo" />
         </Field>
+      </Section>
+
+      {/* Sezione collegamento venue */}
+      <Section title="Collega al database My Mood">
+        <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", margin: "0 0 14px" }}>
+          Collega il tuo account al locale già presente su My Mood per attivare il badge Partner e mostrare le tue foto agli utenti.
+        </p>
+
+        {linkedVenueId ? (
+          /* Venue già collegata */
+          <div style={{
+            display: "flex", alignItems: "center", gap: "12px",
+            padding: "12px 16px", borderRadius: "12px",
+            background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)",
+          }}>
+            <span style={{ fontSize: "20px" }}>✅</span>
+            <div style={{ flex: 1 }}>
+              <p style={{ color: "#34D399", fontWeight: 700, fontSize: "13px", margin: 0 }}>Collegato a: {linkedVenueName}</p>
+              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "11px", margin: "2px 0 0" }}>Il tuo profilo è visibile agli utenti su questa venue</p>
+            </div>
+            <button
+              onClick={handleUnlinkVenue}
+              style={{
+                padding: "6px 12px", borderRadius: "8px", border: "1px solid rgba(239,68,68,0.3)",
+                background: "rgba(239,68,68,0.08)", color: "#FCA5A5",
+                fontSize: "11px", fontWeight: 700, cursor: "pointer",
+              }}
+            >
+              Scollega
+            </button>
+          </div>
+        ) : (
+          /* Ricerca venue */
+          <div style={{ position: "relative" }}>
+            <div style={{ position: "relative" }}>
+              <input
+                value={venueSearch}
+                onChange={e => handleVenueSearch(e.target.value)}
+                placeholder="Cerca il nome del tuo locale..."
+                style={{ ...inputStyle, paddingRight: "36px" }}
+              />
+              {venueSearching && (
+                <div style={{
+                  position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
+                  width: "14px", height: "14px",
+                  border: "2px solid rgba(139,92,246,0.3)", borderTopColor: "#8B5CF6",
+                  borderRadius: "50%", animation: "spin 0.8s linear infinite",
+                }} />
+              )}
+            </div>
+
+            {/* Risultati ricerca */}
+            {venueResults.length > 0 && (
+              <div style={{
+                position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
+                background: "#0d0b16", border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "12px", overflow: "hidden",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+              }}>
+                {venueResults.map((v) => (
+                  <button
+                    key={v.id}
+                    onClick={() => handleLinkVenue(v)}
+                    disabled={venueLinking}
+                    style={{
+                      width: "100%", padding: "12px 16px", textAlign: "left",
+                      background: "none", border: "none",
+                      borderBottom: "1px solid rgba(255,255,255,0.05)",
+                      cursor: "pointer", display: "flex", alignItems: "center", gap: "12px",
+                    }}
+                  >
+                    <span style={{ fontSize: "18px" }}>📍</span>
+                    <div>
+                      <p style={{ color: "#F5F5F0", fontSize: "13px", fontWeight: 700, margin: 0 }}>{v.name}</p>
+                      <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "11px", margin: "2px 0 0" }}>{v.address ?? "Milano"} · {v.type}</p>
+                    </div>
+                    <span style={{ marginLeft: "auto", color: "#8B5CF6", fontSize: "12px", fontWeight: 700 }}>Collega →</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {venueSearch.length >= 2 && venueResults.length === 0 && !venueSearching && (
+              <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "12px", marginTop: "8px" }}>
+                Nessun locale trovato. Prova con un nome diverso.
+              </p>
+            )}
+          </div>
+        )}
       </Section>
 
       {/* Sezione foto */}
