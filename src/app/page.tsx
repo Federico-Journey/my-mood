@@ -24,6 +24,12 @@ interface Profile {
   avatar_url: string | null;
 }
 
+interface UnratedPlan {
+  id: string;
+  title: string;
+  accent_color: string;
+}
+
 const STARS = [
   { x: 8,  y: 18, s: 1,   o: 0.4 },
   { x: 25, y:  8, s: 1.5, o: 0.5 },
@@ -40,6 +46,7 @@ export default function HomePage() {
   const [plans, setPlans] = useState<UserPlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [showSplash, setShowSplash] = useState(false);
+  const [unratedPlan, setUnratedPlan] = useState<UnratedPlan | null>(null);
 
   useEffect(() => {
     // Mostra splash solo una volta per sessione
@@ -98,6 +105,30 @@ export default function HomePage() {
           })
         );
         setPlans(plansWithLikes as UserPlan[]);
+      }
+
+      // Cerca piani creati nelle ultime 36 ore non ancora valutati
+      const cutoff = new Date(Date.now() - 36 * 60 * 60 * 1000).toISOString();
+      const { data: oldPlans } = await supabase
+        .from("user_plans")
+        .select("id, title, accent_color")
+        .eq("user_id", session.user.id)
+        .lt("created_at", new Date().toISOString())
+        .gt("created_at", cutoff)
+        .order("created_at", { ascending: false })
+        .limit(5);
+
+      if (oldPlans && oldPlans.length > 0) {
+        // Controlla quali non hanno rating
+        const { data: ratings } = await supabase
+          .from("plan_ratings")
+          .select("plan_id")
+          .in("plan_id", oldPlans.map(p => p.id))
+          .eq("user_id", session.user.id);
+
+        const ratedIds = new Set((ratings ?? []).map((r: { plan_id: string }) => r.plan_id));
+        const firstUnrated = oldPlans.find(p => !ratedIds.has(p.id));
+        if (firstUnrated) setUnratedPlan(firstUnrated as UnratedPlan);
       }
 
       setLoading(false);
@@ -231,6 +262,31 @@ export default function HomePage() {
         </Link>
       </div>
 
+      {/* ─── Nudge serata non valutata ───────────────────────── */}
+      {unratedPlan && (
+        <div style={{ padding: "8px 20px 4px" }}>
+          <Link href={`/piani/${unratedPlan.id}`} style={{ textDecoration: "none", display: "block" }}>
+            <div style={{
+              borderRadius: "16px", padding: "16px 18px",
+              background: `linear-gradient(135deg, ${unratedPlan.accent_color}12, rgba(255,255,255,0.02))`,
+              border: `1px solid ${unratedPlan.accent_color}30`,
+              display: "flex", alignItems: "center", gap: "14px",
+            }}>
+              <span style={{ fontSize: "24px" }}>⭐</span>
+              <div style={{ flex: 1 }}>
+                <p style={{ color: "#F5F5F0", fontWeight: 700, fontSize: "13px", margin: 0 }}>
+                  Com'è andata ieri sera?
+                </p>
+                <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", margin: "2px 0 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {unratedPlan.title}
+                </p>
+              </div>
+              <span style={{ color: unratedPlan.accent_color, fontSize: "16px" }}>→</span>
+            </div>
+          </Link>
+        </div>
+      )}
+
       {/* ─── Guest banner ────────────────────────────────────── */}
       {isGuest && (
         <div style={{ padding: "8px 20px 4px" }}>
@@ -299,8 +355,25 @@ export default function HomePage() {
       </Section>
 
       {/* ─── Posti preferiti ─────────────────────────────────── */}
-      <Section title="Posti preferiti">
-        <ComingSoon icon="⭐" label="Salva i tuoi posti" desc="Tieni traccia dei locali che ami a Milano — presto!" />
+      <Section title="Posti preferiti" href={user ? "/preferiti" : undefined}>
+        {!user ? (
+          <ComingSoon icon="❤️" label="Salva i tuoi posti" desc="Accedi per salvare i locali che ami a Milano" />
+        ) : (
+          <Link href="/preferiti" style={{ textDecoration: "none", display: "block" }}>
+            <div style={{
+              borderRadius: "16px", padding: "16px 18px",
+              background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.15)",
+              display: "flex", alignItems: "center", gap: "14px",
+            }}>
+              <span style={{ fontSize: "24px" }}>❤️</span>
+              <div style={{ flex: 1 }}>
+                <p style={{ color: "rgba(255,255,255,0.7)", fontWeight: 700, fontSize: "13px", margin: 0 }}>I tuoi locali preferiti</p>
+                <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "12px", margin: "3px 0 0" }}>Tocca ❤️ su un locale per salvarlo qui</p>
+              </div>
+              <span style={{ color: "rgba(239,68,68,0.6)", fontSize: "18px" }}>→</span>
+            </div>
+          </Link>
+        )}
       </Section>
 
       <NavBar />

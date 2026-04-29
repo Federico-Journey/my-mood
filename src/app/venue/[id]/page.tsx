@@ -5,6 +5,7 @@ import type { Venue } from '@/types/database'
 import Link from 'next/link'
 import VenueHeroImage from '@/components/VenueHeroImage'
 import PhotoCarousel from '@/components/PhotoCarousel'
+import FavoriteButton from '@/components/FavoriteButton'
 
 function getVenuePhotoSrc(venue: Venue): string {
   if (venue.photo_url) return venue.photo_url
@@ -175,10 +176,13 @@ export default async function VenuePage({ params }: Props) {
           )}
         </div>
 
-        {/* Nome */}
-        <h1 style={{ fontSize: '32px', fontWeight: 800, color: '#fff', letterSpacing: '-0.5px', margin: '0 0 6px' }}>
-          {venue.name}
-        </h1>
+        {/* Nome + cuore */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '6px' }}>
+          <h1 style={{ fontSize: '32px', fontWeight: 800, color: '#fff', letterSpacing: '-0.5px', margin: 0, flex: 1 }}>
+            {venue.name}
+          </h1>
+          <FavoriteButton venueId={venue.id} size="lg" />
+        </div>
 
         {/* Indirizzo */}
         <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" style={{

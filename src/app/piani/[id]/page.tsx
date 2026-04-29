@@ -15,22 +15,66 @@ type SavedPlan = {
   created_at: string;
 };
 
+type Rating = {
+  rating: number;
+  note: string;
+};
+
 export default function PianoDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [savedPlan, setSavedPlan] = useState<SavedPlan | null>(null);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [existingRating, setExistingRating] = useState<Rating | null>(null);
+  const [selectedStars, setSelectedStars] = useState(0);
+  const [note, setNote] = useState("");
+  const [ratingSaved, setRatingSaved] = useState(false);
+  const [savingRating, setSavingRating] = useState(false);
 
   useEffect(() => {
-    supabase
-      .from("user_plans")
-      .select("*")
-      .eq("id", id)
-      .single()
-      .then(({ data }) => {
-        setSavedPlan(data);
-        setLoading(false);
-      });
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const uid = session?.user?.id ?? null;
+      setUserId(uid);
+
+      const { data: planData } = await supabase
+        .from("user_plans")
+        .select("*")
+        .eq("id", id)
+        .single();
+      setSavedPlan(planData);
+
+      if (uid) {
+        const { data: ratingData } = await supabase
+          .from("plan_ratings")
+          .select("rating, note")
+          .eq("plan_id", id)
+          .eq("user_id", uid)
+          .maybeSingle();
+        if (ratingData) {
+          setExistingRating(ratingData);
+          setSelectedStars(ratingData.rating);
+          setNote(ratingData.note ?? "");
+        }
+      }
+      setLoading(false);
+    };
+    init();
   }, [id]);
+
+  const handleSaveRating = async () => {
+    if (!userId || selectedStars === 0) return;
+    setSavingRating(true);
+    await supabase.from("plan_ratings").upsert({
+      plan_id: id,
+      user_id: userId,
+      rating: selectedStars,
+      note: note.trim() || null,
+    }, { onConflict: "plan_id,user_id" });
+    setSavingRating(false);
+    setRatingSaved(true);
+    setExistingRating({ rating: selectedStars, note: note.trim() });
+  };
 
   if (loading) {
     return (
@@ -135,6 +179,78 @@ export default function PianoDetailPage() {
             );
           })}
         </div>
+
+        {/* ─── Rating post-serata ─────────────────────────────── */}
+        {userId && (
+          <div style={{
+            borderRadius: "20px", padding: "20px",
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            marginBottom: "16px",
+          }}>
+            <h3 style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", margin: "0 0 14px" }}>
+              {existingRating ? "La tua valutazione" : "Com'è andata la serata?"}
+            </h3>
+
+            {/* Stelle */}
+            <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  onClick={() => { setSelectedStars(star); setRatingSaved(false); }}
+                  style={{
+                    fontSize: "28px", background: "none", border: "none", cursor: "pointer",
+                    padding: "4px",
+                    opacity: star <= selectedStars ? 1 : 0.25,
+                    transform: star <= selectedStars ? "scale(1.1)" : "scale(1)",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  ⭐
+                </button>
+              ))}
+            </div>
+
+            {/* Nota opzionale */}
+            {selectedStars > 0 && (
+              <textarea
+                value={note}
+                onChange={(e) => { setNote(e.target.value); setRatingSaved(false); }}
+                placeholder="Aggiungi una nota... (opzionale)"
+                rows={2}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "12px",
+                  background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+                  color: "#F5F5F0", fontSize: "14px", outline: "none",
+                  fontFamily: "inherit", resize: "none", marginBottom: "12px",
+                  boxSizing: "border-box",
+                }}
+              />
+            )}
+
+            {/* Salva */}
+            {selectedStars > 0 && !ratingSaved && (
+              <button
+                onClick={handleSaveRating}
+                disabled={savingRating}
+                style={{
+                  width: "100%", padding: "12px", borderRadius: "12px", border: "none",
+                  background: accentColor, color: "#fff", fontWeight: 700, fontSize: "14px",
+                  cursor: "pointer", fontFamily: "inherit", opacity: savingRating ? 0.6 : 1,
+                }}
+              >
+                {savingRating ? "Salvo..." : "Salva valutazione"}
+              </button>
+            )}
+
+            {/* Conferma */}
+            {ratingSaved && (
+              <p style={{ color: "#4ade80", fontSize: "14px", fontWeight: 600, textAlign: "center", margin: 0 }}>
+                ✓ Valutazione salvata!
+              </p>
+            )}
+          </div>
+        )}
 
         {/* CTA */}
         <Link

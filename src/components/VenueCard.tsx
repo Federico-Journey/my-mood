@@ -13,6 +13,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { Venue } from "@/types/database";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const VENUE_TYPE_EMOJI: Record<string, string> = {
   bar: "🍺",
@@ -128,7 +129,7 @@ function VenueCardList({
         )}
       </div>
 
-      {/* Badge tipo + prezzo */}
+      {/* Badge tipo + prezzo + cuore */}
       <div className="flex flex-col items-end gap-1 shrink-0 pr-4 py-3">
         {isPartner && (
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
@@ -145,6 +146,7 @@ function VenueCardList({
         <span className="text-white/40 text-xs font-semibold">
           {PRICE_LABELS[venue.price_range] ?? venue.price_range}
         </span>
+        <FavoriteButton venueId={venue.id} size="sm" />
       </div>
     </Link>
   );
@@ -197,13 +199,15 @@ function VenueCardLarge({
             background: "linear-gradient(to top, rgba(9,9,15,0.85) 0%, transparent 60%)",
           }}
         />
-        {/* Badge Partner */}
-        {isPartner && (
-          <div className="absolute top-3 right-3"
-            style={{ padding: "3px 10px", borderRadius: "20px", background: "rgba(251,191,36,0.2)", border: "1px solid rgba(251,191,36,0.4)", color: "#FCD34D", fontSize: "11px", fontWeight: 700 }}>
-            ⭐ Partner
-          </div>
-        )}
+        {/* Badge Partner + cuore */}
+        <div className="absolute top-3 right-3 flex items-center gap-2">
+          {isPartner && (
+            <div style={{ padding: "3px 10px", borderRadius: "20px", background: "rgba(251,191,36,0.2)", border: "1px solid rgba(251,191,36,0.4)", color: "#FCD34D", fontSize: "11px", fontWeight: 700 }}>
+              ⭐ Partner
+            </div>
+          )}
+          <FavoriteButton venueId={venue.id} size="sm" />
+        </div>
         {/* Nome sovrapposto */}
         <div className="absolute bottom-3 left-4 right-4">
           <p className="text-white font-bold text-lg leading-tight drop-shadow-md">
