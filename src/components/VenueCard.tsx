@@ -43,31 +43,32 @@ type Props = {
   accentColor?: string;
   /** Layout compatto (lista) o card grande con foto in evidenza */
   variant?: "list" | "card";
+  /** Dati business account del locale (se presente) */
+  business?: { photos: string[]; isPartner: boolean } | null;
 };
 
 export default function VenueCard({
   venue,
   accentColor = "#8B5CF6",
   variant = "list",
+  business = null,
 }: Props) {
-  const typeEmoji =
-    venue.emoji || VENUE_TYPE_EMOJI[venue.type] || "📍";
+  const typeEmoji = venue.emoji || VENUE_TYPE_EMOJI[venue.type] || "📍";
 
-  // Sorgente foto:
-  // 1. photo_url già salvata nel DB (zero latenza)
-  // 2. google_place_id → API proxy con place_id diretto
-  // 3. fallback: Text Search per nome (funziona anche senza place_id nel DB)
-  const photoSrc = venue.photo_url
-    ? venue.photo_url
-    : venue.google_place_id
-    ? `/api/place-photo?place_id=${encodeURIComponent(venue.google_place_id)}`
-    : `/api/place-photo?name=${encodeURIComponent(venue.name)}`;
+  // Sorgente foto: business photos > photo_url DB > Google Places API > emoji
+  const businessPhoto = business?.photos?.[0] ?? null;
+  const photoSrc = businessPhoto
+    ?? (venue.photo_url
+      ? venue.photo_url
+      : venue.google_place_id
+      ? `/api/place-photo?place_id=${encodeURIComponent(venue.google_place_id)}`
+      : `/api/place-photo?name=${encodeURIComponent(venue.name)}`);
 
   if (variant === "card") {
-    return <VenueCardLarge venue={venue} photoSrc={photoSrc} typeEmoji={typeEmoji} accentColor={accentColor} />;
+    return <VenueCardLarge venue={venue} photoSrc={photoSrc} typeEmoji={typeEmoji} accentColor={accentColor} isPartner={business?.isPartner ?? false} />;
   }
 
-  return <VenueCardList venue={venue} photoSrc={photoSrc} typeEmoji={typeEmoji} accentColor={accentColor} />;
+  return <VenueCardList venue={venue} photoSrc={photoSrc} typeEmoji={typeEmoji} accentColor={accentColor} isPartner={business?.isPartner ?? false} />;
 }
 
 /* ─── Variante lista (riga compatta con thumbnail) ──────────── */
@@ -77,11 +78,13 @@ function VenueCardList({
   photoSrc,
   typeEmoji,
   accentColor,
+  isPartner,
 }: {
   venue: Venue;
   photoSrc: string | null;
   typeEmoji: string;
   accentColor: string;
+  isPartner: boolean;
 }) {
   const [imgError, setImgError] = useState(false);
 
@@ -127,12 +130,15 @@ function VenueCardList({
 
       {/* Badge tipo + prezzo */}
       <div className="flex flex-col items-end gap-1 shrink-0 pr-4 py-3">
+        {isPartner && (
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+            style={{ background: "rgba(251,191,36,0.15)", color: "#FCD34D" }}>
+            ⭐ Partner
+          </span>
+        )}
         <span
           className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-          style={{
-            background: `${accentColor}18`,
-            color: accentColor,
-          }}
+          style={{ background: `${accentColor}18`, color: accentColor }}
         >
           {VENUE_TYPE_EMOJI[venue.type] || ""} {venue.type.replace("_", " ")}
         </span>
@@ -151,11 +157,13 @@ function VenueCardLarge({
   photoSrc,
   typeEmoji,
   accentColor,
+  isPartner,
 }: {
   venue: Venue;
   photoSrc: string | null;
   typeEmoji: string;
   accentColor: string;
+  isPartner: boolean;
 }) {
   const [imgError, setImgError] = useState(false);
 
@@ -189,6 +197,13 @@ function VenueCardLarge({
             background: "linear-gradient(to top, rgba(9,9,15,0.85) 0%, transparent 60%)",
           }}
         />
+        {/* Badge Partner */}
+        {isPartner && (
+          <div className="absolute top-3 right-3"
+            style={{ padding: "3px 10px", borderRadius: "20px", background: "rgba(251,191,36,0.2)", border: "1px solid rgba(251,191,36,0.4)", color: "#FCD34D", fontSize: "11px", fontWeight: 700 }}>
+            ⭐ Partner
+          </div>
+        )}
         {/* Nome sovrapposto */}
         <div className="absolute bottom-3 left-4 right-4">
           <p className="text-white font-bold text-lg leading-tight drop-shadow-md">
