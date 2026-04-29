@@ -53,6 +53,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const init = async () => {
+      // getSession() processa anche i token OAuth dall'URL (hash o code)
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.user) {
         // Utente non loggato → vai alla pagina di auth
