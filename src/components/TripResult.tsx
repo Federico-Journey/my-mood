@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS } from "@/lib/travelData";
 import {
@@ -8,6 +9,7 @@ import {
   LeafIcon, CompassIcon, MoonIcon, BagIcon, BedIcon,
 } from "@/components/EllyIcons";
 import type { GeneratedTrip, ItineraryActivity } from "@/lib/tripGenerator";
+import { approveTrip } from "@/lib/bookingChecklist";
 
 const C = ELLY_COLORS;
 
@@ -61,6 +63,12 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
 
   const [saveState, setSaveState] = useState<"unknown" | "guest" | "not-saved" | "saving" | "saved">("unknown");
 
+  // Conferma del viaggio: quando chi l'ha creato lo conferma, entra nella
+  // sezione Viaggi con la checklist delle prenotazioni (vedi bookingChecklist.ts).
+  const [approvedAt, setApprovedAt] = useState<string | null>(null);
+  const [approving, setApproving] = useState(false);
+  const [approveError, setApproveError] = useState<string | null>(null);
+
   const [shareId, setShareId] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [sharing, setSharing] = useState(false);
@@ -85,10 +93,21 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
     if (!tripId) { setSaveState("not-saved"); return; }
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!session?.user) { setSaveState("guest"); return; }
-      const { data } = await supabase.from("trips").select("user_id").eq("id", tripId).maybeSingle();
+      const { data } = await supabase.from("trips").select("user_id, approved_at").eq("id", tripId).maybeSingle();
       setSaveState(data?.user_id === session.user.id ? "saved" : "not-saved");
+      setApprovedAt(data?.approved_at ?? null);
     });
   }, [tripId]);
+
+  const handleApprove = async () => {
+    if (!tripId || approving) return;
+    setApproving(true);
+    setApproveError(null);
+    const { error: err } = await approveTrip(tripId);
+    setApproving(false);
+    if (err) { setApproveError(err); return; }
+    setApprovedAt(new Date().toISOString());
+  };
 
   const handleSaveTrip = async () => {
     if (!tripId || saveState === "saving") return;
@@ -294,6 +313,52 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
             </div>
           )}
         </div>
+
+        {/* Conferma del viaggio (solo per chi l'ha creato e salvato) */}
+        {tripId && saveState === "saved" && (
+          <div
+            className="mb-8 rounded-xl p-4"
+            style={{ background: C.bgElev, border: `1.3px solid ${C.border}` }}
+          >
+            {approvedAt ? (
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <span className="flex items-center gap-2 text-[14px] font-bold">
+                  <span
+                    className="w-6 h-6 rounded-full flex items-center justify-center text-[13px]"
+                    style={{ background: C.accent, color: "#fff" }}
+                  >
+                    ✓
+                  </span>
+                  Viaggio confermato
+                </span>
+                <Link href={`/viaggi/${tripId}`} className="text-[13px] font-bold" style={{ color: C.accent }}>
+                  Checklist prenotazioni →
+                </Link>
+              </div>
+            ) : (
+              <>
+                {votes && votes.length > 0 && yesVotes.length > votes.length / 2 ? (
+                  <p className="text-[13.5px] mb-3 leading-relaxed">
+                    <strong>La maggioranza ha votato sì</strong> ({yesVotes.length} su {votes.length}). Confermi il viaggio?
+                  </p>
+                ) : (
+                  <p className="text-[13px] mb-3 leading-relaxed" style={{ color: C.textMuted }}>
+                    Quando il gruppo è d&apos;accordo, conferma il viaggio: entrerà nella sezione Viaggi con la checklist delle prenotazioni da fare.
+                  </p>
+                )}
+                <button
+                  onClick={handleApprove}
+                  disabled={approving}
+                  className="w-full py-3 rounded-xl font-bold text-[14px]"
+                  style={{ background: C.accent, color: "#fff", opacity: approving ? 0.6 : 1 }}
+                >
+                  {approving ? "Confermo…" : "Confermo il viaggio"}
+                </button>
+                {approveError && <p className="text-[12px] mt-2" style={{ color: C.accent }}>{approveError}</p>}
+              </>
+            )}
+          </div>
+        )}
 
         <div className="flex flex-col gap-6">
           {trip.days.map((day) => (

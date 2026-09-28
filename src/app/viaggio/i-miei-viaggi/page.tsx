@@ -18,6 +18,7 @@ type SavedTrip = {
   themes: string[];
   start_date: string | null;
   created_at: string;
+  approved_at: string | null;
 };
 
 const MONTHS_SHORT = ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"];
@@ -38,7 +39,7 @@ export default function IMieiViaggiPage() {
       if (u) {
         const { data } = await supabase
           .from("trips")
-          .select("id, destination_name, title, subtitle, duration_days, themes, start_date, created_at")
+          .select("id, destination_name, title, subtitle, duration_days, themes, start_date, created_at, approved_at")
           .eq("user_id", u.id)
           .order("created_at", { ascending: false });
         setTrips(data ?? []);
@@ -67,7 +68,17 @@ export default function IMieiViaggiPage() {
           I miei viaggi
         </h1>
         {user && (
-          <p className="text-[13px] mb-8" style={{ color: C.textMuted }}>{user.email}</p>
+          <p className="text-[13px] mb-4" style={{ color: C.textMuted }}>{user.email}</p>
+        )}
+        {user && (
+          <Link
+            href="/viaggi"
+            className="flex items-center justify-between rounded-xl px-4 py-3 mb-8 text-[13.5px] font-bold"
+            style={{ background: C.accentSoft, color: C.accent }}
+          >
+            <span>✓ Viaggi confermati e prenotazioni</span>
+            <span>→</span>
+          </Link>
         )}
 
         {loading && (
@@ -135,6 +146,15 @@ export default function IMieiViaggiPage() {
                 >
                   <Link href={`/viaggio?id=${trip.id}`} className="block px-5 py-4">
                     <div className="flex items-center gap-2 mb-1.5">
+                      {trip.approved_at && (
+                        <span
+                          aria-label="Viaggio confermato"
+                          className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
+                          style={{ background: C.accent, color: "#fff" }}
+                        >
+                          ✓
+                        </span>
+                      )}
                       <span className="text-[11px] font-bold uppercase tracking-[.3px]" style={{ color: C.accent }}>
                         {trip.destination_name}
                       </span>
