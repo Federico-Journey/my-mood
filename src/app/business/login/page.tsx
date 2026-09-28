@@ -142,7 +142,7 @@ export default function BusinessLoginPage() {
         </div>
 
         <p style={{ textAlign: "center", marginTop: "20px", color: "rgba(255,255,255,0.2)", fontSize: "12px" }}>
-          Per supporto: info@mymoodapp.it
+          Per supporto: info@planwithelly.com
         </p>
       </div>
     </div>
