@@ -252,6 +252,17 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                 </button>
               </div>
 
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(`${trip.title} — dai un'occhiata al viaggio e dimmi cosa ne pensi! ${shareUrl}`)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2.5 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-bold text-[13px]"
+                style={{ background: "#25D366", color: "#fff" }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.09c-.24.68-1.4 1.33-1.93 1.4-.5.08-1.06.11-3.46-.91-2.9-1.24-4.79-4.16-4.94-4.35-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.47-.15.17-.31.37-.44.5-.15.14-.3.3-.13.58.17.29.75 1.24 1.62 2.01 1.11 1 2.05 1.31 2.34 1.45.29.15.46.13.63-.07.17-.2.72-.85.92-1.14.19-.29.39-.24.65-.14.27.1 1.68.8 1.97.94.29.15.48.22.55.34.07.13.07.72-.17 1.4z"/></svg>
+                Condividi su WhatsApp
+              </a>
+
               <div
                 className="flex items-center justify-between mt-3 pt-3"
                 style={{ borderTop: `1px solid ${C.border}` }}
