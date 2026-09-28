@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 const C = ELLY_COLORS;
 const LAST_UPDATED = 'Settembre 2026';
 const VERSION = 'Bozza 0.1';
-const CONTACT_EMAIL = '[la tua email di contatto]';
-const LEGAL_EMAIL = '[la tua email legale]';
+const CONTACT_EMAIL = 'info@planwithelly.com';
+const LEGAL_EMAIL = 'info@planwithelly.com';
 
 export default function TermsPage() {
   return (
