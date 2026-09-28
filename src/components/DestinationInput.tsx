@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { DESTINATION_SUGGESTIONS, ELLY_COLORS } from "@/lib/travelData";
-import { PinIcon, GlobeIcon } from "@/components/EllyIcons";
+import { PinIcon, RouteIcon } from "@/components/EllyIcons";
 
 type Props = {
   onSelect: (destination: string) => void;
@@ -33,7 +33,7 @@ export default function DestinationInput({ onSelect }: Props) {
         className="absolute pointer-events-none"
         style={{ top: -30, right: -60, width: 220, height: 220, color: C.accent, opacity: 0.11 }}
       >
-        <GlobeIcon size={220} />
+        <RouteIcon size={220} />
       </div>
 
       <div className="flex-1 px-6 pt-16 pb-40 relative z-10">

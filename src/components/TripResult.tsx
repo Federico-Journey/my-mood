@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS } from "@/lib/travelData";
-import { PinIcon } from "@/components/EllyIcons";
+import {
+  PinIcon, ForkKnifeIcon, GlassIcon, MuseumIcon, ObeliskIcon,
+  LeafIcon, CompassIcon, MoonIcon, BagIcon, BedIcon,
+} from "@/components/EllyIcons";
 import type { GeneratedTrip, ItineraryActivity } from "@/lib/tripGenerator";
 
 const C = ELLY_COLORS;
@@ -19,6 +22,19 @@ const CATEGORY_LABEL: Record<ItineraryActivity["category"], string> = {
   shopping: "Shopping",
   alloggio: "Alloggio",
   altro: "Altro",
+};
+
+const CATEGORY_ICON: Record<ItineraryActivity["category"], React.ComponentType<{ size?: number }>> = {
+  ristorante: ForkKnifeIcon,
+  bar: GlassIcon,
+  museo: MuseumIcon,
+  monumento: ObeliskIcon,
+  natura: LeafIcon,
+  attivita: CompassIcon,
+  vita_notturna: MoonIcon,
+  shopping: BagIcon,
+  alloggio: BedIcon,
+  altro: PinIcon,
 };
 
 const MONTHS_SHORT = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
@@ -248,13 +264,17 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                   style={{ left: "9px", width: "1.5px", background: C.border }}
                 />
                 <div className="flex flex-col gap-2.5">
-                  {day.activities.map((act, i) => (
+                  {day.activities.map((act, i) => {
+                    const CategoryIcon = CATEGORY_ICON[act.category];
+                    return (
                     <div key={i} className="flex gap-3">
-                      <div className="relative z-10 w-5 shrink-0 flex justify-center pt-4">
+                      <div className="relative z-10 w-6 shrink-0 flex justify-center pt-3">
                         <div
-                          className="w-[9px] h-[9px] rounded-full"
-                          style={{ background: C.accent, boxShadow: `0 0 0 3px ${C.bg}` }}
-                        />
+                          className="w-6 h-6 rounded-full flex items-center justify-center"
+                          style={{ background: C.accent, color: "#fff", boxShadow: `0 0 0 3px ${C.bg}` }}
+                        >
+                          <CategoryIcon size={13} />
+                        </div>
                       </div>
                       <div
                         className="flex-1 rounded-xl p-3.5"
@@ -308,7 +328,7 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                         </div>
                       </div>
                     </div>
-                  ))}
+                  );})}
                 </div>
               </div>
             </div>
