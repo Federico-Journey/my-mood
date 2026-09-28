@@ -59,6 +59,8 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [saveState, setSaveState] = useState<"unknown" | "guest" | "not-saved" | "saving" | "saved">("unknown");
+
   const [shareId, setShareId] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [sharing, setSharing] = useState(false);
@@ -75,6 +77,29 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
       .order("created_at", { ascending: true });
     setVotes(data ?? []);
     setVotesLoading(false);
+  };
+
+  // Verifica se il viaggio e' gia' associato all'account dell'utente loggato
+  // (generato mentre era loggato) o se serve ancora un salvataggio esplicito.
+  useEffect(() => {
+    if (!tripId) { setSaveState("not-saved"); return; }
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!session?.user) { setSaveState("guest"); return; }
+      const { data } = await supabase.from("trips").select("user_id").eq("id", tripId).maybeSingle();
+      setSaveState(data?.user_id === session.user.id ? "saved" : "not-saved");
+    });
+  }, [tripId]);
+
+  const handleSaveTrip = async () => {
+    if (!tripId || saveState === "saving") return;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) {
+      window.location.href = `/auth?redirect=${encodeURIComponent(`/viaggio?id=${tripId}`)}`;
+      return;
+    }
+    setSaveState("saving");
+    const { error } = await supabase.from("trips").update({ user_id: session.user.id }).eq("id", tripId);
+    setSaveState(error ? "not-saved" : "saved");
   };
 
   // Se questo viaggio è già stato condiviso in passato (es. riaperto da
@@ -191,6 +216,22 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
               >
                 Diario di viaggio (stampabile)
               </a>
+            )}
+            {tripId && saveState !== "unknown" && (
+              saveState === "saved" ? (
+                <span className="flex items-center gap-1.5 px-4 py-2.5 text-[13.5px] font-semibold" style={{ color: C.textMuted }}>
+                  ✓ Salvato nei tuoi viaggi
+                </span>
+              ) : (
+                <button
+                  onClick={handleSaveTrip}
+                  disabled={saveState === "saving"}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-[13.5px]"
+                  style={{ background: C.bgElev, color: C.text, border: `1.3px solid ${C.border}` }}
+                >
+                  {saveState === "saving" ? "Salvo…" : "Salva nei miei viaggi"}
+                </button>
+              )
             )}
           </div>
           {shareError && <p className="text-[12px] mt-2" style={{ color: C.accent }}>{shareError}</p>}
