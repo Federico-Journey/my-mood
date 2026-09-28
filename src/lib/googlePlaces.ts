@@ -120,30 +120,46 @@ async function cachePlace(
  * e dalla destinazione del viaggio (per disambiguare, es. "Duomo" a Milano
  * vs "Duomo" a Firenze). Controlla prima la cache locale.
  */
+export type PlaceLookupSource = "cache" | "google_api" | "not_configured";
+
+export type PlaceLookup = {
+  result: PlaceMatch | PlaceNotFound;
+  /**
+   * Da dove arriva il risultato — serve solo a contare le vere chiamate a
+   * pagamento fatte a Google (vedi costTracking.ts):
+   * "cache" = trovato nella tabella "places", costo zero;
+   * "google_api" = abbiamo davvero chiamato Google Text Search (a pagamento,
+   * indipendentemente dal fatto che abbia trovato il luogo o no — Google
+   * fattura la chiamata anche a "zero risultati");
+   * "not_configured" = nessuna GOOGLE_PLACES_API_KEY, nessuna chiamata fatta.
+   */
+  source: PlaceLookupSource;
+};
+
 export async function findPlace(
   name: string,
   destination: string,
   category: PlaceCategory = "altro"
-): Promise<PlaceMatch | PlaceNotFound> {
+): Promise<PlaceLookup> {
   const cached = await getCachedPlace(name, destination);
-  if (cached) return cached;
+  if (cached) return { result: cached, source: "cache" };
 
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   if (!apiKey) {
     // Nessuna chiave configurata: non blocchiamo la generazione, semplicemente
     // non arricchiamo con dati reali.
-    return { verified: false };
+    return { result: { verified: false }, source: "not_configured" };
   }
 
   try {
     const query = `${name}, ${destination}`;
     const url = `${TEXT_SEARCH_URL}?query=${encodeURIComponent(query)}&key=${apiKey}`;
     const res = await fetch(url);
-    if (!res.ok) return { verified: false };
+    if (!res.ok) return { result: { verified: false }, source: "google_api" };
 
     const data = await res.json();
     if (data.status !== "OK" || !Array.isArray(data.results) || data.results.length === 0) {
-      return { verified: false };
+      return { result: { verified: false }, source: "google_api" };
     }
 
     const top = data.results[0];
@@ -154,7 +170,7 @@ export async function findPlace(
     const photoRef: string | null = top.photos?.[0]?.photo_reference ?? null;
 
     if (!placeId || !address || lat === undefined || lng === undefined) {
-      return { verified: false };
+      return { result: { verified: false }, source: "google_api" };
     }
 
     const match: PlaceMatch = {
@@ -172,10 +188,12 @@ export async function findPlace(
     // futuro, non deve rallentare l'itinerario che l'utente sta aspettando.
     void cachePlace(name, destination, category, match, photoRef);
 
-    return match;
+    return { result: match, source: "google_api" };
   } catch (err) {
     console.error("[Elly] Errore nella validazione Google Places:", err);
-    return { verified: false };
+    // Il fetch potrebbe comunque aver raggiunto Google prima di fallire:
+    // contiamo comunque una chiamata, per non sottostimare il costo reale.
+    return { result: { verified: false }, source: "google_api" };
   }
 }
 
@@ -183,10 +201,20 @@ export async function findPlace(
  * Valida più luoghi in parallelo (con un piccolo limite di concorrenza
  * per non sparare troppe richieste insieme).
  */
+export type PlaceBatchResult = {
+  results: (PlaceMatch | PlaceNotFound)[];
+  /** Quante vere chiamate a pagamento a Google Text Search sono state fatte. */
+  googleApiCalls: number;
+  /** Quanti luoghi erano già in cache (costo zero). */
+  cacheHits: number;
+};
+
 export async function findPlacesBatch(
   items: { name: string; destination: string; category?: PlaceCategory }[]
-): Promise<(PlaceMatch | PlaceNotFound)[]> {
+): Promise<PlaceBatchResult> {
   const results: (PlaceMatch | PlaceNotFound)[] = [];
+  let googleApiCalls = 0;
+  let cacheHits = 0;
   const CONCURRENCY = 4;
 
   for (let i = 0; i < items.length; i += CONCURRENCY) {
@@ -194,8 +222,12 @@ export async function findPlacesBatch(
     const batchResults = await Promise.all(
       batch.map((it) => findPlace(it.name, it.destination, it.category))
     );
-    results.push(...batchResults);
+    for (const lookup of batchResults) {
+      results.push(lookup.result);
+      if (lookup.source === "google_api") googleApiCalls++;
+      if (lookup.source === "cache") cacheHits++;
+    }
   }
 
-  return results;
+  return { results, googleApiCalls, cacheHits };
 }

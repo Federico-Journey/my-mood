@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { refineTrip, type GenerateTripInput, type GeneratedTrip } from "@/lib/tripGenerator";
+import { logGenerationCosts } from "@/lib/costTracking";
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,7 +27,8 @@ export async function POST(request: NextRequest) {
       startTime: startTime || "09:00", dinnerTime: dinnerTime || "20:00",
     };
 
-    const updatedTrip = await refineTrip(currentTrip, input, feedback.trim());
+    const { trip: updatedTrip, costs } = await refineTrip(currentTrip, input, feedback.trim());
+    void logGenerationCosts(tripId ?? null, costs);
 
     if (tripId) {
       const { error } = await supabase

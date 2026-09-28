@@ -18,6 +18,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { TRAVEL_THEMES } from "./travelData";
 import { findPlacesBatch, type PlaceMatch } from "./googlePlaces";
+import { claudeCostUsd, GOOGLE_TEXT_SEARCH_USD_PER_CALL } from "./pricing";
 
 export type ItineraryActivity = {
   time: string;
@@ -63,6 +64,39 @@ export type GeneratedTrip = {
   changeSummary?: string;
   days: ItineraryDay[];
 };
+
+/** Costo reale (in USD) di una generazione o modifica di itinerario. */
+export type GenerationCosts = {
+  claudeInputTokens: number;
+  claudeOutputTokens: number;
+  claudeCostUsd: number;
+  googleNewCalls: number;
+  googleCachedCalls: number;
+  googleCostUsd: number;
+  totalCostUsd: number;
+};
+
+export type GenerateTripResult = {
+  trip: GeneratedTrip;
+  costs: GenerationCosts;
+};
+
+function buildGenerationCosts(
+  claude: { inputTokens: number; outputTokens: number },
+  google: { newCalls: number; cachedCalls: number }
+): GenerationCosts {
+  const claudeCost = claudeCostUsd(claude.inputTokens, claude.outputTokens);
+  const googleCost = google.newCalls * GOOGLE_TEXT_SEARCH_USD_PER_CALL;
+  return {
+    claudeInputTokens: claude.inputTokens,
+    claudeOutputTokens: claude.outputTokens,
+    claudeCostUsd: claudeCost,
+    googleNewCalls: google.newCalls,
+    googleCachedCalls: google.cachedCalls,
+    googleCostUsd: googleCost,
+    totalCostUsd: claudeCost + googleCost,
+  };
+}
 
 type RawActivity = {
   time: string;
@@ -215,11 +249,17 @@ Istruzioni:
  * Chiama Claude forzando la risposta tramite tool use, con i controlli
  * difensivi che servono in entrambi i casi (generazione e modifica).
  */
+type ClaudeItineraryResult = {
+  raw: RawItinerary;
+  inputTokens: number;
+  outputTokens: number;
+};
+
 async function callClaudeForItinerary(
   client: Anthropic,
   prompt: string,
   numDaysForBudget: number
-): Promise<RawItinerary> {
+): Promise<ClaudeItineraryResult> {
   // L'itinerario in JSON può essere lungo (più giorni = più testo): diamo
   // margine ampio, scalando con la durata, per non tagliare la risposta
   // a metà (Haiku 4.5 supporta fino a 64.000 token di output).
@@ -250,16 +290,26 @@ async function callClaudeForItinerary(
   if (!raw || !Array.isArray(raw.days) || raw.days.length === 0) {
     throw new Error("La risposta di Claude non conteneva un itinerario valido. Riprova.");
   }
-  return raw;
+  return {
+    raw,
+    inputTokens: message.usage.input_tokens,
+    outputTokens: message.usage.output_tokens,
+  };
 }
 
 /**
  * Valida ogni luogo dell'itinerario "grezzo" con Google Places e lo
  * arricchisce con indirizzo/coordinate/rating reali.
  */
-async function enrichWithPlaces(raw: RawItinerary, input: GenerateTripInput): Promise<GeneratedTrip> {
+type EnrichedTrip = {
+  trip: GeneratedTrip;
+  googleNewCalls: number;
+  googleCachedCalls: number;
+};
+
+async function enrichWithPlaces(raw: RawItinerary, input: GenerateTripInput): Promise<EnrichedTrip> {
   const flatActivities = raw.days.flatMap((d) => d.activities);
-  const placeMatches = await findPlacesBatch(
+  const { results: placeMatches, googleApiCalls, cacheHits } = await findPlacesBatch(
     flatActivities.map((a) => ({ name: a.name, destination: input.destination, category: a.category }))
   );
 
@@ -289,7 +339,11 @@ async function enrichWithPlaces(raw: RawItinerary, input: GenerateTripInput): Pr
     }),
   }));
 
-  return { title: raw.title, subtitle: raw.subtitle, changeSummary: raw.change_summary, days };
+  return {
+    trip: { title: raw.title, subtitle: raw.subtitle, changeSummary: raw.change_summary, days },
+    googleNewCalls: googleApiCalls,
+    googleCachedCalls: cacheHits,
+  };
 }
 
 function requireApiKey(): string {
@@ -303,11 +357,19 @@ function requireApiKey(): string {
 }
 
 /** Genera un itinerario da zero a partire dalle scelte dell'utente. */
-export async function generateTrip(input: GenerateTripInput): Promise<GeneratedTrip> {
+export async function generateTrip(input: GenerateTripInput): Promise<GenerateTripResult> {
   const client = new Anthropic({ apiKey: requireApiKey() });
   const numDays = numDaysFor(input, 3);
-  const raw = await callClaudeForItinerary(client, buildGeneratePrompt(input, numDays), numDays);
-  return enrichWithPlaces(raw, input);
+  const { raw, inputTokens, outputTokens } = await callClaudeForItinerary(
+    client,
+    buildGeneratePrompt(input, numDays),
+    numDays
+  );
+  const { trip, googleNewCalls, googleCachedCalls } = await enrichWithPlaces(raw, input);
+  return {
+    trip,
+    costs: buildGenerationCosts({ inputTokens, outputTokens }, { newCalls: googleNewCalls, cachedCalls: googleCachedCalls }),
+  };
 }
 
 /** Modifica un itinerario esistente in base al feedback scritto dall'utente in chat. */
@@ -315,12 +377,16 @@ export async function refineTrip(
   currentTrip: GeneratedTrip,
   input: GenerateTripInput,
   feedback: string
-): Promise<GeneratedTrip> {
+): Promise<GenerateTripResult> {
   const client = new Anthropic({ apiKey: requireApiKey() });
-  const raw = await callClaudeForItinerary(
+  const { raw, inputTokens, outputTokens } = await callClaudeForItinerary(
     client,
     buildRefinePrompt(input, currentTrip, feedback),
     currentTrip.days.length
   );
-  return enrichWithPlaces(raw, input);
+  const { trip, googleNewCalls, googleCachedCalls } = await enrichWithPlaces(raw, input);
+  return {
+    trip,
+    costs: buildGenerationCosts({ inputTokens, outputTokens }, { newCalls: googleNewCalls, cachedCalls: googleCachedCalls }),
+  };
 }

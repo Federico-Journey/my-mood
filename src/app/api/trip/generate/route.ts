@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { generateTrip, type GenerateTripInput } from "@/lib/tripGenerator";
+import { logGenerationCosts } from "@/lib/costTracking";
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Dati del viaggio incompleti" }, { status: 400 });
     }
 
-    const itinerary = await generateTrip({
+    const { trip: itinerary, costs } = await generateTrip({
       destination,
       people,
       startDate: startDate ?? null,
@@ -49,8 +50,13 @@ export async function POST(request: NextRequest) {
       // generato viene comunque restituito, semplicemente non resterà
       // salvato nello storico.
       console.error("[Elly] Errore nel salvare il viaggio su Supabase:", error);
+      // Il costo AI/Google e' stato comunque sostenuto anche se il salvataggio
+      // del viaggio e' fallito: lo registriamo comunque, senza trip_id.
+      void logGenerationCosts(null, costs);
       return NextResponse.json({ trip: itinerary, tripId: null, saved: false });
     }
+
+    void logGenerationCosts(data.id, costs);
 
     return NextResponse.json({ trip: itinerary, tripId: data.id, saved: true });
   } catch (err) {

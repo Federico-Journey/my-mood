@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import type { GeneratedTrip } from "@/lib/tripGenerator";
+import { logCostEvent } from "@/lib/costTracking";
+import { GOOGLE_STATIC_MAP_USD_PER_CALL } from "@/lib/pricing";
 
 /**
  * Genera l'immagine della "cartina degli spostamenti" per un viaggio,
@@ -52,6 +54,18 @@ export async function GET(request: NextRequest) {
     const url = `https://maps.googleapis.com/maps/api/staticmap?${params.join("&")}&key=${apiKey}`;
     const res = await fetch(url);
     if (!res.ok) return new NextResponse(null, { status: 502 });
+
+    // Come per le foto: costo reale, registrato quando la chiamata a Google
+    // avviene davvero (la risposta resta poi in cache un'ora, vedi sotto).
+    void logCostEvent({
+      tripId,
+      costCenter: "google_places",
+      description: "Cartina spostamenti (Static Maps)",
+      quantity: 1,
+      unit: "api_call",
+      amountUsd: GOOGLE_STATIC_MAP_USD_PER_CALL,
+    });
+
     const buffer = await res.arrayBuffer();
     return new NextResponse(buffer, {
       headers: {

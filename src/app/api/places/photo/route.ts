@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logCostEvent } from "@/lib/costTracking";
+import { GOOGLE_PLACE_PHOTO_USD_PER_CALL } from "@/lib/pricing";
 
 /**
  * Proxy verso Google Places Photo API.
@@ -28,6 +30,19 @@ export async function GET(request: NextRequest) {
     if (!res.ok || !res.body) {
       return new NextResponse(null, { status: 502 });
     }
+
+    // Registriamo qui il costo, non durante la generazione del viaggio:
+    // questa e' la vera chiamata a pagamento a Google, che scatta solo la
+    // prima volta che qualcuno visualizza questa foto (poi resta in cache
+    // 7 giorni, vedi Cache-Control qui sotto). Non e' legata a un viaggio
+    // preciso perche' la stessa foto puo' servire itinerari di piu' utenti.
+    void logCostEvent({
+      costCenter: "google_places",
+      description: "Foto luogo (Place Photo)",
+      quantity: 1,
+      unit: "api_call",
+      amountUsd: GOOGLE_PLACE_PHOTO_USD_PER_CALL,
+    });
 
     const buffer = await res.arrayBuffer();
     return new NextResponse(buffer, {
