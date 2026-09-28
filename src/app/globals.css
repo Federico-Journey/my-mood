@@ -118,3 +118,33 @@ body {
 .text-glow {
   text-shadow: 0 0 20px rgba(139,92,246,0.6);
 }
+
+/* ── Splash screen Elly (schermata di lancio) ───────── */
+@keyframes ellySplashIn {
+  from { opacity: 0; transform: scale(0.86); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes ellySplashZoom {
+  0%   { opacity: 1; transform: scale(1); }
+  70%  { opacity: 1; transform: scale(2.6); }
+  100% { opacity: 0; transform: scale(3.6); }
+}
+.elly-splash-word {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #FFFFFF;
+  font-size: clamp(2.75rem, 13vw, 5.5rem);
+}
+.elly-splash-word-in {
+  animation: ellySplashIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.elly-splash-word-zoom {
+  animation: ellySplashZoom 0.55s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .elly-splash-word-in,
+  .elly-splash-word-zoom {
+    animation: none !important;
+  }
+}

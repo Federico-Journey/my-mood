@@ -1,16 +1,8 @@
 import type { ReactNode } from "react";
 
-// Layout dedicato alla rotta /viaggio: carica il font serif (Fraunces) usato nei
-// titoli delle nuove schermate Elly, senza toccare il layout principale
-// (usato ancora dalle schermate serata /genera con il tema scuro).
+// Il font serif (Fraunces) usato nei titoli delle schermate Elly e' ora
+// caricato globalmente da src/app/layout.tsx (serve anche allo splash screen),
+// quindi questo layout si limita a passare i figli.
 export default function ViaggioLayout({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
-        rel="stylesheet"
-      />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

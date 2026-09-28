@@ -1,15 +1,15 @@
 {
-  "name": "my mood",
-  "short_name": "my mood",
-  "description": "Il concierge digitale per le tue serate a Milano",
+  "name": "Elly — Pianifica il tuo viaggio",
+  "short_name": "Elly",
+  "description": "Elly aiuta i gruppi di amici o familiari a decidere insieme dove andare e genera itinerari di viaggio su misura in base a destinazione, durata e mood.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0D0D0D",
-  "theme_color": "#0D0D0D",
+  "background_color": "#7A3348",
+  "theme_color": "#7A3348",
   "orientation": "portrait",
   "scope": "/",
   "lang": "it",
-  "categories": ["lifestyle", "social"],
+  "categories": ["travel", "lifestyle", "social"],
   "icons": [
     {
       "src": "/icon-192x192.png",
