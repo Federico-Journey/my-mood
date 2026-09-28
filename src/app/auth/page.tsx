@@ -3,9 +3,12 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { ELLY_COLORS } from "@/lib/travelData";
+import { CompassIcon } from "@/components/EllyIcons";
+
 type Mode = "signin" | "signup";
 
-const MILAN_PHOTO = "https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?q=80&w=800&auto=format&fit=crop";
+const C = ELLY_COLORS;
 
 export default function AuthPage() {
   const router = useRouter();
@@ -19,7 +22,7 @@ export default function AuthPage() {
   const [resendLoading, setResendLoading] = useState(false);
   const [resendDone, setResendDone] = useState(false);
 
-  const accent = "#8B5CF6";
+  const getRedirectParam = () => new URLSearchParams(window.location.search).get("redirect");
 
   const handleEmailSignIn = async () => {
     setLoading(true); setError(null);
@@ -40,12 +43,15 @@ export default function AuthPage() {
 
   const handleEmailSignUp = async () => {
     setLoading(true); setError(null);
-    const redirectTo = `${window.location.origin}/auth`;
+    const redirectParam = getRedirectParam();
+    const emailRedirectTo = redirectParam
+      ? `${window.location.origin}/auth?redirect=${encodeURIComponent(redirectParam)}`
+      : `${window.location.origin}/auth`;
     const { data, error: err } = await supabase.auth.signUp({
       email, password,
       options: {
         data: { full_name: "" },
-        emailRedirectTo: redirectTo,
+        emailRedirectTo,
       },
     });
     setLoading(false);
@@ -60,6 +66,8 @@ export default function AuthPage() {
     } else if (data.user && !data.user.confirmed_at) {
       // Nuova registrazione — email di conferma inviata
       setSuccessMsg("Controlla la tua email per confermare l'account, poi torna qui per accedere. Controlla anche lo spam.");
+    } else if (redirectParam) {
+      router.push(redirectParam);
     } else {
       // Email già confermata (es. login silenzioso) → vai alla home
       router.push("/");
@@ -87,9 +95,15 @@ export default function AuthPage() {
 
   const handleGoogle = async () => {
     setLoading(true);
+    // Portiamo con noi ?redirect=..., altrimenti dopo il giro su Google
+    // l'utente arrivato da Elly finirebbe nel flusso delle serate.
+    const redirectParam = getRedirectParam();
+    const redirectTo = redirectParam
+      ? `${window.location.origin}/auth?redirect=${encodeURIComponent(redirectParam)}`
+      : `${window.location.origin}/auth`;
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth` },
+      options: { redirectTo },
     });
   };
 
@@ -106,10 +120,18 @@ export default function AuthPage() {
     }
   };
 
-  // Dopo login email: controlla onboarding
+  // Dopo login: se veniamo da Elly torniamo li', altrimenti seguiamo il
+  // flusso di onboarding delle serate.
   const handlePostLogin = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session?.user) return;
+
+    const redirectParam = getRedirectParam();
+    if (redirectParam) {
+      router.push(redirectParam);
+      return;
+    }
+
     const { data: prof } = await supabase
       .from("profiles")
       .select("onboarding_complete")
@@ -128,90 +150,64 @@ export default function AuthPage() {
     else handleEmailSignUp();
   };
 
+  const handleSkip = () => {
+    const redirectParam = getRedirectParam();
+    router.push(redirectParam && redirectParam.startsWith("/viaggio") ? "/viaggio" : "/genera");
+  };
+
   const canSubmit = email.length > 0 && password.length >= 6;
 
-
   return (
-    <main style={{ minHeight: "100vh", position: "relative", overflow: "hidden", fontFamily: '"DM Sans", sans-serif' }}>
+    <main style={{ minHeight: "100vh", position: "relative", overflow: "hidden", background: C.bg, color: C.text, fontFamily: '"DM Sans", sans-serif' }}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+        rel="stylesheet"
+      />
 
-      {/* Background photo */}
+      {/* Decorazione minimale, coerente con le altre schermate Elly */}
+      <div style={{ position: "absolute", top: -50, right: -70, width: 260, height: 260, color: C.accent, opacity: 0.07, pointerEvents: "none" }}>
+        <CompassIcon size={260} />
+      </div>
+
       <div style={{
-        position: "absolute", inset: 0,
-        backgroundImage: `url(${MILAN_PHOTO})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center top",
-        filter: "brightness(0.55) saturate(0.8)",
-      }} />
-
-      {/* Gradient overlay — dark from bottom */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "linear-gradient(to bottom, rgba(9,9,15,0.35) 0%, rgba(9,9,15,0.6) 40%, rgba(9,9,15,0.92) 70%, #09090f 100%)",
-      }} />
-
-      {/* Stars overlay */}
-      {[
-        { x: 10, y: 8 }, { x: 30, y: 5 }, { x: 65, y: 12 }, { x: 80, y: 7 }, { x: 90, y: 15 },
-      ].map((s, i) => (
-        <div key={i} style={{
-          position: "absolute", left: `${s.x}%`, top: `${s.y}%`,
-          width: "2px", height: "2px", borderRadius: "50%",
-          background: "white", opacity: 0.6,
-          animation: `twinkle ${3.5 + i * 0.5}s ease-in-out ${i * 0.7}s infinite alternate`,
-        }} />
-      ))}
-
-      {/* Content */}
-      <div style={{
-        position: "relative", zIndex: 1,
-        minHeight: "100vh",
-        display: "flex", flexDirection: "column",
-        justifyContent: "flex-end",
-        padding: "0 0 env(safe-area-inset-bottom, 0px)",
+        position: "relative", zIndex: 1, minHeight: "100vh",
+        display: "flex", flexDirection: "column", justifyContent: "center",
+        maxWidth: "460px", margin: "0 auto",
+        padding: "72px 24px calc(env(safe-area-inset-bottom, 0px) + 40px)",
       }}>
 
-        {/* Hello Mooder! — top area */}
-        <div style={{ position: "absolute", top: "12%", left: 0, right: 0, textAlign: "center", padding: "0 24px" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "10px" }}>
-            <span style={{ fontSize: "18px" }}>🌙</span>
-            <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>
-              my mood
-            </span>
-          </div>
+        {/* Branding */}
+        <div style={{ textAlign: "center", marginBottom: "32px" }}>
+          <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: C.accent, margin: "0 0 12px" }}>
+            Elly
+          </p>
           <h1 style={{
-            fontSize: "38px", fontWeight: 900, color: "#F5F5F0",
-            letterSpacing: "-0.03em", lineHeight: 1.1, margin: 0,
-            textShadow: "0 2px 20px rgba(0,0,0,0.6)",
+            fontFamily: "'Fraunces', serif", fontWeight: 600,
+            fontSize: "32px", letterSpacing: "-0.01em", lineHeight: 1.15,
+            color: C.text, margin: "0 0 10px",
           }}>
-            Hello Mooder!
+            Bentornato
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", marginTop: "10px", textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}>
-            Le serate migliori iniziano da un mood
+          <p style={{ color: C.textMuted, fontSize: "14px", lineHeight: 1.5 }}>
+            Accedi per salvare e condividere i tuoi viaggi con il gruppo
           </p>
         </div>
 
-        {/* Bottom card */}
+        {/* Card */}
         <div style={{
-          background: "rgba(9,9,15,0.88)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderTop: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: "28px 28px 0 0",
-          padding: "28px 24px 40px",
-          maxWidth: "480px",
-          width: "100%",
-          margin: "0 auto",
+          background: C.bgElev, border: `1.3px solid ${C.border}`,
+          borderRadius: "24px", padding: "24px 22px 26px",
         }}>
 
           {/* Mode toggle */}
-          <div style={{ display: "flex", gap: "4px", background: "rgba(255,255,255,0.05)", borderRadius: "14px", padding: "4px", marginBottom: "24px" }}>
+          <div style={{ display: "flex", gap: "4px", background: C.bg, borderRadius: "14px", padding: "4px", marginBottom: "22px" }}>
             {(["signin", "signup"] as Mode[]).map((m) => (
               <button key={m} onClick={() => { setMode(m); setError(null); setSuccessMsg(null); setShowEmailForm(false); }}
                 style={{
                   flex: 1, padding: "10px", borderRadius: "10px", border: "none", cursor: "pointer",
                   fontFamily: "inherit", fontSize: "14px", fontWeight: 600,
-                  background: mode === m ? "#8B5CF6" : "transparent",
-                  color: mode === m ? "#fff" : "rgba(255,255,255,0.4)",
+                  background: mode === m ? C.accent : "transparent",
+                  color: mode === m ? "#fff" : C.textMuted,
                   transition: "all 0.2s",
                 }}>
                 {m === "signin" ? "Accedi" : "Registrati"}
@@ -223,8 +219,8 @@ export default function AuthPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <div style={{
                 padding: "16px", borderRadius: "14px",
-                background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)",
-                color: "#4ade80", fontSize: "14px", lineHeight: 1.6, textAlign: "center",
+                background: "rgba(61,110,84,0.10)", border: "1px solid rgba(61,110,84,0.3)",
+                color: "#3D6E54", fontSize: "14px", lineHeight: 1.6, textAlign: "center",
               }}>
                 ✉️ {successMsg}
               </div>
@@ -233,8 +229,8 @@ export default function AuthPage() {
                 disabled={resendLoading || resendDone}
                 style={{
                   width: "100%", padding: "12px", borderRadius: "12px", border: "none", cursor: resendDone ? "default" : "pointer",
-                  background: resendDone ? "rgba(34,197,94,0.08)" : "rgba(255,255,255,0.05)",
-                  color: resendDone ? "#4ade80" : "rgba(255,255,255,0.45)",
+                  background: resendDone ? "rgba(61,110,84,0.08)" : C.bg,
+                  color: resendDone ? "#3D6E54" : C.textMuted,
                   fontSize: "13px", fontFamily: "inherit", opacity: resendLoading ? 0.6 : 1,
                 }}
               >
@@ -244,7 +240,7 @@ export default function AuthPage() {
                 onClick={() => { setMode("signin"); setSuccessMsg(null); setResendDone(false); setShowEmailForm(true); }}
                 style={{
                   width: "100%", padding: "12px", borderRadius: "12px", border: "none", cursor: "pointer",
-                  background: "#8B5CF6", color: "#fff", fontSize: "14px", fontWeight: 600, fontFamily: "inherit",
+                  background: C.accent, color: "#fff", fontSize: "14px", fontWeight: 600, fontFamily: "inherit",
                 }}
               >
                 Torna ad Accedi
@@ -264,29 +260,29 @@ export default function AuthPage() {
               </button>
 
               {/* Apple — coming soon */}
-              <div style={{ ...socialBtnStyle, marginTop: "10px", opacity: 0.35, cursor: "not-allowed", position: "relative", userSelect: "none" }}>
+              <div style={{ ...socialBtnStyle, marginTop: "10px", opacity: 0.4, cursor: "not-allowed", position: "relative", userSelect: "none" }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                 </svg>
                 Continua con Apple
-                <span style={{ marginLeft: "auto", fontSize: "10px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.4)", background: "rgba(255,255,255,0.08)", padding: "2px 8px", borderRadius: "6px" }}>
+                <span style={{ marginLeft: "auto", fontSize: "10px", fontWeight: 700, letterSpacing: "1px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "6px" }}>
                   SOON
                 </span>
               </div>
 
               {/* Divider */}
               <div style={{ display: "flex", alignItems: "center", gap: "12px", margin: "20px 0" }}>
-                <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.08)" }} />
-                <span style={{ color: "rgba(255,255,255,0.25)", fontSize: "12px" }}>oppure</span>
-                <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.08)" }} />
+                <div style={{ flex: 1, height: "1px", background: C.border }} />
+                <span style={{ color: C.textMuted, fontSize: "12px" }}>oppure</span>
+                <div style={{ flex: 1, height: "1px", background: C.border }} />
               </div>
 
               {/* Email toggle */}
               {!showEmailForm ? (
                 <button onClick={() => setShowEmailForm(true)} style={{
                   width: "100%", padding: "13px", borderRadius: "12px", cursor: "pointer",
-                  background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.55)", fontSize: "14px", fontFamily: "inherit",
+                  background: C.bg, border: `1px solid ${C.border}`,
+                  color: C.textMuted, fontSize: "14px", fontFamily: "inherit",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -299,11 +295,11 @@ export default function AuthPage() {
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0" }}>
                   <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={inputStyle} />
                   <input type="password" placeholder="Password (min. 6 caratteri)" value={password} onChange={(e) => setPassword(e.target.value)} style={inputStyle} />
-                  {error && <p style={{ color: "#f87171", fontSize: "13px", textAlign: "center", marginBottom: "12px" }}>{error}</p>}
+                  {error && <p style={{ color: "#B3435A", fontSize: "13px", textAlign: "center", marginBottom: "12px" }}>{error}</p>}
                   <button type="submit" disabled={!canSubmit || loading} style={{
                     width: "100%", padding: "14px", borderRadius: "12px", border: "none",
-                    background: canSubmit ? accent : "rgba(255,255,255,0.06)",
-                    color: canSubmit ? "#fff" : "rgba(255,255,255,0.3)",
+                    background: canSubmit ? C.accent : C.disabledBg,
+                    color: canSubmit ? "#fff" : C.disabledText,
                     fontSize: "15px", fontWeight: 600, cursor: canSubmit ? "pointer" : "default",
                     fontFamily: "inherit", opacity: loading ? 0.6 : 1,
                   }}>
@@ -316,34 +312,34 @@ export default function AuthPage() {
 
           {/* Terms notice for signup */}
           {mode === "signup" && !successMsg && (
-            <p style={{ marginTop: "16px", fontSize: "11px", color: "rgba(255,255,255,0.22)", textAlign: "center", lineHeight: 1.6 }}>
+            <p style={{ marginTop: "16px", fontSize: "11px", color: C.textMuted, textAlign: "center", lineHeight: 1.6 }}>
               Registrandoti accetti i{" "}
-              <a href="/terms" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "underline" }}>Termini di Servizio</a>
+              <a href="/terms" style={{ color: C.text, textDecoration: "underline" }}>Termini di Servizio</a>
               {" "}e la{" "}
-              <a href="/privacy" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "underline" }}>Privacy Policy</a>
+              <a href="/privacy" style={{ color: C.text, textDecoration: "underline" }}>Privacy Policy</a>
             </p>
           )}
-
-          {/* Skip */}
-          {!successMsg && (
-            <button
-              onClick={() => router.push("/genera")}
-              style={{
-                marginTop: "20px",
-                width: "100%",
-                background: "none",
-                border: "none",
-                color: "rgba(255,255,255,0.28)",
-                fontSize: "13px",
-                cursor: "pointer",
-                fontFamily: "inherit",
-                padding: "8px",
-              }}
-            >
-              Continua senza account →
-            </button>
-          )}
         </div>
+
+        {/* Skip */}
+        {!successMsg && (
+          <button
+            onClick={handleSkip}
+            style={{
+              marginTop: "18px",
+              width: "100%",
+              background: "none",
+              border: "none",
+              color: C.textMuted,
+              fontSize: "13px",
+              cursor: "pointer",
+              fontFamily: "inherit",
+              padding: "8px",
+            }}
+          >
+            Continua senza account →
+          </button>
+        )}
       </div>
     </main>
   );
@@ -351,15 +347,15 @@ export default function AuthPage() {
 
 const socialBtnStyle: React.CSSProperties = {
   width: "100%", padding: "14px", borderRadius: "12px",
-  background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
-  color: "#F5F5F0", fontSize: "15px", fontWeight: 500, cursor: "pointer",
+  background: C.bg, border: `1px solid ${C.border}`,
+  color: C.text, fontSize: "15px", fontWeight: 500, cursor: "pointer",
   display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
   fontFamily: "inherit",
 };
 
 const inputStyle: React.CSSProperties = {
   width: "100%", padding: "13px 16px", borderRadius: "12px", marginBottom: "10px",
-  background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-  color: "#F5F5F0", fontSize: "15px", outline: "none", fontFamily: "inherit",
+  background: C.bg, border: `1px solid ${C.border}`,
+  color: C.text, fontSize: "15px", outline: "none", fontFamily: "inherit",
   boxSizing: "border-box",
 };

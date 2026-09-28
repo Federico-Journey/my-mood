@@ -1,5 +1,5 @@
 {
-  "name": "my-mood",
+  "name": "elly",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
     "@supabase/supabase-js": "^2.49.4",
     "@types/leaflet": "^1.9.21",
     "leaflet": "^1.9.4",
