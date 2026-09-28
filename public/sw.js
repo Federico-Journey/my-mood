@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-mood-v1';
+const CACHE_NAME = 'elly-v1';
 
 // Assets to pre-cache on install
 const PRECACHE_ASSETS = [

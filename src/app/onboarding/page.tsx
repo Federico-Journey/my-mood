@@ -3,6 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { ELLY_COLORS } from "@/lib/travelData";
+import { CompassIcon } from "@/components/EllyIcons";
+
+const C = ELLY_COLORS;
 
 const NATIONALITIES = [
   "Italiana", "Americana", "Britannica", "Francese", "Tedesca", "Spagnola",
@@ -13,21 +17,24 @@ const NATIONALITIES = [
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
   const [dataNascita, setDataNascita] = useState("");
   const [nazionalita, setNazionalita] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
+  const getRedirectParam = () => new URLSearchParams(window.location.search).get("redirect");
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session?.user) { router.push("/auth"); return; }
+      if (!session?.user) {
+        const redirectParam = getRedirectParam();
+        router.push(redirectParam ? `/auth?redirect=${encodeURIComponent(redirectParam)}` : "/auth");
+        return;
+      }
       setUserId(session.user.id);
-      // Pre-fill name from OAuth metadata
+      // Pre-compila nome/cognome se disponibili dai dati OAuth (es. Google)
       const meta = session.user.user_metadata;
       if (meta?.full_name) {
         const parts = (meta.full_name as string).split(" ");
@@ -37,8 +44,7 @@ export default function OnboardingPage() {
     });
   }, [router]);
 
-  const canGoNext = nome.trim().length > 0 && cognome.trim().length > 0 && dataNascita.length > 0 && nazionalita.length > 0;
-  const canFinish = termsAccepted && privacyAccepted;
+  const canFinish = nome.trim().length > 0 && cognome.trim().length > 0 && dataNascita.length > 0 && nazionalita.length > 0;
 
   const handleFinish = async () => {
     if (!userId || !canFinish) return;
@@ -46,162 +52,86 @@ export default function OnboardingPage() {
     await supabase.from("profiles").upsert({
       id: userId,
       name: `${nome} ${cognome}`.trim(),
+      cognome,
+      data_nascita: dataNascita,
+      nazionalita,
       onboarding_complete: true,
       updated_at: new Date().toISOString(),
     });
-    router.push("/");
+    setLoading(false);
+    const redirectParam = getRedirectParam();
+    router.push(redirectParam || "/viaggio");
   };
 
   return (
-    <main style={{
-      minHeight: "100vh", background: "#09090f", color: "#F5F5F0",
-      fontFamily: '"DM Sans", sans-serif',
-      display: "flex", flexDirection: "column", alignItems: "center",
-      padding: "0 24px",
-    }}>
-      {/* Header */}
-      <div style={{ width: "100%", maxWidth: "440px", paddingTop: "60px", marginBottom: "40px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "32px" }}>
-          <span style={{ fontSize: "14px" }}>🌙</span>
-          <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>
-            my mood
-          </span>
+    <main style={{ minHeight: "100vh", position: "relative", overflow: "hidden", background: C.bg, color: C.text, fontFamily: '"DM Sans", sans-serif' }}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+        rel="stylesheet"
+      />
+
+      <div style={{ position: "absolute", top: -50, right: -70, width: 260, height: 260, color: C.accent, opacity: 0.07, pointerEvents: "none" }}>
+        <CompassIcon size={260} />
+      </div>
+
+      <div style={{
+        position: "relative", zIndex: 1, minHeight: "100vh",
+        display: "flex", flexDirection: "column", justifyContent: "center",
+        maxWidth: "460px", margin: "0 auto",
+        padding: "72px 24px calc(env(safe-area-inset-bottom, 0px) + 40px)",
+      }}>
+
+        <div style={{ textAlign: "center", marginBottom: "32px" }}>
+          <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: C.accent, margin: "0 0 12px" }}>
+            Elly
+          </p>
+          <h1 style={{
+            fontFamily: "'Fraunces', serif", fontWeight: 600,
+            fontSize: "32px", letterSpacing: "-0.01em", lineHeight: 1.15,
+            color: C.text, margin: "0 0 10px",
+          }}>
+            Crea il tuo profilo
+          </h1>
+          <p style={{ color: C.textMuted, fontSize: "14px", lineHeight: 1.5 }}>
+            Ci servono un paio di informazioni prima di iniziare a pianificare
+          </p>
         </div>
 
-        {/* Progress bar */}
-        <div style={{ display: "flex", gap: "6px", marginBottom: "32px" }}>
-          {[1, 2].map((s) => (
-            <div key={s} style={{
-              flex: 1, height: "3px", borderRadius: "3px",
-              background: step >= s ? "#8B5CF6" : "rgba(255,255,255,0.1)",
-              transition: "background 0.3s",
-              boxShadow: step >= s ? "0 0 8px rgba(139,92,246,0.6)" : "none",
-            }} />
-          ))}
+        <div style={{
+          background: C.bgElev, border: `1.3px solid ${C.border}`,
+          borderRadius: "24px", padding: "24px 22px 26px",
+        }}>
+          <FieldLabel>Nome</FieldLabel>
+          <input type="text" placeholder="es. Federico" value={nome} onChange={(e) => setNome(e.target.value)} style={inputStyle} />
+
+          <FieldLabel>Cognome</FieldLabel>
+          <input type="text" placeholder="es. Pugliese" value={cognome} onChange={(e) => setCognome(e.target.value)} style={inputStyle} />
+
+          <FieldLabel>Data di nascita</FieldLabel>
+          <input
+            type="date"
+            value={dataNascita}
+            onChange={(e) => setDataNascita(e.target.value)}
+            max={new Date(Date.now() - 16 * 365.25 * 24 * 3600000).toISOString().split("T")[0]}
+            style={inputStyle}
+          />
+
+          <FieldLabel>Nazionalità</FieldLabel>
+          <select value={nazionalita} onChange={(e) => setNazionalita(e.target.value)} style={{ ...inputStyle, marginBottom: "18px" }}>
+            <option value="">Seleziona...</option>
+            {NATIONALITIES.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+
+          <button onClick={handleFinish} disabled={!canFinish || loading} style={{
+            width: "100%", padding: "14px", borderRadius: "12px", border: "none",
+            background: canFinish ? C.accent : C.disabledBg,
+            color: canFinish ? "#fff" : C.disabledText,
+            fontSize: "15px", fontWeight: 600, cursor: canFinish ? "pointer" : "default",
+            fontFamily: "inherit", opacity: loading ? 0.6 : 1,
+          }}>
+            {loading ? "Salvataggio..." : "Continua →"}
+          </button>
         </div>
-
-        {step === 1 ? (
-          <>
-            <p style={{ color: "#A78BFA", fontSize: "12px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>
-              Passo 1 di 2
-            </p>
-            <h1 style={{ fontSize: "28px", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 8px" }}>
-              Crea il tuo profilo
-            </h1>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "14px", margin: "0 0 32px", lineHeight: 1.5 }}>
-              Dicci qualcosa su di te per personalizzare l'esperienza
-            </p>
-
-            <FieldLabel>Nome</FieldLabel>
-            <input type="text" placeholder="es. Marco" value={nome} onChange={(e) => setNome(e.target.value)} style={inputStyle} />
-
-            <FieldLabel>Cognome</FieldLabel>
-            <input type="text" placeholder="es. Rossi" value={cognome} onChange={(e) => setCognome(e.target.value)} style={inputStyle} />
-
-            <FieldLabel>Data di nascita</FieldLabel>
-            <input type="date" value={dataNascita} onChange={(e) => setDataNascita(e.target.value)}
-              max={new Date(Date.now() - 13 * 365.25 * 24 * 3600000).toISOString().split("T")[0]}
-              style={{ ...inputStyle, colorScheme: "dark" }} />
-
-            <FieldLabel>Nazionalità</FieldLabel>
-            <select value={nazionalita} onChange={(e) => setNazionalita(e.target.value)}
-              style={{ ...inputStyle, colorScheme: "dark" }}>
-              <option value="">Seleziona...</option>
-              {NATIONALITIES.map((n) => <option key={n} value={n}>{n}</option>)}
-            </select>
-
-            <button onClick={() => setStep(2)} disabled={!canGoNext} style={{
-              width: "100%", padding: "16px", borderRadius: "14px", border: "none",
-              background: canGoNext ? "linear-gradient(135deg, #8B5CF6, #6D28D9)" : "rgba(255,255,255,0.06)",
-              color: canGoNext ? "#fff" : "rgba(255,255,255,0.25)",
-              fontSize: "16px", fontWeight: 700, cursor: canGoNext ? "pointer" : "default",
-              fontFamily: "inherit", marginTop: "8px",
-              boxShadow: canGoNext ? "0 4px 20px rgba(139,92,246,0.4)" : "none",
-              transition: "all 0.2s",
-            }}>
-              Continua →
-            </button>
-          </>
-        ) : (
-          <>
-            <p style={{ color: "#A78BFA", fontSize: "12px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>
-              Passo 2 di 2
-            </p>
-            <h1 style={{ fontSize: "28px", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 8px" }}>
-              Termini & Privacy
-            </h1>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "14px", margin: "0 0 32px", lineHeight: 1.5 }}>
-              Per completare la registrazione, accetta i nostri termini
-            </p>
-
-            {/* Terms box */}
-            <div style={{
-              borderRadius: "16px", padding: "18px",
-              background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-              marginBottom: "12px",
-            }}>
-              <label style={{ display: "flex", alignItems: "flex-start", gap: "14px", cursor: "pointer" }}>
-                <div onClick={() => setTermsAccepted(!termsAccepted)} style={{
-                  width: "22px", height: "22px", borderRadius: "6px", flexShrink: 0, marginTop: "1px",
-                  background: termsAccepted ? "#8B5CF6" : "transparent",
-                  border: `2px solid ${termsAccepted ? "#8B5CF6" : "rgba(255,255,255,0.2)"}`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  transition: "all 0.2s", cursor: "pointer",
-                }}>
-                  {termsAccepted && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-                </div>
-                <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px", lineHeight: 1.5 }}>
-                  Ho letto e accetto i{" "}
-                  <a href="/terms" target="_blank" style={{ color: "#A78BFA", textDecoration: "underline" }}>Termini di Servizio</a>
-                </span>
-              </label>
-            </div>
-
-            {/* Privacy box */}
-            <div style={{
-              borderRadius: "16px", padding: "18px",
-              background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-              marginBottom: "32px",
-            }}>
-              <label style={{ display: "flex", alignItems: "flex-start", gap: "14px", cursor: "pointer" }}>
-                <div onClick={() => setPrivacyAccepted(!privacyAccepted)} style={{
-                  width: "22px", height: "22px", borderRadius: "6px", flexShrink: 0, marginTop: "1px",
-                  background: privacyAccepted ? "#8B5CF6" : "transparent",
-                  border: `2px solid ${privacyAccepted ? "#8B5CF6" : "rgba(255,255,255,0.2)"}`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  transition: "all 0.2s", cursor: "pointer",
-                }}>
-                  {privacyAccepted && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-                </div>
-                <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px", lineHeight: 1.5 }}>
-                  Ho letto e accetto la{" "}
-                  <a href="/privacy" target="_blank" style={{ color: "#A78BFA", textDecoration: "underline" }}>Informativa sulla Privacy</a>
-                </span>
-              </label>
-            </div>
-
-            <div style={{ display: "flex", gap: "10px" }}>
-              <button onClick={() => setStep(1)} style={{
-                padding: "16px 20px", borderRadius: "14px", border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.5)",
-                fontSize: "15px", fontWeight: 600, cursor: "pointer", fontFamily: "inherit",
-              }}>
-                ← Indietro
-              </button>
-              <button onClick={handleFinish} disabled={!canFinish || loading} style={{
-                flex: 1, padding: "16px", borderRadius: "14px", border: "none",
-                background: canFinish ? "linear-gradient(135deg, #8B5CF6, #6D28D9)" : "rgba(255,255,255,0.06)",
-                color: canFinish ? "#fff" : "rgba(255,255,255,0.25)",
-                fontSize: "16px", fontWeight: 700, cursor: canFinish ? "pointer" : "default",
-                fontFamily: "inherit", opacity: loading ? 0.6 : 1,
-                boxShadow: canFinish ? "0 4px 20px rgba(139,92,246,0.4)" : "none",
-                transition: "all 0.2s",
-              }}>
-                {loading ? "Salvataggio..." : "Entra in my mood 🌙"}
-              </button>
-            </div>
-          </>
-        )}
       </div>
     </main>
   );
@@ -210,8 +140,8 @@ export default function OnboardingPage() {
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
     <label style={{
-      display: "block", fontSize: "12px", fontWeight: 700, letterSpacing: "1.5px",
-      textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "8px",
+      display: "block", fontSize: "11px", fontWeight: 700, letterSpacing: "1px",
+      textTransform: "uppercase", color: C.textMuted, marginBottom: "8px",
     }}>
       {children}
     </label>
@@ -219,8 +149,8 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
 }
 
 const inputStyle: React.CSSProperties = {
-  width: "100%", padding: "13px 16px", borderRadius: "12px", marginBottom: "18px",
-  background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-  color: "#F5F5F0", fontSize: "15px", outline: "none", fontFamily: "inherit",
-  boxSizing: "border-box", appearance: "none",
+  width: "100%", padding: "13px 16px", borderRadius: "12px", marginBottom: "16px",
+  background: C.bg, border: `1px solid ${C.border}`,
+  color: C.text, fontSize: "15px", outline: "none", fontFamily: "inherit",
+  boxSizing: "border-box",
 };

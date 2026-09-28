@@ -66,11 +66,9 @@ export default function AuthPage() {
     } else if (data.user && !data.user.confirmed_at) {
       // Nuova registrazione — email di conferma inviata
       setSuccessMsg("Controlla la tua email per confermare l'account, poi torna qui per accedere. Controlla anche lo spam.");
-    } else if (redirectParam) {
-      router.push(redirectParam);
     } else {
-      // Email già confermata (es. login silenzioso) → vai alla home
-      router.push("/");
+      // Email gia' confermata (es. login silenzioso): passiamo dal check onboarding
+      await handlePostLogin();
     }
   };
 
@@ -120,28 +118,27 @@ export default function AuthPage() {
     }
   };
 
-  // Dopo login: se veniamo da Elly torniamo li', altrimenti seguiamo il
-  // flusso di onboarding delle serate.
+  // Dopo login: controlliamo sempre che il profilo sia completo (nome,
+  // cognome, data di nascita, nazionalita'). Se non lo e', si passa
+  // dall'onboarding portandoci dietro l'eventuale redirect verso Elly.
   const handlePostLogin = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session?.user) return;
 
     const redirectParam = getRedirectParam();
-    if (redirectParam) {
-      router.push(redirectParam);
-      return;
-    }
 
     const { data: prof } = await supabase
       .from("profiles")
       .select("onboarding_complete")
       .eq("id", session.user.id)
       .single();
+
     if (!prof || !prof.onboarding_complete) {
-      router.push("/onboarding");
-    } else {
-      router.push("/");
+      router.push(redirectParam ? `/onboarding?redirect=${encodeURIComponent(redirectParam)}` : "/onboarding");
+      return;
     }
+
+    router.push(redirectParam || "/");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
