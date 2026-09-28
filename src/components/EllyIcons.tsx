@@ -27,6 +27,15 @@ export function PinIcon({ className, size }: IconProps) {
   );
 }
 
+export function ClockIcon({ className, size }: IconProps) {
+  return (
+    <svg className={className} {...sharedProps(size)}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3.5 2" />
+    </svg>
+  );
+}
+
 export function UsersIcon({ className, size }: IconProps) {
   return (
     <svg className={className} {...sharedProps(size)}>

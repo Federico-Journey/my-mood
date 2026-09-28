@@ -22,13 +22,15 @@ export default function ViaggioPage() {
   const [endDate, setEndDate] = useState<string | null>(null);
   const [themes, setThemes] = useState<string[]>([]);
   const [budgetPerPerson, setBudgetPerPerson] = useState(700);
+  const [startTime, setStartTime] = useState("09:00");
+  const [dinnerTime, setDinnerTime] = useState("20:00");
   const [generatedTrip, setGeneratedTrip] = useState<GeneratedTrip | null>(null);
   const [tripId, setTripId] = useState<string | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [loadingSaved, setLoadingSaved] = useState(false);
 
-  const draft = (): GenerateTripInput => ({ destination, people, startDate, endDate, themes, budgetPerPerson });
+  const draft = (): GenerateTripInput => ({ destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime });
 
   // Recupera l'utente loggato (per associare i viaggi generati a lui) e,
   // se l'URL contiene ?id=..., carica un viaggio già salvato invece di
@@ -110,7 +112,8 @@ export default function ViaggioPage() {
 
   const handleNewTrip = () => {
     setDestination(""); setPeople(2); setStartDate(null); setEndDate(null);
-    setThemes([]); setBudgetPerPerson(700); setGeneratedTrip(null); setTripId(null); setGenerationError(null);
+    setThemes([]); setBudgetPerPerson(700); setStartTime("09:00"); setDinnerTime("20:00");
+    setGeneratedTrip(null); setTripId(null); setGenerationError(null);
     setScreen("destinazione");
   };
 
@@ -159,6 +162,10 @@ export default function ViaggioPage() {
           endDate={endDate}
           themes={themes}
           budgetPerPerson={budgetPerPerson}
+          startTime={startTime}
+          dinnerTime={dinnerTime}
+          onStartTimeChange={setStartTime}
+          onDinnerTimeChange={setDinnerTime}
           onEdit={() => setScreen("budget")}
           onGenerate={handleGenerate}
         />

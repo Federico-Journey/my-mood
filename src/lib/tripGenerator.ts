@@ -51,6 +51,10 @@ export type GenerateTripInput = {
   endDate: string | null;
   themes: string[];
   budgetPerPerson: number;
+  /** Orario indicativo di inizio giornata (colazione), es. "09:00". Media per tutta la vacanza. */
+  startTime: string;
+  /** Orario indicativo di cena, es. "20:00". Media per tutta la vacanza. */
+  dinnerTime: string;
 };
 
 export type GeneratedTrip = {
@@ -160,9 +164,11 @@ function buildGeneratePrompt(input: GenerateTripInput, numDays: number): string 
 - Numero di persone: ${input.people}
 - Temi/mood del viaggio: ${themeLabels || "generico"}
 - Budget indicativo: ${input.budgetPerPerson}€ a persona per l'intero viaggio (~${budgetPerDay}€ a persona al giorno)
+- Orari di riferimento: la giornata inizia indicativamente alle ${input.startTime} (colazione/risveglio) e la cena e' prevista verso le ${input.dinnerTime}. Sono medie per l'intera vacanza, non un vincolo rigido per ogni singolo giorno.
 
 Istruzioni:
 - Per ogni giorno proponi AL MASSIMO 5-6 attività reali (pasti principali come pranzo/cena inclusi), con orari indicativi. L'itinerario deve avere un carattere rilassato ("chill"), non un programma incastrato minuto per minuto: lascia respiro tra un'attività e l'altra, senza sentirti obbligato a riempire ogni fascia oraria. È normale e voluto lasciare esplicitamente del tempo libero non strutturato (es. "Pomeriggio libero: relax o passeggiata senza meta") quando la giornata lo permette, invece di aggiungere sempre una tappa in più.
+- Fai stare il programma di ogni giornata indicativamente tra le ${input.startTime} e le ${input.dinnerTime} (cena inclusa): non iniziare le attivita' prima dell'orario di inizio giornata indicato, e non far slittare la cena molto oltre l'orario indicato. Dopo cena puoi aggiungere al massimo un'attivita' serale leggera (es. una passeggiata, un drink, vita notturna) solo se il tema del viaggio lo richiede esplicitamente — altrimenti la giornata puo' considerarsi conclusa con la cena.
 - Usa nomi SPECIFICI e REALI di luoghi (ristoranti, musei, monumenti, quartieri, attività) coerenti con la destinazione — non nomi generici o inventati. Verranno controllati su Google Maps subito dopo, quindi devono essere posti plausibili e verosimili per quella destinazione.
 - Rispetta il budget indicato: se è basso preferisci street food/trattorie locali/attività gratuite, se è alto includi anche qualche esperienza premium.
 - Rifletti i temi scelti nello stile delle attività proposte (es. se il tema è "storico/bellico" includi musei di guerra, siti storici, memoriali; se è "on the road" struttura le giornate come tappe di un percorso).
@@ -194,6 +200,8 @@ ${JSON.stringify({ title: currentTrip.title, subtitle: currentTrip.subtitle, day
 
 L'utente ha scritto questo feedback, in una chat, per chiedere una modifica:
 "${feedback}"
+
+Promemoria: il programma di ogni giornata deve restare indicativamente tra le ${input.startTime} e le ${input.dinnerTime} (cena inclusa), con al massimo un'attivita' serale leggera dopo cena se il tema del viaggio lo richiede.
 
 Istruzioni:
 - Modifica l'itinerario per accontentare la richiesta, cambiando SOLO quello che serve — lascia invariato tutto il resto (stessi orari, stessi luoghi, stesse descrizioni dove non richiesto).

@@ -5,7 +5,7 @@ import { generateTrip, type GenerateTripInput } from "@/lib/tripGenerator";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { destination, people, startDate, endDate, themes, budgetPerPerson, userId } = body as GenerateTripInput & { userId?: string | null };
+    const { destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime, userId } = body as GenerateTripInput & { userId?: string | null };
 
     if (!destination || !people || !themes || !Array.isArray(themes) || themes.length === 0) {
       return NextResponse.json({ error: "Dati del viaggio incompleti" }, { status: 400 });
@@ -18,6 +18,8 @@ export async function POST(request: NextRequest) {
       endDate: endDate ?? null,
       themes,
       budgetPerPerson: budgetPerPerson ?? 0,
+      startTime: startTime || "09:00",
+      dinnerTime: dinnerTime || "20:00",
     });
 
     const durationDays = itinerary.days.length;

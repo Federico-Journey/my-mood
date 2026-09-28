@@ -1,7 +1,7 @@
 "use client";
 
 import { TRAVEL_THEMES, ELLY_COLORS } from "@/lib/travelData";
-import { PinIcon, UsersIcon, CalendarIcon, CompassIcon, WalletIcon } from "@/components/EllyIcons";
+import { PinIcon, UsersIcon, CalendarIcon, CompassIcon, WalletIcon, ClockIcon } from "@/components/EllyIcons";
 
 type Props = {
   destination: string;
@@ -10,6 +10,10 @@ type Props = {
   endDate: string | null;
   themes: string[];
   budgetPerPerson: number;
+  startTime: string;
+  dinnerTime: string;
+  onStartTimeChange: (t: string) => void;
+  onDinnerTimeChange: (t: string) => void;
   onEdit: () => void;
   onGenerate: () => void;
 };
@@ -29,7 +33,8 @@ function nightsBetween(startIso: string, endIso: string) {
 }
 
 export default function TripSummary({
-  destination, people, startDate, endDate, themes, budgetPerPerson, onEdit, onGenerate,
+  destination, people, startDate, endDate, themes, budgetPerPerson,
+  startTime, dinnerTime, onStartTimeChange, onDinnerTimeChange, onEdit, onGenerate,
 }: Props) {
   const dateLabel = startDate && endDate ? `${formatDate(startDate)} → ${formatDate(endDate)}` : "—";
   const nights = startDate && endDate ? nightsBetween(startDate, endDate) : null;
@@ -104,7 +109,7 @@ export default function TripSummary({
             </div>
           </div>
 
-          <div className="flex items-start gap-3.5 p-4">
+          <div className="flex items-start gap-3.5 p-4" style={{ borderBottom: `1px solid ${C.border}` }}>
             <div className="w-[34px] h-[34px] rounded-[9px] flex items-center justify-center shrink-0" style={{ background: C.bg, color: C.accent }}>
               <WalletIcon size={16} />
             </div>
@@ -112,6 +117,39 @@ export default function TripSummary({
               <div className="text-[11px] uppercase tracking-[.3px] mb-0.5" style={{ color: C.textMuted }}>Budget a persona</div>
               <div className="text-[14.5px] font-bold">
                 €{budgetPerPerson.toLocaleString("it-IT")} · totale gruppo €{(budgetPerPerson * people).toLocaleString("it-IT")}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3.5 p-4">
+            <div className="w-[34px] h-[34px] rounded-[9px] flex items-center justify-center shrink-0" style={{ background: C.bg, color: C.accent }}>
+              <ClockIcon size={16} />
+            </div>
+            <div className="flex-1">
+              <div className="text-[11px] uppercase tracking-[.3px] mb-1.5" style={{ color: C.textMuted }}>
+                Orari indicativi (media per tutto il viaggio)
+              </div>
+              <div className="flex gap-4 flex-wrap">
+                <label className="flex items-center gap-2">
+                  <span className="text-[12.5px]" style={{ color: C.textMuted }}>Inizio giornata</span>
+                  <input
+                    type="time"
+                    value={startTime}
+                    onChange={(e) => onStartTimeChange(e.target.value)}
+                    className="text-[14px] font-bold px-2 py-1 rounded-lg outline-none"
+                    style={{ background: C.bg, border: `1.3px solid ${C.border}`, color: C.text }}
+                  />
+                </label>
+                <label className="flex items-center gap-2">
+                  <span className="text-[12.5px]" style={{ color: C.textMuted }}>Cena</span>
+                  <input
+                    type="time"
+                    value={dinnerTime}
+                    onChange={(e) => onDinnerTimeChange(e.target.value)}
+                    className="text-[14px] font-bold px-2 py-1 rounded-lg outline-none"
+                    style={{ background: C.bg, border: `1.3px solid ${C.border}`, color: C.text }}
+                  />
+                </label>
               </div>
             </div>
           </div>

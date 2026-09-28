@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
       tripId,
       currentTrip,
       feedback,
-      destination, people, startDate, endDate, themes, budgetPerPerson,
+      destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime,
     } = body as {
       tripId?: string | null;
       currentTrip: GeneratedTrip;
@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
     const input: GenerateTripInput = {
       destination, people, startDate: startDate ?? null, endDate: endDate ?? null,
       themes, budgetPerPerson: budgetPerPerson ?? 0,
+      startTime: startTime || "09:00", dinnerTime: dinnerTime || "20:00",
     };
 
     const updatedTrip = await refineTrip(currentTrip, input, feedback.trim());
