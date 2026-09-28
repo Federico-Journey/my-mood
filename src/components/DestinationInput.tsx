@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { DESTINATION_SUGGESTIONS, ELLY_COLORS } from "@/lib/travelData";
-import { PinIcon, RouteIcon } from "@/components/EllyIcons";
 
 type Props = {
   onSelect: (destination: string) => void;
@@ -28,30 +27,20 @@ export default function DestinationInput({ onSelect }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative" style={{ background: C.bg, color: C.text }}>
-      <div
-        className="absolute pointer-events-none"
-        style={{ top: -30, right: -60, width: 220, height: 220, color: C.accent, opacity: 0.11 }}
-      >
-        <RouteIcon size={220} />
-      </div>
-
+    <div className="min-h-screen flex flex-col relative" style={{ background: C.paper, color: C.text }}>
       <div className="flex-1 px-6 pt-16 pb-40 relative z-10">
-        <div className="flex items-start justify-between mb-4">
-          <div
-            className="w-[46px] h-[46px] rounded-full flex items-center justify-center"
-            style={{ border: `1.3px solid ${C.border}`, background: C.bgElev, color: C.accent }}
-          >
-            <PinIcon size={21} />
-          </div>
-          <Link href="/viaggio/i-miei-viaggi" className="text-[12.5px] font-semibold pt-3" style={{ color: C.textMuted }}>
+        <div className="flex items-center justify-between mb-6">
+          <Link href="/" className="text-[13px] font-semibold" style={{ color: C.textMuted }}>
+            ← Home
+          </Link>
+          <Link href="/viaggio/i-miei-viaggi" className="text-[12.5px] font-semibold" style={{ color: C.textMuted }}>
             I miei viaggi
           </Link>
         </div>
         <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
           Passo 1 di 5
         </p>
-        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ color: C.text, fontFamily: "'Fraunces', serif" }}>
+        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ color: C.text, fontFamily: "var(--font-display)" }}>
           Dove vuoi andare?
         </h2>
         <p className="text-sm mb-8 leading-relaxed" style={{ color: C.textMuted }}>

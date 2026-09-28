@@ -1,7 +1,6 @@
 "use client";
 
 import { TRAVEL_THEMES, ELLY_COLORS } from "@/lib/travelData";
-import { PinIcon, UsersIcon, CalendarIcon, CompassIcon, WalletIcon, ClockIcon } from "@/components/EllyIcons";
 
 type Props = {
   destination: string;
@@ -40,27 +39,21 @@ export default function TripSummary({
   const nights = startDate && endDate ? nightsBetween(startDate, endDate) : null;
 
   const rows = [
-    { icon: PinIcon, label: "Destinazione", value: destination || "—" },
-    { icon: UsersIcon, label: "Persone", value: String(people) },
-    { icon: CalendarIcon, label: "Date", value: `${dateLabel}${nights ? ` · ${nights} notti` : ""}` },
+    { label: "Destinazione", value: destination || "—" },
+    { label: "Persone", value: String(people) },
+    { label: "Date", value: `${dateLabel}${nights ? ` · ${nights} notti` : ""}` },
   ];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-screen flex flex-col" style={{ background: C.paper, color: C.text }}>
       <div className="flex-1 px-6 pt-16 pb-40">
         <button onClick={onEdit} className="text-sm mb-6 block" style={{ color: C.textMuted }}>
           ← indietro
         </button>
-        <div
-          className="w-[46px] h-[46px] rounded-full flex items-center justify-center mb-4"
-          style={{ border: `1.3px solid ${C.border}`, background: C.bgElev, color: C.accent }}
-        >
-          <CompassIcon size={21} />
-        </div>
         <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
           Riepilogo
         </p>
-        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "'Fraunces', serif" }}>Il tuo viaggio</h2>
+        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "var(--font-display)" }}>Il tuo viaggio</h2>
         <p className="text-sm mb-8 leading-relaxed" style={{ color: C.textMuted }}>
           Controlla i dettagli prima di generare l&apos;itinerario.
         </p>
@@ -72,12 +65,6 @@ export default function TripSummary({
               className="flex items-start gap-3.5 p-4"
               style={{ borderBottom: i < rows.length - 1 ? `1px solid ${C.border}` : "none" }}
             >
-              <div
-                className="w-[34px] h-[34px] rounded-[9px] flex items-center justify-center shrink-0"
-                style={{ background: C.bg, color: C.accent }}
-              >
-                <row.icon size={16} />
-              </div>
               <div>
                 <div className="text-[11px] uppercase tracking-[.3px] mb-0.5" style={{ color: C.textMuted }}>{row.label}</div>
                 <div className="text-[14.5px] font-bold">{row.value}</div>
@@ -86,9 +73,6 @@ export default function TripSummary({
           ))}
 
           <div className="flex items-start gap-3.5 p-4" style={{ borderBottom: `1px solid ${C.border}` }}>
-            <div className="w-[34px] h-[34px] rounded-[9px] flex items-center justify-center shrink-0" style={{ background: C.bg, color: C.accent }}>
-              <CompassIcon size={16} />
-            </div>
             <div>
               <div className="text-[11px] uppercase tracking-[.3px] mb-0.5" style={{ color: C.textMuted }}>Mood</div>
               <div className="flex gap-1.5 flex-wrap mt-1">
@@ -110,9 +94,6 @@ export default function TripSummary({
           </div>
 
           <div className="flex items-start gap-3.5 p-4" style={{ borderBottom: `1px solid ${C.border}` }}>
-            <div className="w-[34px] h-[34px] rounded-[9px] flex items-center justify-center shrink-0" style={{ background: C.bg, color: C.accent }}>
-              <WalletIcon size={16} />
-            </div>
             <div>
               <div className="text-[11px] uppercase tracking-[.3px] mb-0.5" style={{ color: C.textMuted }}>Budget a persona</div>
               <div className="text-[14.5px] font-bold">
@@ -122,9 +103,6 @@ export default function TripSummary({
           </div>
 
           <div className="flex items-start gap-3.5 p-4">
-            <div className="w-[34px] h-[34px] rounded-[9px] flex items-center justify-center shrink-0" style={{ background: C.bg, color: C.accent }}>
-              <ClockIcon size={16} />
-            </div>
             <div className="flex-1">
               <div className="text-[11px] uppercase tracking-[.3px] mb-1.5" style={{ color: C.textMuted }}>
                 Orari indicativi (media per tutto il viaggio)

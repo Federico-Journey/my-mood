@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS } from "@/lib/travelData";
-import {
-  PinIcon, ForkKnifeIcon, GlassIcon, MuseumIcon, ObeliskIcon,
-  LeafIcon, CompassIcon, MoonIcon, BagIcon, BedIcon,
-} from "@/components/EllyIcons";
 import type { GeneratedTrip, ItineraryActivity } from "@/lib/tripGenerator";
 import { approveTrip } from "@/lib/bookingChecklist";
 
@@ -26,18 +22,11 @@ const CATEGORY_LABEL: Record<ItineraryActivity["category"], string> = {
   altro: "Altro",
 };
 
-const CATEGORY_ICON: Record<ItineraryActivity["category"], React.ComponentType<{ size?: number }>> = {
-  ristorante: ForkKnifeIcon,
-  bar: GlassIcon,
-  museo: MuseumIcon,
-  monumento: ObeliskIcon,
-  natura: LeafIcon,
-  attivita: CompassIcon,
-  vita_notturna: MoonIcon,
-  shopping: BagIcon,
-  alloggio: BedIcon,
-  altro: PinIcon,
-};
+// Foto reali (da Google Places) solo per le categorie dove l'immagine aiuta
+// davvero a scegliere: alloggi, ristoranti, natura/panorami, monumenti.
+// Ogni foto costa una chiamata a Google la prima volta che viene vista,
+// quindi non le mostriamo ovunque.
+const PHOTO_CATEGORIES = new Set<ItineraryActivity["category"]>(["alloggio", "ristorante", "natura", "monumento"]);
 
 const MONTHS_SHORT = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
 function formatDate(iso: string) {
@@ -204,12 +193,15 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
   const noVotes = votes?.filter((v) => v.response === "no") ?? [];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: C.bg, color: C.text }}>
-      <div className="flex-1 px-6 pt-16 pb-32">
+    <div className="min-h-screen flex flex-col" style={{ background: C.paper, color: C.text }}>
+      <div className="flex-1 px-6 pt-12 pb-32">
+        <Link href="/" className="text-[13px] font-semibold inline-block mb-6" style={{ color: C.textMuted }}>
+          ← Home
+        </Link>
         <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
           Il tuo itinerario
         </p>
-        <h2 className="text-[26px] font-bold leading-tight mb-1" style={{ fontFamily: "'Fraunces', serif" }}>
+        <h2 className="text-[26px] font-bold leading-tight mb-1" style={{ fontFamily: "var(--font-display)" }}>
           {trip.title}
         </h2>
         <p className="text-sm mb-4 leading-relaxed" style={{ color: C.textMuted }}>{trip.subtitle}</p>
@@ -301,9 +293,9 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
 
               {votes && votes.length > 0 ? (
                 <div className="flex gap-2 mt-2.5">
-                  <VoteCount emoji="🙋" count={yesVotes.length} names={yesVotes.map((v) => v.voter_name)} />
-                  <VoteCount emoji="🤔" count={maybeVotes.length} names={maybeVotes.map((v) => v.voter_name)} />
-                  <VoteCount emoji="😔" count={noVotes.length} names={noVotes.map((v) => v.voter_name)} />
+                  <VoteCount label="Sì" count={yesVotes.length} names={yesVotes.map((v) => v.voter_name)} />
+                  <VoteCount label="Forse" count={maybeVotes.length} names={maybeVotes.map((v) => v.voter_name)} />
+                  <VoteCount label="No" count={noVotes.length} names={noVotes.map((v) => v.voter_name)} />
                 </div>
               ) : (
                 <p className="text-[12.5px] mt-1.5" style={{ color: C.textMuted }}>
@@ -382,28 +374,20 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                 />
                 <div className="flex flex-col gap-2.5">
                   {day.activities.map((act, i) => {
-                    const CategoryIcon = CATEGORY_ICON[act.category];
+                    const showPhoto = PHOTO_CATEGORIES.has(act.category) && !!act.photo_url;
                     return (
                     <div key={i} className="flex gap-3">
-                      <div className="relative z-10 w-6 shrink-0 flex justify-center pt-3">
+                      <div className="relative z-10 w-6 shrink-0 flex justify-center pt-4">
                         <div
-                          className="w-6 h-6 rounded-full flex items-center justify-center"
-                          style={{ background: C.accent, color: "#fff", boxShadow: `0 0 0 3px ${C.bg}` }}
-                        >
-                          <CategoryIcon size={13} />
-                        </div>
+                          className="w-2.5 h-2.5 rounded-full"
+                          style={{ background: C.accent, boxShadow: `0 0 0 3px ${C.bg}` }}
+                        />
                       </div>
                       <div
                         className="flex-1 rounded-xl p-3.5"
                         style={{ background: C.bgElev, border: `1.3px solid ${C.border}` }}
                       >
                         <div className="flex items-start gap-3">
-                          <div
-                            className="w-9 h-9 rounded-[9px] flex items-center justify-center shrink-0"
-                            style={{ background: C.bg, color: C.accent }}
-                          >
-                            <PinIcon size={16} />
-                          </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className="text-[11px] font-bold" style={{ color: C.accent }}>{act.time}</span>
@@ -415,7 +399,7 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                             <p className="text-[13px] mt-1 leading-snug" style={{ color: C.textMuted }}>{act.description}</p>
                             {act.tip && (
                               <p className="text-[12px] mt-1.5 italic leading-snug" style={{ color: C.textMuted }}>
-                                💡 {act.tip}
+                                Consiglio: {act.tip}
                               </p>
                             )}
                             <div className="flex items-center gap-3 flex-wrap mt-2">
@@ -442,6 +426,15 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                               )}
                             </div>
                           </div>
+                          {showPhoto && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={act.photo_url!}
+                              alt={act.name}
+                              loading="lazy"
+                              className="w-[72px] h-[72px] rounded-lg object-cover shrink-0"
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -469,7 +462,7 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
               className="flex-1 px-3 py-2.5 rounded-xl font-semibold text-[12.5px]"
               style={{ background: C.bgElev, border: `1.3px solid ${C.border}`, color: C.text }}
             >
-              😌 Meno attività, più relax
+              Meno attività, più relax
             </button>
             <button
               onClick={handleMoreActivities}
@@ -477,7 +470,7 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
               className="flex-1 px-3 py-2.5 rounded-xl font-semibold text-[12.5px]"
               style={{ background: C.bgElev, border: `1.3px solid ${C.border}`, color: C.text }}
             >
-              ⚡ Più attività
+              Più attività
             </button>
           </div>
 
@@ -556,12 +549,12 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
   );
 }
 
-function VoteCount({ emoji, count, names }: { emoji: string; count: number; names: string[] }) {
+function VoteCount({ label, count, names }: { label: string; count: number; names: string[] }) {
   if (count === 0) return null;
   return (
     <div className="flex-1 rounded-lg py-2 px-2 text-center" style={{ background: C.bg, border: `1.3px solid ${C.border}` }}>
-      <p className="text-[16px] mb-0.5">{emoji}</p>
-      <p className="font-bold text-[15px] mb-0.5">{count}</p>
+      <p className="font-bold text-[18px] leading-none" style={{ fontFamily: "var(--font-display)" }}>{count}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[.06em] mt-1" style={{ color: C.accent }}>{label}</p>
       <p className="text-[10px] truncate" style={{ color: C.textMuted }}>
         {names.slice(0, 2).join(", ")}{names.length > 2 ? ` +${names.length - 2}` : ""}
       </p>

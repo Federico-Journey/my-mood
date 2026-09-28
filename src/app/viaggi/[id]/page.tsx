@@ -129,7 +129,7 @@ export default function ChecklistPage() {
   const pct = items.length > 0 ? Math.round((done / items.length) * 100) : 0;
 
   return (
-    <div className="min-h-screen" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-screen" style={{ background: C.paper, color: C.text }}>
       <div className="max-w-[560px] mx-auto px-6 pt-12 pb-24">
         <Link href="/viaggi" className="text-[13px] font-semibold inline-block mb-6" style={{ color: C.textMuted }}>
           ← Viaggi

@@ -15,9 +15,9 @@ const CONTROLLER_NAME = '[Nome o ragione sociale del titolare]';
 
 export default function PrivacyPage() {
   return (
-    <main style={{ minHeight: '100vh', background: C.bg, color: C.text, fontFamily: '"DM Sans", sans-serif' }}>
+    <main style={{ minHeight: '100vh', background: C.paper, color: C.text, fontFamily: "var(--font-body)" }}>
       <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Figtree:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
 
@@ -39,7 +39,7 @@ export default function PrivacyPage() {
           <strong>⚠️ Questa è una bozza, non ancora valida.</strong> È riscritta sui dati che Elly tratta davvero (prima era basata su My Mood), ma contiene ancora dei placeholder da completare — nome del titolare, email di contatto — e non ha ricevuto una revisione legale. Non pubblicarla come informativa definitiva finché non l&apos;hai fatta controllare da un professionista.
         </div>
 
-        <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(28px, 6vw, 38px)', fontWeight: 700, marginBottom: '8px', letterSpacing: '-0.01em' }}>
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 6vw, 38px)', fontWeight: 700, marginBottom: '8px', letterSpacing: '-0.01em' }}>
           Informativa sulla Privacy
         </h1>
         <p style={{ color: C.textMuted, fontSize: '14px', marginBottom: '6px' }}>
@@ -200,7 +200,7 @@ export default function PrivacyPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section style={{ marginBottom: '38px' }}>
-      <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: '18px', fontWeight: 600, marginBottom: '14px', color: C.text }}>
+      <h2 style={{ fontFamily: "var(--font-display)", fontSize: '18px', fontWeight: 600, marginBottom: '14px', color: C.text }}>
         {title}
       </h2>
       {children}

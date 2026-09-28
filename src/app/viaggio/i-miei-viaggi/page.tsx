@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS, TRAVEL_THEMES } from "@/lib/travelData";
 import { CompassIcon, CalendarIcon } from "@/components/EllyIcons";
 import type { User } from "@supabase/supabase-js";
+import AppPage from "@/components/AppPage";
 
 const C = ELLY_COLORS;
 
@@ -54,17 +55,12 @@ export default function IMieiViaggiPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: C.bg, color: C.text }}>
-      <div className="max-w-[560px] mx-auto px-6 pt-12 pb-24">
-        {/* Header */}
-        <Link href="/viaggio" className="text-[13px] font-semibold inline-block mb-6" style={{ color: C.textMuted }}>
-          ← Nuovo viaggio
-        </Link>
-
-        <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
+    <AppPage>
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-[.1em] pt-5" style={{ color: C.textMuted }}>
           I tuoi itinerari
         </p>
-        <h1 className="text-[26px] font-bold leading-tight mb-1" style={{ fontFamily: "'Fraunces', serif" }}>
+        <h1 className="text-[26px] font-medium leading-tight mt-1 mb-1">
           I miei viaggi
         </h1>
         {user && (
@@ -168,7 +164,7 @@ export default function IMieiViaggiPage() {
                           className="text-[11px] px-2 py-0.5 rounded-full"
                           style={{ background: C.accentSoft, color: C.accent }}
                         >
-                          {t.emoji} {t.label}
+                          {t.label}
                         </span>
                       ))}
                     </div>
@@ -190,18 +186,7 @@ export default function IMieiViaggiPage() {
           </div>
         )}
 
-        {!loading && user && (
-          <div className="text-center mt-10">
-            <button
-              onClick={() => supabase.auth.signOut().then(() => setUser(null))}
-              className="text-[12px]"
-              style={{ color: C.disabledText, background: "none", border: "none" }}
-            >
-              Esci dall&apos;account
-            </button>
-          </div>
-        )}
       </div>
-    </div>
+    </AppPage>
   );
 }

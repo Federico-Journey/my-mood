@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ELLY_COLORS } from "@/lib/travelData";
-import { UsersIcon } from "@/components/EllyIcons";
 
 type Props = {
   initialPeople?: number;
@@ -25,21 +24,15 @@ export default function PeopleStepper({ initialPeople = 2, onSelect, onBack }: P
   const change = (delta: number) => setPeople((p) => Math.max(1, Math.min(16, p + delta)));
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-screen flex flex-col" style={{ background: C.paper, color: C.text }}>
       <div className="flex-1 px-6 pt-16 pb-40">
         <button onClick={onBack} className="text-sm mb-6 block" style={{ color: C.textMuted }}>
           ← indietro
         </button>
-        <div
-          className="w-[46px] h-[46px] rounded-full flex items-center justify-center mb-4"
-          style={{ border: `1.3px solid ${C.border}`, background: C.bgElev, color: C.accent }}
-        >
-          <UsersIcon size={21} />
-        </div>
         <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
           Passo 2 di 5
         </p>
-        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "'Fraunces', serif" }}>
+        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "var(--font-display)" }}>
           Con quante persone parti?
         </h2>
         <p className="text-sm mb-8 leading-relaxed" style={{ color: C.textMuted }}>
@@ -55,7 +48,7 @@ export default function PeopleStepper({ initialPeople = 2, onSelect, onBack }: P
           >
             –
           </button>
-          <div className="text-[48px] font-semibold min-w-[80px] text-center" style={{ fontFamily: "'Fraunces', serif" }}>{people}</div>
+          <div className="text-[48px] font-semibold min-w-[80px] text-center" style={{ fontFamily: "var(--font-display)" }}>{people}</div>
           <button
             onClick={() => change(1)}
             className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-semibold"

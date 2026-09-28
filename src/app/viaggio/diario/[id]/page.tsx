@@ -70,7 +70,7 @@ export default function DiarioViaggioPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: C.bg, color: C.textMuted }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: C.paper, color: C.textMuted }}>
         Carico il diario di viaggio…
       </div>
     );
@@ -78,7 +78,7 @@ export default function DiarioViaggioPage() {
 
   if (notFound || !trip) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: C.bg, color: C.text }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: C.paper, color: C.text }}>
         <p>Viaggio non trovato.</p>
         <Link href="/viaggio" style={{ color: C.accent }}>← Torna a Elly</Link>
       </div>
@@ -94,7 +94,7 @@ export default function DiarioViaggioPage() {
     .find((a) => a.photo_url)?.photo_url ?? null;
 
   return (
-    <div style={{ background: C.bg, color: C.text }}>
+    <div style={{ background: C.paper, color: C.text }}>
       {/* Barra azioni — nascosta in stampa */}
       <div
         className="print:hidden sticky top-0 z-50 flex items-center justify-between px-6 py-3"
@@ -133,7 +133,7 @@ export default function DiarioViaggioPage() {
           <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
             {trip.destination_name} · Diario di viaggio
           </p>
-          <h1 className="text-[34px] font-bold leading-tight mb-2" style={{ fontFamily: "'Fraunces', serif" }}>
+          <h1 className="text-[34px] font-bold leading-tight mb-2" style={{ fontFamily: "var(--font-display)" }}>
             {trip.title}
           </h1>
           {trip.subtitle && (
@@ -146,7 +146,7 @@ export default function DiarioViaggioPage() {
             <span>{trip.duration_days} giorni</span>
             {themeChips.map((t) => (
               <span key={t.id} className="px-2 py-0.5 rounded-full" style={{ background: C.accentSoft, color: C.accent }}>
-                {t.emoji} {t.label}
+                {t.label}
               </span>
             ))}
           </div>
@@ -178,7 +178,7 @@ export default function DiarioViaggioPage() {
                 </span>
                 {day.date && <span className="text-[13px]" style={{ color: C.textMuted }}>{formatDateShort(day.date)}</span>}
               </div>
-              <h2 className="text-[19px] font-bold mb-4" style={{ fontFamily: "'Fraunces', serif" }}>{day.title}</h2>
+              <h2 className="text-[19px] font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>{day.title}</h2>
 
               <div className="flex flex-col gap-4">
                 {day.activities.map((act, i) => (
@@ -203,10 +203,10 @@ export default function DiarioViaggioPage() {
                       </div>
                       <p className="text-[13.5px] mt-1.5 leading-relaxed" style={{ color: C.textMuted }}>{act.description}</p>
                       {act.tip && (
-                        <p className="text-[12.5px] mt-1.5 italic leading-relaxed" style={{ color: C.textMuted }}>💡 {act.tip}</p>
+                        <p className="text-[12.5px] mt-1.5 italic leading-relaxed" style={{ color: C.textMuted }}>Consiglio: {act.tip}</p>
                       )}
                       <div className="flex items-center gap-3 flex-wrap mt-2 text-[12.5px]" style={{ color: C.textMuted }}>
-                        {act.address && <span>📍 {act.address}</span>}
+                        {act.address && <span>{act.address}</span>}
                         {act.estimated_cost_per_person !== null && (
                           <span className="font-semibold" style={{ color: C.text }}>
                             {act.estimated_cost_per_person === 0 ? "Gratuito" : `~€${act.estimated_cost_per_person} a persona`}

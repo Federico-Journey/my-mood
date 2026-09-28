@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS } from "@/lib/travelData";
+import AppPage from "@/components/AppPage";
 
 const C = ELLY_COLORS;
 
@@ -66,15 +67,12 @@ export default function ViaggiPage() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: C.bg, color: C.text }}>
-      <div className="max-w-[560px] mx-auto px-6 pt-12 pb-24">
-        <Link href="/viaggio/i-miei-viaggi" className="text-[13px] font-semibold inline-block mb-6" style={{ color: C.textMuted }}>
-          ← Tutti i miei viaggi
-        </Link>
-        <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
+    <AppPage>
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-[.1em] pt-5" style={{ color: C.textMuted }}>
           Si parte
         </p>
-        <h1 className="text-[26px] font-bold leading-tight mb-2">Viaggi confermati</h1>
+        <h1 className="text-[26px] font-medium leading-tight mt-1 mb-2">Viaggi confermati</h1>
         <p className="text-[13.5px] mb-8 leading-relaxed" style={{ color: C.textMuted }}>
           Tocca un viaggio per vedere cosa resta da prenotare.
         </p>
@@ -156,7 +154,15 @@ export default function ViaggiPage() {
             })}
           </div>
         )}
+
+        {status === "ready" && (
+          <p className="text-center text-[13px] pt-8">
+            <Link href="/viaggio/i-miei-viaggi" className="font-semibold" style={{ color: C.accent }}>
+              Tutti i viaggi salvati →
+            </Link>
+          </p>
+        )}
       </div>
-    </div>
+    </AppPage>
   );
 }

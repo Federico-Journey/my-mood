@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS } from "@/lib/travelData";
-import { CompassIcon } from "@/components/EllyIcons";
+import { EllyMark } from "@/components/EllyLogo";
 
 const C = ELLY_COLORS;
 
@@ -60,19 +60,16 @@ export default function OnboardingPage() {
     });
     setLoading(false);
     const redirectParam = getRedirectParam();
-    router.push(redirectParam || "/viaggio");
+    router.push(redirectParam || "/");
   };
 
   return (
-    <main style={{ minHeight: "100vh", position: "relative", overflow: "hidden", background: C.bg, color: C.text, fontFamily: '"DM Sans", sans-serif' }}>
+    <main style={{ minHeight: "100vh", position: "relative", overflow: "hidden", background: C.paper, color: C.text, fontFamily: "var(--font-body)" }}>
       <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Figtree:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
 
-      <div style={{ position: "absolute", top: -50, right: -70, width: 260, height: 260, color: C.accent, opacity: 0.07, pointerEvents: "none" }}>
-        <CompassIcon size={260} />
-      </div>
 
       <div style={{
         position: "relative", zIndex: 1, minHeight: "100vh",
@@ -82,11 +79,11 @@ export default function OnboardingPage() {
       }}>
 
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: C.accent, margin: "0 0 12px" }}>
-            Elly
-          </p>
+          <div style={{ display: "flex", justifyContent: "center", margin: "0 0 18px" }}>
+            <EllyMark size={40} />
+          </div>
           <h1 style={{
-            fontFamily: "'Fraunces', serif", fontWeight: 600,
+            fontFamily: "var(--font-display)", fontWeight: 600,
             fontSize: "32px", letterSpacing: "-0.01em", lineHeight: 1.15,
             color: C.text, margin: "0 0 10px",
           }}>

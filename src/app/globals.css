@@ -13,14 +13,20 @@
   --color-dark-card: #1a1025;
 }
 
-/* Base styles */
+/* Base styles — stile "cartografico" di Elly */
+:root {
+  --font-display: 'Outfit', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+}
 body {
-  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(160deg, #07070e 0%, #0f0a1c 45%, #080812 100%);
-  background-attachment: fixed;
-  background-color: #07070e;
-  color: white;
+  font-family: var(--font-body);
+  background-color: #FBFAF7;
+  color: #22201F;
   min-height: 100vh;
+}
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
 }
 
 /* Hide scrollbar globally */
@@ -130,7 +136,7 @@ body {
   100% { opacity: 0; transform: scale(3.6); }
 }
 .elly-splash-word {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: 0.06em;
   color: #FFFFFF;

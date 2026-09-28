@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ELLY_COLORS } from "@/lib/travelData";
-import { WalletIcon } from "@/components/EllyIcons";
 
 type Props = {
   people: number;
@@ -31,27 +30,21 @@ export default function TravelBudgetSelector({ people, initialBudget = 700, onSe
   const [budget, setBudget] = useState(initialBudget);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-screen flex flex-col" style={{ background: C.paper, color: C.text }}>
       <div className="flex-1 px-6 pt-16 pb-40">
         <button onClick={onBack} className="text-sm mb-6 block" style={{ color: C.textMuted }}>
           ← indietro
         </button>
-        <div
-          className="w-[46px] h-[46px] rounded-full flex items-center justify-center mb-4"
-          style={{ border: `1.3px solid ${C.border}`, background: C.bgElev, color: C.accent }}
-        >
-          <WalletIcon size={21} />
-        </div>
         <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
           Passo 5 di 5
         </p>
-        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "'Fraunces', serif" }}>Budget a persona</h2>
+        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "var(--font-display)" }}>Budget a persona</h2>
         <p className="text-sm mb-2 leading-relaxed" style={{ color: C.textMuted }}>
           Per l&apos;intero viaggio, a persona — voli esclusi.
         </p>
 
         <div className="text-center my-9">
-          <div className="text-[40px] font-semibold" style={{ fontFamily: "'Fraunces', serif" }}>
+          <div className="text-[40px] font-semibold" style={{ fontFamily: "var(--font-display)" }}>
             €{budget.toLocaleString("it-IT")}{budget >= 3000 ? "+" : ""}
           </div>
           <div className="text-[12px]" style={{ color: C.textMuted }}>a persona per l&apos;intero viaggio</div>

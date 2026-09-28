@@ -2,18 +2,10 @@
 
 import { useState } from "react";
 import { TRAVEL_THEMES, ELLY_COLORS, type Theme } from "@/lib/travelData";
-import { MountainIcon, ShieldIcon, RoadIcon, WaveIcon, MuseumIcon, CompassIcon, CheckIcon } from "@/components/EllyIcons";
+import { CheckIcon } from "@/components/EllyIcons";
 
 const MAX_THEMES = 3;
 const C = ELLY_COLORS;
-
-const ICON_BY_ID: Record<string, typeof MountainIcon> = {
-  adventure: MountainIcon,
-  history_war: ShieldIcon,
-  on_the_road: RoadIcon,
-  relax: WaveIcon,
-  cultural: MuseumIcon,
-};
 
 type Props = {
   onSelect: (themeIds: string[]) => void;
@@ -35,21 +27,15 @@ export default function ThemeSelector({ onSelect, onBack }: Props) {
   const atMax = selected.length >= MAX_THEMES;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-screen flex flex-col" style={{ background: C.paper, color: C.text }}>
       <div className="flex-1 px-6 pt-16 pb-40">
         <button onClick={onBack} className="text-sm mb-6 block" style={{ color: C.textMuted }}>
           ← indietro
         </button>
-        <div
-          className="w-[46px] h-[46px] rounded-full flex items-center justify-center mb-4"
-          style={{ border: `1.3px solid ${C.border}`, background: C.bgElev, color: C.accent }}
-        >
-          <CompassIcon size={21} />
-        </div>
         <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
           Passo 4 di 5
         </p>
-        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "'Fraunces', serif" }}>Che mood ha questo viaggio?</h2>
+        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "var(--font-display)" }}>Che mood ha questo viaggio?</h2>
         <p className="text-sm mb-6 leading-relaxed" style={{ color: C.textMuted }}>
           Scegli fino a {MAX_THEMES} temi — definiscono lo stile dell&apos;itinerario.
         </p>
@@ -58,7 +44,6 @@ export default function ThemeSelector({ onSelect, onBack }: Props) {
           {TRAVEL_THEMES.map((theme: Theme) => {
             const isSelected = selected.includes(theme.id);
             const isDisabled = atMax && !isSelected;
-            const Icon = ICON_BY_ID[theme.icon] ?? MountainIcon;
             return (
               <button
                 key={theme.id}
@@ -71,12 +56,6 @@ export default function ThemeSelector({ onSelect, onBack }: Props) {
                   opacity: isDisabled ? 0.4 : 1,
                 }}
               >
-                <div
-                  className="w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0"
-                  style={{ background: isSelected ? "#fff" : C.bg, color: isSelected ? C.accent : C.textMuted }}
-                >
-                  <Icon size={19} />
-                </div>
                 <div className="flex-1 min-w-0">
                   <span className="font-bold text-[14.5px] block leading-tight">{theme.label}</span>
                   <span className="text-[12px] mt-0.5 block leading-snug" style={{ color: C.textMuted }}>

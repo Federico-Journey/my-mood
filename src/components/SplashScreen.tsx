@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { EllyMark } from "@/components/EllyLogo";
 
 // Sfondo dello splash: "Vino", lo stesso accent della palette "Vino e Pietra" di Elly
 // (#7A3348) — coerente con l'icona dell'app e con il resto del brand.
@@ -38,11 +39,12 @@ export default function SplashScreen() {
       style={{ background: SPLASH_BG }}
     >
       <span
-        className={`elly-splash-word ${
+        className={`elly-splash-word flex flex-col items-center gap-3 ${
           phase === "in" ? "elly-splash-word-in" : "elly-splash-word-zoom"
         }`}
       >
-        ELLY
+        <EllyMark size={72} color="#FFFFFF" needle={SPLASH_BG} />
+        elly
       </span>
     </div>
   );

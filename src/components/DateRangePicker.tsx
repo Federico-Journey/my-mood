@@ -2,7 +2,6 @@
 
 import { useState, type CSSProperties } from "react";
 import { ELLY_COLORS } from "@/lib/travelData";
-import { CalendarIcon } from "@/components/EllyIcons";
 
 type Props = {
   onSelect: (startDate: string, endDate: string) => void;
@@ -81,21 +80,15 @@ export default function DateRangePicker({ onSelect, onBack }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-screen flex flex-col" style={{ background: C.paper, color: C.text }}>
       <div className="flex-1 px-6 pt-16 pb-40">
         <button onClick={onBack} className="text-sm mb-6 block" style={{ color: C.textMuted }}>
           ← indietro
         </button>
-        <div
-          className="w-[46px] h-[46px] rounded-full flex items-center justify-center mb-4"
-          style={{ border: `1.3px solid ${C.border}`, background: C.bgElev, color: C.accent }}
-        >
-          <CalendarIcon size={21} />
-        </div>
         <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-2" style={{ color: C.accent }}>
           Passo 3 di 5
         </p>
-        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "'Fraunces', serif" }}>Da quando a quando?</h2>
+        <h2 className="text-[28px] font-semibold leading-tight mb-2" style={{ fontFamily: "var(--font-display)" }}>Da quando a quando?</h2>
         <p className="text-sm mb-8 leading-relaxed" style={{ color: C.textMuted }}>
           Seleziona la data di partenza e quella di ritorno.
         </p>

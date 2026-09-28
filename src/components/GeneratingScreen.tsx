@@ -13,7 +13,7 @@ type Props = {
 
 export default function GeneratingScreen({ error, onRetry, onBack }: Props) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: C.paper, color: C.text }}>
       <div
         className="w-16 h-16 rounded-full flex items-center justify-center mb-6"
         style={{ border: `1.3px solid ${C.border}`, background: C.bgElev, color: C.accent }}

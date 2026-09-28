@@ -15,9 +15,9 @@ const LEGAL_EMAIL = 'info@planwithelly.com';
 
 export default function TermsPage() {
   return (
-    <main style={{ minHeight: '100vh', background: C.bg, color: C.text, fontFamily: '"DM Sans", sans-serif' }}>
+    <main style={{ minHeight: '100vh', background: C.paper, color: C.text, fontFamily: "var(--font-body)" }}>
       <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Figtree:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
 
@@ -39,7 +39,7 @@ export default function TermsPage() {
           <strong>⚠️ Questa è una bozza, non ancora valida.</strong> È riscritta su ciò che Elly fa davvero (prima era basata su My Mood), ma contiene ancora dei placeholder da completare — email di contatto — e non ha ricevuto una revisione legale. Non pubblicarla come termini definitivi finché non l&apos;hai fatta controllare da un professionista.
         </div>
 
-        <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(28px, 6vw, 38px)', fontWeight: 700, marginBottom: '8px', letterSpacing: '-0.01em' }}>
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 6vw, 38px)', fontWeight: 700, marginBottom: '8px', letterSpacing: '-0.01em' }}>
           Termini di Servizio
         </h1>
         <p style={{ color: C.textMuted, fontSize: '14px', marginBottom: '44px' }}>
@@ -235,7 +235,7 @@ export default function TermsPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section style={{ marginBottom: '38px' }}>
-      <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: '18px', fontWeight: 600, marginBottom: '14px', color: C.text }}>
+      <h2 style={{ fontFamily: "var(--font-display)", fontSize: '18px', fontWeight: 600, marginBottom: '14px', color: C.text }}>
         {title}
       </h2>
       {children}

@@ -27,16 +27,26 @@ export type Traveler = {
 export const ELLY_ACCENT = "#7A3348";
 
 export const ELLY_COLORS = {
-  bg: "#F1ECE7",
+  // Stile "cartografico": carta chiara, inchiostro caldo, accento vino.
+  bg: "#FBFAF7",
   bgElev: "#FFFFFF",
-  text: "#241C1A",
-  textMuted: "#8A7D77",
-  border: "#E2D8D1",
+  text: "#22201F",
+  textMuted: "#7C746F",
+  border: "#E7E1DA",
   accent: "#7A3348",
-  accentSoft: "rgba(122,51,72,0.09)",
-  accentSoft2: "rgba(122,51,72,0.16)",
-  disabledBg: "#E8E0D9",
-  disabledText: "#B3A69F",
+  accentSoft: "rgba(122,51,72,0.08)",
+  accentSoft2: "rgba(122,51,72,0.15)",
+  disabledBg: "#EEE9E3",
+  disabledText: "#B5ABA4",
+  // Sfondo pagina completo: colore carta + curve di livello appena visibili.
+  // Da usare solo come "background" dei contenitori di pagina, non come colore.
+  paper: `#FBFAF7 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%237A3348' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M40 180c0-66 56-122 134-122s146 44 146 116-66 128-146 128S40 246 40 180z'/%3E%3Cpath d='M74 180c0-50 44-92 102-92s112 34 112 90-50 98-112 98S74 230 74 180z'/%3E%3Cpath d='M108 182c0-34 32-62 70-62s76 24 76 62-36 66-76 66-70-32-70-66z'/%3E%3Cpath d='M142 184c0-19 18-34 40-34s40 14 40 34-20 36-40 36-40-17-40-36z'/%3E%3Cpath d='M-20 40c46-22 100-12 146 12s112 22 180-12 94-22 94-22'/%3E%3Cpath d='M-20 330c56 12 112-12 168-6s124 28 232-6'/%3E%3C/g%3E%3C/svg%3E") center top / 360px repeat`,
+} as const;
+
+/** Font del nuovo stile (caricati in src/app/layout.tsx). */
+export const ELLY_FONTS = {
+  display: "var(--font-display)",
+  body: "var(--font-body)",
 } as const;
 
 // ── Suggerimenti destinazione (per l'autocomplete) ────────────────

@@ -88,12 +88,12 @@ export default function AdminReportPage() {
   }, [loadData]);
 
   if (status === "loading") {
-    return <div className="min-h-screen flex items-center justify-center" style={{ background: C.bg, color: C.textMuted }}>Caricamento…</div>;
+    return <div className="min-h-screen flex items-center justify-center" style={{ background: C.paper, color: C.textMuted }}>Caricamento…</div>;
   }
 
   if (status === "denied") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: C.bg, color: C.text }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: C.paper, color: C.text }}>
         <p>Non hai accesso a questa pagina.</p>
         <Link href="/auth" className="underline" style={{ color: C.accent }}>Accedi</Link>
       </div>
