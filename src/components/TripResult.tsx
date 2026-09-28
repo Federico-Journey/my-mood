@@ -108,9 +108,8 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
     }
   };
 
-  const handleSend = async () => {
-    const text = input.trim();
-    if (!text || sending) return;
+  const sendFeedback = async (text: string) => {
+    if (!text.trim() || sending) return;
     setMessages((prev) => [...prev, { role: "user", text }]);
     setInput("");
     setSending(true);
@@ -127,6 +126,18 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
       setSending(false);
     }
   };
+
+  const handleSend = () => sendFeedback(input.trim());
+
+  const handleFewerActivities = () =>
+    sendFeedback(
+      "Riduci leggermente il numero di attività per ogni giorno (togli circa una attività a giornata, dando priorità a quelle meno importanti), lasciando più tempo libero e un ritmo più rilassato. Non cambiare altro."
+    );
+
+  const handleMoreActivities = () =>
+    sendFeedback(
+      "Aggiungi circa una attività in più per ogni giorno, mantenendo comunque un ritmo rilassato e senza riempire ogni fascia oraria. Non cambiare altro."
+    );
 
   const yesVotes = votes?.filter((v) => v.response === "yes") ?? [];
   const maybeVotes = votes?.filter((v) => v.response === "maybe") ?? [];
@@ -313,6 +324,25 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
             Scrivi cosa vuoi cambiare (es. &quot;togli il museo del giorno 2&quot;, &quot;più vita notturna&quot;,
             &quot;il ristorante del giorno 1 è troppo caro&quot;) e aggiorno l&apos;itinerario qui sopra.
           </p>
+
+          <div className="flex gap-2 mb-4">
+            <button
+              onClick={handleFewerActivities}
+              disabled={sending}
+              className="flex-1 px-3 py-2.5 rounded-xl font-semibold text-[12.5px]"
+              style={{ background: C.bgElev, border: `1.3px solid ${C.border}`, color: C.text }}
+            >
+              😌 Meno attività, più relax
+            </button>
+            <button
+              onClick={handleMoreActivities}
+              disabled={sending}
+              className="flex-1 px-3 py-2.5 rounded-xl font-semibold text-[12.5px]"
+              style={{ background: C.bgElev, border: `1.3px solid ${C.border}`, color: C.text }}
+            >
+              ⚡ Più attività
+            </button>
+          </div>
 
           {messages.length > 0 && (
             <div className="flex flex-col gap-2.5 mb-3">

@@ -162,7 +162,7 @@ function buildGeneratePrompt(input: GenerateTripInput, numDays: number): string 
 - Budget indicativo: ${input.budgetPerPerson}€ a persona per l'intero viaggio (~${budgetPerDay}€ a persona al giorno)
 
 Istruzioni:
-- Per ogni giorno proponi 3-5 attività reali (colazione/mattina, pranzo, pomeriggio, cena, eventualmente sera), con orari indicativi.
+- Per ogni giorno proponi AL MASSIMO 5-6 attività reali (pasti principali come pranzo/cena inclusi), con orari indicativi. L'itinerario deve avere un carattere rilassato ("chill"), non un programma incastrato minuto per minuto: lascia respiro tra un'attività e l'altra, senza sentirti obbligato a riempire ogni fascia oraria. È normale e voluto lasciare esplicitamente del tempo libero non strutturato (es. "Pomeriggio libero: relax o passeggiata senza meta") quando la giornata lo permette, invece di aggiungere sempre una tappa in più.
 - Usa nomi SPECIFICI e REALI di luoghi (ristoranti, musei, monumenti, quartieri, attività) coerenti con la destinazione — non nomi generici o inventati. Verranno controllati su Google Maps subito dopo, quindi devono essere posti plausibili e verosimili per quella destinazione.
 - Rispetta il budget indicato: se è basso preferisci street food/trattorie locali/attività gratuite, se è alto includi anche qualche esperienza premium.
 - Rifletti i temi scelti nello stile delle attività proposte (es. se il tema è "storico/bellico" includi musei di guerra, siti storici, memoriali; se è "on the road" struttura le giornate come tappe di un percorso).
