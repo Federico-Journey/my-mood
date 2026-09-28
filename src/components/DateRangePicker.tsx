@@ -100,40 +100,42 @@ export default function DateRangePicker({ onSelect, onBack }: Props) {
           Seleziona la data di partenza e quella di ritorno.
         </p>
 
-        <div className="flex items-center justify-between mb-4">
+        <div className="max-w-[300px] mx-auto">
+        <div className="flex items-center justify-between mb-3">
           <button
             onClick={() => setCursor(new Date(y, m - 1, 1))}
-            className="w-[34px] h-[34px] rounded-lg flex items-center justify-center"
+            className="w-[30px] h-[30px] rounded-lg flex items-center justify-center"
             style={{ background: C.bgElev, border: `1.3px solid ${C.border}` }}
           >
             ‹
           </button>
-          <div className="text-[14px] font-bold capitalize">{MONTHS[m]} {y}</div>
+          <div className="text-[13px] font-bold capitalize">{MONTHS[m]} {y}</div>
           <button
             onClick={() => setCursor(new Date(y, m + 1, 1))}
-            className="w-[34px] h-[34px] rounded-lg flex items-center justify-center"
+            className="w-[30px] h-[30px] rounded-lg flex items-center justify-center"
             style={{ background: C.bgElev, border: `1.3px solid ${C.border}` }}
           >
             ›
           </button>
         </div>
 
-        <div className="grid grid-cols-7 gap-[3px] mb-1.5">
+        <div className="grid grid-cols-7 gap-[2px] mb-1">
           {WEEKDAYS.map((w, i) => (
-            <div key={i} className="text-center text-[11px] font-semibold pb-1.5" style={{ color: C.textMuted }}>{w}</div>
+            <div key={i} className="text-center text-[10px] font-semibold pb-1" style={{ color: C.textMuted }}>{w}</div>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-[3px]">
+        <div className="grid grid-cols-7 gap-[2px]">
           {cells.map((c) => (
             <div
               key={c.key}
               onClick={c.onClick}
-              className="aspect-square flex items-center justify-center text-[13px] font-semibold"
+              className="h-9 flex items-center justify-center text-[12px] font-semibold"
               style={c.style}
             >
               {c.day ?? ""}
             </div>
           ))}
+        </div>
         </div>
 
         <div
