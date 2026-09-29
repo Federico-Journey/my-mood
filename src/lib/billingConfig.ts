@@ -14,7 +14,10 @@ export const PRICES = {
 export const DEFAULT_LIMITS = { monthly: 15, daily: 5, refinements: 30 } as const;
 
 /** Perché un utente loggato è finito sulla versione di prova (restituito da generate/refine). */
-export type Paywall = null | "none" | "limit_month" | "limit_day" | "not_paid";
+export type Paywall = null | "none" | "limit_month" | "limit_day" | "not_paid" | "chosen_base";
+
+/** Come generare: "auto" = decide il server (completo se disponibile), "base" = versione base scelta dall'utente. */
+export type GenerationChoice = "auto" | "base";
 
 export const eur = (n: number) => `${n.toFixed(2).replace(".", ",")} €`;
 

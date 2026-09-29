@@ -12,7 +12,7 @@ import TripSummary from "@/components/TripSummary";
 import GeneratingScreen from "@/components/GeneratingScreen";
 import TripResult from "@/components/TripResult";
 import type { GeneratedTrip, GenerateTripInput } from "@/lib/tripGenerator";
-import type { Paywall } from "@/lib/billingConfig";
+import type { GenerationChoice, Paywall } from "@/lib/billingConfig";
 
 type Screen = "destinazione" | "persone" | "date" | "mood" | "budget" | "riepilogo" | "generando" | "risultato";
 
@@ -31,6 +31,7 @@ export default function ViaggioPage() {
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [loadingSaved, setLoadingSaved] = useState(false);
   const [paywall, setPaywall] = useState<Paywall>(null);
+  const [choice, setChoice] = useState<GenerationChoice>("auto");
 
   const draft = (): GenerateTripInput => ({ destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime });
 
@@ -71,14 +72,15 @@ export default function ViaggioPage() {
   const handleThemes = (t: string[]) => { setThemes(t); setScreen("budget"); };
   const handleBudget = (b: number) => { setBudgetPerPerson(b); setScreen("riepilogo"); };
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (mode: GenerationChoice = choice) => {
+    setChoice(mode);
     setScreen("generando");
     setGenerationError(null);
     try {
       const res = await fetch("/api/trip/generate", {
         method: "POST",
         headers: await authHeaders(),
-        body: JSON.stringify(draft()),
+        body: JSON.stringify({ ...draft(), mode }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -179,7 +181,7 @@ export default function ViaggioPage() {
         <GeneratingScreen
           destination={destination}
           error={generationError}
-          onRetry={handleGenerate}
+          onRetry={() => handleGenerate(choice)}
           onBack={() => setScreen("riepilogo")}
         />
       )}

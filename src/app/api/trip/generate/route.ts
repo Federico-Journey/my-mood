@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime } = body as GenerateTripInput;
+    // body.mode: "base" se l'utente ha scelto la versione base, altrimenti decide il server.
     // Il viaggio viene creato "senza proprietario": resta consultabile con il
     // suo link (condivisione, PDF, voti) ma NON compare nei viaggi dell'utente
     // finche' non preme "Salva" (in quel momento gli viene assegnato).
@@ -18,7 +19,11 @@ export async function POST(request: NextRequest) {
 
     // Versione di prova (archivio aperto, nessuna chiamata a Google) o completa (luoghi verificati):
     // dipende da abbonamento, viaggio gratuito o crediti (vedi src/lib/entitlements.ts).
-    const gate = await reserveGeneration(userId);
+    // L'utente può scegliere la versione base anche se ha viaggi completi disponibili:
+    // in quel caso non consumiamo nulla.
+    const gate = body.mode === "base" && userId
+      ? { mode: "trial" as const, logId: null, source: null, paywall: "chosen_base" as const }
+      : await reserveGeneration(userId);
     const mode = gate.mode;
 
     let generated;

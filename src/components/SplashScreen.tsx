@@ -22,8 +22,8 @@ export default function SplashScreen() {
     }
 
     setVisible(true);
-    const toZoom = setTimeout(() => setPhase("zoom"), 700);
-    const toHide = setTimeout(() => setVisible(false), 700 + 550);
+    const toZoom = setTimeout(() => setPhase("zoom"), 950);
+    const toHide = setTimeout(() => setVisible(false), 950 + 550);
     return () => {
       clearTimeout(toZoom);
       clearTimeout(toHide);
@@ -43,7 +43,7 @@ export default function SplashScreen() {
           phase === "in" ? "elly-splash-word-in" : "elly-splash-word-zoom"
         }`}
       >
-        <EllyMark size={72} color="#FFFFFF" needle={SPLASH_BG} />
+        <EllyMark size={84} color="#FBFAF7" needle={SPLASH_BG} animated className="elly-mark-drop" />
         elly
       </span>
     </div>

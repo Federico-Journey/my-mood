@@ -1,6 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
 import { TRAVEL_THEMES, ELLY_COLORS } from "@/lib/travelData";
+import { useBillingStatus } from "@/lib/useBillingStatus";
+import type { GenerationChoice, LoggedBilling } from "@/lib/billingConfig";
 
 type Props = {
   destination: string;
@@ -14,7 +18,7 @@ type Props = {
   onStartTimeChange: (t: string) => void;
   onDinnerTimeChange: (t: string) => void;
   onEdit: () => void;
-  onGenerate: () => void;
+  onGenerate: (mode: GenerationChoice) => void;
 };
 
 const C = ELLY_COLORS;
@@ -23,6 +27,21 @@ const MONTHS_SHORT = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott
 function formatDate(iso: string) {
   const [y, m, d] = iso.split("-").map(Number);
   return `${d} ${MONTHS_SHORT[m - 1]} ${y}`;
+}
+
+/**
+ * Da dove arriverebbe il viaggio completo (stesso ordine del server: abbonamento → viaggio
+ * gratuito → crediti). null = niente disponibile, quindi si genera la versione base.
+ */
+function fullSource(s: LoggedBilling): string | null {
+  const sub = s.subscription;
+  if (sub?.active && sub.used_month < s.limits.monthly && sub.used_day < s.limits.daily) {
+    const left = s.limits.monthly - sub.used_month;
+    return `Incluso nell'abbonamento · ${left === 1 ? "te ne resta 1" : `te ne restano ${left}`} questo mese`;
+  }
+  if (s.free_left > 0) return "Usa il tuo viaggio gratuito";
+  if (s.credits > 0) return `Usa 1 viaggio acquistato · ${s.credits === 1 ? "ne hai 1" : `ne hai ${s.credits}`}`;
+  return null;
 }
 
 function nightsBetween(startIso: string, endIso: string) {
@@ -35,6 +54,12 @@ export default function TripSummary({
   destination, people, startDate, endDate, themes, budgetPerPerson,
   startTime, dinnerTime, onStartTimeChange, onDinnerTimeChange, onEdit, onGenerate,
 }: Props) {
+  const { status } = useBillingStatus();
+  const billing = status?.enabled && status.loggedIn ? status : null;
+  const source = billing ? fullSource(billing) : null;
+  const [pick, setPick] = useState<"full" | "base">("full");
+  const mode: GenerationChoice = source && pick === "base" ? "base" : "auto";
+
   const dateLabel = startDate && endDate ? `${formatDate(startDate)} → ${formatDate(endDate)}` : "—";
   const nights = startDate && endDate ? nightsBetween(startDate, endDate) : null;
 
@@ -133,10 +158,49 @@ export default function TripSummary({
           </div>
         </div>
 
-        <p className="text-[12px] text-center leading-relaxed px-2" style={{ color: C.textMuted }}>
-          Il motore di generazione arriva nel prossimo step — da qui l&apos;AI generera&apos; l&apos;itinerario
-          giorno per giorno e lo validera&apos; con dati reali sui luoghi.
-        </p>
+        {billing && source && (
+          <div className="mt-6">
+            <p className="text-[11px] uppercase tracking-[.3px] mb-2" style={{ color: C.textMuted }}>Che viaggio vuoi generare?</p>
+            <div className="grid gap-2.5" role="radiogroup" aria-label="Tipo di viaggio">
+              {([
+                ["full", "Viaggio completo", `Luoghi verificati su Google Maps, foto e modifiche incluse. ${source}.`],
+                ["base", "Versione base · gratis", "Luoghi dal nostro archivio aperto, non verificati. Non usa i tuoi viaggi disponibili."],
+              ] as const).map(([key, title, text]) => {
+                const on = pick === key;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    onClick={() => setPick(key)}
+                    className="text-left rounded-2xl p-4 flex gap-3 items-start"
+                    style={{ background: on ? C.accentSoft : C.bgElev, border: `1.5px solid ${on ? C.accent : C.border}` }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-0.5 w-[18px] h-[18px] rounded-full shrink-0 flex items-center justify-center"
+                      style={{ border: `1.8px solid ${on ? C.accent : C.border}` }}
+                    >
+                      {on && <span className="w-[9px] h-[9px] rounded-full" style={{ background: C.accent }} />}
+                    </span>
+                    <span>
+                      <span className="block text-[14.5px] font-bold">{title}</span>
+                      <span className="block text-[12.5px] leading-snug mt-0.5" style={{ color: C.textMuted }}>{text}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {billing && !source && (
+          <p className="mt-6 rounded-xl px-4 py-3 text-[13px] leading-relaxed" style={{ background: C.accentSoft }}>
+            Verrà generata la <strong>versione base</strong> (luoghi non verificati), perché non hai viaggi completi disponibili.{" "}
+            <Link href="/prezzi" className="font-bold underline" style={{ color: C.accent }}>Vedi i prezzi</Link>
+          </p>
+        )}
       </div>
 
       <div
@@ -147,11 +211,11 @@ export default function TripSummary({
         }}
       >
         <button
-          onClick={onGenerate}
+          onClick={() => onGenerate(mode)}
           className="w-full max-w-[420px] mx-auto block py-4 rounded-xl font-bold text-[15px]"
           style={{ background: C.accent, color: "#fff" }}
         >
-          Genera il viaggio
+          {source ? (pick === "base" ? "Genera la versione base" : "Genera il viaggio completo") : "Genera il viaggio"}
         </button>
       </div>
     </div>

@@ -217,15 +217,19 @@ export default function TripResult({ trip, tripId, paywall = null, onNewTrip, on
 
         {trip.mode === "trial" && (
           <div className="mb-4 rounded-xl px-4 py-3 text-[13px] leading-relaxed" style={{ background: C.accentSoft, color: C.text }}>
-            <strong>Versione di prova.</strong> I luoghi vengono dal nostro archivio aperto e non sono verificati su Google Maps.{" "}
+            <strong>Versione base.</strong> I luoghi vengono dal nostro archivio aperto e non sono verificati su Google Maps.{" "}
             {loggedIn ? (
               <>
-                {paywall === "limit_day"
+                {paywall === "chosen_base"
+                  ? "Hai scelto la versione base: il tuo viaggio completo resta disponibile. Per usarlo, rigenera il viaggio scegliendo «Viaggio completo». "
+                  : paywall === "limit_day"
                   ? "Hai raggiunto il limite di nuovi viaggi di oggi: domani potrai crearne altri con luoghi verificati. "
                   : paywall === "limit_month"
                     ? "Hai usato i viaggi di questo periodo: puoi comprare un viaggio singolo o attendere il rinnovo. "
                     : `Per luoghi verificati scegli un viaggio singolo (${eur(PRICES.tripEur)}) o l'abbonamento mensile (${eur(PRICES.monthlyEur)}). `}
-                <Link href="/prezzi" className="font-bold underline" style={{ color: C.accent }}>Vedi i prezzi</Link>
+                {paywall !== "chosen_base" && (
+                  <Link href="/prezzi" className="font-bold underline" style={{ color: C.accent }}>Vedi i prezzi</Link>
+                )}
               </>
             ) : (
               <>

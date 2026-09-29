@@ -1,34 +1,46 @@
 /**
- * Logo di Elly: un pin da mappa con dentro l'ago di una bussola.
- * E' l'unico simbolo ricorrente dell'app (in alto a sinistra, nel pulsante
- * centrale della barra in basso, nello splash e nell'icona dell'app).
+ * Logo di Elly: un pin da mappa con dentro una rosa dei venti a quattro punte,
+ * con il Nord in ambra ("Rosa dei venti", proposta A).
+ * È il simbolo ricorrente dell'app: in alto a sinistra, nel pulsante centrale della
+ * barra in basso e nello splash. L'icona sul telefono invece è la "E" (public/icon-*.png).
  */
+
+export const ELLY_AMBER = "#F3A34F";
 
 type MarkProps = {
   size?: number;
   /** Colore del pin. */
   color?: string;
-  /** Colore dell'ago e dell'anello interno (di solito lo sfondo). */
+  /** Colore della stella ritagliata (di solito lo sfondo). */
   needle?: string;
+  /** Colore della punta Nord. */
+  accent?: string;
+  /** Anima la stella (usato nello splash). */
+  animated?: boolean;
   className?: string;
   title?: string;
 };
 
-export function EllyMark({ size = 24, color = "#7A3348", needle = "#FFFFFF", className, title }: MarkProps) {
+export function EllyMark({
+  size = 24, color = "#7A3348", needle = "#FFFFFF", accent = ELLY_AMBER, animated = false, className, title,
+}: MarkProps) {
+  const star = animated ? { className: "elly-mark-star", style: { transformBox: "view-box" as const, transformOrigin: "32px 27px" } } : {};
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 32 32"
+      viewBox="0 0 64 64"
       className={className}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
       aria-label={title}
     >
-      <path fill={color} d="M16 2C9.9 2 5 6.9 5 13c0 8.2 11 17 11 17s11-8.8 11-17C27 6.9 22.1 2 16 2z" />
-      <circle cx="16" cy="13" r="7" fill="none" stroke={needle} strokeOpacity={0.55} strokeWidth={1} />
-      <path fill={needle} d="M16 6.8l2.1 6.2h-4.2z" />
-      <path fill={needle} fillOpacity={0.45} d="M13.9 13h4.2L16 19.2z" />
+      <path fill={color} d="M32 4C19.3 4 9 14.3 9 27c0 16.5 23 33 23 33s23-16.5 23-33C55 14.3 44.7 4 32 4z" />
+      <g {...star}>
+        <path fill={needle} d="M32 11L35.2 23.8L48 27L35.2 30.2L32 43L28.8 30.2L16 27L28.8 23.8Z" />
+        <path fill={accent} d="M32 11L35.2 23.8L32 27L28.8 23.8Z" />
+      </g>
+      <circle cx="32" cy="27" r="2.2" fill={color} />
     </svg>
   );
 }
@@ -37,7 +49,7 @@ export function EllyMark({ size = 24, color = "#7A3348", needle = "#FFFFFF", cla
 export function EllyWordmark({ size = 24, color = "#7A3348", textColor = "#22201F" }: { size?: number; color?: string; textColor?: string }) {
   return (
     <span className="inline-flex items-center gap-1.5" aria-label="Elly">
-      <EllyMark size={size} color={color} needle="#FBFAF7" />
+      <EllyMark size={Math.round(size * 1.1)} color={color} needle="#FBFAF7" />
       <span
         style={{
           fontFamily: "var(--font-display)",
