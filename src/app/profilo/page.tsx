@@ -2,7 +2,9 @@
 
 /**
  * Profilo di Elly: dati dell'account, pagamenti (in arrivo, verranno
- * collegati quando sara' definito il prezzo per viaggio) e uscita.
+ * collegati quando sara' definito il prezzo per viaggio), uscita ed
+ * eliminazione dell'account (funzione "delete_my_account" nel database,
+ * vedi supabase/account_deletion.sql).
  * Sostituisce il vecchio profilo di My Mood (mood preferiti, budget...).
  */
 
@@ -44,6 +46,36 @@ export default function ProfiloPage() {
   const signOut = async () => {
     await supabase.auth.signOut();
     router.push("/");
+  };
+
+  // Eliminazione account: due passaggi (spiegazione + parola di conferma).
+  const [deleteStep, setDeleteStep] = useState<"closed" | "confirm" | "done">("closed");
+  const [confirmText, setConfirmText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const CONFIRM_WORD = "ELIMINA";
+
+  const closeDelete = () => {
+    if (deleting) return;
+    setDeleteStep("closed");
+    setConfirmText("");
+    setDeleteError(null);
+  };
+
+  const deleteAccount = async () => {
+    if (confirmText.trim().toUpperCase() !== CONFIRM_WORD || deleting) return;
+    setDeleting(true);
+    setDeleteError(null);
+    const { error } = await supabase.rpc("delete_my_account");
+    if (error) {
+      setDeleting(false);
+      setDeleteError("Non sono riuscito a eliminare l'account. Riprova tra poco o scrivici a info@planwithelly.com.");
+      return;
+    }
+    // L'utente non esiste piu': puliamo solo la sessione salvata nel browser.
+    await supabase.auth.signOut({ scope: "local" });
+    setDeleting(false);
+    setDeleteStep("done");
   };
 
   const initial = (name || email || "?").trim().charAt(0).toUpperCase();
@@ -104,9 +136,91 @@ export default function ProfiloPage() {
 
           <ListSection title="Sessione">
             <ListRow first label="Esci" onClick={signOut} danger />
-            <ListRow label="Elimina account" soon />
+            <ListRow label="Elimina account" onClick={() => setDeleteStep("confirm")} danger />
           </ListSection>
         </>
+      )}
+      {deleteStep !== "closed" && (
+        <div
+          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center px-4 pb-4"
+          style={{ background: "rgba(34,32,31,.5)" }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Elimina account"
+          onClick={deleteStep === "confirm" ? closeDelete : undefined}
+        >
+          <div
+            className="w-full max-w-[420px] rounded-2xl p-5"
+            style={{ background: C.bgElev, border: `1px solid ${C.border}`, marginBottom: "env(safe-area-inset-bottom, 0px)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {deleteStep === "confirm" ? (
+              <>
+                <h2 className="text-[19px] font-semibold mb-2" style={{ fontFamily: "var(--font-display)" }}>Eliminare il tuo account?</h2>
+                <p className="text-[13.5px] leading-relaxed mb-2" style={{ color: C.textMuted }}>
+                  Verranno cancellati in modo definitivo il tuo profilo, tutti i tuoi viaggi (salvati e confermati), le liste di
+                  prenotazione, le notifiche e i link di condivisione con i relativi voti. Chi ha ricevuto un tuo link non
+                  potrà più aprirlo.
+                </p>
+                <p className="text-[13.5px] leading-relaxed mb-4" style={{ color: C.textMuted }}>
+                  <strong style={{ color: C.text }}>Non si può annullare.</strong> Se hai effettuato pagamenti, le ricevute
+                  restano conservate per gli obblighi fiscali, ma scollegate dal tuo account.
+                </p>
+                <label className="block text-[12.5px] font-semibold mb-1.5" htmlFor="confirm-delete">
+                  Per confermare scrivi {CONFIRM_WORD}
+                </label>
+                <input
+                  id="confirm-delete"
+                  type="text"
+                  autoComplete="off"
+                  autoCapitalize="characters"
+                  value={confirmText}
+                  onChange={(e) => setConfirmText(e.target.value)}
+                  disabled={deleting}
+                  className="w-full rounded-xl px-4 py-3 text-[15px] outline-none mb-3"
+                  style={{ background: C.bg, border: `1.3px solid ${C.border}`, color: C.text }}
+                />
+                {deleteError && <p className="text-[12.5px] mb-3" style={{ color: C.accent }}>{deleteError}</p>}
+                <div className="flex gap-2.5">
+                  <button
+                    onClick={closeDelete}
+                    disabled={deleting}
+                    className="flex-1 py-3 rounded-xl font-bold text-[14px]"
+                    style={{ background: C.bg, border: `1.3px solid ${C.border}`, color: C.text }}
+                  >
+                    Annulla
+                  </button>
+                  <button
+                    onClick={deleteAccount}
+                    disabled={deleting || confirmText.trim().toUpperCase() !== CONFIRM_WORD}
+                    className="flex-1 py-3 rounded-xl font-bold text-[14px]"
+                    style={{
+                      background: confirmText.trim().toUpperCase() === CONFIRM_WORD ? C.accent : C.disabledBg,
+                      color: confirmText.trim().toUpperCase() === CONFIRM_WORD ? "#fff" : C.disabledText,
+                    }}
+                  >
+                    {deleting ? "Elimino…" : "Elimina definitivamente"}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="text-[19px] font-semibold mb-2" style={{ fontFamily: "var(--font-display)" }}>Account eliminato</h2>
+                <p className="text-[13.5px] leading-relaxed mb-4" style={{ color: C.textMuted }}>
+                  Abbiamo cancellato il tuo account e i dati collegati. Grazie per aver provato Elly: se vorrai tornare, ti basta
+                  registrarti di nuovo.
+                </p>
+                <button
+                  onClick={() => router.push("/")}
+                  className="w-full py-3 rounded-xl font-bold text-[14px]"
+                  style={{ background: C.accent, color: "#fff" }}
+                >
+                  Torna alla home
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       )}
     </AppPage>
   );

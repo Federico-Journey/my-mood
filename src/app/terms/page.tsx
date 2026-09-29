@@ -57,16 +57,16 @@ export default function TermsPage() {
         </P>
         <P>
           Sei responsabile della veridicità dei dati che fornisci e della custodia delle tue credenziali. Se sospetti un
-          accesso non autorizzato scrivi subito a <Mail />. Puoi chiedere in qualsiasi momento la cancellazione
-          dell&apos;account.
+          accesso non autorizzato scrivi subito a <Mail />. Puoi eliminare l&apos;account in qualsiasi momento da Profilo → Elimina account: i tuoi viaggi e i dati collegati
+          vengono cancellati in modo definitivo.
         </P>
       </Section>
 
       <Section title="4. Salvataggio e link di condivisione">
         <P>
           Un Itinerario appena generato <strong>non viene salvato nel tuo account finché non scegli “Salva”</strong>. Fino
-          a quel momento resta raggiungibile solo da chi ha il suo indirizzo, non compare nei tuoi viaggi e può essere
-          eliminato automaticamente.
+          a quel momento resta raggiungibile solo da chi ha il suo indirizzo, non compare nei tuoi viaggi e viene eliminato
+          automaticamente dopo 30 giorni.
         </P>
         <P>
           Il link di condivisione mostra l&apos;Itinerario a chiunque lo riceva, senza bisogno di account, insieme ai nomi

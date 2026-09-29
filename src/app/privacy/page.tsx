@@ -36,13 +36,13 @@ export default function PrivacyPage() {
               feature: "Crei un account",
               data: "Email e password (la password non la vediamo mai: è conservata in forma cifrata da Supabase). Con “Accedi con Google”: nome, email e foto del tuo account Google. Nome del profilo e, se li aggiungi, foto e città di partenza.",
               basis: "Esecuzione del contratto (art. 6.1.b)",
-              retention: "Fino alla cancellazione dell’account",
+              retention: "Fino alla cancellazione dell’account, che puoi fare in autonomia dal Profilo",
             },
             {
               feature: "Generi un itinerario",
               data: "Destinazione, date, numero di persone, mood, budget, orari di inizio giornata e cena; l’itinerario prodotto e le tue richieste di modifica scritte in chat.",
               basis: "Esecuzione del contratto (art. 6.1.b)",
-              retention: "Un viaggio salvato resta finché non lo elimini tu o cancelli l’account. Un viaggio generato ma non salvato non è collegato al tuo account, è raggiungibile solo da chi ha il suo indirizzo e può essere eliminato in automatico.",
+              retention: "Un viaggio salvato resta finché non lo elimini tu o cancelli l’account. Un viaggio generato ma non salvato non è collegato al tuo account, è raggiungibile solo da chi ha il suo indirizzo e viene eliminato in automatico dopo 30 giorni.",
             },
             {
               feature: "Salvi, confermi e prenoti",
@@ -179,8 +179,9 @@ export default function PrivacyPage() {
           <li><strong>revocare il consenso</strong>, dove il trattamento si basa su di esso, senza pregiudicare quanto fatto prima.</li>
         </UL>
         <P>
-          Molte cose le puoi fare da solo: eliminare i tuoi viaggi e le notifiche direttamente dall&apos;app. Per il resto,
-          compresa la cancellazione dell&apos;account, scrivi a <Mail />: rispondiamo entro 30 giorni. Se ritieni che il
+          Molte cose le puoi fare da solo direttamente dall&apos;app: eliminare i tuoi viaggi e le notifiche, ed eliminare
+          l&apos;intero account da <strong>Profilo → Elimina account</strong> (cancella subito profilo, viaggi, link condivisi,
+          liste di prenotazione e notifiche). Per tutto il resto scrivi a <Mail />: rispondiamo entro 30 giorni. Se ritieni che il
           trattamento violi la normativa puoi proporre reclamo al{" "}
           <Ext href="https://www.garanteprivacy.it">Garante per la protezione dei dati personali</Ext>.
         </P>
