@@ -34,7 +34,10 @@ export async function POST(request: NextRequest) {
     let customer: string | null = row?.stripe_customer_id ?? null;
     if (!customer) {
       const { data: u } = await admin.auth.admin.getUserById(userId);
-      const created = await stripe.customers.create({ email: u.user?.email ?? undefined, metadata: { user_id: userId } });
+      const created = await stripe.customers.create(
+        { email: u.user?.email ?? undefined, metadata: { user_id: userId } },
+        { idempotencyKey: `elly-customer-${userId}` }, // un doppio clic non crea due clienti
+      );
       customer = created.id;
       await admin.rpc("set_stripe_customer", { p_user: userId, p_customer: customer });
     }
@@ -57,6 +60,16 @@ export async function POST(request: NextRequest) {
       session = await stripe.checkout.sessions.create({
         ...common,
         mode: "payment",
+        // Fattura/ricevuta PDF anche per i viaggi singoli (per gli abbonamenti la crea Stripe da sola).
+        invoice_creation: {
+          enabled: true,
+          invoice_data: {
+            description: "Elly — viaggi completi",
+            metadata: { user_id: userId },
+            ...(process.env.STRIPE_INVOICE_FOOTER ? { footer: process.env.STRIPE_INVOICE_FOOTER } : {}),
+          },
+        },
+        payment_intent_data: { description: "Elly — viaggio completo", metadata: { user_id: userId } },
         line_items: [{ price: await priceIdFor(PRICE_LOOKUP.trip), quantity: qty, adjustable_quantity: { enabled: true, minimum: 1, maximum: 10 } }],
       });
     } else {
@@ -64,7 +77,7 @@ export async function POST(request: NextRequest) {
         ...common,
         mode: "subscription",
         line_items: [{ price: await priceIdFor(PRICE_LOOKUP.monthly), quantity: 1 }],
-        subscription_data: { metadata: { user_id: userId } },
+        subscription_data: { description: "Elly — abbonamento mensile", metadata: { user_id: userId } },
       });
     }
     return NextResponse.json({ url: session.url });
