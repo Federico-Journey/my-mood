@@ -59,8 +59,11 @@ export default function AdminProvaPage() {
         headers: await authHeaders(),
         body: JSON.stringify({ label }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || `Errore ${res.status}`);
+      // Se il server va in timeout risponde con una pagina di errore, non con JSON: la mostriamo comunque.
+      const raw = await res.text();
+      let data: { error?: string; places?: number; withPhoto?: number; restaurants?: number; errors?: string[] } = {};
+      try { data = JSON.parse(raw); } catch { /* risposta non JSON */ }
+      if (!res.ok) throw new Error(data.error || `Errore ${res.status}: ${raw.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").slice(0, 200)}`);
       const warn = data.errors?.length ? ` · avvisi: ${data.errors.join("; ")}` : "";
       setRuns((r) => ({
         ...r,
@@ -140,7 +143,7 @@ export default function AdminProvaPage() {
               <li key={label} className="flex items-center gap-3 px-4 py-3" style={{ borderTop: i ? `1px solid ${C.border}` : "none" }}>
                 <div className="flex-1 min-w-0">
                   <div className="text-[14px] font-semibold truncate">{label}</div>
-                  <div className="text-[12px] truncate" style={{ color: run?.state === "error" ? C.accent : C.textMuted }}>
+                  <div className="text-[12px] break-words whitespace-pre-wrap" style={{ color: run?.state === "error" ? C.accent : C.textMuted }}>
                     {run?.state === "running"
                       ? "Importo…"
                       : run?.message
