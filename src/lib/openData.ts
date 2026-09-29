@@ -41,9 +41,20 @@ export type ResolvedDestination = {
   radiusKm: number;
 };
 
-async function getJson(url: string, init?: RequestInit) {
-  const res = await fetch(url, { ...init, headers: { "User-Agent": UA, Accept: "application/json", ...(init?.headers ?? {}) } });
-  if (!res.ok) throw new Error(`${new URL(url).host} ha risposto ${res.status}`);
+async function getJson(url: string, init?: RequestInit, timeoutMs = 8000) {
+  const host = new URL(url).host;
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...init,
+      signal: AbortSignal.timeout(timeoutMs),
+      headers: { "User-Agent": UA, Accept: "application/json", ...(init?.headers ?? {}) },
+    });
+  } catch (err) {
+    const timedOut = err instanceof Error && (err.name === "TimeoutError" || err.name === "AbortError");
+    throw new Error(timedOut ? `${host} non ha risposto entro ${Math.round(timeoutMs / 1000)} secondi` : `${host}: ${err instanceof Error ? err.message : "errore di rete"}`);
+  }
+  if (!res.ok) throw new Error(`${host} ha risposto ${res.status}`);
   return res.json();
 }
 
@@ -95,13 +106,28 @@ const CLASSES: Record<string, ItineraryActivity["category"]> = {
 
 /** Luoghi notevoli da Wikidata attorno alla destinazione. */
 async function wikidataPlaces(d: ResolvedDestination): Promise<OpenPlace[]> {
+  // La ricerca per raggio è pesante nelle grandi città: prima un tentativo con raggio contenuto,
+  // se Wikidata non risponde in tempo un secondo con raggio dimezzato.
+  const attempts: [number, number][] = [[Math.min(d.radiusKm, 10), 22000], [Math.min(d.radiusKm, 5), 12000]];
+  let lastErr: unknown = null;
+  for (const [radiusKm, timeoutMs] of attempts) {
+    try {
+      return await wikidataQuery(d, radiusKm, timeoutMs);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr instanceof Error ? lastErr : new Error("Wikidata non disponibile");
+}
+
+async function wikidataQuery(d: ResolvedDestination, radiusKm: number, timeoutMs: number): Promise<OpenPlace[]> {
   const values = Object.keys(CLASSES).map((q) => `wd:${q}`).join(" ");
   const query = `
 SELECT ?item ?itemLabel ?itemDescription ?lat ?lon ?image ?sitelinks ?class WHERE {
   SERVICE wikibase:around {
     ?item wdt:P625 ?coord .
     bd:serviceParam wikibase:center "Point(${d.longitude} ${d.latitude})"^^geo:wktLiteral .
-    bd:serviceParam wikibase:radius "${d.radiusKm}" .
+    bd:serviceParam wikibase:radius "${radiusKm}" .
   }
   VALUES ?class { ${values} }
   ?item wdt:P31 ?class .
@@ -114,7 +140,7 @@ SELECT ?item ?itemLabel ?itemDescription ?lat ?lon ?image ?sitelinks ?class WHER
 }
 ORDER BY DESC(?sitelinks)
 LIMIT 250`;
-  const data = await getJson(`https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(query)}`);
+  const data = await getJson(`https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(query)}`, undefined, timeoutMs);
   const seen = new Set<string>();
   const out: OpenPlace[] = [];
   for (const b of data.results?.bindings ?? []) {
@@ -139,7 +165,11 @@ LIMIT 250`;
     });
     if (out.length >= 70) break;
   }
-  await addImageCredits(out);
+  try {
+    await addImageCredits(out);
+  } catch {
+    for (const p of out) { p.image_url = null; p.image_page = null; }
+  }
   return out;
 }
 
@@ -154,7 +184,9 @@ async function addImageCredits(places: OpenPlace[]) {
     const chunk = withImg.slice(i, i + 40);
     const titles = chunk.map((p) => decodeURIComponent(p.image_page!.split("/wiki/")[1]));
     const data = await getJson(
-      `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&iiextmetadatafilter=Artist|LicenseShortName&format=json&titles=${encodeURIComponent(titles.join("|"))}`
+      `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&iiextmetadatafilter=Artist|LicenseShortName&format=json&titles=${encodeURIComponent(titles.join("|"))}`,
+      undefined,
+      6000
     );
     const byTitle = new Map<string, { artist: string; license: string }>();
     for (const page of Object.values<{ title: string; imageinfo?: { extmetadata?: Record<string, { value: string }> }[] }>(data.query?.pages ?? {})) {
@@ -190,11 +222,13 @@ async function osmPlaces(d: ResolvedDestination): Promise<OpenPlace[]> {
   nwr["amenity"~"^(restaurant|cafe|bar|pub)$"]["name"](around:${r},${d.latitude},${d.longitude});
 );
 out center tags 600;`;
-  const data = await getJson("https://overpass-api.de/api/interpreter", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `data=${encodeURIComponent(q)}`,
-  });
+  const init = { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: `data=${encodeURIComponent(q)}` };
+  let data;
+  try {
+    data = await getJson("https://overpass-api.de/api/interpreter", init, 22000);
+  } catch {
+    data = await getJson("https://overpass.kumi.systems/api/interpreter", init, 22000); // server alternativo
+  }
   const scored = (data.elements ?? [])
     .map((el: { type: string; id: number; lat?: number; lon?: number; center?: { lat: number; lon: number }; tags: Record<string, string> }) => {
       const t = el.tags ?? {};
@@ -226,16 +260,18 @@ out center tags 600;`;
   return [...restaurants, ...bars];
 }
 
-export async function importOpenPlaces(label: string) {
+/**
+ * Importa una sola fonte alla volta ("wikidata" o "osm"): ogni chiamata resta entro il tempo
+ * massimo della funzione sul server e un problema di una fonte non blocca l'altra.
+ */
+export async function importPart(label: string, part: "wikidata" | "osm") {
   const dest = await resolveDestination(label);
-  const [wd, osm] = await Promise.allSettled([wikidataPlaces(dest), osmPlaces(dest)]);
-  const places = [
-    ...(wd.status === "fulfilled" ? wd.value : []),
-    ...(osm.status === "fulfilled" ? osm.value : []),
-  ];
-  const errors = [
-    wd.status === "rejected" ? `Wikidata: ${String(wd.reason?.message ?? wd.reason)}` : null,
-    osm.status === "rejected" ? `OpenStreetMap: ${String(osm.reason?.message ?? osm.reason)}` : null,
-  ].filter(Boolean) as string[];
-  return { dest, places, errors };
+  let places: OpenPlace[] = [];
+  let error: string | null = null;
+  try {
+    places = part === "wikidata" ? await wikidataPlaces(dest) : await osmPlaces(dest);
+  } catch (err) {
+    error = err instanceof Error ? err.message : String(err);
+  }
+  return { dest, places, error };
 }

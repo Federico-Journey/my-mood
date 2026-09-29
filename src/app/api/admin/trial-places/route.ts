@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseForRequest } from "@/lib/supabaseServer";
-import { importOpenPlaces } from "@/lib/openData";
+import { importPart } from "@/lib/openData";
 import { destinationKey, normName } from "@/lib/trialPlaces";
 
 // Wikidata e OpenStreetMap possono impiegare qualche secondo: diamo tempo.
 export const maxDuration = 60;
 
 /**
- * Importa (o reimporta) una meta nell'archivio aperto della prova.
- * Solo per amministratori: il controllo lo fa il database (RLS) e lo
- * ripetiamo qui per dare un messaggio chiaro.
+ * Importa (o reimporta) UNA fonte di una meta nell'archivio aperto della prova:
+ * part = "wikidata" (monumenti, musei, natura + foto) oppure "osm" (ristoranti e bar).
+ * Due chiamate separate, così ciascuna resta entro il tempo massimo del server.
+ * Solo per amministratori: il controllo lo fa il database (RLS) e lo ripetiamo qui.
  */
 export async function POST(request: NextRequest) {
   const { db, userId } = await supabaseForRequest(request);
@@ -17,14 +18,16 @@ export async function POST(request: NextRequest) {
   const { data: profile } = await db.from("profiles").select("is_admin").eq("id", userId).maybeSingle();
   if (!profile?.is_admin) return NextResponse.json({ error: "Solo per amministratori" }, { status: 403 });
 
-  const { label } = (await request.json()) as { label?: string };
+  const { label, part } = (await request.json()) as { label?: string; part?: string };
   if (!label?.trim()) return NextResponse.json({ error: "Manca la meta" }, { status: 400 });
+  if (part !== "wikidata" && part !== "osm") return NextResponse.json({ error: "Fonte non valida" }, { status: 400 });
 
   try {
-    const { dest, places, errors } = await importOpenPlaces(label.trim());
+    const { dest, places, error } = await importPart(label.trim(), part);
     const key = destinationKey(label);
     const aliases = Array.from(new Set([normName(dest.label), destinationKey(dest.label)])).filter((a) => a && a !== key);
 
+    // Anagrafica della meta (senza toccare il conteggio, che ricalcoliamo alla fine).
     const { error: dErr } = await db.from("trial_destinations").upsert({
       key,
       label: label.trim(),
@@ -33,24 +36,29 @@ export async function POST(request: NextRequest) {
       latitude: dest.latitude,
       longitude: dest.longitude,
       radius_km: dest.radiusKm,
-      place_count: places.length,
-      imported_at: new Date().toISOString(),
     });
     if (dErr) throw dErr;
 
-    await db.from("trial_places").delete().eq("destination_key", key);
-    if (places.length > 0) {
-      const { error: pErr } = await db.from("trial_places").insert(places.map((p) => ({ ...p, destination_key: key })));
-      if (pErr) throw pErr;
+    // Se la fonte non ha risposto teniamo i luoghi già importati; altrimenti li sostituiamo.
+    if (!error) {
+      await db.from("trial_places").delete().eq("destination_key", key).eq("source", part);
+      if (places.length > 0) {
+        const { error: pErr } = await db.from("trial_places").insert(places.map((p) => ({ ...p, destination_key: key })));
+        if (pErr) throw pErr;
+      }
     }
+
+    const { count } = await db.from("trial_places").select("id", { count: "exact", head: true }).eq("destination_key", key);
+    await db.from("trial_destinations").update({ place_count: count ?? 0, imported_at: new Date().toISOString() }).eq("key", key);
 
     return NextResponse.json({
       key,
+      part,
       places: places.length,
       withPhoto: places.filter((p) => p.image_url).length,
-      restaurants: places.filter((p) => p.source === "osm").length,
+      total: count ?? 0,
       radiusKm: dest.radiusKm,
-      errors,
+      error,
     });
   } catch (err) {
     console.error("[Elly] Import archivio prova fallito:", err);

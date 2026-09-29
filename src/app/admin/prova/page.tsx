@@ -51,29 +51,38 @@ export default function AdminProvaPage() {
     });
   }, [load]);
 
-  const importOne = useCallback(async (label: string) => {
-    setRuns((r) => ({ ...r, [label]: { state: "running" } }));
+  // Una fonte alla volta: ogni chiamata al server ha il suo tempo massimo.
+  const runPart = useCallback(async (label: string, part: "wikidata" | "osm") => {
+    const nome = part === "wikidata" ? "Luoghi (Wikidata)" : "Locali (OpenStreetMap)";
     try {
       const res = await fetch("/api/admin/trial-places", {
         method: "POST",
         headers: await authHeaders(),
-        body: JSON.stringify({ label }),
+        body: JSON.stringify({ label, part }),
       });
       // Se il server va in timeout risponde con una pagina di errore, non con JSON: la mostriamo comunque.
       const raw = await res.text();
-      let data: { error?: string; places?: number; withPhoto?: number; restaurants?: number; errors?: string[] } = {};
+      let data: { error?: string | null; places?: number; withPhoto?: number; total?: number } = {};
       try { data = JSON.parse(raw); } catch { /* risposta non JSON */ }
-      if (!res.ok) throw new Error(data.error || `Errore ${res.status}: ${raw.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").slice(0, 200)}`);
-      const warn = data.errors?.length ? ` · avvisi: ${data.errors.join("; ")}` : "";
-      setRuns((r) => ({
-        ...r,
-        [label]: { state: "ok", message: `${data.places} luoghi (${data.withPhoto} con foto, ${data.restaurants} locali)${warn}` },
-      }));
+      if (!res.ok) {
+        const detail = data.error || raw.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").slice(0, 200);
+        return { ok: false, text: `${nome}: errore ${res.status}: ${detail}` };
+      }
+      if (data.error) return { ok: false, text: `${nome}: ${data.error} (dati già presenti mantenuti)` };
+      return { ok: true, text: `${nome}: ${data.places}${part === "wikidata" ? ` (${data.withPhoto} con foto)` : ""}` };
     } catch (err) {
-      setRuns((r) => ({ ...r, [label]: { state: "error", message: err instanceof Error ? err.message : "Errore" } }));
+      return { ok: false, text: `${nome}: ${err instanceof Error ? err.message : "errore di rete"}` };
     }
+  }, []);
+
+  const importOne = useCallback(async (label: string) => {
+    setRuns((r) => ({ ...r, [label]: { state: "running", message: "Importo i luoghi…" } }));
+    const a = await runPart(label, "wikidata");
+    setRuns((r) => ({ ...r, [label]: { state: "running", message: `${a.text} · importo i locali…` } }));
+    const b = await runPart(label, "osm");
+    setRuns((r) => ({ ...r, [label]: { state: a.ok && b.ok ? "ok" : "error", message: `${a.text} · ${b.text}` } }));
     await load();
-  }, [load]);
+  }, [load, runPart]);
 
   const importMissing = async () => {
     setBulk(true);
@@ -145,7 +154,7 @@ export default function AdminProvaPage() {
                   <div className="text-[14px] font-semibold truncate">{label}</div>
                   <div className="text-[12px] break-words whitespace-pre-wrap" style={{ color: run?.state === "error" ? C.accent : C.textMuted }}>
                     {run?.state === "running"
-                      ? "Importo…"
+                      ? (run.message ?? "Importo…")
                       : run?.message
                         ?? (row?.place_count
                           ? `${row.place_count} luoghi · ${row.imported_at ? new Date(row.imported_at).toLocaleDateString("it-IT") : ""}`
