@@ -66,22 +66,24 @@ if (existing.data[0]) {
 }
 
 // Webhook
+const EVENTS = [
+  "checkout.session.completed",
+  "checkout.session.async_payment_succeeded",
+  "customer.subscription.created",
+  "customer.subscription.updated",
+  "customer.subscription.deleted",
+  "charge.refunded",          // rimborso: toglie i crediti corrispondenti
+  "charge.dispute.closed",    // contestazione persa: idem
+];
 const url = `${site}/api/stripe/webhook`;
 const hooks = await stripe.webhookEndpoints.list({ limit: 100 });
-if (hooks.data.some((h) => h.url === url)) {
-  console.log(`= Webhook ${url}: già presente. Il segreto (whsec_...) si vede solo alla creazione:`);
+const found = hooks.data.find((h) => h.url === url);
+if (found) {
+  await stripe.webhookEndpoints.update(found.id, { enabled_events: EVENTS });
+  console.log(`= Webhook ${url}: già presente, eventi aggiornati. Il segreto (whsec_...) si vede solo alla creazione:`);
   console.log("  se non l'hai salvato, in Stripe → Sviluppatori → Webhook → il tuo endpoint → 'Mostra segreto'.");
 } else {
-  const hook = await stripe.webhookEndpoints.create({
-    url,
-    enabled_events: [
-      "checkout.session.completed",
-      "checkout.session.async_payment_succeeded",
-      "customer.subscription.created",
-      "customer.subscription.updated",
-      "customer.subscription.deleted",
-    ],
-  });
+  const hook = await stripe.webhookEndpoints.create({ url, enabled_events: EVENTS });
   console.log(`+ Webhook creato: ${url}`);
   console.log(`\nSEGRETO DEL WEBHOOK (copialo in Vercel come STRIPE_WEBHOOK_SECRET):\n${hook.secret}\n`);
 }

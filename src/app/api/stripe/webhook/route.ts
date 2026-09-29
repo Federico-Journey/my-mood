@@ -30,6 +30,15 @@ export async function POST(request: NextRequest) {
       case "checkout.session.async_payment_succeeded":
         await handleCheckout(stripe, event.data.object as Stripe.Checkout.Session);
         break;
+      case "charge.refunded":
+        await revokeForCharge(stripe, event.data.object as Stripe.Charge, false);
+        break;
+      case "charge.dispute.closed": {
+        // Contestazione persa: è come un rimborso totale.
+        const dispute = event.data.object as Stripe.Dispute;
+        if (dispute.status === "lost") await revokeForCharge(stripe, dispute.charge, true);
+        break;
+      }
       case "customer.subscription.created":
       case "customer.subscription.updated":
       case "customer.subscription.deleted":
@@ -90,4 +99,30 @@ async function syncSubscription(sub: Stripe.Subscription, knownUser?: string) {
     p_cancel: sub.cancel_at_period_end,
   });
   if (error) throw error;
+}
+
+/**
+ * Rimborso (o contestazione persa) di un acquisto di viaggi: togliamo i crediti corrispondenti.
+ * Rimborso parziale = quota proporzionale (arrotondata per difetto a favore del cliente).
+ * I viaggi già generati non si possono "ritirare": se i crediti sono già stati usati, la parte
+ * non recuperabile finisce nei log. I rimborsi degli abbonamenti non toccano i crediti.
+ */
+async function revokeForCharge(stripe: Stripe, chargeRef: string | Stripe.Charge, full: boolean) {
+  const charge = typeof chargeRef === "string" ? await stripe.charges.retrieve(chargeRef) : chargeRef;
+  const pi = typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id;
+  if (!pi) return;
+  const sessions = await stripe.checkout.sessions.list({ payment_intent: pi, limit: 1 });
+  const session = sessions.data[0];
+  if (!session || session.mode !== "payment") return; // non è un acquisto di viaggi singoli
+  const userId = session.metadata?.user_id || session.client_reference_id;
+  if (!userId) return;
+  const items = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 });
+  const qty = items.data.reduce((n, li) => n + (li.quantity ?? 0), 0);
+  if (qty < 1 || charge.amount < 1) return;
+  const target = full || charge.amount_refunded >= charge.amount ? qty : Math.floor((qty * charge.amount_refunded) / charge.amount);
+  const { data, error } = await supabaseAdmin().rpc("revoke_credits", { p_user: userId, p_ref: session.id, p_target: target });
+  if (error) throw error;
+  if (data?.shortfall > 0) {
+    console.warn(`[Elly] Rimborso ${charge.id}: ${data.shortfall} crediti già usati, non recuperabili (utente ${userId}).`);
+  }
 }

@@ -48,8 +48,10 @@ CREATE TABLE IF NOT EXISTS credit_ledger (
   delta INTEGER NOT NULL,
   reason TEXT NOT NULL DEFAULT 'purchase',
   stripe_ref TEXT UNIQUE,                            -- id della sessione di pagamento: evita accrediti doppi
+  revoked INTEGER NOT NULL DEFAULT 0,                -- crediti annullati per rimborso (solo righe di acquisto)
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+ALTER TABLE credit_ledger ADD COLUMN IF NOT EXISTS revoked INTEGER NOT NULL DEFAULT 0;
 
 CREATE TABLE IF NOT EXISTS generation_log (
   id BIGSERIAL PRIMARY KEY,
@@ -194,6 +196,31 @@ BEGIN
   RETURN TRUE;
 END $$;
 
+-- Rimborso (totale o parziale): toglie all'utente i crediti corrispondenti. p_target = crediti da
+-- annullare IN TOTALE per quell'acquisto (cumulativo): richiamarla più volte con lo stesso valore
+-- non fa nulla. Non può togliere crediti già usati: la parte non recuperabile viene restituita
+-- come "shortfall" (il viaggio già generato resta all'utente).
+CREATE OR REPLACE FUNCTION revoke_credits(p_user UUID, p_ref TEXT, p_target INTEGER) RETURNS JSONB
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+DECLARE
+  l credit_ledger%ROWTYPE;
+  v_have INTEGER;
+  v_to_revoke INTEGER;
+  v_take INTEGER;
+BEGIN
+  SELECT * INTO l FROM credit_ledger WHERE stripe_ref = p_ref AND user_id = p_user AND delta > 0 FOR UPDATE;
+  IF NOT FOUND THEN RETURN jsonb_build_object('revoked', 0, 'shortfall', 0, 'reason', 'no_purchase'); END IF;
+  v_to_revoke := LEAST(p_target, l.delta) - l.revoked;
+  IF v_to_revoke <= 0 THEN RETURN jsonb_build_object('revoked', 0, 'shortfall', 0); END IF;
+  SELECT credits INTO v_have FROM user_billing WHERE user_id = p_user FOR UPDATE;
+  v_take := LEAST(v_to_revoke, COALESCE(v_have, 0));
+  UPDATE user_billing SET credits = credits - v_take, updated_at = NOW() WHERE user_id = p_user;
+  UPDATE credit_ledger SET revoked = revoked + v_to_revoke WHERE id = l.id;
+  INSERT INTO credit_ledger (user_id, delta, reason, stripe_ref)
+  VALUES (p_user, -v_take, 'refund', 'refund:' || p_ref || ':' || (l.revoked + v_to_revoke));
+  RETURN jsonb_build_object('revoked', v_take, 'shortfall', v_to_revoke - v_take);
+END $$;
+
 CREATE OR REPLACE FUNCTION set_stripe_customer(p_user UUID, p_customer TEXT) RETURNS void
 LANGUAGE sql SECURITY DEFINER SET search_path = public AS $$
   INSERT INTO user_billing (user_id, stripe_customer_id) VALUES (p_user, p_customer)
@@ -253,7 +280,7 @@ DECLARE f TEXT;
 BEGIN
   FOREACH f IN ARRAY ARRAY[
     'consume_generation(uuid)', 'attach_generation_trip(uuid,bigint,uuid)', 'refund_generation(uuid,bigint)',
-    'consume_refinement(uuid,uuid)', 'grant_credits(uuid,integer,text)', 'set_stripe_customer(uuid,text)',
+    'consume_refinement(uuid,uuid)', 'grant_credits(uuid,integer,text)', 'revoke_credits(uuid,text,integer)', 'set_stripe_customer(uuid,text)',
     'upsert_subscription(uuid,text,text,timestamptz,timestamptz,boolean)', 'billing_summary(uuid)'
   ] LOOP
     EXECUTE format('REVOKE ALL ON FUNCTION %s FROM PUBLIC, anon, authenticated', f);
