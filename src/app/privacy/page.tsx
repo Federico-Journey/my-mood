@@ -192,6 +192,13 @@ export default function PrivacyPage() {
             <a href={`mailto:${CONTROLLER_EMAIL}`} style={{ color: C.accent }}>{CONTROLLER_EMAIL}</a>
           </P>
         </Section>
+
+        <Section title="Crediti">
+          <P>
+            L&apos;elenco delle destinazioni suggerite in fase di ricerca si basa su dati geografici{' '}
+            <a href="https://www.geonames.org" style={{ color: C.accent }}>GeoNames</a>, distribuiti con licenza Creative Commons Attribution 4.0.
+          </P>
+        </Section>
       </div>
     </main>
   );

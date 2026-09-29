@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { DESTINATION_SUGGESTIONS, ELLY_COLORS } from "@/lib/travelData";
+import { loadDestinations, searchDestinations, type Destination } from "@/lib/destinationSearch";
 
 type Props = {
   onSelect: (destination: string) => void;
@@ -15,11 +16,22 @@ export default function DestinationInput({ onSelect }: Props) {
   const [showDropdown, setShowDropdown] = useState(false);
   const canContinue = value.trim().length > 1;
 
-  const matches = value.trim().length
-    ? DESTINATION_SUGGESTIONS.filter((d) =>
-        `${d.name} ${d.country}`.toLowerCase().includes(value.trim().toLowerCase())
-      ).slice(0, 6)
-    : [];
+  // L'elenco mondiale delle destinazioni si scarica in background appena si
+  // apre la schermata; finche' non e' pronto usiamo i suggerimenti fissi.
+  const [index, setIndex] = useState<Awaited<ReturnType<typeof loadDestinations>>>([]);
+  useEffect(() => { loadDestinations().then(setIndex); }, []);
+
+  const query = value.trim();
+  const matches: Destination[] =
+    query.length === 0
+      ? []
+      : index.length > 0
+        ? searchDestinations(index, query)
+        : DESTINATION_SUGGESTIONS.filter((d) =>
+            `${d.name} ${d.country}`.toLowerCase().includes(query.toLowerCase())
+          )
+            .slice(0, 6)
+            .map((d) => ({ label: `${d.name}, ${d.country}`, name: d.name, subtitle: d.country, flag: d.flag }));
 
   const pick = (label: string) => {
     setValue(label);
@@ -44,7 +56,7 @@ export default function DestinationInput({ onSelect }: Props) {
           Dove vuoi andare?
         </h2>
         <p className="text-sm mb-8 leading-relaxed" style={{ color: C.textMuted }}>
-          Scrivi una destinazione, o scegli tra i suggerimenti.
+          Scrivi una città, una regione, un’isola o un Paese: ti suggerisco le mete mentre scrivi.
         </p>
 
         <div className="relative">
@@ -54,7 +66,7 @@ export default function DestinationInput({ onSelect }: Props) {
             onChange={(e) => { setValue(e.target.value); setShowDropdown(true); }}
             onFocus={() => setShowDropdown(true)}
             onKeyDown={(e) => { if (e.key === "Enter" && canContinue) onSelect(value.trim()); }}
-            placeholder="Es. Lisbona, Giappone, Toscana…"
+            placeholder="Es. Lisbona, Giappone, Isole Eolie…"
             autoFocus
             className="w-full rounded-xl px-4 py-[15px] text-[16px] font-semibold outline-none"
             style={{ background: C.bgElev, border: `1.3px solid ${value ? C.accent : C.border}`, color: C.text }}
@@ -67,20 +79,20 @@ export default function DestinationInput({ onSelect }: Props) {
             >
               {matches.length === 0 ? (
                 <div className="px-4 py-3.5 text-[13px]" style={{ color: C.textMuted }}>
-                  Nessun suggerimento — puoi continuare comunque scrivendo la destinazione
+                  Nessun suggerimento: puoi continuare comunque, scrivi pure la meta che hai in mente
                 </div>
               ) : (
                 matches.map((d) => (
                   <div
-                    key={d.name}
-                    onClick={() => pick(`${d.name}, ${d.country}`)}
+                    key={d.label}
+                    onClick={() => pick(d.label)}
                     className="flex items-center gap-3 px-4 py-3 cursor-pointer"
                     style={{ borderBottom: `1px solid ${C.border}` }}
                   >
                     <span className="text-[19px]">{d.flag}</span>
                     <div>
                       <div className="font-semibold text-[14px]">{d.name}</div>
-                      <div className="text-[12px]" style={{ color: C.textMuted }}>{d.country}</div>
+                      <div className="text-[12px]" style={{ color: C.textMuted }}>{d.subtitle}</div>
                     </div>
                   </div>
                 ))
@@ -88,6 +100,27 @@ export default function DestinationInput({ onSelect }: Props) {
             </div>
           )}
         </div>
+
+        {value.trim().length === 0 && (
+          <div className="mt-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[.1em] mb-2.5" style={{ color: C.textMuted }}>
+              Mete popolari
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {DESTINATION_SUGGESTIONS.slice(0, 12).map((d) => (
+                <button
+                  key={d.name}
+                  type="button"
+                  onClick={() => onSelect(`${d.name}, ${d.country}`)}
+                  className="px-3.5 py-2 rounded-full text-[13px] font-semibold"
+                  style={{ background: C.bgElev, border: `1px solid ${C.border}`, color: C.text }}
+                >
+                  {d.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div
