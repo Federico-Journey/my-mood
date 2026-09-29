@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseForRequest } from "@/lib/supabaseServer";
 import { refineTrip, type GenerateTripInput, type GeneratedTrip } from "@/lib/tripGenerator";
 import { logGenerationCosts } from "@/lib/costTracking";
+import { reserveRefinement } from "@/lib/entitlements";
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,7 +29,10 @@ export async function POST(request: NextRequest) {
     };
 
     const { db, userId } = await supabaseForRequest(request);
-    const mode = userId ? "full" : "trial";
+    // Le modifiche a un viaggio già pagato sono incluse; altrimenti resta la versione di prova.
+    const gate = await reserveRefinement(userId, tripId);
+    if (gate.blocked) return NextResponse.json({ error: gate.blocked }, { status: 429 });
+    const mode = gate.mode;
     const { trip: updatedTrip, costs } = await refineTrip(currentTrip, input, feedback.trim(), { mode });
     void logGenerationCosts(tripId ?? null, costs);
 
@@ -48,7 +52,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ trip: updatedTrip });
+    return NextResponse.json({ trip: updatedTrip, paywall: gate.paywall });
   } catch (err) {
     console.error("[Elly] Errore nella modifica del viaggio:", err);
     const message = err instanceof Error ? err.message : "Errore interno";

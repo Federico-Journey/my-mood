@@ -7,6 +7,7 @@ import { ELLY_COLORS } from "@/lib/travelData";
 import type { GeneratedTrip, ItineraryActivity } from "@/lib/tripGenerator";
 import { approveTrip } from "@/lib/bookingChecklist";
 import PlacePhoto, { TripCredits } from "@/components/PlacePhoto";
+import { PRICES, eur, type Paywall } from "@/lib/billingConfig";
 
 const C = ELLY_COLORS;
 
@@ -41,15 +42,22 @@ type Vote = { voter_name: string; response: string };
 type Props = {
   trip: GeneratedTrip;
   tripId: string | null;
+  /** Se l'utente ha fatto l'accesso ma è finito sulla versione di prova: il motivo. */
+  paywall?: Paywall;
   onNewTrip: () => void;
   onRefine: (feedback: string) => Promise<GeneratedTrip>;
 };
 
-export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props) {
+export default function TripResult({ trip, tripId, paywall = null, onNewTrip, onRefine }: Props) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => setLoggedIn(!!session?.user));
+  }, []);
 
   const [saveState, setSaveState] = useState<"unknown" | "guest" | "not-saved" | "saving" | "saved">("unknown");
 
@@ -210,14 +218,27 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
         {trip.mode === "trial" && (
           <div className="mb-4 rounded-xl px-4 py-3 text-[13px] leading-relaxed" style={{ background: C.accentSoft, color: C.text }}>
             <strong>Versione di prova.</strong> I luoghi vengono dal nostro archivio aperto e non sono verificati su Google Maps.{" "}
-            <Link
-              href={`/auth?redirect=${encodeURIComponent(tripId ? `/viaggio?id=${tripId}` : "/viaggio")}`}
-              className="font-bold underline"
-              style={{ color: C.accent }}
-            >
-              Accedi
-            </Link>{" "}
-            per itinerari con luoghi verificati.
+            {loggedIn ? (
+              <>
+                {paywall === "limit_day"
+                  ? "Hai raggiunto il limite di nuovi viaggi di oggi: domani potrai crearne altri con luoghi verificati. "
+                  : paywall === "limit_month"
+                    ? "Hai usato i viaggi di questo periodo: puoi comprare un viaggio singolo o attendere il rinnovo. "
+                    : `Per luoghi verificati scegli un viaggio singolo (${eur(PRICES.tripEur)}) o l'abbonamento mensile (${eur(PRICES.monthlyEur)}). `}
+                <Link href="/prezzi" className="font-bold underline" style={{ color: C.accent }}>Vedi i prezzi</Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href={`/auth?redirect=${encodeURIComponent(tripId ? `/viaggio?id=${tripId}` : "/viaggio")}`}
+                  className="font-bold underline"
+                  style={{ color: C.accent }}
+                >
+                  Accedi
+                </Link>{" "}
+                per itinerari con luoghi verificati: il primo viaggio è gratis.
+              </>
+            )}
           </div>
         )}
 

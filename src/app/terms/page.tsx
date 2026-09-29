@@ -78,26 +78,48 @@ export default function TermsPage() {
 
       <Section title="5. Prezzi e pagamenti">
         <P>
-          Il modello di Elly è il <strong>pagamento per singolo viaggio</strong>: il prezzo dipende dal lavoro necessario
-          a costruire l&apos;Itinerario e ti viene mostrato, IVA inclusa, <strong>prima</strong> che tu confermi
-          l&apos;acquisto. Questa funzione è in arrivo: finché non viene attivata, i prezzi indicati in questo punto non
-          si applicano e non ti verrà addebitato nulla. Ti avviseremo nell&apos;app quando i pagamenti saranno attivi.
+          Puoi ottenere Itinerari completi, con luoghi verificati su Google Maps, in due modi: il{" "}
+          <strong>viaggio singolo</strong> (2,99 € per ogni nuovo Itinerario, con modifiche e rigenerazioni dello stesso
+          viaggio incluse) oppure l&apos;<strong>abbonamento mensile</strong> (5,99 € al mese). Quando ti registri hai
+          diritto a <strong>un Itinerario completo gratuito</strong>. In ogni momento puoi usare anche la versione di
+          prova, con luoghi del nostro archivio aperto non verificati su Google Maps. I prezzi sono in euro, comprensivi
+          di eventuali imposte, e ti vengono mostrati <strong>prima</strong> che tu confermi l&apos;acquisto; possono
+          cambiare in futuro, ma non per quanto hai già acquistato o per il periodo di abbonamento in corso.
         </P>
         <P>
-          Quando saranno attivi, i pagamenti passeranno da <strong>Stripe</strong>, un fornitore esterno: i dati della
-          carta sono trattati da lui e non transitano dai nostri sistemi. Se la generazione non va a buon fine per un
-          nostro problema tecnico, l&apos;importo non ti viene addebitato o ti viene rimborsato.
+          <strong>Viaggi singoli.</strong> I viaggi acquistati e non ancora usati non scadono. Le modifiche allo stesso
+          viaggio sono incluse entro un limite tecnico di 30 per viaggio, pensato per evitare abusi.
+        </P>
+        <P>
+          <strong>Abbonamento mensile e uso equo.</strong> L&apos;abbonamento si rinnova automaticamente ogni mese fino alla
+          disdetta. Comprende fino a 15 nuovi Itinerari completi per ogni periodo di abbonamento (il conteggio riparte al
+          rinnovo) e fino a 5 nuovi Itinerari al giorno; le modifiche ai tuoi viaggi sono incluse nell&apos;uso normale,
+          entro il limite tecnico indicato sopra. L&apos;uso è personale: non puoi condividere o rivendere l&apos;account.
+          Se raggiungi un limite puoi acquistare viaggi singoli o attendere il rinnovo. Possiamo modificare questi limiti
+          con un preavviso ragionevole, senza effetto sul periodo già pagato.
+        </P>
+        <P>
+          <strong>Disdetta.</strong> Puoi annullare l&apos;abbonamento in qualsiasi momento dal Profilo (“Gestisci
+          abbonamento e ricevute”). L&apos;abbonamento resta attivo fino alla fine del periodo già pagato e non viene
+          rinnovato; i periodi già iniziati non vengono rimborsati, salvo quanto previsto dalla legge.
+        </P>
+        <P>
+          I pagamenti passano da <strong>Stripe</strong>, un fornitore esterno: i dati della carta sono trattati da lui e
+          non transitano dai nostri sistemi. Se la generazione non va a buon fine per un nostro problema tecnico, il viaggio
+          non ti viene addebitato o ti viene restituito.
         </P>
         <P>
           <strong>Contenuto digitale e recesso.</strong> L&apos;Itinerario è un contenuto digitale che viene creato e messo a
-          tua disposizione subito. Per questo, al momento dell&apos;acquisto ti chiederemo il consenso espresso
-          all&apos;esecuzione immediata e la presa d&apos;atto che, una volta fornito il contenuto, perdi il diritto di
-          recesso previsto dal Codice del consumo. Restano ferme le tutele che la legge ti riconosce in ogni caso,
-          come quelle per i difetti di conformità del contenuto digitale.
+          tua disposizione subito. Al momento dell&apos;acquisto ti chiediamo il consenso espresso all&apos;esecuzione
+          immediata e la presa d&apos;atto che, per la parte di servizio già fornita, perdi il diritto di recesso di 14
+          giorni previsto dal Codice del consumo. Per i viaggi acquistati e non ancora usati, e per un abbonamento non
+          ancora utilizzato, puoi recedere entro 14 giorni scrivendo a {LEGAL.email} e ti rimborsiamo; se hai già usato
+          l&apos;abbonamento ti rimborsiamo la parte non ancora fornita. Restano ferme le tutele che la legge ti riconosce
+          in ogni caso, come quelle per i difetti di conformità del contenuto digitale.
         </P>
         <P>
           Alcune sezioni o funzioni, come determinati articoli della Bacheca, potranno essere riservate a utenti
-          premium. Le condizioni di un eventuale abbonamento ti saranno mostrate prima della sottoscrizione.
+          premium: ti verrà indicato chiaramente prima di qualsiasi acquisto.
         </P>
       </Section>
 

@@ -1,20 +1,20 @@
 "use client";
 
 /**
- * Profilo di Elly: dati dell'account, pagamenti (in arrivo, verranno
- * collegati quando sara' definito il prezzo per viaggio), uscita ed
+ * Profilo di Elly: dati dell'account, piano e viaggi (crediti, abbonamento, Stripe), uscita ed
  * eliminazione dell'account (funzione "delete_my_account" nel database,
  * vedi supabase/account_deletion.sql).
  * Sostituisce il vecchio profilo di My Mood (mood preferiti, budget...).
  */
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS } from "@/lib/travelData";
 import AppPage from "@/components/AppPage";
 import { ListRow, ListSection } from "@/components/SettingsList";
+import PlanSection from "@/components/PlanSection";
 
 const C = ELLY_COLORS;
 
@@ -69,6 +69,10 @@ export default function ProfiloPage() {
     const { error } = await supabase.rpc("delete_my_account");
     if (error) {
       setDeleting(false);
+      if (error.message?.includes("ABBONAMENTO_ATTIVO")) {
+        setDeleteError("Hai un abbonamento attivo. Annullalo prima da “Gestisci abbonamento e ricevute”, poi potrai eliminare l'account.");
+        return;
+      }
       setDeleteError("Non sono riuscito a eliminare l'account. Riprova tra poco o scrivici a info@planwithelly.com.");
       return;
     }
@@ -129,10 +133,9 @@ export default function ProfiloPage() {
             <ListRow label="Nome" value={name || "—"} />
           </ListSection>
 
-          <ListSection title="Pagamenti">
-            <ListRow first label="Metodi di pagamento" soon />
-            <ListRow label="Spese per viaggio" soon />
-          </ListSection>
+          <Suspense fallback={null}>
+            <PlanSection />
+          </Suspense>
 
           <ListSection title="Sessione">
             <ListRow first label="Esci" onClick={signOut} danger />
@@ -163,8 +166,9 @@ export default function ProfiloPage() {
                   potrà più aprirlo.
                 </p>
                 <p className="text-[13.5px] leading-relaxed mb-4" style={{ color: C.textMuted }}>
-                  <strong style={{ color: C.text }}>Non si può annullare.</strong> Se hai effettuato pagamenti, le ricevute
-                  restano conservate per gli obblighi fiscali, ma scollegate dal tuo account.
+                  <strong style={{ color: C.text }}>Non si può annullare.</strong> I viaggi acquistati e non ancora usati andranno
+                  persi. Se hai effettuato pagamenti, le ricevute restano conservate per gli obblighi fiscali, ma scollegate dal
+                  tuo account. Con un abbonamento attivo devi prima annullarlo.
                 </p>
                 <label className="block text-[12.5px] font-semibold mb-1.5" htmlFor="confirm-delete">
                   Per confermare scrivi {CONFIRM_WORD}

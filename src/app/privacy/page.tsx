@@ -63,8 +63,8 @@ export default function PrivacyPage() {
               retention: "Finché non le elimini, o fino alla cancellazione dell’account o del viaggio",
             },
             {
-              feature: "Paghi un viaggio (quando i pagamenti saranno attivi)",
-              data: "Importo, data, viaggio acquistato e ricevuta. I dati della carta sono gestiti direttamente da Stripe: noi non li vediamo né li conserviamo.",
+              feature: "Acquisti viaggi o ti abboni",
+              data: "Importo, data, tipo di acquisto (viaggio singolo o abbonamento), viaggi disponibili, stato e date dell’abbonamento, numero di nuovi viaggi creati nel periodo (per l’uso equo) e identificativo cliente Stripe. I dati della carta sono gestiti direttamente da Stripe: noi non li vediamo né li conserviamo.",
               basis: "Esecuzione del contratto (art. 6.1.b) e obblighi fiscali e contabili (art. 6.1.c)",
               retention: "10 anni, come previsto dalla normativa contabile e fiscale",
             },
@@ -149,7 +149,7 @@ export default function PrivacyPage() {
             Wikimedia Commons, che riceve quindi l&apos;indirizzo IP del tuo dispositivo come per qualsiasi immagine sul web.
           </li>
           <li><strong>Cloudflare</strong> — gestione del dominio e inoltro delle email inviate a {LEGAL.email}.</li>
-          <li><strong>Stripe</strong> — pagamenti, quando saranno attivi.</li>
+          <li><strong>Stripe</strong> — pagamenti e gestione dell&apos;abbonamento (carta, ricevute, disdetta).</li>
           <li>
             <strong>Autorità</strong> — se lo richiede la legge, o per far valere o difendere un diritto in sede
             giudiziaria.

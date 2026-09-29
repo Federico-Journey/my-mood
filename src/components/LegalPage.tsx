@@ -11,7 +11,7 @@ import { ELLY_COLORS } from "@/lib/travelData";
 const C = ELLY_COLORS;
 
 export const LEGAL = {
-  version: "1.0",
+  version: "1.1",
   updated: "29 settembre 2026",
   ownerName: "Federico Pugliese",
   email: "info@planwithelly.com",

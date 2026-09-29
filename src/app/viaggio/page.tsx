@@ -12,6 +12,7 @@ import TripSummary from "@/components/TripSummary";
 import GeneratingScreen from "@/components/GeneratingScreen";
 import TripResult from "@/components/TripResult";
 import type { GeneratedTrip, GenerateTripInput } from "@/lib/tripGenerator";
+import type { Paywall } from "@/lib/billingConfig";
 
 type Screen = "destinazione" | "persone" | "date" | "mood" | "budget" | "riepilogo" | "generando" | "risultato";
 
@@ -29,6 +30,7 @@ export default function ViaggioPage() {
   const [tripId, setTripId] = useState<string | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [loadingSaved, setLoadingSaved] = useState(false);
+  const [paywall, setPaywall] = useState<Paywall>(null);
 
   const draft = (): GenerateTripInput => ({ destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime });
 
@@ -84,6 +86,7 @@ export default function ViaggioPage() {
       }
       setGeneratedTrip(data.trip as GeneratedTrip);
       setTripId(data.tripId ?? null);
+      setPaywall((data.paywall as Paywall) ?? null);
       // Mettiamo l'id nell'indirizzo: se la pagina viene ricaricata il
       // viaggio (anche se non ancora salvato) si riapre invece di perdersi.
       if (data.tripId) window.history.replaceState(null, "", `/viaggio?id=${data.tripId}`);
@@ -107,13 +110,14 @@ export default function ViaggioPage() {
     }
     const updated = data.trip as GeneratedTrip;
     setGeneratedTrip(updated);
+    setPaywall((data.paywall as Paywall) ?? null);
     return updated;
   };
 
   const handleNewTrip = () => {
     setDestination(""); setPeople(2); setStartDate(null); setEndDate(null);
     setThemes([]); setBudgetPerPerson(700); setStartTime("09:00"); setDinnerTime("20:00");
-    setGeneratedTrip(null); setTripId(null); setGenerationError(null);
+    setGeneratedTrip(null); setTripId(null); setGenerationError(null); setPaywall(null);
     window.history.replaceState(null, "", "/viaggio");
     setScreen("destinazione");
   };
@@ -180,7 +184,7 @@ export default function ViaggioPage() {
         />
       )}
       {screen === "risultato" && generatedTrip && (
-        <TripResult trip={generatedTrip} tripId={tripId} onNewTrip={handleNewTrip} onRefine={handleRefine} />
+        <TripResult trip={generatedTrip} tripId={tripId} paywall={paywall} onNewTrip={handleNewTrip} onRefine={handleRefine} />
       )}
     </main>
   );
