@@ -44,9 +44,10 @@ export default function PlanSection() {
   }
 
   const sub = status.subscription;
+  const paymentFailed = !!sub && ["past_due", "unpaid"].includes(sub.status);
   const subText = sub?.active
     ? sub.cancel_at_period_end ? `Termina il ${fmtDate(sub.period_end)}` : `Attivo · rinnovo il ${fmtDate(sub.period_end)}`
-    : "Non attivo";
+    : paymentFailed ? "Pagamento non riuscito" : "Non attivo";
 
   const openPortal = async () => {
     setError(null);
@@ -60,6 +61,12 @@ export default function PlanSection() {
         <p className="text-[13px] rounded-xl px-4 py-3 mt-5" style={{ background: C.accentSoft, color: C.text }}>
           {waiting ? "Pagamento ricevuto: aggiorno il tuo saldo…" : "Grazie! Il tuo piano è aggiornato."}
         </p>
+      )}
+      {paymentFailed && (
+        <div className="rounded-xl px-4 py-3 mt-5 text-[13px]" style={{ background: C.accentSoft, color: C.text }}>
+          <p>Il rinnovo dell&apos;abbonamento non è andato a buon fine (carta scaduta o fondi insufficienti). Aggiorna il metodo di pagamento: Stripe riproverà l&apos;addebito e l&apos;abbonamento tornerà attivo.</p>
+          <button onClick={openPortal} className="mt-2 font-bold underline" style={{ color: C.accent }}>Aggiorna il metodo di pagamento</button>
+        </div>
       )}
       <ListSection title="Piano e viaggi">
         <ListRow first label="Viaggio gratuito" value={status.free_left > 0 ? "Disponibile" : "Già usato"} />

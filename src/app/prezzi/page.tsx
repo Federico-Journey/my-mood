@@ -26,6 +26,7 @@ function PrezziInner() {
   const loggedIn = status?.enabled === true && status.loggedIn === true;
   const limits = loggedIn && status.loggedIn ? status.limits : DEFAULT_LIMITS;
   const hasSub = loggedIn && status.loggedIn && !!status.subscription?.active;
+  const subFailed = loggedIn && status.loggedIn && !!status.subscription && ["past_due", "unpaid"].includes(status.subscription.status);
 
   const buy = async (plan: "trip" | "monthly") => {
     setBusy(plan);
@@ -41,6 +42,7 @@ function PrezziInner() {
     const cls = "w-full py-3 rounded-xl font-bold text-[14px] text-center block";
     if (!enabled) return <div className={cls} style={{ background: C.disabledBg, color: C.disabledText }}>In arrivo</div>;
     if (!loggedIn) return <Link href="/auth?redirect=/prezzi" className={cls} style={style}>Accedi per acquistare</Link>;
+    if (plan === "monthly" && subFailed) return <Link href="/profilo" className={cls} style={style}>Aggiorna il pagamento</Link>;
     if (plan === "monthly" && hasSub) return <div className={cls} style={{ background: C.disabledBg, color: C.disabledText }}>Già attivo</div>;
     return (
       <button onClick={() => buy(plan)} disabled={busy !== null} className={cls} style={{ ...style, opacity: busy ? 0.6 : 1 }}>

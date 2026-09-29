@@ -27,6 +27,14 @@ export async function POST(request: NextRequest) {
       if (summary?.subscription?.active) {
         return NextResponse.json({ error: "Hai già un abbonamento attivo: puoi gestirlo dal Profilo." }, { status: 409 });
       }
+      // Rinnovo non riuscito: l'abbonamento esiste ancora e Stripe sta riprovando l'addebito.
+      // Un secondo abbonamento porterebbe a un doppio addebito: prima si aggiorna la carta.
+      if (["past_due", "unpaid"].includes(summary?.subscription?.status)) {
+        return NextResponse.json(
+          { error: "L'ultimo rinnovo non è andato a buon fine. Aggiorna il metodo di pagamento da Profilo → Gestisci abbonamento." },
+          { status: 409 },
+        );
+      }
     }
 
     // Cliente Stripe: uno per utente, creato al primo acquisto.
@@ -77,7 +85,11 @@ export async function POST(request: NextRequest) {
         ...common,
         mode: "subscription",
         line_items: [{ price: await priceIdFor(PRICE_LOOKUP.monthly), quantity: 1 }],
-        subscription_data: { description: "Elly — abbonamento mensile", metadata: { user_id: userId } },
+        subscription_data: {
+          description: "Elly — abbonamento mensile",
+          metadata: { user_id: userId },
+          billing_mode: { type: "flexible" }, // esplicito: non dipendiamo dal default della versione API
+        },
       });
     }
     return NextResponse.json({ url: session.url });
