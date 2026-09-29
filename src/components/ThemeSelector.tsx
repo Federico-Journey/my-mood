@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TRAVEL_THEMES, ELLY_COLORS, type Theme } from "@/lib/travelData";
+import { TRAVEL_THEMES, THEME_GROUPS, ELLY_COLORS, type Theme } from "@/lib/travelData";
 import { CheckIcon } from "@/components/EllyIcons";
 
 const MAX_THEMES = 3;
@@ -40,44 +40,52 @@ export default function ThemeSelector({ onSelect, onBack }: Props) {
           Scegli fino a {MAX_THEMES} temi — definiscono lo stile dell&apos;itinerario.
         </p>
 
-        <div className="flex flex-col gap-2.5">
-          {TRAVEL_THEMES.map((theme: Theme) => {
-            const isSelected = selected.includes(theme.id);
-            const isDisabled = atMax && !isSelected;
-            return (
-              <button
-                key={theme.id}
-                onClick={() => toggle(theme.id)}
-                disabled={isDisabled}
-                className="relative rounded-xl px-4 py-3.5 text-left flex items-center gap-3.5 transition-colors"
-                style={{
-                  background: isSelected ? C.accentSoft : C.bgElev,
-                  border: `1.3px solid ${isSelected ? C.accent : C.border}`,
-                  opacity: isDisabled ? 0.4 : 1,
-                }}
-              >
-                <div className="flex-1 min-w-0">
-                  <span className="font-bold text-[14.5px] block leading-tight">{theme.label}</span>
-                  <span className="text-[12px] mt-0.5 block leading-snug" style={{ color: C.textMuted }}>
-                    {theme.desc}
-                  </span>
-                </div>
-                <div
-                  className="w-5 h-5 rounded-full shrink-0 flex items-center justify-center"
-                  style={{
-                    background: isSelected ? C.accent : "transparent",
-                    border: isSelected ? "none" : `1.3px solid ${C.border}`,
-                    color: "#fff",
-                  }}
-                >
-                  {isSelected && <CheckIcon size={11} />}
-                </div>
-              </button>
-            );
-          })}
-        </div>
+        {THEME_GROUPS.map((group) => (
+          <section key={group.id} className="mb-6">
+            <h3 className="text-[11px] font-semibold uppercase tracking-[.1em] mb-2.5" style={{ color: C.textMuted }}>
+              {group.label}
+            </h3>
+            <div className="grid grid-cols-2 gap-2.5">
+              {TRAVEL_THEMES.filter((t) => t.group === group.id).map((theme: Theme) => {
+                const isSelected = selected.includes(theme.id);
+                const isDisabled = atMax && !isSelected;
+                return (
+                  <button
+                    key={theme.id}
+                    onClick={() => toggle(theme.id)}
+                    disabled={isDisabled}
+                    aria-pressed={isSelected}
+                    className="relative rounded-xl px-3.5 py-3 text-left transition-colors flex flex-col"
+                    style={{
+                      background: isSelected ? C.accentSoft : C.bgElev,
+                      border: `1.3px solid ${isSelected ? C.accent : C.border}`,
+                      opacity: isDisabled ? 0.4 : 1,
+                    }}
+                  >
+                    <span className="flex items-start justify-between gap-2">
+                      <span className="font-bold text-[14px] leading-tight">{theme.label}</span>
+                      <span
+                        className="w-[18px] h-[18px] rounded-full shrink-0 flex items-center justify-center"
+                        style={{
+                          background: isSelected ? C.accent : "transparent",
+                          border: isSelected ? "none" : `1.3px solid ${C.border}`,
+                          color: "#fff",
+                        }}
+                      >
+                        {isSelected && <CheckIcon size={10} />}
+                      </span>
+                    </span>
+                    <span className="text-[11.5px] mt-1 leading-snug" style={{ color: C.textMuted }}>
+                      {theme.desc}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        ))}
         <p className="text-center text-[12px] mt-3.5" style={{ color: C.textMuted }}>
-          Puoi selezionarne massimo {MAX_THEMES}
+          {selected.length} di {MAX_THEMES} selezionati
         </p>
       </div>
 

@@ -5,14 +5,57 @@ import type { Mood } from "./data";
 
 // I temi di viaggio riusano la stessa forma dei "mood" delle serate,
 // ma con contenuti pensati per un viaggio invece che per una serata a Milano.
-export type Theme = Mood & { icon: string };
+// Sono raggruppati in categorie per la schermata di scelta (max 3 selezionabili).
+// "desc" finisce anche nel prompt di Claude: descrive cosa deve proporre.
+export type ThemeGroup = "natura" | "cultura" | "gusto" | "relax" | "stile";
+export type Theme = Mood & { icon: string; group: ThemeGroup };
+
+export const THEME_GROUPS: { id: ThemeGroup; label: string }[] = [
+  { id: "natura", label: "Natura e avventura" },
+  { id: "cultura", label: "Cultura e storia" },
+  { id: "gusto", label: "Gusto e serate" },
+  { id: "relax", label: "Relax e benessere" },
+  { id: "stile", label: "Stile di viaggio" },
+];
 
 export const TRAVEL_THEMES: Theme[] = [
-  { id: "adventure",   emoji: "⚡",  label: "Avventuroso",       color: "#F59E0B", desc: "Trekking, natura selvaggia, fuori dai sentieri battuti", icon: "adventure" },
-  { id: "history_war", emoji: "🎖️", label: "Storico / bellico", color: "#78716C", desc: "Musei di guerra, siti storici, memoria dei luoghi", icon: "history_war" },
-  { id: "on_the_road", emoji: "🏍️", label: "On the road",       color: "#B24A2C", desc: "In moto o auto, strada libera, tappa dopo tappa", icon: "on_the_road" },
-  { id: "relax",       emoji: "🌊",  label: "Relax",             color: "#06B6D4", desc: "Ritmo lento, mare o natura, zero stress", icon: "relax" },
-  { id: "cultural",    emoji: "🎭",  label: "Culturale",         color: "#EC4899", desc: "Arte, tradizioni locali, musei e monumenti", icon: "cultural" },
+  // Natura e avventura
+  { id: "adventure",   group: "natura", emoji: "⚡",  label: "Avventuroso",         color: "#F59E0B", desc: "Trekking, natura selvaggia, fuori dai sentieri battuti", icon: "adventure" },
+  { id: "hiking",      group: "natura", emoji: "🥾",  label: "Trekking e cammini",  color: "#65A30D", desc: "Sentieri, cammini a tappe, giornate a piedi con panorami e rifugi", icon: "hiking" },
+  { id: "nature",      group: "natura", emoji: "🏞️", label: "Natura e panorami",   color: "#16A34A", desc: "Parchi, laghi, punti panoramici, albe e tramonti", icon: "nature" },
+  { id: "beach",       group: "natura", emoji: "🏖️", label: "Mare e spiagge",      color: "#0EA5E9", desc: "Spiagge, calette, giri in barca, giornate di sole", icon: "beach" },
+  { id: "mountain",    group: "natura", emoji: "🏔️", label: "Montagna",            color: "#64748B", desc: "Alpi e vette, laghi alpini, rifugi, sci e sport invernali in stagione", icon: "mountain" },
+  { id: "water_sports",group: "natura", emoji: "🤿",  label: "Sport d'acqua",       color: "#0891B2", desc: "Snorkeling, immersioni, surf, kayak, vela", icon: "water_sports" },
+  { id: "wildlife",    group: "natura", emoji: "🦁",  label: "Safari e fauna",      color: "#CA8A04", desc: "Safari, osservazione di animali, riserve e parchi naturali", icon: "wildlife" },
+
+  // Cultura e storia
+  { id: "cultural",    group: "cultura", emoji: "🎭", label: "Culturale",           color: "#EC4899", desc: "Arte, tradizioni locali, musei e monumenti", icon: "cultural" },
+  { id: "history_war", group: "cultura", emoji: "🎖️", label: "Storico / bellico",  color: "#78716C", desc: "Musei di guerra, siti storici, memoria dei luoghi", icon: "history_war" },
+  { id: "architecture",group: "cultura", emoji: "🏛️", label: "Architettura e design", color: "#A16207", desc: "Edifici iconici, quartieri d'autore, design e architettura contemporanea", icon: "architecture" },
+  { id: "cinema",      group: "cultura", emoji: "🎬", label: "Cinema e serie TV",   color: "#7C3AED", desc: "Set di film e serie, luoghi resi celebri dallo schermo", icon: "cinema" },
+  { id: "spiritual",   group: "cultura", emoji: "🕯️", label: "Spirituale",         color: "#9333EA", desc: "Templi, santuari, cammini spirituali, meditazione e silenzio", icon: "spiritual" },
+  { id: "local_life",  group: "cultura", emoji: "🧺", label: "Vita locale",         color: "#C2410C", desc: "Mercati, quartieri autentici, botteghe e incontri con la gente del posto", icon: "local_life" },
+
+  // Gusto e serate
+  { id: "food",        group: "gusto", emoji: "🍝",  label: "Food e cucina locale", color: "#DC2626", desc: "Piatti tipici, mercati, trattorie storiche, street food, corsi di cucina", icon: "food" },
+  { id: "wine",        group: "gusto", emoji: "🍷",  label: "Vino e cantine",       color: "#9F1239", desc: "Cantine, degustazioni, vigneti, enoteche e wine bar", icon: "wine" },
+  { id: "nightlife",   group: "gusto", emoji: "🍸",  label: "Vita notturna",        color: "#4F46E5", desc: "Cocktail bar, musica dal vivo, locali e club", icon: "nightlife" },
+  { id: "shopping",    group: "gusto", emoji: "🛍️", label: "Shopping e mercatini", color: "#DB2777", desc: "Boutique, mercatini, artigianato e prodotti tipici da portare a casa", icon: "shopping" },
+
+  // Relax e benessere
+  { id: "relax",       group: "relax", emoji: "🌊",  label: "Relax",                color: "#06B6D4", desc: "Ritmo lento, mare o natura, zero stress", icon: "relax" },
+  { id: "wellness",    group: "relax", emoji: "🧖",  label: "Benessere e spa",      color: "#14B8A6", desc: "Terme, spa, massaggi, yoga, hotel con centro benessere", icon: "wellness" },
+  { id: "romantic",    group: "relax", emoji: "💞",  label: "Romantico",            color: "#E11D48", desc: "Tramonti, cene speciali, hotel di charme, momenti in due", icon: "romantic" },
+  { id: "luxury",      group: "relax", emoji: "✨",  label: "Lusso",                color: "#B45309", desc: "Hotel 5 stelle, ristoranti stellati, esperienze esclusive", icon: "luxury" },
+
+  // Stile di viaggio
+  { id: "on_the_road", group: "stile", emoji: "🏍️", label: "On the road",         color: "#B24A2C", desc: "In moto o auto, strada libera, tappa dopo tappa", icon: "on_the_road" },
+  { id: "city_break",  group: "stile", emoji: "🏙️", label: "City break",          color: "#475569", desc: "Pochi giorni in città: i luoghi imperdibili senza perdere tempo", icon: "city_break" },
+  { id: "family",      group: "stile", emoji: "👨‍👩‍👧", label: "Con bambini",       color: "#F97316", desc: "Attività adatte alle famiglie, ritmi tranquilli, pause e spazi per i più piccoli", icon: "family" },
+  { id: "friends",     group: "stile", emoji: "🎉",  label: "Tra amici",            color: "#D946EF", desc: "Esperienze da fare in gruppo, divertimento e serate insieme", icon: "friends" },
+  { id: "photography", group: "stile", emoji: "📷",  label: "Fotografia",           color: "#0F766E", desc: "Luoghi fotogenici, luce dell'alba e del tramonto, scorci da cartolina", icon: "photography" },
+  { id: "events",      group: "stile", emoji: "🎟️", label: "Eventi e sport",       color: "#2563EB", desc: "Concerti, festival, partite, gran premi e appuntamenti in calendario", icon: "events" },
+  { id: "offbeat",     group: "stile", emoji: "🧭",  label: "Fuori dai circuiti",   color: "#57534E", desc: "Luoghi meno battuti, borghi e chicche lontane dalle folle", icon: "offbeat" },
 ];
 
 export type Traveler = {
