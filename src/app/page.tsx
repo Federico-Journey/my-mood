@@ -311,8 +311,6 @@ export default function HomePage() {
                   <a
                     key={t.id}
                     href={`/viaggio/diario/${t.id}`}
-                    target="_blank"
-                    rel="noreferrer"
                     className="shrink-0 w-[124px] rounded-xl p-2.5"
                     style={{ background: C.bgElev, border: `1px solid ${C.border}` }}
                   >

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseForRequest } from "@/lib/supabaseServer";
 import { refineTrip, type GenerateTripInput, type GeneratedTrip } from "@/lib/tripGenerator";
 import { logGenerationCosts } from "@/lib/costTracking";
 
@@ -31,7 +31,8 @@ export async function POST(request: NextRequest) {
     void logGenerationCosts(tripId ?? null, costs);
 
     if (tripId) {
-      const { error } = await supabase
+      const { db } = await supabaseForRequest(request);
+      const { error } = await db
         .from("trips")
         .update({
           title: updatedTrip.title,

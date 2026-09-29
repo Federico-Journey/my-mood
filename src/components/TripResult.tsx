@@ -220,8 +220,6 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
             {tripId && (
               <a
                 href={`/viaggio/diario/${tripId}`}
-                target="_blank"
-                rel="noreferrer"
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-[13.5px]"
                 style={{ background: C.bgElev, color: C.text, border: `1.3px solid ${C.border}` }}
               >

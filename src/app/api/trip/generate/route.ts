@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseForRequest } from "@/lib/supabaseServer";
 import { generateTrip, type GenerateTripInput } from "@/lib/tripGenerator";
 import { logGenerationCosts } from "@/lib/costTracking";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime, userId } = body as GenerateTripInput & { userId?: string | null };
+    const { destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime } = body as GenerateTripInput;
+    // Chi e' l'utente lo ricaviamo dal token di sessione verificato, non dal
+    // corpo della richiesta (vedi supabaseForRequest).
+    const { db, userId } = await supabaseForRequest(request);
 
     if (!destination || !people || !themes || !Array.isArray(themes) || themes.length === 0) {
       return NextResponse.json({ error: "Dati del viaggio incompleti" }, { status: 400 });
@@ -25,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     const durationDays = itinerary.days.length;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from("trips")
       .insert({
         user_id: userId ?? null,

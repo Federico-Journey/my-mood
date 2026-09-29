@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { authHeaders } from "@/lib/authHeaders";
 import { ELLY_COLORS, TRAVEL_THEMES } from "@/lib/travelData";
 import { PinIcon, CalendarIcon, CompassIcon } from "@/components/EllyIcons";
 import type { GeneratedTrip, ItineraryActivity } from "@/lib/tripGenerator";
@@ -51,6 +52,25 @@ export default function DiarioViaggioPage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [mapOk, setMapOk] = useState(true);
+  const [mapUrl, setMapUrl] = useState<string | null>(null);
+
+  // La cartina e' generata lato server a partire dal viaggio: per i viaggi
+  // con proprietario il server deve sapere chi sei, quindi la scarichiamo
+  // con il token di sessione invece di un semplice <img src="...">.
+  useEffect(() => {
+    let objectUrl: string | null = null;
+    (async () => {
+      try {
+        const res = await fetch(`/api/trip/staticmap?tripId=${id}`, { headers: await authHeaders() });
+        if (!res.ok) { setMapOk(false); return; }
+        objectUrl = URL.createObjectURL(await res.blob());
+        setMapUrl(objectUrl);
+      } catch {
+        setMapOk(false);
+      }
+    })();
+    return () => { if (objectUrl) URL.revokeObjectURL(objectUrl); };
+  }, [id]);
 
   useEffect(() => {
     supabase
@@ -80,7 +100,10 @@ export default function DiarioViaggioPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: C.paper, color: C.text }}>
         <p>Viaggio non trovato.</p>
-        <Link href="/viaggio" style={{ color: C.accent }}>← Torna a Elly</Link>
+        <p className="text-[13px] max-w-[300px] text-center" style={{ color: C.textMuted }}>
+          Se è un viaggio che hai salvato, accedi con il tuo account per vederlo.
+        </p>
+        <Link href={`/auth?redirect=${encodeURIComponent(`/viaggio/diario/${id}`)}`} style={{ color: C.accent }}>Accedi</Link>
       </div>
     );
   }
@@ -153,13 +176,13 @@ export default function DiarioViaggioPage() {
         </div>
 
         {/* ── Cartina degli spostamenti ─────────────────────────── */}
-        {mapOk && (
+        {mapOk && mapUrl && (
           <div className="mb-10 print:mb-8 print:break-inside-avoid">
             <p className="text-[12px] font-semibold uppercase tracking-[.5px] mb-3" style={{ color: C.accent }}>
               Cartina degli spostamenti
             </p>
             <img
-              src={`/api/trip/staticmap?tripId=${trip.id}`}
+              src={mapUrl}
               alt="Cartina degli spostamenti"
               className="w-full rounded-2xl print:rounded-none"
               style={{ border: `1.3px solid ${C.border}` }}

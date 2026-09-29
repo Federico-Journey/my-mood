@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { authHeaders } from "@/lib/authHeaders";
 import DestinationInput from "@/components/DestinationInput";
 import PeopleStepper from "@/components/PeopleStepper";
 import DateRangePicker from "@/components/DateRangePicker";
@@ -27,19 +28,14 @@ export default function ViaggioPage() {
   const [generatedTrip, setGeneratedTrip] = useState<GeneratedTrip | null>(null);
   const [tripId, setTripId] = useState<string | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const [loadingSaved, setLoadingSaved] = useState(false);
 
   const draft = (): GenerateTripInput => ({ destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime });
 
-  // Recupera l'utente loggato (per associare i viaggi generati a lui) e,
-  // se l'URL contiene ?id=..., carica un viaggio già salvato invece di
-  // ripartire dall'inizio (link da "I miei viaggi").
+  // Se l'URL contiene ?id=..., carica un viaggio già salvato invece di
+  // ripartire dall'inizio (link da "I miei viaggi"). L'utente loggato viene
+  // riconosciuto dal server tramite il token di sessione (authHeaders).
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUserId(session?.user?.id ?? null);
-    });
-
     const params = new URLSearchParams(window.location.search);
     const savedId = params.get("id");
     if (!savedId) return;
@@ -78,8 +74,8 @@ export default function ViaggioPage() {
     try {
       const res = await fetch("/api/trip/generate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...draft(), userId }),
+        headers: await authHeaders(),
+        body: JSON.stringify(draft()),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -98,7 +94,7 @@ export default function ViaggioPage() {
     if (!generatedTrip) throw new Error("Nessun itinerario da modificare.");
     const res = await fetch("/api/trip/refine", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: await authHeaders(),
       body: JSON.stringify({ ...draft(), tripId, currentTrip: generatedTrip, feedback }),
     });
     const data = await res.json();

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseForRequest } from "@/lib/supabaseServer";
 import type { GeneratedTrip } from "@/lib/tripGenerator";
 import { logCostEvent } from "@/lib/costTracking";
 import { GOOGLE_STATIC_MAP_USD_PER_CALL } from "@/lib/pricing";
@@ -24,7 +24,8 @@ export async function GET(request: NextRequest) {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   if (!apiKey) return new NextResponse(null, { status: 404 });
 
-  const { data, error } = await supabase.from("trips").select("itinerary").eq("id", tripId).single();
+  const { db } = await supabaseForRequest(request);
+  const { data, error } = await db.from("trips").select("itinerary").eq("id", tripId).single();
   if (error || !data) return new NextResponse(null, { status: 404 });
 
   const trip = { days: data.itinerary } as Pick<GeneratedTrip, "days">;
