@@ -14,6 +14,8 @@ import { ELLY_COLORS, TRAVEL_THEMES } from "@/lib/travelData";
 import type { ItineraryDay } from "@/lib/tripGenerator";
 import AppPage from "@/components/AppPage";
 import PlacePhoto from "@/components/PlacePhoto";
+import { useBillingStatus } from "@/lib/useBillingStatus";
+import { planSummary } from "@/lib/billingConfig";
 
 const C = ELLY_COLORS;
 
@@ -129,6 +131,8 @@ export default function HomePage() {
   const [name, setName] = useState<string | null>(null);
   const [trips, setTrips] = useState<HomeTrip[]>([]);
   const [votes, setVotes] = useState<Record<string, Votes>>({});
+  const { status: billing } = useBillingStatus();
+  const plan = billing && billing.enabled && billing.loggedIn ? planSummary(billing) : null;
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
@@ -240,6 +244,23 @@ export default function HomePage() {
             <p className="text-[11px] font-semibold uppercase tracking-[.1em]" style={{ color: C.textMuted }}>{dateLine}</p>
             <h1 className="text-[27px] font-medium leading-[1.1] mt-1" style={{ textWrap: "balance" }}>{headline}</h1>
           </div>
+
+          {plan && (
+            <Link
+              href={plan.kind === "payment_failed" ? "/profilo" : "/prezzi"}
+              className="flex items-center justify-between gap-3 rounded-2xl px-4 py-3 mb-3"
+              style={{ background: C.bgElev, border: `1px solid ${C.border}` }}
+            >
+              <span className="min-w-0">
+                <span className="block text-[11px] font-semibold uppercase tracking-[.1em]" style={{ color: C.textMuted }}>{plan.label}</span>
+                <span className="block text-[13.5px] mt-0.5 leading-snug">{plan.detail}</span>
+              </span>
+              <span className="shrink-0 text-center leading-none">
+                <span className="block text-[22px] font-medium tabular-nums" style={{ fontFamily: "var(--font-display)", color: C.accent }}>{plan.available}</span>
+                <span className="block text-[10.5px] mt-1" style={{ color: C.textMuted }}>{plan.available === 1 ? "viaggio" : "viaggi"}</span>
+              </span>
+            </Link>
+          )}
 
           {!hero && (
             <div className="rounded-2xl p-5" style={{ background: C.bgElev, border: `1px solid ${C.border}` }}>

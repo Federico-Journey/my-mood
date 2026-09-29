@@ -40,3 +40,52 @@ export type BillingStatus =
       };
       limits: { monthly: number; daily: number; refinements: number };
     };
+
+/** Stato di un utente loggato con i pagamenti attivi. */
+export type LoggedBilling = Extract<BillingStatus, { enabled: true; loggedIn: true }>;
+
+export type PlanSummary = {
+  kind: "subscription" | "payment_failed" | "pay_per_trip" | "trial";
+  /** Nome del piano, per esempio "Abbonamento mensile". */
+  label: string;
+  /** Riga di dettaglio, per esempio "3 di 15 viaggi usati". */
+  detail: string;
+  /** Viaggi completi ancora disponibili (crediti + viaggio gratuito). Con abbonamento: quelli rimasti nel periodo. */
+  available: number;
+};
+
+/** Piano attivo dell'utente, in ordine di priorità: abbonamento, crediti acquistati, prova. */
+export function planSummary(s: LoggedBilling): PlanSummary {
+  const sub = s.subscription;
+  const fmt = (iso: string | null) =>
+    iso ? new Date(iso).toLocaleDateString("it-IT", { day: "numeric", month: "long" }) : "";
+  if (sub?.active) {
+    const left = Math.max(0, s.limits.monthly - sub.used_month);
+    return {
+      kind: "subscription",
+      label: "Abbonamento mensile",
+      detail: sub.cancel_at_period_end
+        ? `${left} viaggi ancora disponibili · termina il ${fmt(sub.period_end)}`
+        : `${sub.used_month} di ${s.limits.monthly} viaggi usati · rinnovo il ${fmt(sub.period_end)}`,
+      available: left,
+    };
+  }
+  if (sub && ["past_due", "unpaid"].includes(sub.status)) {
+    return { kind: "payment_failed", label: "Pagamento non riuscito", detail: "Aggiorna il metodo di pagamento per riattivare l'abbonamento", available: s.credits + s.free_left };
+  }
+  const available = s.credits + s.free_left;
+  if (s.credits > 0) {
+    return {
+      kind: "pay_per_trip",
+      label: "Pay per viaggio",
+      detail: s.credits === 1 ? "1 viaggio acquistato disponibile" : `${s.credits} viaggi acquistati disponibili`,
+      available,
+    };
+  }
+  return {
+    kind: "trial",
+    label: "Prova gratuita",
+    detail: s.free_left > 0 ? "1 viaggio completo incluso" : "Viaggio gratuito già usato: acquista un viaggio o abbonati",
+    available,
+  };
+}

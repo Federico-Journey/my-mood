@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { ELLY_COLORS } from "@/lib/travelData";
 import { startStripe, useBillingStatus } from "@/lib/useBillingStatus";
 import { ListRow, ListSection } from "@/components/SettingsList";
+import { planSummary } from "@/lib/billingConfig";
 
 const C = ELLY_COLORS;
 
@@ -44,6 +45,7 @@ export default function PlanSection() {
   }
 
   const sub = status.subscription;
+  const plan = planSummary(status);
   const paymentFailed = !!sub && ["past_due", "unpaid"].includes(sub.status);
   const subText = sub?.active
     ? sub.cancel_at_period_end ? `Termina il ${fmtDate(sub.period_end)}` : `Attivo · rinnovo il ${fmtDate(sub.period_end)}`
@@ -69,7 +71,8 @@ export default function PlanSection() {
         </div>
       )}
       <ListSection title="Piano e viaggi">
-        <ListRow first label="Viaggio gratuito" value={status.free_left > 0 ? "Disponibile" : "Già usato"} />
+        <ListRow first label="Piano attivo" value={plan.label} />
+        <ListRow label="Viaggio gratuito" value={status.free_left > 0 ? "Disponibile" : "Già usato"} />
         <ListRow label="Viaggi acquistati" value={String(status.credits)} />
         <ListRow label="Abbonamento" value={subText} />
         {sub?.active && (
