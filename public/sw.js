@@ -1,4 +1,4 @@
-const CACHE_NAME = 'elly-v4';
+const CACHE_NAME = 'elly-v5';
 
 // Assets to pre-cache on install
 const PRECACHE_ASSETS = [

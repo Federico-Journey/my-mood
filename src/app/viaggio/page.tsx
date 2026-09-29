@@ -83,6 +83,9 @@ export default function ViaggioPage() {
       }
       setGeneratedTrip(data.trip as GeneratedTrip);
       setTripId(data.tripId ?? null);
+      // Mettiamo l'id nell'indirizzo: se la pagina viene ricaricata il
+      // viaggio (anche se non ancora salvato) si riapre invece di perdersi.
+      if (data.tripId) window.history.replaceState(null, "", `/viaggio?id=${data.tripId}`);
       setScreen("risultato");
     } catch (err) {
       setGenerationError(err instanceof Error ? err.message : "Errore imprevisto.");
@@ -110,6 +113,7 @@ export default function ViaggioPage() {
     setDestination(""); setPeople(2); setStartDate(null); setEndDate(null);
     setThemes([]); setBudgetPerPerson(700); setStartTime("09:00"); setDinnerTime("20:00");
     setGeneratedTrip(null); setTripId(null); setGenerationError(null);
+    window.history.replaceState(null, "", "/viaggio");
     setScreen("destinazione");
   };
 

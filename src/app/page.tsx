@@ -54,9 +54,13 @@ function dateRange(start: string | null, days: number) {
     : `${d} ${MONTHS_SHORT[m - 1]} – ${end.getDate()} ${MONTHS_SHORT[end.getMonth()]}`;
 }
 
+// Per le copertine preferiamo panorami e monumenti (piu' evocativi di un ristorante).
+const COVER_CATEGORIES = ["natura", "monumento", "museo", "attivita"];
+
 function firstPhoto(trip: HomeTrip) {
-  for (const day of trip.itinerary ?? []) for (const a of day.activities) if (a.verified && a.photo_url) return a.photo_url;
-  return null;
+  const all = (trip.itinerary ?? []).flatMap((d) => d.activities).filter((a) => a.verified && a.photo_url);
+  const scenic = all.find((a) => COVER_CATEGORIES.includes(a.category));
+  return (scenic ?? all[0])?.photo_url ?? null;
 }
 
 function coordinates(trip: HomeTrip) {
@@ -311,16 +315,31 @@ export default function HomePage() {
                   <a
                     key={t.id}
                     href={`/viaggio/diario/${t.id}`}
-                    className="shrink-0 w-[124px] rounded-xl p-2.5"
+                    className="shrink-0 w-[148px] rounded-xl p-2"
                     style={{ background: C.bgElev, border: `1px solid ${C.border}` }}
                   >
-                    <div className="h-[60px] rounded flex flex-col justify-center gap-1 px-2.5" style={{ background: C.accentSoft }}>
-                      <i className="block h-[3px] rounded w-[70%]" style={{ background: C.accentSoft2 }} />
-                      <i className="block h-[3px] rounded" style={{ background: C.accentSoft2 }} />
-                      <i className="block h-[3px] rounded w-[55%]" style={{ background: C.accentSoft2 }} />
+                    {/* Copertina: foto reale del viaggio con titolo, come la prima pagina del PDF */}
+                    <div className="relative h-[176px] rounded-lg overflow-hidden">
+                      <Photo src={firstPhoto(t)} className="w-full h-full" />
+                      <div
+                        className="absolute inset-0"
+                        style={{ background: "linear-gradient(to top, rgba(34,32,31,.72) 0%, rgba(34,32,31,.05) 55%, transparent 100%)" }}
+                      />
+                      <span
+                        className="absolute top-2 left-2 text-[8.5px] font-semibold uppercase tracking-[.14em] px-1.5 py-[3px] rounded"
+                        style={{ background: "rgba(251,250,247,.9)", color: C.accent }}
+                      >
+                        Diario
+                      </span>
+                      <div className="absolute left-2.5 right-2.5 bottom-2.5 text-white">
+                        <div className="text-[15px] font-semibold leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+                          {t.destination_name}
+                        </div>
+                        <div className="text-[10.5px] opacity-85 mt-0.5">
+                          {dateRange(t.start_date, t.duration_days)}
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-[12.5px] font-semibold mt-2 truncate">Diario {t.destination_name}</div>
-                    <div className="text-[11px]" style={{ color: C.textMuted }}>{t.duration_days} giorni</div>
                   </a>
                 ))}
               </div>

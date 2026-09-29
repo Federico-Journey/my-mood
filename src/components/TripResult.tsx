@@ -206,43 +206,43 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
         </h2>
         <p className="text-sm mb-4 leading-relaxed" style={{ color: C.textMuted }}>{trip.subtitle}</p>
 
-        {/* Condividi con il gruppo + diario stampabile */}
+        {/* Barra azioni: Salva · PDF · Condividi */}
         <div className="mb-8">
-          <div className="flex items-center gap-2 flex-wrap">
-            <button
+          <div
+            className="grid grid-cols-3 rounded-2xl overflow-hidden"
+            style={{ background: C.bgElev, border: `1px solid ${C.border}` }}
+          >
+            <ActionCell
+              label={saveState === "saved" ? "Salvato ✓" : saveState === "saving" ? "Salvo…" : "Salva"}
+              hint={
+                saveState === "saved" ? "nei miei viaggi"
+                : saveState === "guest" ? "accedi per salvare"
+                : "nei miei viaggi"
+              }
+              onClick={saveState === "saved" ? undefined : handleSaveTrip}
+              disabled={!tripId || saveState === "unknown" || saveState === "saving"}
+              highlighted={saveState === "saved"}
+            />
+            <ActionCell
+              label="PDF"
+              hint="diario di viaggio"
+              href={tripId ? `/viaggio/diario/${tripId}` : undefined}
+              disabled={!tripId}
+              divider
+            />
+            <ActionCell
+              label="Condividi"
+              hint={sharing ? "creo il link…" : shareUrl ? "aggiorna il link" : "invia al gruppo"}
               onClick={handleShare}
               disabled={sharing}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-[13.5px]"
-              style={{ background: C.accentSoft, color: C.accent, border: `1.3px solid ${C.border}` }}
-            >
-              {sharing ? "Creo il link…" : shareUrl ? "Aggiorna il link" : "Condividi con il gruppo"}
-            </button>
-            {tripId && (
-              <a
-                href={`/viaggio/diario/${tripId}`}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-[13.5px]"
-                style={{ background: C.bgElev, color: C.text, border: `1.3px solid ${C.border}` }}
-              >
-                Diario di viaggio (stampabile)
-              </a>
-            )}
-            {tripId && saveState !== "unknown" && (
-              saveState === "saved" ? (
-                <span className="flex items-center gap-1.5 px-4 py-2.5 text-[13.5px] font-semibold" style={{ color: C.textMuted }}>
-                  ✓ Salvato nei tuoi viaggi
-                </span>
-              ) : (
-                <button
-                  onClick={handleSaveTrip}
-                  disabled={saveState === "saving"}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-[13.5px]"
-                  style={{ background: C.bgElev, color: C.text, border: `1.3px solid ${C.border}` }}
-                >
-                  {saveState === "saving" ? "Salvo…" : "Salva nei miei viaggi"}
-                </button>
-              )
-            )}
+              divider
+            />
           </div>
+          {tripId && (saveState === "not-saved" || saveState === "guest") && (
+            <p className="text-[12px] mt-2 leading-snug" style={{ color: C.textMuted }}>
+              Questo viaggio non è ancora salvato: premi Salva per ritrovarlo in Home e in I miei viaggi.
+            </p>
+          )}
           {shareError && <p className="text-[12px] mt-2" style={{ color: C.accent }}>{shareError}</p>}
 
           {shareUrl && (
@@ -557,5 +557,39 @@ function VoteCount({ label, count, names }: { label: string; count: number; name
         {names.slice(0, 2).join(", ")}{names.length > 2 ? ` +${names.length - 2}` : ""}
       </p>
     </div>
+  );
+}
+
+function ActionCell({
+  label, hint, onClick, href, disabled, divider, highlighted,
+}: {
+  label: string;
+  hint: string;
+  onClick?: () => void;
+  href?: string;
+  disabled?: boolean;
+  divider?: boolean;
+  highlighted?: boolean;
+}) {
+  const style = {
+    borderLeft: divider ? `1px solid ${C.border}` : "none",
+    background: highlighted ? C.accentSoft : "transparent",
+    color: highlighted ? C.accent : C.text,
+    opacity: disabled && !highlighted ? 0.45 : 1,
+  } as const;
+  const className = "flex flex-col items-center justify-center text-center py-3.5 px-1.5 min-h-[64px]";
+  const inner = (
+    <>
+      <span className="text-[14.5px] font-semibold leading-tight">{label}</span>
+      <span className="text-[11px] mt-0.5 leading-tight" style={{ color: highlighted ? C.accent : C.textMuted }}>{hint}</span>
+    </>
+  );
+  if (href && !disabled) {
+    return <a href={href} className={className} style={style}>{inner}</a>;
+  }
+  return (
+    <button type="button" onClick={onClick} disabled={disabled || !onClick} className={className} style={style}>
+      {inner}
+    </button>
   );
 }

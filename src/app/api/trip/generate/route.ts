@@ -7,9 +7,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime } = body as GenerateTripInput;
-    // Chi e' l'utente lo ricaviamo dal token di sessione verificato, non dal
-    // corpo della richiesta (vedi supabaseForRequest).
-    const { db, userId } = await supabaseForRequest(request);
+    // Il viaggio viene creato "senza proprietario": resta consultabile con il
+    // suo link (condivisione, PDF, voti) ma NON compare nei viaggi dell'utente
+    // finche' non preme "Salva" (in quel momento gli viene assegnato).
+    const { db } = await supabaseForRequest(request);
 
     if (!destination || !people || !themes || !Array.isArray(themes) || themes.length === 0) {
       return NextResponse.json({ error: "Dati del viaggio incompleti" }, { status: 400 });
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await db
       .from("trips")
       .insert({
-        user_id: userId ?? null,
+        user_id: null,
         destination_name: destination,
         start_date: startDate ?? null,
         duration_days: durationDays,
