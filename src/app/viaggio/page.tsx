@@ -54,6 +54,7 @@ export default function ViaggioPage() {
           setGeneratedTrip({
             title: data.title,
             subtitle: data.subtitle ?? "",
+            mode: data.generation_mode === "trial" ? "trial" : "full",
             days: data.itinerary ?? [],
           });
           setScreen("risultato");

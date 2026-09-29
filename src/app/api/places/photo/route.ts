@@ -3,39 +3,71 @@ import { logCostEvent } from "@/lib/costTracking";
 import { GOOGLE_PLACE_PHOTO_USD_PER_CALL } from "@/lib/pricing";
 
 /**
- * Proxy verso Google Places Photo API.
+ * Foto dei luoghi da Google, recuperate AL MOMENTO (le regole Google non
+ * permettono di salvare i riferimenti alle foto, che tra l'altro scadono).
  *
- * Il browser non chiama mai direttamente Google con la nostra chiave (che
- * altrimenti sarebbe visibile a chiunque apra gli strumenti sviluppatore):
- * passa solo il "photo_reference" (un token opaco, non una credenziale) a
- * questa route, che scarica l'immagine lato server con la chiave segreta e
- * la restituisce così com'è.
+ * - ?pid=<place id>        → immagine (Place Details "solo foto", gratuito,
+ *                            + Place Photos, 7 $ ogni 1.000 con 1.000 gratis al mese)
+ * - ?pid=<place id>&meta=1 → JSON con l'autore della foto, da mostrare sotto
+ *                            l'immagine come richiesto da Google (nessun costo)
+ * - ?ref=<photo_reference> → vecchi viaggi creati con la vecchia API
+ *
+ * Il browser non vede mai la nostra chiave: parla solo con questa route.
  */
-export async function GET(request: NextRequest) {
-  const ref = request.nextUrl.searchParams.get("ref");
-  const width = request.nextUrl.searchParams.get("w") ?? "800";
 
-  if (!ref) {
-    return new NextResponse(null, { status: 400 });
-  }
+async function firstPhoto(pid: string, apiKey: string) {
+  const res = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(pid)}`, {
+    headers: { "X-Goog-Api-Key": apiKey, "X-Goog-FieldMask": "photos" },
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  const p = data.photos?.[0];
+  if (!p?.name) return null;
+  const author = p.authorAttributions?.[0];
+  return {
+    name: p.name as string,
+    author: (author?.displayName as string | undefined) ?? null,
+    authorUri: (author?.uri as string | undefined) ?? null,
+  };
+}
+
+export async function GET(request: NextRequest) {
+  const sp = request.nextUrl.searchParams;
+  const pid = sp.get("pid");
+  const ref = sp.get("ref");
+  const width = Math.min(Number(sp.get("w") ?? "800") || 800, 1600);
 
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  if (!apiKey) {
-    return new NextResponse(null, { status: 404 });
-  }
+  if (!apiKey || (!pid && !ref)) return new NextResponse(null, { status: 404 });
 
   try {
-    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${encodeURIComponent(width)}&photo_reference=${encodeURIComponent(ref)}&key=${apiKey}`;
-    const res = await fetch(url);
-    if (!res.ok || !res.body) {
-      return new NextResponse(null, { status: 502 });
+    let imageRes: Response;
+
+    if (pid) {
+      const photo = await firstPhoto(pid, apiKey);
+      if (!photo) {
+        return sp.get("meta")
+          ? NextResponse.json({ author: null }, { headers: { "Cache-Control": "private, max-age=3600" } })
+          : new NextResponse(null, { status: 404 });
+      }
+      if (sp.get("meta")) {
+        return NextResponse.json(
+          { author: photo.author, authorUri: photo.authorUri },
+          { headers: { "Cache-Control": "private, max-age=3600" } }
+        );
+      }
+      imageRes = await fetch(
+        `https://places.googleapis.com/v1/${photo.name}/media?maxWidthPx=${width}&key=${apiKey}`
+      );
+    } else {
+      imageRes = await fetch(
+        `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${width}&photo_reference=${encodeURIComponent(ref!)}&key=${apiKey}`
+      );
     }
 
-    // Registriamo qui il costo, non durante la generazione del viaggio:
-    // questa e' la vera chiamata a pagamento a Google, che scatta solo la
-    // prima volta che qualcuno visualizza questa foto (poi resta in cache
-    // 7 giorni, vedi Cache-Control qui sotto). Non e' legata a un viaggio
-    // preciso perche' la stessa foto puo' servire itinerari di piu' utenti.
+    if (!imageRes.ok || !imageRes.body) return new NextResponse(null, { status: 502 });
+
+    // Unica vera chiamata a pagamento: il download della foto.
     void logCostEvent({
       costCenter: "google_places",
       description: "Foto luogo (Place Photo)",
@@ -44,17 +76,17 @@ export async function GET(request: NextRequest) {
       amountUsd: GOOGLE_PLACE_PHOTO_USD_PER_CALL,
     });
 
-    const buffer = await res.arrayBuffer();
+    const buffer = await imageRes.arrayBuffer();
     return new NextResponse(buffer, {
       headers: {
-        "Content-Type": res.headers.get("content-type") ?? "image/jpeg",
-        // La stessa foto non cambia: cache lunga lato browser/CDN, così non
-        // richiamiamo Google Places ogni volta che si riapre la pagina.
-        "Cache-Control": "public, max-age=604800, immutable",
+        "Content-Type": imageRes.headers.get("content-type") ?? "image/jpeg",
+        // Solo nel browser di chi guarda, per un giorno: niente copie
+        // condivise sul nostro CDN (regole Google sui contenuti).
+        "Cache-Control": "private, max-age=86400",
       },
     });
   } catch (err) {
-    console.error("[Elly] Errore nel proxy foto Google Places:", err);
+    console.error("[Elly] Errore nel recupero foto Google Places:", err);
     return new NextResponse(null, { status: 502 });
   }
 }

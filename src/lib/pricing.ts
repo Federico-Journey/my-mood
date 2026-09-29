@@ -42,6 +42,12 @@ export function claudeCostUsd(inputTokens: number, outputTokens: number): number
 
 export const GOOGLE_TEXT_SEARCH_USD_PER_CALL = 32 / 1000;
 export const GOOGLE_PLACE_PHOTO_USD_PER_CALL = 7 / 1000;
+/**
+ * Places API (New): Text Search "solo identificativo" = gratis e illimitata;
+ * Place Details Essentials (coordinate + indirizzo) = 5 $ ogni 1.000,
+ * 10.000 gratuite al mese (listino verificato il 29/09/2026).
+ */
+export const GOOGLE_PLACE_DETAILS_ESSENTIALS_USD_PER_CALL = 5 / 1000;
 
 // --- Google Maps Static API -------------------------------------------
 

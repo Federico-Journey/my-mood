@@ -11,6 +11,7 @@
 
 import { supabase } from "./supabase";
 import type { GenerationCosts } from "./tripGenerator";
+import { GOOGLE_PLACE_DETAILS_ESSENTIALS_USD_PER_CALL, GOOGLE_TEXT_SEARCH_USD_PER_CALL } from "./pricing";
 
 export type CostCenter = "claude" | "google_places" | "vercel" | "supabase" | "altro";
 
@@ -63,15 +64,26 @@ export async function logGenerationCosts(tripId: string | null, costs: Generatio
     },
   ];
 
-  if (costs.googleNewCalls > 0) {
+  if (costs.googleDetailsCalls > 0) {
+    events.push({
+      tripId,
+      costCenter: "google_places",
+      description: "Verifica luoghi (Place Details Essentials)",
+      quantity: costs.googleDetailsCalls,
+      unit: "api_call",
+      amountUsd: costs.googleDetailsCalls * GOOGLE_PLACE_DETAILS_ESSENTIALS_USD_PER_CALL,
+      metadata: { reused: costs.googleReused },
+    });
+  }
+  if (costs.googleLegacyCalls > 0) {
     events.push({
       tripId,
       costCenter: "google_places",
       description: "Validazione luoghi (Text Search)",
-      quantity: costs.googleNewCalls,
+      quantity: costs.googleLegacyCalls,
       unit: "api_call",
-      amountUsd: costs.googleCostUsd,
-      metadata: { cachedCalls: costs.googleCachedCalls },
+      amountUsd: costs.googleLegacyCalls * GOOGLE_TEXT_SEARCH_USD_PER_CALL,
+      metadata: { reused: costs.googleReused, fallback: true },
     });
   }
 

@@ -10,7 +10,11 @@ export async function POST(request: NextRequest) {
     // Il viaggio viene creato "senza proprietario": resta consultabile con il
     // suo link (condivisione, PDF, voti) ma NON compare nei viaggi dell'utente
     // finche' non preme "Salva" (in quel momento gli viene assegnato).
-    const { db } = await supabaseForRequest(request);
+    const { db, userId } = await supabaseForRequest(request);
+    // Versione di prova (archivio aperto, nessuna chiamata a Google) per chi
+    // non ha fatto l'accesso; verifica completa con Google per chi è loggato.
+    // Quando arriveranno i pagamenti, qui si deciderà in base ai crediti.
+    const mode = userId ? "full" : "trial";
 
     if (!destination || !people || !themes || !Array.isArray(themes) || themes.length === 0) {
       return NextResponse.json({ error: "Dati del viaggio incompleti" }, { status: 400 });
@@ -25,7 +29,7 @@ export async function POST(request: NextRequest) {
       budgetPerPerson: budgetPerPerson ?? 0,
       startTime: startTime || "09:00",
       dinnerTime: dinnerTime || "20:00",
-    });
+    }, { mode });
 
     const durationDays = itinerary.days.length;
 
@@ -33,6 +37,7 @@ export async function POST(request: NextRequest) {
       .from("trips")
       .insert({
         user_id: null,
+        generation_mode: mode,
         destination_name: destination,
         start_date: startDate ?? null,
         duration_days: durationDays,

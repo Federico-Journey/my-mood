@@ -132,6 +132,10 @@ export default function ShareTripClient({ shareId, trip, themeAccent, initialVot
                                 <a href={act.maps_url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold underline" style={{ color: themeAccent }}>
                                   Apri in Google Maps{act.rating ? ` · ★ ${act.rating}` : ""}
                                 </a>
+                              ) : act.maps_url ? (
+                                <a href={act.maps_url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold underline" style={{ color: C.textMuted }}>
+                                  Cerca su Google Maps · da verificare
+                                </a>
                               ) : (
                                 <span className="text-[11px]" style={{ color: C.disabledText }}>luogo da verificare</span>
                               )}

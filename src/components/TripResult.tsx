@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS } from "@/lib/travelData";
 import type { GeneratedTrip, ItineraryActivity } from "@/lib/tripGenerator";
 import { approveTrip } from "@/lib/bookingChecklist";
+import PlacePhoto, { TripCredits } from "@/components/PlacePhoto";
 
 const C = ELLY_COLORS;
 
@@ -205,6 +206,20 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
           {trip.title}
         </h2>
         <p className="text-sm mb-4 leading-relaxed" style={{ color: C.textMuted }}>{trip.subtitle}</p>
+
+        {trip.mode === "trial" && (
+          <div className="mb-4 rounded-xl px-4 py-3 text-[13px] leading-relaxed" style={{ background: C.accentSoft, color: C.text }}>
+            <strong>Versione di prova.</strong> I luoghi vengono dal nostro archivio aperto e non sono verificati su Google Maps.{" "}
+            <Link
+              href={`/auth?redirect=${encodeURIComponent(tripId ? `/viaggio?id=${tripId}` : "/viaggio")}`}
+              className="font-bold underline"
+              style={{ color: C.accent }}
+            >
+              Accedi
+            </Link>{" "}
+            per itinerari con luoghi verificati.
+          </div>
+        )}
 
         {/* Barra azioni: Salva · PDF · Condividi */}
         <div className="mb-8">
@@ -417,6 +432,16 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                                   Apri in Google Maps
                                   {act.rating ? ` · ★ ${act.rating}` : ""}
                                 </a>
+                              ) : act.maps_url ? (
+                                <a
+                                  href={act.maps_url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-[12px] font-semibold underline"
+                                  style={{ color: C.textMuted }}
+                                >
+                                  Cerca su Google Maps · da verificare
+                                </a>
                               ) : (
                                 <span className="text-[11px]" style={{ color: C.disabledText }}>
                                   luogo da verificare
@@ -425,13 +450,14 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
                             </div>
                           </div>
                           {showPhoto && (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={act.photo_url!}
-                              alt={act.name}
-                              loading="lazy"
-                              className="w-[72px] h-[72px] rounded-lg object-cover shrink-0"
-                            />
+                            <div className="w-[72px] shrink-0">
+                              <PlacePhoto
+                                src={act.photo_url!}
+                                alt={act.name}
+                                credit={act.photo_credit}
+                                className="w-[72px] h-[72px] rounded-lg"
+                              />
+                            </div>
                           )}
                         </div>
                       </div>
@@ -442,6 +468,8 @@ export default function TripResult({ trip, tripId, onNewTrip, onRefine }: Props)
             </div>
           ))}
         </div>
+
+        <TripCredits activities={trip.days.flatMap((d) => d.activities)} />
 
         {/* ── Modifica il piano via chat ─────────────────────────── */}
         <div className="mt-10">

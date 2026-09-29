@@ -27,11 +27,12 @@ export async function POST(request: NextRequest) {
       startTime: startTime || "09:00", dinnerTime: dinnerTime || "20:00",
     };
 
-    const { trip: updatedTrip, costs } = await refineTrip(currentTrip, input, feedback.trim());
+    const { db, userId } = await supabaseForRequest(request);
+    const mode = userId ? "full" : "trial";
+    const { trip: updatedTrip, costs } = await refineTrip(currentTrip, input, feedback.trim(), { mode });
     void logGenerationCosts(tripId ?? null, costs);
 
     if (tripId) {
-      const { db } = await supabaseForRequest(request);
       const { error } = await db
         .from("trips")
         .update({
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
           subtitle: updatedTrip.subtitle,
           itinerary: updatedTrip.days,
           duration_days: updatedTrip.days.length,
+          generation_mode: mode,
         })
         .eq("id", tripId);
       if (error) {

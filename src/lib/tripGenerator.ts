@@ -7,7 +7,10 @@
  *    una risposta strutturata (JSON) tramite "tool use" — così non dobbiamo
  *    sperare che l'AI risponda nel formato giusto, glielo imponiamo.
  * 3. Passa ogni luogo proposto dall'AI a Google Places per verificarlo e
- *    arricchirlo con indirizzo/coordinate/rating reali (vedi googlePlaces.ts).
+ *    arricchirlo con coordinate e indirizzo reali (vedi googlePlaces.ts).
+ *
+ * Modalità "trial" (versione di prova): Claude sceglie i luoghi SOLO da un
+ * nostro archivio aperto (vedi trialPlaces.ts) e non si chiama mai Google.
  *
  * `refineTrip` riusa la stessa pipeline per le modifiche via chat: manda
  * a Claude l'itinerario attuale + il feedback dell'utente, e si aspetta
@@ -17,8 +20,9 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { TRAVEL_THEMES } from "./travelData";
-import { findPlacesBatch, type PlaceMatch } from "./googlePlaces";
-import { claudeCostUsd, GOOGLE_TEXT_SEARCH_USD_PER_CALL } from "./pricing";
+import { findPlacesBatch, mapsSearchUrl, type PlaceMatch } from "./googlePlaces";
+import { loadTrialPlaces, trialPlacesForPrompt, matchTrialPlace, normName, type TrialPlace } from "./trialPlaces";
+import { claudeCostUsd, GOOGLE_TEXT_SEARCH_USD_PER_CALL, GOOGLE_PLACE_DETAILS_ESSENTIALS_USD_PER_CALL } from "./pricing";
 
 export type ItineraryActivity = {
   time: string;
@@ -36,6 +40,12 @@ export type ItineraryActivity = {
   maps_url: string | null;
   photo_url: string | null;
   verified: boolean;
+  /** Identificativo Google del luogo (l'unico dato Google conservabile senza limiti). */
+  place_id?: string | null;
+  /** Autore e licenza della foto, per le foto dell'archivio aperto (Wikimedia Commons). */
+  photo_credit?: string | null;
+  /** Da dove arriva la verifica: Google o archivio aperto di Elly. */
+  source?: "google" | "elly" | null;
 };
 
 export type ItineraryDay = {
@@ -62,16 +72,24 @@ export type GeneratedTrip = {
   title: string;
   subtitle: string;
   changeSummary?: string;
+  /** "trial" = versione di prova con luoghi dall'archivio aperto. */
+  mode?: GenerationMode;
   days: ItineraryDay[];
 };
+
+export type GenerationMode = "full" | "trial";
 
 /** Costo reale (in USD) di una generazione o modifica di itinerario. */
 export type GenerationCosts = {
   claudeInputTokens: number;
   claudeOutputTokens: number;
   claudeCostUsd: number;
-  googleNewCalls: number;
-  googleCachedCalls: number;
+  /** Chiamate Place Details Essentials (5 $ / 1.000). */
+  googleDetailsCalls: number;
+  /** Chiamate alla vecchia Text Search (32 $ / 1.000), solo in caso di ripiego. */
+  googleLegacyCalls: number;
+  /** Luoghi già verificati ripresi senza chiamare Google. */
+  googleReused: number;
   googleCostUsd: number;
   totalCostUsd: number;
 };
@@ -83,19 +101,30 @@ export type GenerateTripResult = {
 
 function buildGenerationCosts(
   claude: { inputTokens: number; outputTokens: number },
-  google: { newCalls: number; cachedCalls: number }
+  google: { details: number; legacy: number; reused: number }
 ): GenerationCosts {
   const claudeCost = claudeCostUsd(claude.inputTokens, claude.outputTokens);
-  const googleCost = google.newCalls * GOOGLE_TEXT_SEARCH_USD_PER_CALL;
+  const googleCost = google.details * GOOGLE_PLACE_DETAILS_ESSENTIALS_USD_PER_CALL + google.legacy * GOOGLE_TEXT_SEARCH_USD_PER_CALL;
   return {
     claudeInputTokens: claude.inputTokens,
     claudeOutputTokens: claude.outputTokens,
     claudeCostUsd: claudeCost,
-    googleNewCalls: google.newCalls,
-    googleCachedCalls: google.cachedCalls,
+    googleDetailsCalls: google.details,
+    googleLegacyCalls: google.legacy,
+    googleReused: google.reused,
     googleCostUsd: googleCost,
     totalCostUsd: claudeCost + googleCost,
   };
+}
+
+/** Istruzioni aggiuntive per la versione di prova. */
+function trialBlock(trial: TrialPlace[] | null): string {
+  if (!trial) {
+    return `- VERSIONE DI PROVA: proponi solo luoghi molto noti e sicuramente esistenti della destinazione. Per pranzi e cene non inventare nomi di locali: indica la zona e il tipo di cucina (es. "Pranzo in trattoria a Trastevere").`;
+  }
+  return `- VERSIONE DI PROVA: per monumenti, musei, natura e attività usa SOLO luoghi di questo elenco, scrivendo il nome ESATTAMENTE come compare. Per pranzi, cene e drink puoi scegliere un locale dell'elenco; se non c'è niente di adatto indica la zona e il tipo di cucina (es. "Cena in una tasca nel quartiere Alfama") senza inventare nomi.
+ELENCO LUOGHI DISPONIBILI:
+${trialPlacesForPrompt(trial)}`;
 }
 
 type RawActivity = {
@@ -178,12 +207,13 @@ const ITINERARY_TOOL: Anthropic.Tool = {
   },
 };
 
-function buildGeneratePrompt(input: GenerateTripInput, numDays: number): string {
+function buildGeneratePrompt(input: GenerateTripInput, numDays: number, trial?: TrialPlace[] | null): string {
   const themeLabels = input.themes
     .map((id) => TRAVEL_THEMES.find((t) => t.id === id))
     .filter((t): t is NonNullable<typeof t> => !!t)
     .map((t) => `${t.label} (${t.desc})`)
     .join("; ");
+  const trialText = trial !== undefined ? `\n${trialBlock(trial)}` : "";
 
   const budgetPerDay = Math.round(input.budgetPerPerson / Math.max(numDays, 1));
   const periodLine = input.startDate && input.endDate
@@ -207,11 +237,12 @@ Istruzioni:
 - Rispetta il budget indicato: se è basso preferisci street food/trattorie locali/attività gratuite, se è alto includi anche qualche esperienza premium.
 - Rifletti i temi scelti nello stile delle attività proposte (es. se il tema è "storico/bellico" includi musei di guerra, siti storici, memoriali; se è "on the road" struttura le giornate come tappe di un percorso).
 - Dai priorità ai luoghi più iconici, fotogenici e conosciuti della destinazione (quelli che chiunque cerca su Instagram o TikTok prima di partire), non a posti generici — ma alterna con qualche chicca meno scontata, per non fare un itinerario di sole trappole turistiche.
-- Scrivi tutto in italiano.
+- Scrivi tutto in italiano.${trialText}
 - Rispondi SOLO chiamando lo strumento "build_itinerary", senza testo aggiuntivo.`;
 }
 
-function buildRefinePrompt(input: GenerateTripInput, currentTrip: GeneratedTrip, feedback: string): string {
+function buildRefinePrompt(input: GenerateTripInput, currentTrip: GeneratedTrip, feedback: string, trial?: TrialPlace[] | null): string {
+  const trialText = trial !== undefined ? `\n${trialBlock(trial)}` : "";
   // Mandiamo indietro solo i campi "autoriali": indirizzo/coordinate/rating
   // vengono ri-generati dopo dalla validazione Google Places, non serve
   // rimandarli a Claude (risparmia token e quindi soldi).
@@ -242,7 +273,7 @@ Istruzioni:
 - Se il feedback chiede di aggiungere o sostituire un luogo, usa nomi SPECIFICI e REALI (verranno controllati su Google Maps dopo).
 - Mantieni lo stesso numero di giorni, a meno che il feedback non chieda esplicitamente di cambiarlo.
 - Compila anche "change_summary": una frase breve, in italiano, colloquiale, che spiega cosa hai cambiato (es. "Ho tolto il museo del giorno 2 e aggiunto una passeggiata al tramonto sul lungomare.").
-- Rispondi SOLO chiamando lo strumento "build_itinerary" con l'itinerario COMPLETO aggiornato (tutti i giorni, non solo quello modificato).`;
+- Rispondi SOLO chiamando lo strumento "build_itinerary" con l'itinerario COMPLETO aggiornato (tutti i giorni, non solo quello modificato).${trialText}`;
 }
 
 /**
@@ -298,51 +329,111 @@ async function callClaudeForItinerary(
 }
 
 /**
- * Valida ogni luogo dell'itinerario "grezzo" con Google Places e lo
- * arricchisce con indirizzo/coordinate/rating reali.
+ * Arricchisce l'itinerario "grezzo" con dati reali:
+ * - modalità "full": verifica con Google (vedi googlePlaces.ts);
+ * - modalità "trial": prende i dati dall'archivio aperto, senza Google.
+ * In entrambi i casi i luoghi già presenti nella versione precedente dello
+ * stesso viaggio (modifiche in chat) vengono ripresi così come sono.
  */
 type EnrichedTrip = {
   trip: GeneratedTrip;
-  googleNewCalls: number;
-  googleCachedCalls: number;
+  google: { details: number; legacy: number; reused: number };
 };
 
-async function enrichWithPlaces(raw: RawItinerary, input: GenerateTripInput): Promise<EnrichedTrip> {
-  const flatActivities = raw.days.flatMap((d) => d.activities);
-  const { results: placeMatches, googleApiCalls, cacheHits } = await findPlacesBatch(
-    flatActivities.map((a) => ({ name: a.name, destination: input.destination, category: a.category }))
-  );
+type EnrichOptions = {
+  mode: GenerationMode;
+  trialPlaces: TrialPlace[] | null;
+  previous?: GeneratedTrip;
+};
+
+function previousByName(prev?: GeneratedTrip): Map<string, ItineraryActivity> {
+  const map = new Map<string, ItineraryActivity>();
+  for (const d of prev?.days ?? []) for (const a of d.activities) if (a.verified) map.set(normName(a.name), a);
+  return map;
+}
+
+async function enrichWithPlaces(raw: RawItinerary, input: GenerateTripInput, opts: EnrichOptions): Promise<EnrichedTrip> {
+  const flat = raw.days.flatMap((d) => d.activities);
+  const previous = previousByName(opts.previous);
+  type Extra = Pick<ItineraryActivity, "address" | "latitude" | "longitude" | "rating" | "maps_url" | "photo_url" | "verified" | "place_id" | "photo_credit" | "source">;
+  const unverified = (name: string): Extra => ({
+    address: null, latitude: null, longitude: null, rating: null,
+    maps_url: mapsSearchUrl(name, input.destination), photo_url: null, verified: false,
+    place_id: null, photo_credit: null, source: null,
+  });
+
+  const extras: (Extra | null)[] = flat.map((a) => {
+    const prev = previous.get(normName(a.name));
+    if (!prev) return null;
+    return {
+      address: prev.address, latitude: prev.latitude, longitude: prev.longitude, rating: prev.rating,
+      maps_url: prev.maps_url, photo_url: prev.photo_url, verified: prev.verified,
+      place_id: prev.place_id ?? null, photo_credit: prev.photo_credit ?? null, source: prev.source ?? null,
+    };
+  });
+  let reused = extras.filter(Boolean).length;
+  let details = 0;
+  let legacy = 0;
+
+  if (opts.mode === "trial") {
+    flat.forEach((a, i) => {
+      if (extras[i]) return;
+      const p = opts.trialPlaces ? matchTrialPlace(a.name, opts.trialPlaces) : null;
+      extras[i] = p
+        ? {
+            address: null,
+            latitude: p.latitude,
+            longitude: p.longitude,
+            rating: null,
+            maps_url: mapsSearchUrl(p.name, input.destination),
+            photo_url: p.image_url,
+            verified: true,
+            place_id: null,
+            photo_credit: p.image_credit,
+            source: "elly",
+          }
+        : unverified(a.name);
+    });
+  } else {
+    const todo = flat.map((a, i) => ({ a, i })).filter(({ i }) => !extras[i]);
+    const batch = await findPlacesBatch(
+      todo.map(({ a }) => ({ name: a.name, destination: input.destination, category: a.category }))
+    );
+    details = batch.detailsCalls;
+    legacy = batch.legacyCalls;
+    reused += batch.reused;
+    todo.forEach(({ a, i }, k) => {
+      const m = batch.results[k];
+      const v: PlaceMatch | null = m.verified ? m : null;
+      extras[i] = v
+        ? {
+            address: v.address, latitude: v.latitude, longitude: v.longitude, rating: v.rating,
+            maps_url: v.mapsUrl, photo_url: v.photoUrl, verified: true,
+            place_id: v.placeId, photo_credit: null, source: "google",
+          }
+        : unverified(a.name);
+    });
+  }
 
   let cursor = 0;
   const days: ItineraryDay[] = raw.days.map((d) => ({
     day: d.day,
     date: input.startDate ? addDays(input.startDate, d.day - 1) : null,
     title: d.title,
-    activities: d.activities.map((a) => {
-      const match = placeMatches[cursor++];
-      const verified: PlaceMatch | null = match.verified ? match : null;
-      return {
-        time: a.time,
-        name: a.name,
-        category: a.category,
-        description: a.description,
-        tip: a.tip ?? null,
-        estimated_cost_per_person: a.estimated_cost_per_person ?? null,
-        address: verified?.address ?? null,
-        latitude: verified?.latitude ?? null,
-        longitude: verified?.longitude ?? null,
-        rating: verified?.rating ?? null,
-        maps_url: verified?.mapsUrl ?? null,
-        photo_url: verified?.photoUrl ?? null,
-        verified: !!verified,
-      };
-    }),
+    activities: d.activities.map((a) => ({
+      time: a.time,
+      name: a.name,
+      category: a.category,
+      description: a.description,
+      tip: a.tip ?? null,
+      estimated_cost_per_person: a.estimated_cost_per_person ?? null,
+      ...(extras[cursor++] as Extra),
+    })),
   }));
 
   return {
-    trip: { title: raw.title, subtitle: raw.subtitle, changeSummary: raw.change_summary, days },
-    googleNewCalls: googleApiCalls,
-    googleCachedCalls: cacheHits,
+    trip: { title: raw.title, subtitle: raw.subtitle, changeSummary: raw.change_summary, mode: opts.mode, days },
+    google: { details, legacy, reused },
   };
 }
 
@@ -357,36 +448,38 @@ function requireApiKey(): string {
 }
 
 /** Genera un itinerario da zero a partire dalle scelte dell'utente. */
-export async function generateTrip(input: GenerateTripInput): Promise<GenerateTripResult> {
+export async function generateTrip(
+  input: GenerateTripInput,
+  opts: { mode?: GenerationMode } = {}
+): Promise<GenerateTripResult> {
+  const mode = opts.mode ?? "full";
   const client = new Anthropic({ apiKey: requireApiKey() });
   const numDays = numDaysFor(input, 3);
+  const trialPlaces = mode === "trial" ? await loadTrialPlaces(input.destination) : null;
   const { raw, inputTokens, outputTokens } = await callClaudeForItinerary(
     client,
-    buildGeneratePrompt(input, numDays),
+    buildGeneratePrompt(input, numDays, mode === "trial" ? trialPlaces : undefined),
     numDays
   );
-  const { trip, googleNewCalls, googleCachedCalls } = await enrichWithPlaces(raw, input);
-  return {
-    trip,
-    costs: buildGenerationCosts({ inputTokens, outputTokens }, { newCalls: googleNewCalls, cachedCalls: googleCachedCalls }),
-  };
+  const { trip, google } = await enrichWithPlaces(raw, input, { mode, trialPlaces });
+  return { trip, costs: buildGenerationCosts({ inputTokens, outputTokens }, google) };
 }
 
 /** Modifica un itinerario esistente in base al feedback scritto dall'utente in chat. */
 export async function refineTrip(
   currentTrip: GeneratedTrip,
   input: GenerateTripInput,
-  feedback: string
+  feedback: string,
+  opts: { mode?: GenerationMode } = {}
 ): Promise<GenerateTripResult> {
+  const mode = opts.mode ?? "full";
   const client = new Anthropic({ apiKey: requireApiKey() });
+  const trialPlaces = mode === "trial" ? await loadTrialPlaces(input.destination) : null;
   const { raw, inputTokens, outputTokens } = await callClaudeForItinerary(
     client,
-    buildRefinePrompt(input, currentTrip, feedback),
+    buildRefinePrompt(input, currentTrip, feedback, mode === "trial" ? trialPlaces : undefined),
     currentTrip.days.length
   );
-  const { trip, googleNewCalls, googleCachedCalls } = await enrichWithPlaces(raw, input);
-  return {
-    trip,
-    costs: buildGenerationCosts({ inputTokens, outputTokens }, { newCalls: googleNewCalls, cachedCalls: googleCachedCalls }),
-  };
+  const { trip, google } = await enrichWithPlaces(raw, input, { mode, trialPlaces, previous: currentTrip });
+  return { trip, costs: buildGenerationCosts({ inputTokens, outputTokens }, google) };
 }

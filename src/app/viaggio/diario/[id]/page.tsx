@@ -8,6 +8,7 @@ import { authHeaders } from "@/lib/authHeaders";
 import { ELLY_COLORS, TRAVEL_THEMES } from "@/lib/travelData";
 import { PinIcon, CalendarIcon, CompassIcon } from "@/components/EllyIcons";
 import type { GeneratedTrip, ItineraryActivity } from "@/lib/tripGenerator";
+import PlacePhoto, { TripCredits } from "@/components/PlacePhoto";
 
 const C = ELLY_COLORS;
 
@@ -112,9 +113,8 @@ export default function DiarioViaggioPage() {
     .map((tid) => TRAVEL_THEMES.find((t) => t.id === tid))
     .filter((t): t is (typeof TRAVEL_THEMES)[number] => !!t);
 
-  const heroPhoto = trip.itinerary
-    .flatMap((d) => d.activities)
-    .find((a) => a.photo_url)?.photo_url ?? null;
+  const heroAct = trip.itinerary.flatMap((d) => d.activities).find((a) => a.photo_url) ?? null;
+  const heroPhoto = heroAct?.photo_url ?? null;
 
   return (
     <div style={{ background: C.paper, color: C.text }}>
@@ -139,12 +139,9 @@ export default function DiarioViaggioPage() {
         {/* ── Copertina ─────────────────────────────────────────── */}
         <div className="mb-10 print:mb-8">
           {heroPhoto ? (
-            <img
-              src={heroPhoto}
-              alt={trip.destination_name}
-              className="w-full h-[220px] object-cover rounded-2xl mb-6 print:rounded-none"
-              style={{ border: `1.3px solid ${C.border}` }}
-            />
+            <div className="w-full h-[220px] rounded-2xl mb-6 overflow-hidden print:rounded-none" style={{ border: `1.3px solid ${C.border}` }}>
+              <PlacePhoto src={heroPhoto} alt={trip.destination_name} credit={heroAct?.photo_credit} className="w-full h-full" overlay />
+            </div>
           ) : (
             <div
               className="w-full h-[180px] rounded-2xl mb-6 flex items-center justify-center print:rounded-none"
@@ -211,7 +208,13 @@ export default function DiarioViaggioPage() {
                     style={{ background: C.bgElev, border: `1.3px solid ${C.border}` }}
                   >
                     {act.photo_url && (
-                      <img src={act.photo_url} alt={act.name} className="w-full h-[160px] object-cover" />
+                      <PlacePhoto
+                        src={act.photo_url}
+                        alt={act.name}
+                        credit={act.photo_credit}
+                        className="w-full h-[160px] block"
+                        captionClassName="px-4 pt-1"
+                      />
                     )}
                     <div className="p-4">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -243,6 +246,8 @@ export default function DiarioViaggioPage() {
             </div>
           ))}
         </div>
+
+        <TripCredits activities={trip.itinerary.flatMap((d) => d.activities)} open />
 
         <p className="text-center text-[12px] mt-12 print:mt-8" style={{ color: C.textMuted }}>
           Generato con Elly

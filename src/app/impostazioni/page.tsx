@@ -59,6 +59,7 @@ export default function ImpostazioniPage() {
       {isAdmin && (
         <ListSection title="Gestione">
           <ListRow first label="Costi e ricavi" href="/admin/report" />
+          <ListRow label="Archivio della prova" href="/admin/prova" />
         </ListSection>
       )}
 

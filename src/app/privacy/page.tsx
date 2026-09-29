@@ -144,6 +144,10 @@ export default function PrivacyPage() {
             <strong>Google</strong> — verifica dei luoghi, foto e mappe (Places API e Static Maps: riceve nomi e coordinate dei
             luoghi e la destinazione, non i tuoi dati personali), Google Fonts, e accesso con Google se lo scegli.
           </li>
+          <li>
+            <strong>Wikimedia Foundation</strong> — nella versione di prova le foto dei luoghi vengono caricate direttamente da
+            Wikimedia Commons, che riceve quindi l&apos;indirizzo IP del tuo dispositivo come per qualsiasi immagine sul web.
+          </li>
           <li><strong>Cloudflare</strong> — gestione del dominio e inoltro delle email inviate a {LEGAL.email}.</li>
           <li><strong>Stripe</strong> — pagamenti, quando saranno attivi.</li>
           <li>
@@ -228,6 +232,15 @@ export default function PrivacyPage() {
         <P>
           I suggerimenti di destinazione si basano su dati geografici <Ext href="https://www.geonames.org">GeoNames</Ext>,
           distribuiti con licenza Creative Commons Attribution 4.0.
+        </P>
+        <P>
+          Nella versione di prova i luoghi provengono da <Ext href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</Ext>{" "}
+          (licenza ODbL) e da <Ext href="https://www.wikidata.org">Wikidata</Ext> (CC0); le foto da{" "}
+          <Ext href="https://commons.wikimedia.org">Wikimedia Commons</Ext>, con autore e licenza indicati in ogni viaggio.
+        </P>
+        <P>
+          Dei dati di Google Maps conserviamo solo quanto consentito dai termini di Google: l&apos;identificativo del luogo e le
+          coordinate per non più di 30 giorni. Le foto di Google vengono mostrate al momento, con il nome del loro autore.
         </P>
       </Section>
     </LegalLayout>

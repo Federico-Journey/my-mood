@@ -13,6 +13,7 @@ import { supabase } from "@/lib/supabase";
 import { ELLY_COLORS, TRAVEL_THEMES } from "@/lib/travelData";
 import type { ItineraryDay } from "@/lib/tripGenerator";
 import AppPage from "@/components/AppPage";
+import PlacePhoto from "@/components/PlacePhoto";
 
 const C = ELLY_COLORS;
 
@@ -90,12 +91,21 @@ function voteText(v: Votes | undefined) {
   return parts.join(", ");
 }
 
-function Photo({ src, className }: { src: string | null; className: string }) {
-  return src ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt="" loading="lazy" className={`${className} object-cover`} />
-  ) : (
-    <div className={className} style={{ background: `linear-gradient(135deg, ${C.accentSoft2}, ${C.accentSoft})` }} />
+/**
+ * Foto di copertina. Le foto Google richiedono di mostrare l'autore: nei
+ * riquadri piccoli (small) non c'è spazio, quindi lì usiamo solo foto
+ * dell'archivio aperto e altrimenti lo sfondo colorato.
+ */
+function Photo({ src, className, small = false }: { src: string | null; className: string; small?: boolean }) {
+  const [failed, setFailed] = useState(false);
+  const isGoogle = !!src && src.startsWith("/api/places/photo?pid=");
+  if (!src || failed || (small && isGoogle)) {
+    return <div className={className} style={{ background: `linear-gradient(135deg, ${C.accentSoft2}, ${C.accentSoft})` }} />;
+  }
+  return (
+    <div className={`${className} overflow-hidden`}>
+      <PlacePhoto src={src} alt="" className="w-full h-full" overlay onFail={() => setFailed(true)} />
+    </div>
   );
 }
 
@@ -290,7 +300,7 @@ export default function HomePage() {
                     className="flex items-center gap-3 p-2.5"
                     style={{ borderTop: i ? `1px solid ${C.border}` : "none" }}
                   >
-                    <Photo src={firstPhoto(t)} className="w-11 h-11 rounded-lg shrink-0" />
+                    <Photo src={firstPhoto(t)} className="w-11 h-11 rounded-lg shrink-0" small />
                     <div className="flex-1 min-w-0">
                       <div className="text-[14px] font-semibold truncate">
                         {t.approved_at && <span style={{ color: C.accent }}>✓ </span>}
