@@ -1,267 +1,193 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { ELLY_COLORS } from '@/lib/travelData';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { LEGAL, LegalLayout, Section, P, UL, Mail, DefinitionList } from "@/components/LegalPage";
+import { ELLY_COLORS } from "@/lib/travelData";
 
 export const metadata: Metadata = {
-  title: 'Termini di Servizio — Elly',
-  description: 'Condizioni di utilizzo del servizio Elly.',
+  title: "Termini di servizio — Elly",
+  description: "Le condizioni con cui puoi usare Elly: cosa fa il servizio, pagamenti, responsabilità e diritti.",
 };
 
 const C = ELLY_COLORS;
-const LAST_UPDATED = 'Settembre 2026';
-const VERSION = 'Bozza 0.1';
-const CONTACT_EMAIL = 'info@planwithelly.com';
-const LEGAL_EMAIL = 'info@planwithelly.com';
 
 export default function TermsPage() {
   return (
-    <main style={{ minHeight: '100vh', background: C.paper, color: C.text, fontFamily: "var(--font-body)" }}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Figtree:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
+    <LegalLayout title="Termini di servizio" current="terms">
+      <Section title="1. Chi offre il servizio">
+        <P>
+          Elly è offerto da <strong>{LEGAL.ownerName}</strong> (di seguito “Elly” o “noi”), raggiungibile a{" "}
+          <Mail />. Usando Elly accetti questi Termini e la{" "}
+          <Link href="/privacy" style={{ color: C.accent }}>Informativa sulla privacy</Link>. Se non li accetti,
+          non usare il servizio.
+        </P>
+        <DefinitionList
+          items={[
+            ["Servizio", "L’applicazione web e mobile Elly, raggiungibile su " + LEGAL.site + "."],
+            ["Utente", "Chi usa il Servizio, con o senza account."],
+            ["Itinerario", "Il piano di viaggio giorno per giorno generato dal Servizio a partire da destinazione, date, persone, mood e budget."],
+            ["Viaggio salvato", "Un Itinerario che l’Utente ha scelto di salvare nel proprio account."],
+            ["Voto di gruppo", "La funzione che permette di condividere un Itinerario con un link e raccogliere le risposte del gruppo."],
+          ]}
+        />
+      </Section>
 
-      {/* Header */}
-      <div style={{ borderBottom: `1px solid ${C.border}`, padding: '18px 24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <Link href="/viaggio" style={{ color: C.textMuted, textDecoration: 'none', fontSize: '14px', fontWeight: 600 }}>
-          ← Elly
-        </Link>
-        <span style={{ color: C.border, fontSize: '14px' }}>/</span>
-        <span style={{ color: C.text, fontSize: '14px' }}>Termini di Servizio</span>
-      </div>
+      <Section title="2. Cosa fa Elly (e cosa non fa)">
+        <P>Elly ti aiuta a organizzare un viaggio di gruppo. In particolare puoi:</P>
+        <UL>
+          <li>generare un Itinerario scegliendo destinazione, date, mood e budget, e chiedere modifiche in chat;</li>
+          <li>condividerlo con un link e far votare il gruppo, anche a chi non ha un account;</li>
+          <li>salvarlo, confermarlo e seguire la lista delle prenotazioni da fare (voli, alloggi, ristoranti, attività);</li>
+          <li>ricevere notifiche, per esempio quando qualcuno vota un tuo viaggio, e leggere gli articoli della Bacheca.</li>
+        </UL>
+        <P>
+          <strong>Elly non è un’agenzia di viaggi, un tour operator né un intermediario.</strong> Non vende né prenota
+          voli, alloggi, ristoranti o attività: ti suggerisce cosa fare e ti rimanda alle fonti (ad esempio Google Maps).
+          Le prenotazioni le concludi tu direttamente con i fornitori, alle loro condizioni.
+        </P>
+        <P>
+          Il Servizio è in fase iniziale: funzioni, contenuti e interfaccia possono cambiare e, in caso di
+          manutenzione o problemi tecnici, essere temporaneamente non disponibili.
+        </P>
+      </Section>
 
-      <div style={{ maxWidth: '680px', margin: '0 auto', padding: '40px 24px 120px' }}>
-        {/* Banner bozza */}
-        <div style={{
-          background: C.accentSoft2, border: `1.3px solid ${C.accent}`, borderRadius: '14px',
-          padding: '16px 18px', marginBottom: '36px', fontSize: '13.5px', lineHeight: 1.6, color: C.text,
-        }}>
-          <strong>⚠️ Questa è una bozza, non ancora valida.</strong> È riscritta su ciò che Elly fa davvero (prima era basata su My Mood), ma contiene ancora dei placeholder da completare — email di contatto — e non ha ricevuto una revisione legale. Non pubblicarla come termini definitivi finché non l&apos;hai fatta controllare da un professionista.
-        </div>
+      <Section title="3. Requisiti e account">
+        <P>
+          Per usare Elly devi avere almeno <strong>18 anni</strong>. Puoi generare e condividere un Itinerario senza
+          registrarti; per salvarlo e ritrovarlo serve un account (email e password oppure accesso con Google).
+        </P>
+        <P>
+          Sei responsabile della veridicità dei dati che fornisci e della custodia delle tue credenziali. Se sospetti un
+          accesso non autorizzato scrivi subito a <Mail />. Puoi chiedere in qualsiasi momento la cancellazione
+          dell&apos;account.
+        </P>
+      </Section>
 
-        <h1 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 6vw, 38px)', fontWeight: 700, marginBottom: '8px', letterSpacing: '-0.01em' }}>
-          Termini di Servizio
-        </h1>
-        <p style={{ color: C.textMuted, fontSize: '14px', marginBottom: '44px' }}>
-          {VERSION} — Ultimo aggiornamento: {LAST_UPDATED}
-        </p>
+      <Section title="4. Salvataggio e link di condivisione">
+        <P>
+          Un Itinerario appena generato <strong>non viene salvato nel tuo account finché non scegli “Salva”</strong>. Fino
+          a quel momento resta raggiungibile solo da chi ha il suo indirizzo, non compare nei tuoi viaggi e può essere
+          eliminato automaticamente.
+        </P>
+        <P>
+          Il link di condivisione mostra l&apos;Itinerario a chiunque lo riceva, senza bisogno di account, insieme ai nomi
+          e alle risposte di chi ha già votato. Chi lo inoltra ad altri ne allarga la visibilità: condividilo solo con
+          le persone con cui vuoi decidere. Se modifichi un Itinerario già condiviso, il link mostra la versione
+          aggiornata.
+        </P>
+      </Section>
 
-        <Section title="1. Definizioni">
-          <DefinitionList
-            items={[
-              ['«Piattaforma»', 'L\'applicazione web/mobile "Elly".'],
-              ['«Utente»', 'Qualsiasi persona che utilizza la Piattaforma, con o senza account.'],
-              ['«Itinerario»', 'Il piano di viaggio generato dalla Piattaforma sulla base di destinazione, durata, persone e temi indicati.'],
-              ['«Voto di Gruppo»', 'Funzionalità che permette di condividere un Itinerario tramite link e raccogliere le risposte dei partecipanti.'],
-              ['«Contenuto UGC»', 'Il nome e la risposta lasciati da chi partecipa al Voto di Gruppo, o qualsiasi altro contenuto inserito dagli Utenti.'],
-            ]}
-          />
-        </Section>
+      <Section title="5. Prezzi e pagamenti">
+        <P>
+          Il modello di Elly è il <strong>pagamento per singolo viaggio</strong>: il prezzo dipende dal lavoro necessario
+          a costruire l&apos;Itinerario e ti viene mostrato, IVA inclusa, <strong>prima</strong> che tu confermi
+          l&apos;acquisto. Questa funzione è in arrivo: finché non viene attivata, i prezzi indicati in questo punto non
+          si applicano e non ti verrà addebitato nulla. Ti avviseremo nell&apos;app quando i pagamenti saranno attivi.
+        </P>
+        <P>
+          Quando saranno attivi, i pagamenti passeranno da <strong>Stripe</strong>, un fornitore esterno: i dati della
+          carta sono trattati da lui e non transitano dai nostri sistemi. Se la generazione non va a buon fine per un
+          nostro problema tecnico, l&apos;importo non ti viene addebitato o ti viene rimborsato.
+        </P>
+        <P>
+          <strong>Contenuto digitale e recesso.</strong> L&apos;Itinerario è un contenuto digitale che viene creato e messo a
+          tua disposizione subito. Per questo, al momento dell&apos;acquisto ti chiederemo il consenso espresso
+          all&apos;esecuzione immediata e la presa d&apos;atto che, una volta fornito il contenuto, perdi il diritto di
+          recesso previsto dal Codice del consumo. Restano ferme le tutele che la legge ti riconosce in ogni caso,
+          come quelle per i difetti di conformità del contenuto digitale.
+        </P>
+        <P>
+          Alcune sezioni o funzioni, come determinati articoli della Bacheca, potranno essere riservate a utenti
+          premium. Le condizioni di un eventuale abbonamento ti saranno mostrate prima della sottoscrizione.
+        </P>
+      </Section>
 
-        <Section title="2. Accettazione dei Termini">
-          <P>
-            Utilizzando Elly accetti integralmente i presenti Termini di Servizio («Termini»). Se non li accetti,
-            ti preghiamo di non utilizzare la Piattaforma. Per qualsiasi questione legale puoi contattarci a{' '}
-            <a href={`mailto:${LEGAL_EMAIL}`} style={{ color: C.accent }}>{LEGAL_EMAIL}</a>.
-          </P>
-          <P>
-            L&apos;utilizzo della Piattaforma implica l&apos;accettazione anche dell&apos;{' '}
-            <Link href="/privacy" style={{ color: C.accent }}>Informativa sulla Privacy</Link>, parte integrante
-            dei presenti Termini.
-          </P>
-        </Section>
+      <Section title="6. Itinerari generati con intelligenza artificiale">
+        <P>
+          Gli Itinerari sono scritti con l&apos;aiuto di un modello di intelligenza artificiale e, dove possibile, i luoghi
+          vengono verificati con dati reali (indirizzo, foto, valutazioni). Nonostante questo{" "}
+          <strong>orari di apertura, prezzi, disponibilità, distanze e persino l&apos;esistenza di un luogo possono essere
+          imprecisi, incompleti o cambiati</strong>. I luoghi indicati come “da verificare” non sono stati riscontrati.
+        </P>
+        <P>
+          Prima di partire e di prenotare, controlla le informazioni che contano (orari, prezzi, requisiti d&apos;ingresso,
+          visti, condizioni meteo e di sicurezza della destinazione) sulle fonti ufficiali. Il budget indicato negli
+          Itinerari è una stima, non un preventivo.
+        </P>
+      </Section>
 
-        <Section title="3. Descrizione del Servizio">
-          <P>
-            Elly è un servizio che aiuta a pianificare viaggi in base al mood o al tema di chi parte. Il Servizio
-            include:
-          </P>
-          <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: C.textMuted }}>
-            <li>
-              <strong>Generazione di itinerari</strong> — piani giorno per giorno personalizzati su destinazione,
-              durata e tema del viaggio (avventuroso, storico, relax, culturale...), con luoghi validati tramite
-              dati reali.
-            </li>
-            <li>
-              <strong>Voto di Gruppo</strong> — crea un Itinerario, condividilo con il tuo gruppo tramite link e
-              lascia che ognuno risponda, per decidere insieme dove andare senza il classico &quot;vediamo&quot;.
-            </li>
-            <li>
-              <strong>&quot;I miei viaggi&quot;</strong> — se hai un account, i tuoi Itinerari restano salvati e
-              consultabili in qualsiasi momento.
-            </li>
-          </ul>
-          <P>
-            I luoghi e le attività suggeriti sono soggetti a variazioni indipendenti dalla Società. Elly non
-            garantisce la disponibilità o le caratteristiche effettive dei singoli luoghi.
-          </P>
-        </Section>
+      <Section title="7. Uso corretto del Servizio">
+        <P>Usando Elly ti impegni a non:</P>
+        <UL>
+          <li>inserire contenuti falsi, offensivi, discriminatori o che violino diritti di terzi (inclusi i nomi che scrivi votando);</li>
+          <li>usare bot, scraper o altri sistemi automatici, o sovraccaricare il Servizio, senza il nostro consenso scritto;</li>
+          <li>cercare di accedere ad account, dati o sistemi che non sono tuoi, o aggirare le misure di sicurezza;</li>
+          <li>rivendere o sfruttare commercialmente il Servizio o i suoi contenuti senza autorizzazione;</li>
+          <li>usare Elly per attività illecite.</li>
+        </UL>
+        <P>
+          Se violi questi Termini possiamo rimuovere i contenuti interessati e sospendere o chiudere il tuo account,
+          dandoti dove possibile un preavviso.
+        </P>
+      </Section>
 
-        <Section title="4. Registrazione e Account">
-          <P>
-            Puoi generare e condividere un Itinerario anche senza registrarti. Un account (email e password, oppure
-            accesso con Google) è necessario solo per salvare i tuoi viaggi in &quot;I miei viaggi&quot; e
-            ritrovarli in seguito.
-          </P>
-          <P>
-            L&apos;Utente è responsabile della veridicità dei dati forniti in fase di registrazione, della custodia
-            delle proprie credenziali di accesso e di qualsiasi attività svolta sul proprio account. In caso di
-            accesso non autorizzato, contattaci a{' '}
-            <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: C.accent }}>{CONTACT_EMAIL}</a>.
-          </P>
-          <P>
-            Elly si riserva il diritto di sospendere o cancellare l&apos;account in caso di violazione dei Termini
-            o di utilizzo fraudolento della Piattaforma.
-          </P>
-        </Section>
+      <Section title="8. Contenuti degli utenti e Voto di gruppo">
+        <P>
+          Chi partecipa a un Voto di gruppo indica un nome e una risposta, visibili a chi ha il link e al proprietario del
+          viaggio. Sei responsabile di ciò che scrivi. Non siamo responsabili delle decisioni che il gruppo prende in base
+          ai voti né di eventuali accordi tra i partecipanti.
+        </P>
+      </Section>
 
-        <Section title="5. Condotta dell'Utente">
-          <P>Utilizzando la Piattaforma ti impegni a:</P>
-          <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: C.textMuted }}>
-            <li>Non pubblicare contenuti falsi, diffamatori, discriminatori o lesivi di diritti di terzi.</li>
-            <li>Non violare i diritti di proprietà intellettuale della Società o di terzi.</li>
-            <li>Non utilizzare sistemi automatizzati (bot, scraper) senza autorizzazione scritta.</li>
-            <li>Non tentare di accedere in modo non autorizzato ai sistemi o agli account altrui.</li>
-            <li>Non condividere le proprie credenziali di accesso con terzi.</li>
-          </ul>
-          <P>La violazione di questi obblighi può determinare la sospensione dell&apos;account e/o l&apos;avvio di azioni legali.</P>
-        </Section>
+      <Section title="9. Proprietà intellettuale">
+        <P>
+          Il marchio, il logo, il design, i testi originali, il codice e la grafica di Elly appartengono a{" "}
+          {LEGAL.ownerName} o ai suoi licenzianti. Ti concediamo una licenza personale, non esclusiva, non
+          trasferibile e revocabile per usare il Servizio secondo questi Termini.
+        </P>
+        <P>
+          Puoi usare gli Itinerari che generi per organizzare i tuoi viaggi e condividerli con chi viaggia con te. Le
+          fotografie, le valutazioni e i dati sui luoghi provengono da terze parti (ad esempio Google) e restano dei
+          rispettivi titolari, secondo le loro condizioni.
+        </P>
+      </Section>
 
-        <Section title="6. Contenuti Generati dagli Utenti (UGC)">
-          <P>
-            Partecipando al Voto di Gruppo inserisci un nome e una risposta, visibili a chi ha accesso al link
-            dell&apos;Itinerario condiviso. Dichiari che il Contenuto UGC non viola diritti di terzi e non contiene
-            dati personali di terzi senza il loro consenso.
-          </P>
-          <P>
-            Elly si riserva il diritto di rimuovere qualsiasi Contenuto UGC che risulti in violazione dei presenti
-            Termini, senza obbligo di preavviso.
-          </P>
-        </Section>
+      <Section title="10. Responsabilità">
+        <P>
+          Facciamo il possibile perché Elly funzioni bene, ma il Servizio è fornito “così com&apos;è”. Nei limiti consentiti
+          dalla legge non rispondiamo di danni indiretti o consequenziali, di interruzioni del Servizio, delle
+          informazioni imprecise contenute negli Itinerari, di esperienze negative presso i luoghi suggeriti, né di
+          prenotazioni, pagamenti o accordi conclusi con fornitori terzi.
+        </P>
+        <P>
+          Nessuna parte di questi Termini esclude o limita la responsabilità che non può essere esclusa per legge, ad
+          esempio per dolo o colpa grave, per morte o danni alla persona, né i diritti inderogabili che la legge
+          riconosce ai consumatori.
+        </P>
+      </Section>
 
-        <Section title="7. Voto di Gruppo">
-          <P>
-            Il link di condivisione di un Itinerario è accessibile a chiunque lo riceva. Ti raccomandiamo di non
-            condividerlo su canali pubblici, per tutelare la privacy tua e degli altri partecipanti al voto.
-          </P>
-          <P>
-            Elly non è responsabile delle decisioni prese dal gruppo sulla base dei risultati del voto.
-          </P>
-        </Section>
+      <Section title="11. Modifiche ai Termini e al Servizio">
+        <P>
+          Possiamo modificare questi Termini, per esempio per nuove funzioni o cambi di legge. Se le modifiche sono
+          rilevanti ti avviseremo con ragionevole anticipo nell&apos;app o via email; continuando a usare Elly dopo tale
+          data accetti la nuova versione. Se non sei d&apos;accordo puoi smettere di usare il Servizio e chiedere la
+          cancellazione dell&apos;account. Le modifiche non si applicano agli acquisti già conclusi.
+        </P>
+      </Section>
 
-        <Section title="8. Accuratezza dei Contenuti Generati con l'IA">
-          <P>
-            Gli Itinerari sono generati con l&apos;ausilio di intelligenza artificiale e i luoghi proposti vengono
-            verificati, dove possibile, con dati reali (indirizzi, foto, valutazioni). Nonostante questo,
-            informazioni come <strong>orari di apertura, prezzi, disponibilità e distanze possono risultare
-            imprecise o non aggiornate</strong>.
-          </P>
-          <P>
-            Ti consigliamo di <strong>verificare sempre in autonomia</strong> le informazioni rilevanti (in
-            particolare orari e prezzi) prima e durante il viaggio. Elly non è responsabile di eventuali
-            inconvenienti derivanti da informazioni imprecise contenute in un Itinerario generato dalla
-            Piattaforma.
-          </P>
-        </Section>
+      <Section title="12. Legge applicabile e foro competente">
+        <P>
+          Questi Termini sono regolati dalla legge italiana. Se sei un consumatore, restano ferme le norme
+          inderogabili del tuo Paese di residenza e puoi rivolgerti al giudice del luogo in cui risiedi o hai il domicilio.
+          Prima di ricorrere al giudice puoi anche contattarci a <Mail /> per trovare una soluzione, o rivolgerti a un
+          organismo di risoluzione alternativa delle controversie (ADR).
+        </P>
+      </Section>
 
-        <Section title="9. Proprietà Intellettuale">
-          <P>
-            Tutti i contenuti della Piattaforma — marchio, logo, interfaccia, testi, grafica, codice sorgente —
-            sono di proprietà esclusiva di Elly o dei suoi licenzianti. È concessa all&apos;Utente una licenza
-            personale, non esclusiva, non trasferibile e revocabile per utilizzare la Piattaforma nei modi
-            consentiti dai presenti Termini.
-          </P>
-          <P>
-            È espressamente vietato copiare, decompilare, modificare o distribuire qualsiasi elemento della
-            Piattaforma senza autorizzazione scritta.
-          </P>
-        </Section>
-
-        <Section title="10. Limitazione di Responsabilità">
-          <P>
-            Il Servizio è fornito &quot;così com&apos;è&quot; senza garanzie di alcun tipo. Nella misura massima
-            consentita dalla legge applicabile, Elly non sarà responsabile per:
-          </P>
-          <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: C.textMuted }}>
-            <li>Danni indiretti, incidentali o consequenziali derivanti dall&apos;uso del Servizio.</li>
-            <li>Interruzioni temporanee per manutenzione o cause di forza maggiore.</li>
-            <li>Imprecisioni negli Itinerari generati, incluse informazioni su luoghi, orari o prezzi.</li>
-            <li>Esperienze negative presso i luoghi suggeriti.</li>
-            <li>Contenuti pubblicati dagli Utenti.</li>
-          </ul>
-          <P>
-            Nulla in questi Termini esclude la responsabilità di Elly per frode, morte o lesioni personali causate
-            da nostra negligenza, o qualsiasi responsabilità non escludibile dalla legge italiana obbligatoria.
-          </P>
-        </Section>
-
-        <Section title="11. Modifiche ai Termini">
-          <P>
-            Ci riserviamo il diritto di modificare questi Termini in qualsiasi momento. In caso di modifiche
-            sostanziali, ti daremo un preavviso ragionevole tramite avviso in-app o email. Il continuato utilizzo
-            del Servizio dopo tale periodo costituirà accettazione dei nuovi Termini.
-          </P>
-        </Section>
-
-        <Section title="12. Legge Applicabile e Risoluzione delle Controversie">
-          <P>
-            I presenti Termini sono disciplinati dalla legge italiana. Per gli Utenti consumatori, in caso di
-            controversia è possibile ricorrere alla piattaforma europea ODR (
-            <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" style={{ color: C.accent }}>
-              ec.europa.eu/consumers/odr
-            </a>
-            ) o al foro del luogo di residenza del consumatore.
-          </P>
-        </Section>
-
-        <Section title="13. Contatti">
-          <P>Per qualsiasi domanda o segnalazione relativa a questi Termini:</P>
-          <ul style={{ paddingLeft: '20px', lineHeight: '1.9', color: C.textMuted }}>
-            <li>
-              Assistenza generale:{' '}
-              <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: C.accent }}>{CONTACT_EMAIL}</a>
-            </li>
-            <li>
-              Questioni legali:{' '}
-              <a href={`mailto:${LEGAL_EMAIL}`} style={{ color: C.accent }}>{LEGAL_EMAIL}</a>
-            </li>
-          </ul>
-        </Section>
-      </div>
-    </main>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section style={{ marginBottom: '38px' }}>
-      <h2 style={{ fontFamily: "var(--font-display)", fontSize: '18px', fontWeight: 600, marginBottom: '14px', color: C.text }}>
-        {title}
-      </h2>
-      {children}
-    </section>
-  );
-}
-
-function P({ children }: { children: React.ReactNode }) {
-  return <p style={{ color: C.textMuted, lineHeight: '1.75', marginBottom: '14px', fontSize: '15px' }}>{children}</p>;
-}
-
-function DefinitionList({ items }: { items: [string, string][] }) {
-  return (
-    <dl style={{ marginBottom: '14px' }}>
-      {items.map(([term, def]) => (
-        <div
-          key={term}
-          style={{
-            display: 'grid', gridTemplateColumns: '160px 1fr', gap: '8px 16px',
-            padding: '10px 0', borderBottom: `1px solid ${C.border}`, fontSize: '15px',
-          }}
-        >
-          <dt style={{ color: C.accent, fontWeight: 600, alignSelf: 'start' }}>{term}</dt>
-          <dd style={{ color: C.textMuted, lineHeight: '1.6', margin: 0 }}>{def}</dd>
-        </div>
-      ))}
-    </dl>
+      <Section title="13. Contatti">
+        <P>
+          Per domande, segnalazioni o richieste su questi Termini scrivi a <Mail />.
+        </P>
+      </Section>
+    </LegalLayout>
   );
 }

@@ -120,7 +120,7 @@ export default function ViaggioPage() {
   if (loadingSaved) {
     return (
       <main>
-        <GeneratingScreen />
+        <GeneratingScreen variant="open" />
       </main>
     );
   }
@@ -172,6 +172,7 @@ export default function ViaggioPage() {
       )}
       {screen === "generando" && (
         <GeneratingScreen
+          destination={destination}
           error={generationError}
           onRetry={handleGenerate}
           onBack={() => setScreen("riepilogo")}
