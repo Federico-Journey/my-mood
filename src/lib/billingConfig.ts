@@ -80,7 +80,7 @@ export function planSummary(s: LoggedBilling): PlanSummary {
   if (s.credits > 0) {
     return {
       kind: "pay_per_trip",
-      label: "Pay per viaggio",
+      label: "Pay per use",
       detail: s.credits === 1 ? "1 viaggio acquistato disponibile" : `${s.credits} viaggi acquistati disponibili`,
       available,
     };
