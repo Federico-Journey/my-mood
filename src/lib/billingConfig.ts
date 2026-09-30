@@ -57,6 +57,21 @@ export type PlanSummary = {
   available: number;
 };
 
+/**
+ * Da dove arriverebbe il viaggio completo (stesso ordine del server: abbonamento → viaggio
+ * gratuito → crediti). null = niente disponibile, quindi si genera la versione base.
+ */
+export function fullSource(s: LoggedBilling): string | null {
+  const sub = s.subscription;
+  if (sub?.active && sub.used_month < s.limits.monthly && sub.used_day < s.limits.daily) {
+    const left = s.limits.monthly - sub.used_month;
+    return `Incluso nell'abbonamento · ${left === 1 ? "te ne resta 1" : `te ne restano ${left}`} questo mese`;
+  }
+  if (s.free_left > 0) return "Usa il tuo viaggio gratuito";
+  if (s.credits > 0) return `Usa 1 viaggio acquistato · ${s.credits === 1 ? "ne hai 1" : `ne hai ${s.credits}`}`;
+  return null;
+}
+
 /** Piano attivo dell'utente, in ordine di priorità: abbonamento, crediti acquistati, prova. */
 export function planSummary(s: LoggedBilling): PlanSummary {
   const sub = s.subscription;

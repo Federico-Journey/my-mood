@@ -58,8 +58,10 @@ const LEGACY_SEARCH_URL = "https://maps.googleapis.com/maps/api/place/textsearch
 /** Le coordinate salvate valgono al massimo 30 giorni (regole Google). */
 const GEO_MAX_AGE_MS = 29 * 24 * 60 * 60 * 1000;
 
-export function mapsUrlFor(placeId: string): string {
-  return `https://www.google.com/maps/place/?q=place_id:${placeId}`;
+export function mapsUrlFor(name: string, placeId: string): string {
+  // Formato ufficiale Google ("Urls API"): query testuale + query_place_id,
+  // apre il luogo esatto sia da browser sia dall'app Google Maps.
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}&query_place_id=${encodeURIComponent(placeId)}`;
 }
 
 /** Link di ricerca su Google Maps (gratuito, nessuna API) per luoghi non verificati. */
@@ -178,7 +180,7 @@ async function legacyLookup(name: string, destination: string, apiKey: string): 
     latitude: lat,
     longitude: lng,
     rating: null,
-    mapsUrl: mapsUrlFor(top.place_id),
+    mapsUrl: mapsUrlFor(name, top.place_id),
     photoUrl: Array.isArray(top.photos) && top.photos.length > 0 ? photoUrlForPlace(top.place_id) : null,
   };
 }
@@ -196,7 +198,7 @@ async function lookup(name: string, destination: string, category: PlaceCategory
         latitude: cached.lat,
         longitude: cached.lng,
         rating: null,
-        mapsUrl: mapsUrlFor(cached.placeId),
+        mapsUrl: mapsUrlFor(name, cached.placeId),
         photoUrl: photoUrlForPlace(cached.placeId),
       },
       billableDetails: 0,
@@ -228,7 +230,7 @@ async function lookup(name: string, destination: string, category: PlaceCategory
           latitude: det.lat,
           longitude: det.lng,
           rating: null,
-          mapsUrl: mapsUrlFor(placeId),
+          mapsUrl: mapsUrlFor(name, placeId),
           photoUrl: det.hasPhotos ? photoUrlForPlace(placeId) : null,
         },
         billableDetails: 1,

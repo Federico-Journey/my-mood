@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { authHeaders } from "@/lib/authHeaders";
+import { useBillingStatus } from "@/lib/useBillingStatus";
+import TripModeChoice from "@/components/TripModeChoice";
 import DestinationInput from "@/components/DestinationInput";
 import PeopleStepper from "@/components/PeopleStepper";
 import DateRangePicker from "@/components/DateRangePicker";
@@ -14,7 +16,7 @@ import TripResult from "@/components/TripResult";
 import type { GeneratedTrip, GenerateTripInput } from "@/lib/tripGenerator";
 import type { GenerationChoice, Paywall } from "@/lib/billingConfig";
 
-type Screen = "destinazione" | "persone" | "date" | "mood" | "budget" | "riepilogo" | "generando" | "risultato";
+type Screen = "modalita" | "destinazione" | "persone" | "date" | "mood" | "budget" | "riepilogo" | "generando" | "risultato";
 
 export default function ViaggioPage() {
   const [screen, setScreen] = useState<Screen>("destinazione");
@@ -32,6 +34,9 @@ export default function ViaggioPage() {
   const [loadingSaved, setLoadingSaved] = useState(false);
   const [paywall, setPaywall] = useState<Paywall>(null);
   const [choice, setChoice] = useState<GenerationChoice>("auto");
+  const { status: billingStatus } = useBillingStatus();
+  const billing = billingStatus?.enabled && billingStatus.loggedIn ? billingStatus : null;
+  const modeInitialized = useRef(false);
 
   const draft = (): GenerateTripInput => ({ destination, people, startDate, endDate, themes, budgetPerPerson, startTime, dinnerTime });
 
@@ -66,6 +71,24 @@ export default function ViaggioPage() {
       });
   }, []);
 
+  // Appena la pagina si apre (e non stiamo riaprendo un viaggio salvato), se i pagamenti sono
+  // attivi per questo utente mostriamo subito la scelta prova/completo, prima della destinazione.
+  useEffect(() => {
+    if (modeInitialized.current) return;
+    if (billingStatus === null) return; // ancora in caricamento
+    modeInitialized.current = true;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("id")) return;
+    if (billingStatus.enabled && billingStatus.loggedIn) {
+      setScreen((s) => (s === "destinazione" ? "modalita" : s));
+    }
+  }, [billingStatus]);
+
+  const handleModeChoice = (m: "full" | "base") => {
+    setChoice(m === "base" ? "base" : "auto");
+    setScreen("destinazione");
+  };
+
   const handleDestination = (d: string) => { setDestination(d); setScreen("persone"); };
   const handlePeople = (p: number) => { setPeople(p); setScreen("date"); };
   const handleDates = (start: string, end: string) => { setStartDate(start); setEndDate(end); setScreen("mood"); };
@@ -73,7 +96,6 @@ export default function ViaggioPage() {
   const handleBudget = (b: number) => { setBudgetPerPerson(b); setScreen("riepilogo"); };
 
   const handleGenerate = async (mode: GenerationChoice = choice) => {
-    setChoice(mode);
     setScreen("generando");
     setGenerationError(null);
     try {
@@ -120,8 +142,9 @@ export default function ViaggioPage() {
     setDestination(""); setPeople(2); setStartDate(null); setEndDate(null);
     setThemes([]); setBudgetPerPerson(700); setStartTime("09:00"); setDinnerTime("20:00");
     setGeneratedTrip(null); setTripId(null); setGenerationError(null); setPaywall(null);
+    setChoice("auto");
     window.history.replaceState(null, "", "/viaggio");
-    setScreen("destinazione");
+    setScreen(billing ? "modalita" : "destinazione");
   };
 
   if (loadingSaved) {
@@ -134,6 +157,13 @@ export default function ViaggioPage() {
 
   return (
     <main>
+      {screen === "modalita" && billing && (
+        <TripModeChoice
+          billing={billing}
+          initialChoice={choice === "base" ? "base" : "full"}
+          onContinue={handleModeChoice}
+        />
+      )}
       {screen === "destinazione" && (
         <DestinationInput onSelect={handleDestination} />
       )}
@@ -174,7 +204,9 @@ export default function ViaggioPage() {
           onStartTimeChange={setStartTime}
           onDinnerTimeChange={setDinnerTime}
           onEdit={() => setScreen("budget")}
-          onGenerate={handleGenerate}
+          onGenerate={() => handleGenerate(choice)}
+          mode={billing ? choice : null}
+          onEditMode={billing ? () => setScreen("modalita") : undefined}
         />
       )}
       {screen === "generando" && (

@@ -100,52 +100,48 @@ export default function ShareTripClient({ shareId, trip, themeAccent, initialVot
               </div>
               <h3 className="text-[15px] font-bold mb-3">{day.title}</h3>
 
-              <div className="relative pl-1">
-                <div className="absolute top-1 bottom-1" style={{ left: "9px", width: "1.5px", background: C.border }} />
-                <div className="flex flex-col gap-2.5">
-                  {day.activities.map((act, i) => (
-                    <div key={i} className="flex gap-3">
-                      <div className="relative z-10 w-5 shrink-0 flex justify-center pt-4">
-                        <div className="w-[9px] h-[9px] rounded-full" style={{ background: themeAccent, boxShadow: `0 0 0 3px ${C.bg}` }} />
-                      </div>
-                      <div className="flex-1 rounded-xl p-3.5" style={{ background: C.bgElev, border: `1.3px solid ${C.border}` }}>
-                        <div className="flex items-start gap-3">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-[11px] font-bold" style={{ color: themeAccent }}>{act.time}</span>
-                              <span className="text-[10px] uppercase tracking-[.3px]" style={{ color: C.textMuted }}>
-                                {CATEGORY_LABEL[act.category]}
+              <div className="flex flex-col gap-2.5">
+                {day.activities.map((act, i) => (
+                  <div key={i} className="flex gap-3">
+                    <div className="w-11 shrink-0 pt-4 text-right">
+                      <span className="text-[12px] font-bold tabular-nums leading-tight" style={{ color: themeAccent, fontFamily: "var(--font-display)" }}>
+                        {act.time}
+                      </span>
+                    </div>
+                    <div className="flex-1 rounded-xl p-3.5 min-w-0" style={{ background: C.bgElev, border: `1.3px solid ${C.border}` }}>
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1 min-w-0">
+                          <span className="text-[10px] uppercase tracking-[.3px]" style={{ color: C.textMuted }}>
+                            {CATEGORY_LABEL[act.category]}
+                          </span>
+                          <div className="font-bold text-[14.5px] mt-0.5">{act.name}</div>
+                          <p className="text-[13px] mt-1 leading-snug" style={{ color: C.textMuted }}>{act.description}</p>
+                          {act.tip && (
+                            <p className="text-[12px] mt-1.5 italic leading-snug" style={{ color: C.textMuted }}>Consiglio: {act.tip}</p>
+                          )}
+                          <div className="flex items-center gap-3 flex-wrap mt-2">
+                            {act.estimated_cost_per_person !== null && (
+                              <span className="text-[12px] font-semibold">
+                                {act.estimated_cost_per_person === 0 ? "Gratuito" : `~€${act.estimated_cost_per_person} a persona`}
                               </span>
-                            </div>
-                            <div className="font-bold text-[14.5px] mt-0.5">{act.name}</div>
-                            <p className="text-[13px] mt-1 leading-snug" style={{ color: C.textMuted }}>{act.description}</p>
-                            {act.tip && (
-                              <p className="text-[12px] mt-1.5 italic leading-snug" style={{ color: C.textMuted }}>Consiglio: {act.tip}</p>
                             )}
-                            <div className="flex items-center gap-3 flex-wrap mt-2">
-                              {act.estimated_cost_per_person !== null && (
-                                <span className="text-[12px] font-semibold">
-                                  {act.estimated_cost_per_person === 0 ? "Gratuito" : `~€${act.estimated_cost_per_person} a persona`}
-                                </span>
-                              )}
-                              {act.verified && act.maps_url ? (
-                                <a href={act.maps_url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold underline" style={{ color: themeAccent }}>
-                                  Apri in Google Maps{act.rating ? ` · ★ ${act.rating}` : ""}
-                                </a>
-                              ) : act.maps_url ? (
-                                <a href={act.maps_url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold underline" style={{ color: C.textMuted }}>
-                                  Cerca su Google Maps · da verificare
-                                </a>
-                              ) : (
-                                <span className="text-[11px]" style={{ color: C.disabledText }}>luogo da verificare</span>
-                              )}
-                            </div>
+                            {act.verified && act.maps_url ? (
+                              <a href={act.maps_url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold underline" style={{ color: themeAccent }}>
+                                Apri in Google Maps{act.rating ? ` · ★ ${act.rating}` : ""}
+                              </a>
+                            ) : act.maps_url ? (
+                              <a href={act.maps_url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold underline" style={{ color: C.textMuted }}>
+                                Cerca su Google Maps · da verificare
+                              </a>
+                            ) : (
+                              <span className="text-[11px]" style={{ color: C.disabledText }}>luogo da verificare</span>
+                            )}
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

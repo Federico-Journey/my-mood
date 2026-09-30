@@ -47,7 +47,7 @@ export default function ImpostazioniPage() {
           {email ? (
             <>
               <ListRow first label="Email" value={email} />
-              <ListRow label="Notifiche" soon />
+              <ListRow label="Notifiche" href="/notifiche" />
               <ListRow label="Esci" onClick={signOut} danger />
             </>
           ) : (

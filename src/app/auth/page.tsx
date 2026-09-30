@@ -84,11 +84,50 @@ export default function AuthPage() {
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN" && session) {
+        setLoading(false);
+        setError(null);
         await handlePostLogin();
       }
     });
     return () => subscription.unsubscribe();
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Google (o Supabase) può tornare con un errore nell'indirizzo (?error=...) invece che
+  // con una sessione: senza questo controllo l'utente sceglie l'account e si ritrova su
+  // /auth come se non avesse fatto nulla, senza sapere perché.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const desc = params.get("error_description") || hash.get("error_description");
+    const code = params.get("error_code") || hash.get("error_code");
+    if (!desc && !code) return;
+    setLoading(false);
+    setError(
+      code === "provider_email_needs_verification"
+        ? "Il tuo account Google non ha un'email verificata: verificala con Google e riprova."
+        : desc
+          ? decodeURIComponent(desc.replace(/\+/g, " "))
+          : "L'accesso con Google non è andato a buon fine. Riprova, o usa l'email."
+    );
+    window.history.replaceState(null, "", window.location.pathname + (getRedirectParam() ? `?redirect=${encodeURIComponent(getRedirectParam()!)}` : ""));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Tornati da Google (c'è un "code" nell'indirizzo) ma dopo qualche secondo nessuna
+  // sessione è arrivata: è il sintomo "scelgo l'account e torno su Elly senza essere
+  // collegato" — quasi sempre un indirizzo di ritorno non autorizzato in Supabase.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.get("code")) return;
+    const t = setTimeout(async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        setLoading(false);
+        setError("L'accesso con Google non si è completato. Riprova, oppure usa l'email.");
+      }
+    }, 4000);
+    return () => clearTimeout(t);
   }, []);
 
   const handleGoogle = async () => {
@@ -149,7 +188,7 @@ export default function AuthPage() {
 
   const handleSkip = () => {
     const redirectParam = getRedirectParam();
-    router.push(redirectParam && redirectParam.startsWith("/viaggio") ? "/viaggio" : "/genera");
+    router.push(redirectParam && redirectParam.startsWith("/viaggio") ? redirectParam : "/viaggio");
   };
 
   const canSubmit = email.length > 0 && password.length >= 6;

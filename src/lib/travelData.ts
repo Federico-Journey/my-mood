@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════
 // ELLY — Travel data (temi di viaggio, viaggiatori, palette)
 // ══════════════════════════════════════════════════
-import type { Mood } from "./data";
+type Mood = { id: string; emoji: string; label: string; color: string; desc: string };
 
 // I temi di viaggio riusano la stessa forma dei "mood" delle serate,
 // ma con contenuti pensati per un viaggio invece che per una serata a Milano.
