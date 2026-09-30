@@ -39,12 +39,6 @@ const CATEGORY_LABEL: Record<ItineraryActivity["category"], string> = {
   altro: "Altro",
 };
 
-// Foto reali (da Google Places) solo per le categorie dove l'immagine aiuta
-// davvero a scegliere: alloggi, ristoranti, natura/panorami, monumenti.
-// Ogni foto costa una chiamata a Google la prima volta che viene vista,
-// quindi non le mostriamo ovunque.
-const PHOTO_CATEGORIES = new Set<ItineraryActivity["category"]>(["alloggio", "ristorante", "natura", "monumento"]);
-
 const MONTHS_SHORT = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
 function formatDate(iso: string) {
   const [y, m, d] = iso.split("-").map(Number);
@@ -767,7 +761,7 @@ function ActionCell({
 }
 
 function ActivityCardBody({ act }: { act: ItineraryActivity }) {
-  const showPhoto = PHOTO_CATEGORIES.has(act.category) && !!act.photo_url;
+  const showPhoto = !!act.photo_url;
   return (
     <div className="flex items-start gap-3">
       <div className="flex-1 min-w-0">

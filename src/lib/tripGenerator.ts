@@ -352,8 +352,6 @@ function previousByName(prev?: GeneratedTrip): Map<string, ItineraryActivity> {
   return map;
 }
 
-const MAX_GOOGLE_PHOTOS = 3;
-
 async function enrichWithPlaces(raw: RawItinerary, input: GenerateTripInput, opts: EnrichOptions): Promise<EnrichedTrip> {
   const flat = raw.days.flatMap((d) => d.activities);
   const previous = previousByName(opts.previous);
@@ -417,18 +415,11 @@ async function enrichWithPlaces(raw: RawItinerary, input: GenerateTripInput, opt
     });
   }
 
-  // Al massimo MAX_GOOGLE_PHOTOS foto Google per viaggio: ogni foto mostrata è una chiamata a pagamento
-  // oltre la soglia gratuita mensile. Scegliamo le categorie più scenografiche; le altre restano
-  // verificate (posizione, link Maps) ma senza foto. Le foto dell'archivio aperto non sono limitate.
-  const PHOTO_PRIORITY: Record<string, number> = { natura: 0, monumento: 1, alloggio: 2, ristorante: 3 };
-  const googlePhotoIdx = flat
-    .map((a, i) => ({ i, rank: PHOTO_PRIORITY[a.category] ?? 9 }))
-    .filter(({ i }) => extras[i]?.photo_url && extras[i]?.source !== "elly")
-    .sort((x, y) => x.rank - y.rank || x.i - y.i);
-  googlePhotoIdx.slice(MAX_GOOGLE_PHOTOS).forEach(({ i }) => {
-    extras[i] = { ...(extras[i] as Extra), photo_url: null };
-  });
-
+  // Foto su tutti i luoghi verificati (Google per il viaggio completo, archivio
+  // aperto per la prova): ogni foto si recupera da Google al momento in cui
+  // viene vista (vedi /api/places/photo), non a ogni generazione — le regole di
+  // Google non permettono di salvarle in un archivio nostro, quindi il costo è
+  // per visualizzazione e non per viaggio generato.
   let cursor = 0;
   const days: ItineraryDay[] = raw.days.map((d) => ({
     day: d.day,

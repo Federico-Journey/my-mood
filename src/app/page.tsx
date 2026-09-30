@@ -14,6 +14,7 @@ import { ELLY_COLORS, TRAVEL_THEMES } from "@/lib/travelData";
 import type { ItineraryDay } from "@/lib/tripGenerator";
 import AppPage from "@/components/AppPage";
 import PlacePhoto from "@/components/PlacePhoto";
+import { EllyMark } from "@/components/EllyLogo";
 import { useBillingStatus } from "@/lib/useBillingStatus";
 import { planSummary } from "@/lib/billingConfig";
 
@@ -95,14 +96,23 @@ function voteText(v: Votes | undefined) {
 
 /**
  * Foto di copertina. Le foto Google richiedono di mostrare l'autore: nei
- * riquadri piccoli (small) non c'è spazio, quindi lì usiamo solo foto
- * dell'archivio aperto e altrimenti lo sfondo colorato.
+ * riquadri piccoli (small, es. le righe di "I tuoi viaggi") non c'è spazio
+ * per la didascalia, quindi lì usiamo solo foto dell'archivio aperto; se il
+ * viaggio non ne ha (viaggio completo, foto tutte da Google) mostriamo il
+ * simbolo di Elly invece di un riquadro vuoto.
  */
 function Photo({ src, className, small = false }: { src: string | null; className: string; small?: boolean }) {
   const [failed, setFailed] = useState(false);
   const isGoogle = !!src && src.startsWith("/api/places/photo?pid=");
   if (!src || failed || (small && isGoogle)) {
-    return <div className={className} style={{ background: `linear-gradient(135deg, ${C.accentSoft2}, ${C.accentSoft})` }} />;
+    return (
+      <div
+        className={`${className} flex items-center justify-center`}
+        style={{ background: `linear-gradient(135deg, ${C.accentSoft2}, ${C.accentSoft})` }}
+      >
+        <EllyMark size={small ? 18 : 40} color={C.accent} needle={C.paper} />
+      </div>
+    );
   }
   return (
     <div className={`${className} overflow-hidden`}>
