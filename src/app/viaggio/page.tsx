@@ -138,6 +138,22 @@ export default function ViaggioPage() {
     return updated;
   };
 
+  const handleRename = async (title: string) => {
+    const trimmed = title.trim();
+    if (!trimmed) return;
+    setGeneratedTrip((prev) => (prev ? { ...prev, title: trimmed } : prev));
+    if (tripId) {
+      await supabase.from("trips").update({ title: trimmed }).eq("id", tripId);
+    }
+  };
+
+  const handleReorder = async (days: GeneratedTrip["days"]) => {
+    setGeneratedTrip((prev) => (prev ? { ...prev, days } : prev));
+    if (tripId) {
+      await supabase.from("trips").update({ itinerary: days }).eq("id", tripId);
+    }
+  };
+
   const handleNewTrip = () => {
     setDestination(""); setPeople(2); setStartDate(null); setEndDate(null);
     setThemes([]); setBudgetPerPerson(700); setStartTime("09:00"); setDinnerTime("20:00");
@@ -218,7 +234,15 @@ export default function ViaggioPage() {
         />
       )}
       {screen === "risultato" && generatedTrip && (
-        <TripResult trip={generatedTrip} tripId={tripId} paywall={paywall} onNewTrip={handleNewTrip} onRefine={handleRefine} />
+        <TripResult
+          trip={generatedTrip}
+          tripId={tripId}
+          paywall={paywall}
+          onNewTrip={handleNewTrip}
+          onRefine={handleRefine}
+          onRename={handleRename}
+          onReorder={handleReorder}
+        />
       )}
     </main>
   );
